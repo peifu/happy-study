@@ -27,6 +27,28 @@
             --text-color: #ffffff;
             --card-bg-color: rgba(15, 35, 55, 0.7);
         }
+
+        /* 浅色主题变量 */
+        .light-theme {
+            --primary: #0078d4;
+            --secondary: #00bfae;
+            --accent: #ff6b6b;
+            --success: #43a047;
+            --warning: #ff9800;
+            --info: #1976d2;
+            --english: #4285f4;
+            --chinese: #ea4335;
+            --math: #fbbc05;
+            --pe: #34a853;
+            --dark: #f5f7fa;
+            --darker: #e3e8ef;
+            --card-bg: rgba(255,255,255,0.9);
+            --text: #222222;
+            --text-secondary: #6b7280;
+            --bg-color: #f5f7fa;
+            --text-color: #222222;
+            --card-bg-color: rgba(255,255,255,0.95);
+        }
         
         * {
             margin: 0;
@@ -735,13 +757,51 @@
     <script>
         // 初始化函数
         function init() {
+            // 设置主题
+            applyTheme(getSavedTheme() || 'dark');
             // 设置事件监听
             setupEventListeners();
-            
             // 初始化设置滑块
             setupSettingsSliders();
+            // 主题选择监听
+            setupThemeSelect();
         }
 
+        // 主题切换
+        function applyTheme(theme) {
+            document.body.classList.remove('light-theme');
+            if (theme === 'light') {
+                document.body.classList.add('light-theme');
+            } else if (theme === 'auto') {
+                // 跟随系统
+                if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+                    document.body.classList.add('light-theme');
+                }
+            }
+            // 保存主题
+            localStorage.setItem('theme', theme);
+            // 设置下拉框选中
+            const themeSelect = document.getElementById('themeSelect');
+            if (themeSelect) themeSelect.value = theme;
+        }
+
+        function getSavedTheme() {
+            return localStorage.getItem('theme');
+        }
+
+        function setupThemeSelect() {
+            const themeSelect = document.getElementById('themeSelect');
+            if (!themeSelect) return;
+            themeSelect.addEventListener('change', function() {
+                applyTheme(this.value);
+            });
+            // 响应系统主题变化
+            window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', e => {
+                if (getSavedTheme() === 'auto') {
+                    applyTheme('auto');
+                }
+            });
+        }
         // 设置事件监听
         function setupEventListeners() {
             // 导航链接点击事件
