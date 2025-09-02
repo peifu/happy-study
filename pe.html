@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>快乐学习 - 小学体育</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0f9d58;
+            --secondary: #f4b400;
+            --accent: #db4437;
+            --success: #0f9d58;
+            --warning: #f4b400;
+            --info: #4285f4;
+            --dark: #0a1929;
+            --darker: #051321;
+            --card-bg: rgba(15, 35, 55, 0.7);
+            --text: #ffffff;
+            --text-secondary: #a0aec0;
+            --transition: all 0.3s ease;
+            --bg-color: #0a1929;
+            --text-color: #ffffff;
+            --card-bg-color: rgba(15, 35, 55, 0.7);
+            --font-size: 16px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--darker), var(--dark));
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-size: var(--font-size);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 导航样式 */
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(15, 157, 88, 0.3);
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(15, 157, 88, 0.5);
+            cursor: pointer;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+        
+        .nav-link {
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: var(--transition);
+        }
+        
+        .nav-link:hover::before {
+            width: 100%;
+        }
+        
+        .nav-link.active {
+            background: rgba(15, 157, 88, 0.1);
+        }
+        
+        .nav-link.active::before {
+            width: 100%;
+        }
+        
+        /* 页面内容 */
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 主页样式 */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+        }
+        
+        .sports-card {
+            background: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(15, 157, 88, 0.2);
+            text-align: center;
+        }
+        
+        .sports-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .sports-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(15, 157, 88, 0.1) 0%, transparent 70%);
+            transform: rotate(30deg);
+            z-index: 0;
+        }
+        
+        .title-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .sports-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(15, 157, 88, 0.3);
+        }
+        
+        .demo-btn {
+            background: rgba(15, 157, 88, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--primary);
+        }
+        
+        .demo-btn:hover {
+            background: rgba(15, 157, 88, 0.3);
+            transform: scale(1.1);
+        }
+        
+        .sports-category {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+            font-style: italic;
+        }
+        
+        .sports-content {
+            font-size: 24px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .sports-line {
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .sports-explanation {
+            font-style: italic;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+            border-left: 3px solid var(--secondary);
+            padding-left: 15px;
+            font-size: 18px;
+        }
+        
+        .card-controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary), var(--info));
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            box-shadow: 0 0 15px rgba(15, 157, 88, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background: linear-gradient(90deg, var(--success), var(--secondary));
+            color: white;
+        }
+        
+        .btn-success:hover {
+            box-shadow: 0 0 15px rgba(15, 157, 88, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(90deg, var(--warning), var(--accent));
+            color: white;
+        }
+        
+        .btn-warning:hover {
+            box-shadow: 0 0 15px rgba(244, 180, 0, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-color);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(15, 157, 88, 0.3);
+        }
+        
+        /* 进度容器 */
+        .progress-container {
+            background: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(15, 157, 88, 0.2);
+        }
+        
+        .progress-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .stat-card {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .progress-bar-container {
+            margin: 20px 0;
+        }
+        
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        .progress-bar {
+            height: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            width: 0%;
+            box-shadow: 0 0 10px rgba(15, 157, 88, 0.3);
+            transition: width 0.5s ease;
+        }
+        
+        /* 体育项目列表 */
+        .sports-selector {
+            margin-top: 20px;
+        }
+        
+        .sports-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+        
+        .sports-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .sports-item:hover {
+            background: rgba(15, 157, 88, 0.1);
+        }
+        
+        .sports-item.mastered {
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .sports-item .sports-name {
+            font-weight: 600;
+        }
+        
+        .sports-item .sports-category {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        
+        .sports-item-status {
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            background: rgba(244, 180, 0, 0.2);
+            color: var(--secondary);
+        }
+        
+        /* 标准表格样式 */
+        .standards-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .standards-table th, .standards-table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .standards-table th {
+            background: rgba(15, 157, 88, 0.2);
+            color: var(--primary);
+        }
+        
+        .standards-table tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .standards-table tr:hover {
+            background: rgba(15, 157, 88, 0.1);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .card-controls {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .sports-content {
+                font-size: 20px;
+            }
+            
+            .sports-title {
+                font-size: 26px;
+            }
+            
+            .title-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .standards-table {
+                font-size: 14px;
+            }
+            
+            .standards-table th, .standards-table td {
+                padding: 8px 5px;
+            }
+        }
+        
+        /* 动画效果 */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(15, 157, 88, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(15, 157, 88, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(15, 157, 88, 0); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-secondary);
+        }
+        
+        .sports-icon {
+            font-size: 24px;
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        .requirement-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        
+        .requirement-label {
+            min-width: 120px;
+            font-weight: bold;
+            color: var(--secondary);
+        }
+        
+        .requirement-value {
+            flex-grow: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-container">
+            <div class="logo" id="homeLink">
+                <i class="fas fa-brain"></i>
+                <span>快乐学习</span>
+            </div>
+            
+            <div class="nav-links">
+                <div class="nav-link active" data-page="sports">
+                    <i class="fas fa-running"></i>
+                    <span>体育健康</span>
+                </div>
+                <div class="nav-link" data-page="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>设置</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 体育健康页面 -->
+        <div class="page active" id="sportsPage">
+            <div class="main-content">
+                <div class="sports-card">
+                    <div class="title-container">
+                        <h2 class="sports-title" id="sportsTitle">跳绳项目</h2>
+                        <button class="demo-btn" id="demoBtn" title="查看示范">
+                            <i class="fas fa-play-circle"></i>
+                        </button>
+                    </div>
+                    <div class="sports-category" id="sportsCategory">【一年级体育要求】</div>
+                    
+                    <div class="sports-content" id="sportsContent">
+                        <div class="requirement-item">
+                            <span class="sports-icon"><i class="fas fa-forward"></i></span>
+                            <span class="requirement-label">一分钟跳绳：</span>
+                            <span class="requirement-value">男生90个，女生95个</span>
+                        </div>
+                        <div class="requirement-item">
+                            <span class="sports-icon"><i class="fas fa-tachometer-alt"></i></span>
+                            <span class="requirement-label">合格标准：</span>
+                            <span class="requirement-value">男生70个，女生75个</span>
+                        </div>
+                        <div class="requirement-item">
+                            <span class="sports-icon"><i class="fas fa-star"></i></span>
+                            <span class="requirement-label">优秀标准：</span>
+                            <span class="requirement-value">男生110个，女生115个</span>
+                        </div>
+                    </div>
+                    
+                    <div class="sports-explanation" id="sportsExplanation">
+                        跳绳是一项全身性有氧运动，能够有效提高心肺功能、协调性和耐力。对小学生身体发育有很好的促进作用。
+                    </div>
+                    
+                    <div class="card-controls">
+                        <button class="btn btn-secondary" id="prevBtn">
+                            <i class="fas fa-arrow-left"></i>
+                            <span>上一个</span>
+                        </button>
+                        <button class="btn btn-success" id="knowBtn">
+                            <i class="fas fa-check"></i>
+                            <span>已达标</span>
+                        </button>
+                        <button class="btn btn-warning" id="notKnowBtn">
+                            <i class="fas fa-times"></i>
+                            <span>未达标</span>
+                        </button>
+                        <button class="btn btn-primary" id="nextBtn">
+                            <span>下一个</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-title">
+                        <i class="fas fa-chart-line"></i>
+                        <span>训练进度</span>
+                    </div>
+                    
+                    <div class="stats">
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalCount">12</div>
+                            <div class="stat-label">项目总数</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="learnedCount">5</div>
+                            <div class="stat-label">已测项目</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="masteredCount">3</div>
+                            <div class="stat-label">已达标</div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-bar-container">
+                        <div class="progress-info">
+                            <span>达标进度</span>
+                            <span id="progressPercentage">42%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill" style="width: 42%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-title">
+                        <i class="fas fa-dumbbell"></i>
+                        <span>体育项目</span>
+                    </div>
+                    
+                    <select class="form-control" id="gradeSelector">
+                        <option value="grade1">小学一年级</option>
+                        <option value="grade2">小学二年级</option>
+                        <option value="grade3">小学三年级</option>
+                        <option value="grade4">小学四年级</option>
+                        <option value="grade5">小学五年级</option>
+                        <option value="grade6">小学六年级</option>
+                    </select>
+                    
+                    <div class="sports-list" id="sportsList">
+                        <div class="sports-item mastered">
+                            <div>
+                                <div class="sports-name">跳绳</div>
+                                <div class="sports-category">体能项目</div>
+                            </div>
+                            <div class="sports-item-status">
+                                <div class="status-badge">已达标</div>
+                            </div>
+                        </div>
+                        <div class="sports-item">
+                            <div>
+                                <div class="sports-name">50米跑</div>
+                                <div class="sports-category">速度项目</div>
+                            </div>
+                            <div class="sports-item-status">
+                                <div class="status-badge">未测试</div>
+                            </div>
+                        </div>
+                        <div class="sports-item">
+                            <div>
+                                <div class="sports-name">坐位体前屈</div>
+                                <div class="sports-category">柔韧项目</div>
+                            </div>
+                            <div class="sports-item-status">
+                                <div class="status-badge">未达标</div>
+                            </div>
+                        </div>
+                        <div class="sports-item">
+                            <div>
+                                <div class="sports-name">仰卧起坐</div>
+                                <div class="sports-category">腰腹力量</div>
+                            </div>
+                            <div class="sports-item-status">
+                                <div class="status-badge">未测试</div>
+                            </div>
+                        </div>
+                        <div class="sports-item">
+                            <div>
+                                <div class="sports-name">立定跳远</div>
+                                <div class="sports-category">爆发力</div>
+                            </div>
+                            <div class="sports-item-status">
+                                <div class="status-badge">未测试</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 体育标准表格 -->
+            <div class="progress-container" style="margin-top: 30px;">
+                <div class="progress-title">
+                    <i class="fas fa-table"></i>
+                    <span>小学体育达标标准</span>
+                </div>
+                
+                <table class="standards-table">
+                    <thead>
+                        <tr>
+                            <th>年级</th>
+                            <th>跳绳(个/分钟)</th>
+                            <th>50米跑(秒)</th>
+                            <th>坐位体前屈(cm)</th>
+                            <th>仰卧起坐(个/分钟)</th>
+                            <th>立定跳远(cm)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>一年级</td>
+                            <td>90-95</td>
+                            <td>12.0-12.5</td>
+                            <td>8.0-9.0</td>
+                            <td>18-20</td>
+                            <td>110-120</td>
+                        </tr>
+                        <tr>
+                            <td>二年级</td>
+                            <td>100-105</td>
+                            <td>11.5-12.0</td>
+                            <td>9.0-10.0</td>
+                            <td>20-22</td>
+                            <td>120-130</td>
+                        </tr>
+                        <tr>
+                            <td>三年级</td>
+                            <td>110-115</td>
+                            <td>11.0-11.5</td>
+                            <td>10.0-11.0</td>
+                            <td>22-25</td>
+                            <td>130-140</td>
+                        </tr>
+                        <tr>
+                            <td>四年级</td>
+                            <td>120-125</td>
+                            <td>10.5-11.0</td>
+                            <td>11.0-12.0</td>
+                            <td>25-28</td>
+                            <td>140-150</td>
+                        </tr>
+                        <tr>
+                            <td>五年级</td>
+                            <td>130-135</td>
+                            <td>10.0-10.5</td>
+                            <td>12.0-13.0</td>
+                            <td>28-32</td>
+                            <td>150-160</td>
+                        </tr>
+                        <tr>
+                            <td>六年级</td>
+                            <td>140-145</td>
+                            <td>9.5-10.0</td>
+                            <td>13.0-14.0</td>
+                            <td>32-35</td>
+                            <td>160-170</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2025 快乐学习 - Sevenking Studio</p>
+        </footer>
+    </div>
+
+    <script>
+        // 体育项目数据
+        const sportsData = {
+            grade1: [
+                {
+                    title: "跳绳项目",
+                    category: "【一年级体育要求】",
+                    content: [
+                        {icon: "fas fa-forward", label: "一分钟跳绳：", value: "男生90个，女生95个"},
+                        {icon: "fas fa-tachometer-alt", label: "合格标准：", value: "男生70个，女生75个"},
+                        {icon: "fas fa-star", label: "优秀标准：", value: "男生110个，女生115个"}
+                    ],
+                    explanation: "跳绳是一项全身性有氧运动，能够有效提高心肺功能、协调性和耐力。对小学生身体发育有很好的促进作用。"
+                },
+                {
+                    title: "50米跑",
+                    category: "【一年级体育要求】",
+                    content: [
+                        {icon: "fas fa-running", label: "达标时间：", value: "男生12.0秒，女生12.5秒"},
+                        {icon: "fas fa-tachometer-alt", label: "合格标准：", value: "男生13.0秒，女生13.5秒"},
+                        {icon: "fas fa-star", label: "优秀标准：", value: "男生11.0秒，女生11.5秒"}
+                    ],
+                    explanation: "50米跑是测试学生速度、反应能力和爆发力的重要项目，对提高心肺功能有显著效果。"
+                },
+                {
+                    title: "坐位体前屈",
+                    category: "【一年级体育要求】",
+                    content: [
+                        {icon: "fas fa-arrows-alt-h", label: "达标要求：", value: "男生8.0cm，女生9.0cm"},
+                        {icon: "fas fa-tachometer-alt", label: "合格标准：", value: "男生6.0cm，女生7.0cm"},
+                        {icon: "fas fa-star", label: "优秀标准：", value: "男生10.0cm，女生11.0cm"}
+                    ],
+                    explanation: "坐位体前屈是测量学生躯干、腰、髋等关节可能达到的活动幅度，主要反映这些部位的关节、韧带和肌肉的伸展性和弹性。"
+                },
+                {
+                    title: "仰卧起坐",
+                    category: "【一年级体育要求】",
+                    content: [
+                        {icon: "fas fa-bed", label: "一分钟次数：", value: "男生18个，女生20个"},
+                        {icon: "fas fa-tachometer-alt", label: "合格标准：", value: "男生15个，女生17个"},
+                        {icon: "fas fa-star", label: "优秀标准：", value: "男生22个，女生24个"}
+                    ],
+                    explanation: "仰卧起坐是测试学生腰腹部肌肉力量和耐力的项目，对核心力量发展非常重要。"
+                },
+                {
+                    title: "立定跳远",
+                    category: "【一年级体育要求】",
+                    content: [
+                        {icon: "fas fa-arrows-alt-v", label: "达标距离：", value: "男生110cm，女生120cm"},
+                        {icon: "fas fa-tachometer-alt", label: "合格标准：", value: "男生100cm，女生110cm"},
+                        {icon: "fas fa-star", label: "优秀标准：", value: "男生125cm，女生135cm"}
+                    ],
+                    explanation: "立定跳远是测试学生下肢爆发力、身体协调性和平衡能力的项目，对全面发展身体素质有重要意义。"
+                }
+            ],
+            grade2: [
+                {
+                    title: "跳绳项目",
+                    category: "【二年级体育要求】",
+                    content: [
+                        {icon: "fas fa-forward", label: "一分钟跳绳：", value: "男生100个，女生105个"},
+                        {icon: "fas fa-tachometer-alt", label: "合格标准：", value: "男生80个，女生85个"},
+                        {icon: "fas fa-star", label: "优秀标准：", value: "男生120个，女生125个"}
+                    ],
+                    explanation: "二年级学生应掌握基本跳绳技巧，并能连续跳跃，提高协调性和耐力。"
+                },
+                {
+                    title: "50米跑",
+                    category: "【二年级体育要求】",
+                    content: [
+                        {icon: "fas fa-running", label: "达标时间：", value: "男生11.5秒，女生12.0秒"},
+                        {icon: "fas fa-tachometer-alt", label: "合格标准：", value: "男生12.5秒，女生13.0秒"},
+                        {icon: "fas fa-star", label: "优秀标准：", value: "男生10.5秒，女生11.0秒"}
+                    ],
+                    explanation: "二年级学生应掌握正确的跑步姿势，提高步频和步幅，发展速度素质。"
+                }
+            ],
+            grade3: [
+                {
+                    title: "跳绳项目",
+                    category: "【三年级体育要求】",
+                    content: [
+                        {icon: "fas fa-forward", label: "一分钟跳绳：", value: "男生110个，女生115个"},
+                        {icon: "fas fa-tachometer-alt", label: "合格标准：", value: "男生90个，女生95个"},
+                        {icon: "fas fa-star", label: "优秀标准：", value: "男生130个，女生135个"}
+                    ],
+                    explanation: "三年级学生应掌握多种跳绳花样，如交叉跳、双摇等，提高协调性和节奏感。"
+                },
+                {
+                    title: "50米跑",
+                    category: "【三年级体育要求】",
+                    content: [
+                        {icon: "fas fa-running", label: "达标时间：", value: "男生11.0秒，女生11.5秒"},
+                        {icon: "fas fa-tachometer-alt", label: "合格标准：", value: "男生12.0秒，女生12.5秒"},
+                        {icon: "fas fa-star", label: "优秀标准：", value: "男生10.0秒，女生10.5秒"}
+                    ],
+                    explanation: "三年级学生应进一步提高跑步技术，发展速度耐力，掌握起跑和冲刺技巧。"
+                }
+            ]
+        };
+
+        let currentGrade = 'grade1';
+        let currentSportIndex = 0;
+        let testedSports = {};
+        let masteredSports = {};
+
+        // DOM元素
+        const sportsTitleElement = document.getElementById('sportsTitle');
+        const sportsCategoryElement = document.getElementById('sportsCategory');
+        const sportsContentElement = document.getElementById('sportsContent');
+        const sportsExplanationElement = document.getElementById('sportsExplanation');
+        const gradeSelectorElement = document.getElementById('gradeSelector');
+        const demoBtnElement = document.getElementById('demoBtn');
+        const knowBtnElement = document.getElementById('knowBtn');
+        const notKnowBtnElement = document.getElementById('notKnowBtn');
+        const nextBtnElement = document.getElementById('nextBtn');
+        const prevBtnElement = document.getElementById('prevBtn');
+        const totalCountElement = document.getElementById('totalCount');
+        const learnedCountElement = document.getElementById('learnedCount');
+        const masteredCountElement = document.getElementById('masteredCount');
+        const progressFillElement = document.getElementById('progressFill');
+        const progressPercentageElement = document.getElementById('progressPercentage');
+        const sportsListElement = document.getElementById('sportsList');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pages = document.querySelectorAll('.page');
+        const homeLink = document.getElementById('homeLink');
+
+        // 初始化
+        function init() {
+            // 加载进度
+            loadProgress();
+            
+            // 初始化UI
+            showCurrentSport();
+            updateProgress();
+            updateSportsList();
+            
+            // 设置事件监听
+            setupEventListeners();
+        }
+
+        // 设置事件监听
+        function setupEventListeners() {
+            // 年级选择
+            gradeSelectorElement.addEventListener('change', handleGradeChange);
+            
+            // 控制按钮
+            demoBtnElement.addEventListener('click', showDemo);
+            knowBtnElement.addEventListener('click', markAsMastered);
+            notKnowBtnElement.addEventListener('click', markAsNotMastered);
+            nextBtnElement.addEventListener('click', showNextSport);
+            prevBtnElement.addEventListener('click', showPrevSport);
+            
+            // 导航链接
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    const pageId = link.getAttribute('data-page');
+                    switchPage(pageId);
+                });
+            });
+            
+            // 主页链接
+            homeLink.addEventListener('click', () => {
+                window.location.href = 'index.html';
+            });
+            
+        }
+
+        // 切换页面
+        function switchPage(pageId) {
+            if (pageId === 'home') {
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            // 更新活动导航链接
+            navLinks.forEach(link => {
+                if (link.getAttribute('data-page') === pageId) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+            
+            // 显示对应页面
+            pages.forEach(page => {
+                if (page.id === pageId + 'Page') {
+                    page.classList.add('active');
+                } else {
+                    page.classList.remove('active');
+                }
+            });
+        }
+
+        // 显示当前体育项目
+        function showCurrentSport() {
+            const sportData = sportsData[currentGrade][currentSportIndex];
+            sportsTitleElement.textContent = sportData.title;
+            sportsCategoryElement.textContent = sportData.category;
+            
+            // 清空原有内容
+            sportsContentElement.innerHTML = '';
+            
+            // 添加项目内容
+            sportData.content.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'requirement-item';
+                itemElement.innerHTML = `
+                    <span class="sports-icon"><i class="${item.icon}"></i></span>
+                    <span class="requirement-label">${item.label}</span>
+                    <span class="requirement-value">${item.value}</span>
+                `;
+                sportsContentElement.appendChild(itemElement);
+            });
+            
+            sportsExplanationElement.textContent = sportData.explanation;
+        }
+
+        // 显示示范
+        function showDemo() {
+            const sportData = sportsData[currentGrade][currentSportIndex];
+            alert(`正在加载"${sportData.title}"的示范视频...`);
+        }
+
+        // 标记为已达标
+        function markAsMastered() {
+            const sportTitle = sportsData[currentGrade][currentSportIndex].title;
+            masteredSports[sportTitle] = true;
+            testedSports[sportTitle] = true;
+            saveProgress();
+            updateProgress();
+            updateSportsList();
+            showNextSport();
+        }
+
+        // 标记为未达标
+        function markAsNotMastered() {
+            const sportTitle = sportsData[currentGrade][currentSportIndex].title;
+            masteredSports[sportTitle] = false;
+            testedSports[sportTitle] = true;
+            saveProgress();
+            updateProgress();
+            updateSportsList();
+            showNextSport();
+        }
+
+        // 显示下一个体育项目
+        function showNextSport() {
+            currentSportIndex = (currentSportIndex + 1) % sportsData[currentGrade].length;
+            showCurrentSport();
+        }
+
+        // 显示上一个体育项目
+        function showPrevSport() {
+            currentSportIndex = (currentSportIndex - 1 + sportsData[currentGrade].length) % sportsData[currentGrade].length;
+            showCurrentSport();
+        }
+
+        // 处理年级变更
+        function handleGradeChange() {
+            currentGrade = gradeSelectorElement.value;
+            currentSportIndex = 0;
+            showCurrentSport();
+            updateProgress();
+            updateSportsList();
+        }
+
+        // 更新进度显示
+        function updateProgress() {
+            const totalSports = sportsData[currentGrade].length;
+            const tested = Object.keys(testedSports).filter(title => 
+                sportsData[currentGrade].some(s => s.title === title)
+            ).length;
+            const mastered = Object.keys(masteredSports).filter(title => 
+                masteredSports[title] && sportsData[currentGrade].some(s => s.title === title)
+            ).length;
+            
+            totalCountElement.textContent = totalSports;
+            learnedCountElement.textContent = tested;
+            masteredCountElement.textContent = mastered;
+            
+            const progress = totalSports > 0 ? (tested / totalSports) * 100 : 0;
+            progressFillElement.style.width = `${progress}%`;
+            progressPercentageElement.textContent = `${Math.round(progress)}%`;
+        }
+
+        // 更新体育项目列表显示
+        function updateSportsList() {
+            sportsListElement.innerHTML = '';
+            
+            sportsData[currentGrade].forEach((sport, index) => {
+                const sportItem = document.createElement('div');
+                sportItem.className = 'sports-item';
+                
+                if (masteredSports[sport.title]) {
+                    sportItem.classList.add('mastered');
+                }
+                
+                sportItem.innerHTML = `
+                    <div>
+                        <div class="sports-name">${sport.title}</div>
+                        <div class="sports-category">${sport.category.replace('【', '').replace('】', '')}</div>
+                    </div>
+                    <div class="sports-item-status">
+                        <div class="status-badge">${masteredSports[sport.title] ? '已达标' : (testedSports[sport.title] ? '未达标' : '未测试')}</div>
+                    </div>
+                `;
+                
+                sportItem.addEventListener('click', () => {
+                    currentSportIndex = index;
+                    showCurrentSport();
+                });
+                
+                sportsListElement.appendChild(sportItem);
+            });
+        }
+
+        // 保存进度到本地存储
+        function saveProgress() {
+            localStorage.setItem('testedSports', JSON.stringify(testedSports));
+            localStorage.setItem('masteredSports', JSON.stringify(masteredSports));
+        }
+
+        // 从本地存储加载进度
+        function loadProgress() {
+            const tested = localStorage.getItem('testedSports');
+            const mastered = localStorage.getItem('masteredSports');
+            
+            if (tested) {
+                testedSports = JSON.parse(tested);
+            }
+            
+            if (mastered) {
+                masteredSports = JSON.parse(mastered);
+            }
+        }
+
+        // 初始化应用
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

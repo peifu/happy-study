@@ -1,0 +1,1649 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>快乐学习 - 智能单词学习系统</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00a2ff;
+            --secondary: #00d9a6;
+            --accent: #ff6b6b;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --info: #2196f3;
+            --dark: #0a1929;
+            --darker: #051321;
+            --card-bg: rgba(15, 35, 55, 0.7);
+            --text: #ffffff;
+            --text-secondary: #a0aec0;
+            --transition: all 0.3s ease;
+            --bg-color: #0a1929;
+            --text-color: #ffffff;
+            --card-bg-color: rgba(15, 35, 55, 0.7);
+            --progress-bg: rgba(255, 255, 255, 0.1);
+            --progress-fill: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--darker), var(--dark));
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-size: 16px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        body.light-theme {
+            --bg-color: #f5f7fa;
+            --text-color: #2d3748;
+            --card-bg-color: rgba(255, 255, 255, 0.95);
+            --text-secondary: #718096;
+            --darker: #e2e8f0;
+            --dark: #edf2f7;
+            --primary: #3182ce;
+            --secondary: #38a169;
+            --accent: #e53e3e;
+            --success: #38a169;
+            --warning: #d69e2e;
+            --info: #3182ce;
+            --progress-bg: rgba(0, 0, 0, 0.1);
+            --progress-fill: linear-gradient(90deg, #3182ce, #38a169);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 导航样式 */
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(0, 247, 255, 0.3);
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(0, 247, 255, 0.5);
+            cursor: pointer;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+        
+        .nav-link {
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: var(--transition);
+        }
+        
+        .nav-link:hover::before {
+            width: 100%;
+        }
+        
+        .nav-link.active {
+            background: rgba(0, 247, 255, 0.1);
+        }
+        
+        .nav-link.active::before {
+            width: 100%;
+        }
+        
+        /* 页面内容 */
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 主页样式 */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+        }
+        
+        .word-card {
+            background: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(0, 247, 255, 0.2);
+        }
+        
+        .word-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .word-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 247, 255, 0.1) 0%, transparent 70%);
+            transform: rotate(30deg);
+            z-index: 0;
+        }
+        
+        .word-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+            gap: 15px;
+        }
+        
+        .word {
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(0, 247, 255, 0.3);
+        }
+        
+        .speak-btn-icon {
+            background: linear-gradient(90deg, var(--primary), var(--info));
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .speak-btn-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(0, 247, 255, 0.5);
+        }
+        
+        .speak-btn-icon i {
+            font-size: 20px;
+        }
+        
+        .phonetic {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .meaning {
+            font-size: 24px;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .example {
+            font-style: italic;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+            border-left: 3px solid var(--secondary);
+            padding-left: 15px;
+        }
+        
+        .card-controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+            justify-content: center;
+            width: 100%;
+            flex-wrap: nowrap;
+        }
+        
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            justify-content: center;
+            min-width: 100px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary), var(--info));
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            box-shadow: 0 0 15px rgba(0, 247, 255, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background: linear-gradient(90deg, var(--success), var(--secondary));
+            color: white;
+        }
+        
+        .btn-success:hover {
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(90deg, var(--warning), var(--accent));
+            color: white;
+        }
+        
+        .btn-warning:hover {
+            box-shadow: 0 0 15px rgba(255, 152, 0, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-color);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(0, 247, 255, 0.3);
+        }
+        
+        /* 进度容器 */
+        .progress-container {
+            background: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(0, 247, 255, 0.2);
+        }
+        
+        .progress-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .stat-card {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .progress-bar-container {
+            margin: 20px 0;
+        }
+        
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        .progress-bar {
+            height: 12px;
+            background: var(--progress-bg);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--progress-fill);
+            border-radius: 10px;
+            width: 0%;
+            box-shadow: 0 0 10px rgba(0, 247, 255, 0.3);
+            transition: width 0.5s ease;
+        }
+        
+        /* 开关样式 */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+            margin-left: 10px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider-round {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .slider-round:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider-round {
+            background-color: var(--primary);
+        }
+        
+        input:checked + .slider-round:before {
+            transform: translateX(26px);
+        }
+        
+        /* 设置页面样式 */
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .settings-card {
+            background: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(0, 247, 255, 0.2);
+            transition: var(--transition);
+        }
+        
+        .settings-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .settings-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            color: var(--primary);
+            font-size: 22px;
+            font-weight: 600;
+        }
+        
+        .settings-icon {
+            font-size: 24px;
+            width: 30px;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+        
+        .form-control {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            padding: 12px 15px;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(0, 247, 255, 0.3);
+        }
+        
+        .range-slider {
+            width: 100%;
+            -webkit-appearance: none;
+            height: 8px;
+            border-radius: 4px;
+            background: var(--progress-bg);
+            outline: none;
+            margin: 10px 0;
+        }
+        
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 247, 255, 0.3);
+        }
+        
+        .slider-value {
+            text-align: center;
+            font-size: 18px;
+            color: var(--primary);
+            margin-top: 10px;
+        }
+        
+        /* 单词列表页面样式 */
+        .words-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: var(--card-bg-color);
+            border-radius: 8px;
+            padding: 10px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 300px;
+        }
+        
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: var(--text-color);
+            padding: 8px;
+            width: 100%;
+            outline: none;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 8px 16px;
+            background: rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .filter-btn.active {
+            background: rgba(0, 247, 255, 0.1);
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .words-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .word-item {
+            background: var(--card-bg-color);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .word-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 5px 15px rgba(0, 247, 255, 0.2);
+        }
+        
+        .word-item.mastered {
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .word-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .word-item-word {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .word-item-phonetic {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+        
+        .word-item-meaning {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        
+        .word-item-example {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-style: italic;
+            border-left: 2px solid var(--secondary);
+            padding-left: 10px;
+        }
+        
+        .word-item-status {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 15px;
+        }
+        
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            background: rgba(0, 255, 157, 0.2);
+            color: var(--secondary);
+        }
+        
+        /* 加载指示器 */
+        .loader {
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid var(--primary);
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .words-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            
+            .search-box {
+                width: 100%;
+            }
+            
+            .card-controls {
+                flex-wrap: wrap;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .word-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn {
+                min-width: 80px;
+                padding: 10px 15px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .card-controls {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+        
+        /* 动画效果 */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 247, 255, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 247, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 247, 255, 0); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* 控件组样式 */
+        .control-group {
+            margin-bottom: 25px;
+        }
+        
+        .control-label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            color: var(--text-secondary);
+        }
+        
+        .timer-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .auto-play-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        /* 间距调整 */
+        .book-selector-container {
+            margin-bottom: 25px;
+        }
+        
+        .timer-setting-container {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .inline-control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .inline-label {
+            white-space: nowrap;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-container">
+            <div class="logo" id="homeLink">
+                <i class="fas fa-brain"></i>
+                <span>快乐学习</span>
+            </div>
+            
+            <div class="nav-links">
+                <div class="nav-link active" data-page="wordcard">
+                    <i class="fas fa-home"></i>
+                    <span>单词记忆</span>
+                </div>
+                <div class="nav-link" data-page="wordlist">
+                    <i class="fas fa-list"></i>
+                    <span>单词列表</span>
+                </div>
+                <div class="nav-link" data-page="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>设置</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 单词卡片页面 -->
+        <div class="page active" id="wordcardPage">
+            <div class="main-content">
+                <div class="word-card">
+                    <div class="word-header">
+                    	<div class="word" id="currentWord">加载中...</div>
+                        <button class="speak-btn-icon" id="speakBtn">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
+                    <div class="phonetic" id="currentPhonetic">//</div>
+                    <div class="meaning" id="currentMeaning">加载单词数据中</div>
+                    <div class="example" id="currentExample">请稍候，正在加载单词数据。</div>
+                    
+                    <div class="card-controls">
+                        <button class="btn btn-primary" id="prevBtn" disabled>
+                            <i class="fas fa-arrow-left"></i>
+                            <span>上一个</span>
+                        </button>
+                        <button class="btn btn-success" id="knowBtn" disabled>
+                            <i class="fas fa-check"></i>
+                            <span>认识</span>
+                        </button>
+                        <button class="btn btn-warning" id="notKnowBtn" disabled>
+                            <i class="fas fa-times"></i>
+                            <span>不认识</span>
+                        </button>
+                        <button class="btn btn-primary" id="nextBtn" disabled>
+                            <span>下一个</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-title">
+                        <i class="fas fa-chart-line"></i>
+                        <span>学习进度</span>
+                    </div>
+                    
+                    <div class="stats">
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalCount">0</div>
+                            <div class="stat-label">单词总数</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="learnedCount">0</div>
+                            <div class="stat-label">已学单词</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="masteredCount">0</div>
+                            <div class="stat-label">已掌握</div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-bar-container">
+                        <div class="progress-info">
+                            <span>学习进度</span>
+                            <span id="progressPercentage">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-title">
+                        <i class="fas fa-book"></i>
+                        <span>当前单词本</span>
+                    </div>
+                    
+                    <select class="form-control" id="bookSelector">
+                        <option value="grade3">小学三年级词汇</option>
+                        <option value="cet6">大学英语六级词汇</option>
+                        <option value="toefl">托福核心词汇</option>
+                        <option value="ielts">雅思核心词汇</option>
+                        <option value="gre">GRE高频词汇</option>
+                    </select>
+                    
+                    <div class="timer-setting-container">
+                        <div class="control-group">
+                            <div class="control-label">
+                                <span>自动翻页:</span>
+                                <label class="switch">
+                                    <input type="checkbox" id="autoPlayToggle" checked>
+                                    <span class="slider-round"></span>
+                                </label>
+                                <span style="margin-left: 10px;" id="autoPlayStatus">开启</span>
+                            </div>
+                            
+                            <div class="inline-control-group">
+                                <span class="inline-label">间隔时间:</span>
+                                <input type="range" min="1" max="60" value="5" class="range-slider" id="autoPlaySlider">
+                                <span class="slider-value" id="sliderValue">5 秒</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 单词列表页面 -->
+        <div class="page" id="wordlistPage">
+            <div class="words-header">
+                <h2>单词列表</h2>
+                
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="搜索单词..." id="wordSearch">
+                </div>
+            </div>
+            
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">全部</button>
+                <button class="filter-btn" data-filter="mastered">已掌握</button>
+                <button class="filter-btn" data-filter="learning">学习中</button>
+                <button class="filter-btn" data-filter="new">未学习</button>
+            </div>
+            
+            <div class="words-grid" id="wordsGrid">
+                <div class="loader"></div>
+            </div>
+        </div>
+        
+        <!-- 设置页面 -->
+        <div class="page" id="settingsPage">
+            <h2>系统设置</h2>
+            
+            <div class="settings-grid">
+                <div class="settings-card">
+                    <div class="settings-header">
+                        <i class="fas fa-book settings-icon"></i>
+                        <div class="settings-title">学习设置</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">默认单词本</label>
+                        <select class="form-control" id="defaultBook">
+                            <option value="grade3">小学三年级词汇</option>
+                            <option value="cet6">大学英语六级词汇</option>
+                            <option value="toefl">托福核心词汇</option>
+                            <option value="ielts">雅思核心词汇</option>
+                            <option value="gre">GRE高频词汇</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">新单词每日数量</label>
+                        <input type="range" min="5" max="50" value="20" class="range-slider" id="dailyWordsSlider">
+                        <div class="slider-value" id="dailyWordsValue">20 个</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">复习单词数量</label>
+                        <input type="range" min="10" max="100" value="30" class="range-slider" id="reviewWordsSlider">
+                        <div class="slider-value" id="reviewWordsValue">30 个</div>
+                    </div>
+                </div>
+                
+                <div class="settings-card">
+                    <div class="settings-header">
+                        <i class="fas fa-volume-up settings-icon"></i>
+                        <div class="settings-title">发音设置</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">发音速度</label>
+                        <input type="range" min="0.5" max="1.5" step="0.1" value="1.0" class="range-slider" id="speechRateSlider">
+                        <div class="slider-value" id="speechRateValue">1.0</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">发音音调</label>
+                        <input type="range" min="0.5" max="2.0" step="0.1" value="1.0" class="range-slider" id="speechPitchSlider">
+                        <div class="slider-value" id="speechPitchValue">1.0</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">发音人</label>
+                        <select class="form-control" id="voiceSelect">
+                            <option value="">默认发音人</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="settings-card">
+                    <div class="settings-header">
+                        <i class="fas fa-paint-brush settings-icon"></i>
+                        <div class="settings-title">界面设置</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">主题</label>
+                        <select class="form-control" id="themeSelect">
+                            <option value="dark">深色主题</option>
+                            <option value="light">浅色主题</option>
+                            <option value="auto">跟随系统</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">字体大小</label>
+                        <input type="range" min="14" max="24" value="16" class="range-slider" id="fontSizeSlider">
+                        <div class="slider-value" id="fontSizeValue">16px</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">动画效果</label>
+                        <select class="form-control" id="animationSelect">
+                            <option value="full">全部动画</option>
+                            <option value="reduced">减少动画</option>
+                            <option value="none">无动画</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="settings-card">
+                    <div class="settings-header">
+                        <i class="fas fa-database settings-icon"></i>
+                        <div class="settings-title">数据管理</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button class="btn btn-primary" style="width: 100%; margin-bottom: 15px;">
+                            <i class="fas fa-download"></i>
+                            <span>导出学习数据</span>
+                        </button>
+                        
+                        <button class="btn btn-secondary" style="width: 100%; margin-bottom: 15px;">
+                            <i class="fas fa-upload"></i>
+                            <span>导入学习数据</span>
+                        </button>
+                        
+                        <button class="btn btn-warning" style="width: 100%;">
+                            <i class="fas fa-trash"></i>
+                            <span>重置学习进度</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2025 快乐学习 - Sevenking Studio</p>
+        </footer>
+    </div>
+
+    <script>
+        // 单词数据将从JSON文件加载
+        let wordLists = {};
+        let currentBook = 'grade3';
+        let currentIndex = 0;
+        let autoPlayInterval = 5; // 默认5秒
+        let autoPlayTimer = null;
+        let autoPlayEnabled = true;
+        let learnedWords = {};
+        let masteredWords = {};
+
+        // DOM元素
+        const currentWordElement = document.getElementById('currentWord');
+        const currentPhoneticElement = document.getElementById('currentPhonetic');
+        const currentMeaningElement = document.getElementById('currentMeaning');
+        const currentExampleElement = document.getElementById('currentExample');
+        const bookSelectorElement = document.getElementById('bookSelector');
+        const autoPlaySliderElement = document.getElementById('autoPlaySlider');
+        const sliderValueElement = document.getElementById('sliderValue');
+        const autoPlayToggleElement = document.getElementById('autoPlayToggle');
+        const autoPlayStatusElement = document.getElementById('autoPlayStatus');
+        const speakBtnElement = document.getElementById('speakBtn');
+        const knowBtnElement = document.getElementById('knowBtn');
+        const notKnowBtnElement = document.getElementById('notKnowBtn');
+        const nextBtnElement = document.getElementById('nextBtn');
+        const prevBtnElement = document.getElementById('prevBtn');
+        const totalCountElement = document.getElementById('totalCount');
+        const learnedCountElement = document.getElementById('learnedCount');
+        const masteredCountElement = document.getElementById('masteredCount');
+        const progressFillElement = document.getElementById('progressFill');
+        const progressPercentageElement = document.getElementById('progressPercentage');
+        const wordsGridElement = document.getElementById('wordsGrid');
+        const wordSearchElement = document.getElementById('wordSearch');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pages = document.querySelectorAll('.page');
+        const themeSelectElement = document.getElementById('themeSelect');
+        const fontSizeSliderElement = document.getElementById('fontSizeSlider');
+
+        // 初始化
+        async function init() {
+            // 加载单词数据
+            await loadWordData();
+            
+            // 加载学习进度
+            loadProgress();
+            
+            // 加载设置
+            loadSettings();
+            
+            // 初始化UI
+            renderWordList();
+            showCurrentWord();
+            updateProgress();
+            initSettings();
+            
+            // 设置事件监听
+            setupEventListeners();
+            
+            // 自动播放
+            startAutoPlay();
+            
+            // 检查系统主题偏好
+            checkSystemTheme();
+        }
+
+        // 检查系统主题偏好
+        function checkSystemTheme() {
+            if (localStorage.getItem('theme') === 'auto') {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (prefersDark) {
+                    document.body.classList.remove('light-theme');
+                } else {
+                    document.body.classList.add('light-theme');
+                }
+            }
+            
+            // 监听系统主题变化
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                if (localStorage.getItem('theme') === 'auto') {
+                    if (e.matches) {
+                        document.body.classList.remove('light-theme');
+                    } else {
+                        document.body.classList.add('light-theme');
+                    }
+                }
+            });
+        }
+
+        // 从JSON文件加载单词数据
+        async function loadWordData() {
+            try {
+                // 显示加载状态
+                currentWordElement.textContent = "加载中...";
+                currentPhoneticElement.textContent = "//";
+                currentMeaningElement.textContent = "正在加载单词数据";
+                currentExampleElement.textContent = "请稍候，正在从JSON文件加载数据。";
+                
+                // 加载单词数据
+                const response = await fetch('wordlists.json');
+                if (!response.ok) {
+                    throw new Error('无法加载单词数据');
+                }
+                
+                wordLists = await response.json();
+                
+                // 启用按钮
+                speakBtnElement.disabled = false;
+                knowBtnElement.disabled = false;
+                notKnowBtnElement.disabled = false;
+                nextBtnElement.disabled = false;
+                prevBtnElement.disabled = false;
+                
+            } catch (error) {
+                console.error('加载单词数据失败:', error);
+                
+                // 使用默认数据作为后备
+                wordLists = {
+                    grade3: [
+                        { word: "technology", phonetic: "/tekˈnɒlədʒi/", meaning: "n. 技术，科技；工艺学", example: "Modern technology has transformed the way we communicate." },
+                        { word: "innovation", phonetic: "/ˌɪnəˈveɪʃn/", meaning: "n. 创新，革新", example: "The company encourages innovation and creative thinking." },
+                        { word: "analysis", phonetic: "/əˈnæləsɪs/", meaning: "n. 分析", example: "Further analysis of the data is needed." },
+                        { word: "environment", phonetic: "/ɪnˈvaɪrənmənt/", meaning: "n. 环境，生态环境", example: "We need to protect the environment for future generations." }
+                    ],
+                    cet6: [
+                        { word: "algorithm", phonetic: "/ˈælɡərɪðəm/", meaning: "n. 算法", example: "The software uses a complex algorithm to predict market trends." },
+                        { word: "sustainability", phonetic: "/səˌsteɪnəˈbɪləti/", meaning: "n. 可持续性", example: "Environmental sustainability is crucial for our future." }
+                    ],
+                    toefl: [
+                        { word: "academic", phonetic: "/ˌækəˈdemɪk/", meaning: "adj. 学术的", example: "She has had a brilliant academic career." },
+                        { word: "hypothesis", phonetic: "/haɪˈpɒθəsɪs/", meaning: "n. 假设", example: "The results of the experiment supported his hypothesis." }
+                    ],
+                    ielts: [
+                        { word: "proficient", phonetic: "/prəˈfɪʃnt/", meaning: "adj. 精通的，熟练的", example: "She is proficient in three languages." },
+                        { word: "ambiguity", phonetic: "/ˌæmbɪˈɡjuːəti/", meaning: "n. 歧义，模棱两可", example: "The law should be written without ambiguity." }
+                    ],
+                    gre: [
+                        { word: "esoteric", phonetic: "/ˌesəˈterɪk/", meaning: "adj. 深奥的，难懂的", example: "His lectures are often esoteric and hard to follow." },
+                        { word: "ubiquitous", phonetic: "/juːˈbɪkwɪtəs/", meaning: "adj. 无所不在的", example: "Smartphones have become ubiquitous in modern society." }
+                    ]
+                };
+                
+                // 启用按钮
+                speakBtnElement.disabled = false;
+                knowBtnElement.disabled = false;
+                notKnowBtnElement.disabled = false;
+                nextBtnElement.disabled = false;
+                prevBtnElement.disabled = false;
+                
+                // 显示错误消息
+                currentWordElement.textContent = "加载失败";
+                currentPhoneticElement.textContent = "//";
+                currentMeaningElement.textContent = "使用默认数据";
+                currentExampleElement.textContent = "无法从JSON文件加载数据，使用默认数据。";
+            }
+        }
+
+        // 加载设置
+        function loadSettings() {
+            // 主题设置
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                themeSelectElement.value = savedTheme;
+                applyTheme(savedTheme);
+            }
+            
+            // 字体大小设置
+            const savedFontSize = localStorage.getItem('fontSize');
+            if (savedFontSize) {
+                fontSizeSliderElement.value = savedFontSize;
+                document.body.style.fontSize = `${savedFontSize}px`;
+                document.getElementById('fontSizeValue').textContent = `${savedFontSize}px`;
+            }
+            
+            // 自动翻页设置
+            const savedAutoPlay = localStorage.getItem('autoPlay');
+            if (savedAutoPlay !== null) {
+                autoPlayEnabled = savedAutoPlay === 'true';
+                autoPlayToggleElement.checked = autoPlayEnabled;
+                autoPlayStatusElement.textContent = autoPlayEnabled ? '开启' : '关闭';
+            }
+        }
+
+        // 应用主题
+        function applyTheme(theme) {
+            if (theme === 'light') {
+                document.body.classList.add('light-theme');
+            } else if (theme === 'dark') {
+                document.body.classList.remove('light-theme');
+            } else if (theme === 'auto') {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (prefersDark) {
+                    document.body.classList.remove('light-theme');
+                } else {
+                    document.body.classList.add('light-theme');
+                }
+            }
+        }
+
+        // 初始化设置
+        function initSettings() {
+            // 设置滑块初始值
+            autoPlaySliderElement.value = autoPlayInterval;
+            sliderValueElement.textContent = `${autoPlayInterval} 秒`;
+            
+            // 填充发音人选项
+            populateVoiceList();
+        }
+
+        // 填充发音人选项
+        function populateVoiceList() {
+            const voiceSelect = document.getElementById('voiceSelect');
+            const voices = speechSynthesis.getVoices();
+            
+            // 清除现有选项（除了默认选项）
+            while (voiceSelect.options.length > 1) {
+                voiceSelect.remove(1);
+            }
+            
+            voices.forEach(voice => {
+                const option = document.createElement('option');
+                option.value = voice.name;
+                option.textContent = `${voice.name} (${voice.lang})`;
+                voiceSelect.appendChild(option);
+            });
+        }
+
+        // 设置事件监听
+        function setupEventListeners() {
+            // 导航链接
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    const pageId = link.getAttribute('data-page');
+                    switchPage(pageId);
+                    
+                    // 更新活动链接
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                });
+            });
+            
+
+            // 主页链接点击事件
+            document.getElementById('homeLink').addEventListener('click', function() {
+                window.location.href = 'index.html';
+            });
+            
+            // 单词本选择
+            bookSelectorElement.addEventListener('change', handleBookChange);
+            
+            // 自动播放间隔滑块
+            autoPlaySliderElement.addEventListener('input', () => {
+                autoPlayInterval = parseInt(autoPlaySliderElement.value);
+                sliderValueElement.textContent = `${autoPlayInterval} 秒`;
+                resetAutoPlay();
+            });
+            
+            // 自动播放开关
+            autoPlayToggleElement.addEventListener('change', () => {
+                autoPlayEnabled = autoPlayToggleElement.checked;
+                autoPlayStatusElement.textContent = autoPlayEnabled ? '开启' : '关闭';
+                localStorage.setItem('autoPlay', autoPlayEnabled);
+                
+                if (autoPlayEnabled) {
+                    startAutoPlay();
+                } else {
+                    stopAutoPlay();
+                }
+            });
+            
+            // 控制按钮
+            speakBtnElement.addEventListener('click', speakCurrentWord);
+            knowBtnElement.addEventListener('click', markAsKnown);
+            notKnowBtnElement.addEventListener('click', markAsUnknown);
+            nextBtnElement.addEventListener('click', showNextWord);
+            prevBtnElement.addEventListener('click', showPrevWord);
+            
+            // 单词搜索
+            wordSearchElement.addEventListener('input', renderWordList);
+            
+            // 单词过滤
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    filterButtons.forEach(b => b.classList.remove('active'));
+                    button.classList.add('active');
+                    renderWordList();
+                });
+            });
+            
+            // 主题设置
+            themeSelectElement.addEventListener('change', () => {
+                const theme = themeSelectElement.value;
+                localStorage.setItem('theme', theme);
+                applyTheme(theme);
+            });
+            
+            // 字体大小设置
+            fontSizeSliderElement.addEventListener('input', () => {
+                const fontSize = fontSizeSliderElement.value;
+                document.body.style.fontSize = `${fontSize}px`;
+                document.getElementById('fontSizeValue').textContent = `${fontSize}px`;
+                localStorage.setItem('fontSize', fontSize);
+            });
+            
+            // 设置页面滑块
+            setupSettingsSliders();
+        }
+
+        // 设置页面滑块
+        function setupSettingsSliders() {
+            const sliders = [
+                { id: 'dailyWordsSlider', output: 'dailyWordsValue', format: v => `${v} 个` },
+                { id: 'reviewWordsSlider', output: 'reviewWordsValue', format: v => `${v} 个` },
+                { id: 'speechRateSlider', output: 'speechRateValue', format: v => v },
+                { id: 'speechPitchSlider', output: 'speechPitchValue', format: v => v }
+            ];
+            
+            sliders.forEach(({ id, output, format }) => {
+                const slider = document.getElementById(id);
+                const outputElement = document.getElementById(output);
+                
+                if (slider && outputElement) {
+                    outputElement.textContent = format(slider.value);
+                    slider.addEventListener('input', () => {
+                        outputElement.textContent = format(slider.value);
+                    });
+                }
+            });
+        }
+
+        // 切换页面
+        function switchPage(pageId) {
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            document.getElementById(`${pageId}Page`).classList.add('active');
+            
+            // 如果是单词列表页面，重新渲染
+            if (pageId === 'wordlist') {
+                renderWordList();
+            }
+        }
+
+        // 显示当前单词
+        function showCurrentWord() {
+            if (!wordLists[currentBook] || wordLists[currentBook].length === 0) {
+                currentWordElement.textContent = "无数据";
+                currentPhoneticElement.textContent = "//";
+                currentMeaningElement.textContent = "当前单词本没有数据";
+                currentExampleElement.textContent = "请选择其他单词本或检查数据文件。";
+                return;
+            }
+            
+            const wordData = wordLists[currentBook][currentIndex];
+            currentWordElement.textContent = wordData.word;
+            currentPhoneticElement.textContent = wordData.phonetic;
+            currentMeaningElement.textContent = wordData.meaning;
+            currentExampleElement.textContent = wordData.example;
+            
+            // 启用按钮
+            speakBtnElement.disabled = false;
+            knowBtnElement.disabled = false;
+            notKnowBtnElement.disabled = false;
+            nextBtnElement.disabled = false;
+            prevBtnElement.disabled = false;
+            
+            // 自动朗读单词
+            setTimeout(speakCurrentWord, 300);
+        }
+
+        // 显示上一个单词
+        function showPrevWord() {
+            if (!wordLists[currentBook] || wordLists[currentBook].length === 0) return;
+            
+            currentIndex = (currentIndex - 1 + wordLists[currentBook].length) % wordLists[currentBook].length;
+            showCurrentWord();
+            resetAutoPlay();
+        }
+
+        // 朗读当前单词
+        function speakCurrentWord() {
+            if (!wordLists[currentBook] || wordLists[currentBook].length === 0) return;
+            
+            const word = wordLists[currentBook][currentIndex].word;
+            const utterance = new SpeechSynthesisUtterance(word);
+            utterance.lang = 'en-US';
+            utterance.rate = 0.8;
+            speechSynthesis.speak(utterance);
+        }
+
+        // 标记为认识
+        function markAsKnown() {
+            if (!wordLists[currentBook] || wordLists[currentBook].length === 0) return;
+            
+            const word = wordLists[currentBook][currentIndex].word;
+            masteredWords[word] = true;
+            learnedWords[word] = true;
+            saveProgress();
+            updateProgress();
+            renderWordList();
+            showNextWord();
+        }
+
+        // 标记为不认识
+        function markAsUnknown() {
+            if (!wordLists[currentBook] || wordLists[currentBook].length === 0) return;
+            
+            const word = wordLists[currentBook][currentIndex].word;
+            masteredWords[word] = false;
+            learnedWords[word] = true;
+            saveProgress();
+            updateProgress();
+            renderWordList();
+            showNextWord();
+        }
+
+        // 显示下一个单词
+        function showNextWord() {
+            if (!wordLists[currentBook] || wordLists[currentBook].length === 0) return;
+            
+            currentIndex = (currentIndex + 1) % wordLists[currentBook].length;
+            showCurrentWord();
+            resetAutoPlay();
+        }
+
+        // 处理单词本变更
+        function handleBookChange() {
+            currentBook = bookSelectorElement.value;
+            currentIndex = 0;
+            showCurrentWord();
+            renderWordList();
+            resetAutoPlay();
+            updateProgress();
+        }
+
+        // 开始自动播放
+        function startAutoPlay() {
+            if (autoPlayTimer) clearInterval(autoPlayTimer);
+            if (autoPlayEnabled) {
+                autoPlayTimer = setInterval(showNextWord, autoPlayInterval * 1000);
+            }
+        }
+
+        // 停止自动播放
+        function stopAutoPlay() {
+            if (autoPlayTimer) {
+                clearInterval(autoPlayTimer);
+                autoPlayTimer = null;
+            }
+        }
+
+        // 重置自动播放
+        function resetAutoPlay() {
+            stopAutoPlay();
+            startAutoPlay();
+        }
+
+        // 渲染单词列表
+        function renderWordList() {
+            if (!wordLists[currentBook] || wordLists[currentBook].length === 0) {
+                wordsGridElement.innerHTML = '<div class="stat-card">当前单词本没有数据</div>';
+                return;
+            }
+            
+            wordsGridElement.innerHTML = '';
+            
+            // 获取搜索词和过滤器
+            const searchTerm = wordSearchElement.value.toLowerCase();
+            const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+            
+            wordLists[currentBook].forEach((wordData, index) => {
+                // 搜索过滤
+                if (searchTerm && !wordData.word.toLowerCase().includes(searchTerm) && 
+                    !wordData.meaning.toLowerCase().includes(searchTerm)) {
+                    return;
+                }
+                
+                // 状态过滤
+                const isLearned = learnedWords[wordData.word];
+                const isMastered = masteredWords[wordData.word];
+                
+                if (activeFilter === 'mastered' && !isMastered) return;
+                if (activeFilter === 'learning' && (!isLearned || isMastered)) return;
+                if (activeFilter === 'new' && isLearned) return;
+                
+                const wordItem = document.createElement('div');
+                wordItem.className = 'word-item';
+                if (isMastered) {
+                    wordItem.classList.add('mastered');
+                }
+                
+                wordItem.innerHTML = `
+                    <div class="word-item-header">
+                        <div class="word-item-word">${wordData.word}</div>
+                        <div class="word-item-status">
+                            ${isMastered ? '<div class="status-badge">已掌握</div>' : 
+                              isLearned ? '<div class="status-badge">学习中</div>' : ''}
+                        </div>
+                    </div>
+                    <div class="word-item-phonetic">${wordData.phonetic}</div>
+                    <div class="word-item-meaning">${wordData.meaning}</div>
+                    <div class="word-item-example">${wordData.example}</div>
+                `;
+                
+                wordItem.addEventListener('click', () => {
+                    currentIndex = index;
+                    switchPage('wordcard');
+                    showCurrentWord();
+                    resetAutoPlay();
+                    
+                    // 更新活动链接
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    navLinks[0].classList.add('active');
+                });
+                
+                wordsGridElement.appendChild(wordItem);
+            });
+            
+            // 如果没有匹配的单词
+            if (wordsGridElement.children.length === 0) {
+                wordsGridElement.innerHTML = '<div class="stat-card">没有找到匹配的单词</div>';
+            }
+        }
+
+        // 更新进度显示
+        function updateProgress() {
+            if (!wordLists[currentBook] || wordLists[currentBook].length === 0) {
+                totalCountElement.textContent = "0";
+                learnedCountElement.textContent = "0";
+                masteredCountElement.textContent = "0";
+                progressFillElement.style.width = "0%";
+                progressPercentageElement.textContent = "0%";
+                return;
+            }
+            
+            const totalWords = wordLists[currentBook].length;
+            const learned = Object.keys(learnedWords).filter(word => 
+                wordLists[currentBook].some(w => w.word === word)
+            ).length;
+            const mastered = Object.keys(masteredWords).filter(word => 
+                masteredWords[word] && wordLists[currentBook].some(w => w.word === word)
+            ).length;
+            
+            totalCountElement.textContent = totalWords;
+            learnedCountElement.textContent = learned;
+            masteredCountElement.textContent = mastered;
+            
+            const progress = totalWords > 0 ? (learned / totalWords) * 100 : 0;
+            progressFillElement.style.width = `${progress}%`;
+            progressPercentageElement.textContent = `${Math.round(progress)}%`;
+        }
+
+        // 保存进度到本地存储
+        function saveProgress() {
+            localStorage.setItem('learnedWords', JSON.stringify(learnedWords));
+            localStorage.setItem('masteredWords', JSON.stringify(masteredWords));
+        }
+
+        // 从本地存储加载进度
+        function loadProgress() {
+            const learned = localStorage.getItem('learnedWords');
+            const mastered = localStorage.getItem('masteredWords');
+            
+            if (learned) {
+                learnedWords = JSON.parse(learned);
+            }
+            
+            if (mastered) {
+                masteredWords = JSON.parse(mastered);
+            }
+        }
+
+        // 初始化应用
+        window.addEventListener('DOMContentLoaded', init);
+        
+        // 语音合成API加载
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = populateVoiceList;
+        }
+    </script>
+</body>
+</html>

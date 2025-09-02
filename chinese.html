@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>快乐学习 - 小学语文诗词</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ea4335;
+            --secondary: #fbbc05;
+            --accent: #ff6b6b;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --info: #4285f4;
+            --dark: #0a1929;
+            --darker: #051321;
+            --card-bg: rgba(15, 35, 55, 0.7);
+            --text: #ffffff;
+            --text-secondary: #a0aec0;
+            --transition: all 0.3s ease;
+            --bg-color: #0a1929;
+            --text-color: #ffffff;
+            --card-bg-color: rgba(15, 35, 55, 0.7);
+            --font-size: 16px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--darker), var(--dark));
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-size: var(--font-size);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 导航样式 */
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(234, 67, 53, 0.3);
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(234, 67, 53, 0.5);
+            cursor: pointer;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+        
+        .nav-link {
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: var(--transition);
+        }
+        
+        .nav-link:hover::before {
+            width: 100%;
+        }
+        
+        .nav-link.active {
+            background: rgba(234, 67, 53, 0.1);
+        }
+        
+        .nav-link.active::before {
+            width: 100%;
+        }
+        
+        /* 页面内容 */
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 主页样式 */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+        }
+        
+        .poem-card {
+            background: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(234, 67, 53, 0.2);
+            text-align: center;
+        }
+        
+        .poem-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .poem-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(234, 67, 53, 0.1) 0%, transparent 70%);
+            transform: rotate(30deg);
+            z-index: 0;
+        }
+        
+        .title-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .poem-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(234, 67, 53, 0.3);
+        }
+        
+        .read-btn {
+            background: rgba(234, 67, 53, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--primary);
+        }
+        
+        .read-btn:hover {
+            background: rgba(234, 67, 53, 0.3);
+            transform: scale(1.1);
+        }
+        
+        .poem-author {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+            font-style: italic;
+        }
+        
+        .poem-content {
+            font-size: 24px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .poem-line {
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .poem-translation {
+            font-style: italic;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+            border-left: 3px solid var(--secondary);
+            padding-left: 15px;
+            font-size: 18px;
+        }
+        
+        .card-controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary), var(--info));
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            box-shadow: 0 0 15px rgba(234, 67, 53, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background: linear-gradient(90deg, var(--success), var(--secondary));
+            color: white;
+        }
+        
+        .btn-success:hover {
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(90deg, var(--warning), var(--accent));
+            color: white;
+        }
+        
+        .btn-warning:hover {
+            box-shadow: 0 0 15px rgba(255, 152, 0, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-color);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(234, 67, 53, 0.3);
+        }
+        
+        /* 进度容器 */
+        .progress-container {
+            background: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(234, 67, 53, 0.2);
+        }
+        
+        .progress-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .stat-card {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .progress-bar-container {
+            margin: 20px 0;
+        }
+        
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        .progress-bar {
+            height: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            width: 0%;
+            box-shadow: 0 0 10px rgba(234, 67, 53, 0.3);
+            transition: width 0.5s ease;
+        }
+        
+        /* 诗词选集 */
+        .poem-selector {
+            margin-top: 20px;
+        }
+        
+        .poem-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+        
+        .poem-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .poem-item:hover {
+            background: rgba(234, 67, 53, 0.1);
+        }
+        
+        .poem-item.mastered {
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .poem-item .poem-name {
+            font-weight: 600;
+        }
+        
+        .poem-item .poem-author {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        
+        .poem-item-status {
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            background: rgba(251, 188, 5, 0.2);
+            color: var(--secondary);
+        }
+        
+        /* 设置页面样式 */
+        .settings-container {
+            background: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(234, 67, 53, 0.2);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .setting-group {
+            margin-bottom: 25px;
+        }
+        
+        .setting-title {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .setting-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .setting-option {
+            padding: 12px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .setting-option:hover {
+            background: rgba(234, 67, 53, 0.1);
+        }
+        
+        .setting-option.active {
+            background: rgba(234, 67, 53, 0.2);
+            border-color: var(--primary);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .card-controls {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .poem-content {
+                font-size: 20px;
+            }
+            
+            .poem-title {
+                font-size: 26px;
+            }
+            
+            .title-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .setting-options {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* 动画效果 */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(234, 67, 53, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(234, 67, 53, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(234, 67, 53, 0); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-secondary);
+        }
+        
+        .error-message {
+            text-align: center;
+            padding: 10px;
+            color: var(--primary);
+            background: rgba(234, 67, 53, 0.1);
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-container">
+            <div class="logo" id="homeLink">
+                <i class="fas fa-brain"></i>
+                <span>快乐学习</span>
+            </div>
+            
+            <div class="nav-links">
+                <div class="nav-link active" data-page="chinese">
+                    <i class="fas fa-pen-fancy"></i>
+                    <span>语文诗词</span>
+                </div>
+                <div class="nav-link" data-page="daily">
+                    <i class="fas fa-calendar-day"></i>
+                    <span>日积月累</span>
+                </div>
+                <div class="nav-link" data-page="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>设置</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 语文诗词页面 -->
+        <div class="page active" id="chinesePage">
+            <div class="main-content">
+                <div class="poem-card">
+                    <div class="title-container">
+                        <h2 class="poem-title" id="poemTitle">静夜思</h2>
+                        <button class="read-btn" id="readBtn" title="朗读诗词">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
+                    <div class="poem-author" id="poemAuthor">【唐】李白</div>
+                    
+                    <div class="poem-content" id="poemContent">
+                        <span class="poem-line">床前明月光，</span>
+                        <span class="poem-line">疑是地上霜。</span>
+                        <span class="poem-line">举头望明月，</span>
+                        <span class="poem-line">低头思故乡。</span>
+                    </div>
+                    
+                    <div class="poem-translation" id="poemTranslation">
+                        明亮的月光洒在窗户纸上，好像地上泛起了一层霜。我禁不住抬起头来，看那天窗外空中的一轮明月，不由得低头沉思，想起远方的家乡。
+                    </div>
+                    
+                    <div class="card-controls">
+                        <button class="btn btn-secondary" id="prevBtn">
+                            <i class="fas fa-arrow-left"></i>
+                            <span>上一首</span>
+                        </button>
+                        <button class="btn btn-success" id="knowBtn">
+                            <i class="fas fa-check"></i>
+                            <span>已背诵</span>
+                        </button>
+                        <button class="btn btn-warning" id="notKnowBtn">
+                            <i class="fas fa-times"></i>
+                            <span>未掌握</span>
+                        </button>
+                        <button class="btn btn-primary" id="nextBtn">
+                            <span>下一首</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-title">
+                        <i class="fas fa-chart-line"></i>
+                        <span>学习进度</span>
+                    </div>
+                    
+                    <div class="stats">
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalCount">36</div>
+                            <div class="stat-label">诗词总数</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="learnedCount">12</div>
+                            <div class="stat-label">已学诗词</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="masteredCount">8</div>
+                            <div class="stat-label">已背诵</div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-bar-container">
+                        <div class="progress-info">
+                            <span>背诵进度</span>
+                            <span id="progressPercentage">33%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill" style="width: 33%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-title">
+                        <i class="fas fa-book"></i>
+                        <span>诗词选集</span>
+                    </div>
+                    
+                    <select class="form-control" id="bookSelector">
+                        <option value="primary1">小学一年级</option>
+                        <option value="primary2">小学二年级</option>
+                        <option value="primary3">小学三年级</option>
+                        <option value="primary4">小学四年级</option>
+                        <option value="primary5">小学五年级</option>
+                        <option value="primary6">小学六年级</option>
+                    </select>
+                    
+                    <div class="poem-list" id="poemList">
+                        <div class="loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <span>加载诗词列表中...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 日积月累页面 -->
+        <div class="page" id="dailyPage">
+            <div class="poem-card">
+                <h2 class="poem-title">日积月累</h2>
+                <div class="poem-author">知识在于积累</div>
+                
+                <div class="poem-content">
+                    <span class="poem-line">读书破万卷，下笔如有神。</span>
+                    <span class="poem-line">——杜甫</span>
+                </div>
+                
+                <div class="poem-translation">
+                    形容博览群书，把书读透，这样落实到笔下，运用起来就会得心应手。
+                </div>
+                
+                <div class="card-controls">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-random"></i>
+                        <span>随机一条</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 设置页面 -->
+        <div class="page" id="settingsPage">
+            <div class="settings-container">
+                <div class="setting-group">
+                    <div class="setting-title">
+                        <i class="fas fa-volume-up"></i>
+                        <span>语音设置</span>
+                    </div>
+                    <div class="setting-options">
+                        <div class="setting-option active" data-voice="普通话">
+                            <i class="fas fa-microphone"></i>
+                            <span>普通话</span>
+                        </div>
+                        <div class="setting-option" data-voice="粤语">
+                            <i class="fas fa-microphone-alt"></i>
+                            <span>粤语</span>
+                        </div>
+                        <div class="setting-option" data-voice="台湾话">
+                            <i class="fas fa-microphone"></i>
+                            <span>台湾话</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="setting-group">
+                    <div class="setting-title">
+                        <i class="fas fa-paint-brush"></i>
+                        <span>页面主题</span>
+                    </div>
+                    <div class="setting-options">
+                        <div class="setting-option active" data-theme="dark">
+                            <i class="fas fa-moon"></i>
+                            <span>深色模式</span>
+                        </div>
+                        <div class="setting-option" data-theme="light">
+                            <i class="fas fa-sun"></i>
+                            <span>浅色模式</span>
+                        </div>
+                        <div class="setting-option" data-theme="blue">
+                            <i class="fas fa-palette"></i>
+                            <span>蓝色主题</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="setting-group">
+                    <div class="setting-title">
+                        <i class="fas fa-text-height"></i>
+                        <span>字体大小</span>
+                    </div>
+                    <div class="setting-options">
+                        <div class="setting-option" data-fontsize="small">
+                            <i class="fas fa-font"></i>
+                            <span>小字体</span>
+                        </div>
+                        <div class="setting-option active" data-fontsize="medium">
+                            <i class="fas fa-font"></i>
+                            <span>中等字体</span>
+                        </div>
+                        <div class="setting-option" data-fontsize="large">
+                            <i class="fas fa-heading"></i>
+                            <span>大字体</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-controls">
+                    <button class="btn btn-primary" id="saveSettings">
+                        <i class="fas fa-save"></i>
+                        <span>保存设置</span>
+                    </button>
+                    <button class="btn btn-secondary" id="resetSettings">
+                        <i class="fas fa-undo"></i>
+                        <span>恢复默认</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2025 快乐学习 - Sevenking Studio</p>
+        </footer>
+    </div>
+
+    <script>
+        // 默认诗词数据（当JSON加载失败时使用）
+        const defaultPoemsData = {
+            primary1: [
+                {
+                    title: "静夜思",
+                    author: "【唐】李白",
+                    content: ["床前明月光，", "疑是地上霜。", "举头望明月，", "低头思故乡。"],
+                    translation: "明亮的月光洒在窗户纸上，好像地上泛起了一层霜。我禁不住抬起头来，看那天窗外空中的一轮明月，不由得低头沉思，想起远方的家乡。"
+                },
+                {
+                    title: "春晓",
+                    author: "【唐】孟浩然",
+                    content: ["春眠不觉晓，", "处处闻啼鸟。", "夜来风雨声，", "花落知多少。"],
+                    translation: "春日里贪睡不知不觉天就亮了，到处可以听见小鸟的鸣叫声。回想昨夜的阵阵风雨声，不知吹落了多少娇美的春花。"
+                },
+                {
+                    title: "悯农",
+                    author: "【唐】李绅",
+                    content: ["锄禾日当午，", "汗滴禾下土。", "谁知盘中餐，", "粒粒皆辛苦。"],
+                    translation: "盛夏中午，烈日炎炎，农民还在劳作，汗珠滴入泥土。有谁想到，我们碗中的米饭，一粒一粒都是农民辛苦劳动得来的呀？"
+                }
+            ],
+            primary2: [
+                {
+                    title: "登鹳雀楼",
+                    author: "【唐】王之涣",
+                    content: ["白日依山尽，", "黄河入海流。", "欲穷千里目，", "更上一层楼。"],
+                    translation: "夕阳依傍着西山慢慢地沉没，滔滔黄河朝着东海汹涌奔流。若想把千里的风光景物看够，那就要登上更高的一层城楼。"
+                },
+                {
+                    title: "望庐山瀑布",
+                    author: "【唐】李白",
+                    content: ["日照香炉生紫烟，", "遥看瀑布挂前川。", "飞流直下三千尺，", "疑是银河落九天。"],
+                    translation: "香炉峰在阳光的照射下生起紫色烟霞，从远处看去瀑布好似白色绢绸悬挂山前。高崖上飞腾直落的瀑布好像有几千尺，让人怀疑是银河从天上泻落到人间。"
+                }
+            ]
+        };
+
+        let poemsData = {};
+        let currentBook = 'primary1';
+        let currentPoemIndex = 0;
+        let learnedPoems = {};
+        let masteredPoems = {};
+        let voiceType = '普通话';
+        let currentTheme = 'dark';
+        let currentFontSize = 'medium';
+
+        // DOM元素
+        const poemTitleElement = document.getElementById('poemTitle');
+        const poemAuthorElement = document.getElementById('poemAuthor');
+        const poemContentElement = document.getElementById('poemContent');
+        const poemTranslationElement = document.getElementById('poemTranslation');
+        const bookSelectorElement = document.getElementById('bookSelector');
+        const readBtnElement = document.getElementById('readBtn');
+        const knowBtnElement = document.getElementById('knowBtn');
+        const notKnowBtnElement = document.getElementById('notKnowBtn');
+        const nextBtnElement = document.getElementById('nextBtn');
+        const prevBtnElement = document.getElementById('prevBtn');
+        const totalCountElement = document.getElementById('totalCount');
+        const learnedCountElement = document.getElementById('learnedCount');
+        const masteredCountElement = document.getElementById('masteredCount');
+        const progressFillElement = document.getElementById('progressFill');
+        const progressPercentageElement = document.getElementById('progressPercentage');
+        const poemListElement = document.getElementById('poemList');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pages = document.querySelectorAll('.page');
+        const saveSettingsBtn = document.getElementById('saveSettings');
+        const resetSettingsBtn = document.getElementById('resetSettings');
+        const homeLink = document.getElementById('homeLink');
+
+        // 初始化
+        function init() {
+            // 加载学习进度
+            loadProgress();
+            
+            // 加载设置
+            loadSettings();
+            
+            // 加载诗词数据
+            loadPoemsData();
+            
+            // 设置事件监听
+            setupEventListeners();
+        }
+
+        // 加载诗词数据
+        function loadPoemsData() {
+            // 模拟从JSON文件加载数据
+            fetch('https://example.com/api/poems.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('网络响应不正常');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    poemsData = data;
+                    updateUI();
+                })
+                .catch(error => {
+                    console.error('加载诗词数据失败，使用默认数据:', error);
+                    poemsData = defaultPoemsData;
+                    showError('加载远程数据失败，使用默认诗词数据');
+                    updateUI();
+                });
+        }
+
+        // 显示错误信息
+        function showError(message) {
+            const errorElement = document.createElement('div');
+            errorElement.className = 'error-message';
+            errorElement.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+            poemListElement.innerHTML = '';
+            poemListElement.appendChild(errorElement);
+            
+            // 3秒后消失
+            setTimeout(() => {
+                errorElement.style.opacity = '0';
+                setTimeout(() => {
+                    if (poemListElement.contains(errorElement)) {
+                        poemListElement.removeChild(errorElement);
+                    }
+                }, 1000);
+            }, 3000);
+        }
+
+        // 更新UI
+        function updateUI() {
+            showCurrentPoem();
+            updateProgress();
+            updatePoemList();
+            applyTheme();
+            applyFontSize();
+        }
+
+        // 设置事件监听
+        function setupEventListeners() {
+            // 诗词本选择
+            bookSelectorElement.addEventListener('change', handleBookChange);
+            
+            // 控制按钮
+            readBtnElement.addEventListener('click', readCurrentPoem);
+            knowBtnElement.addEventListener('click', markAsMemorized);
+            notKnowBtnElement.addEventListener('click', markAsNotMemorized);
+            nextBtnElement.addEventListener('click', showNextPoem);
+            prevBtnElement.addEventListener('click', showPrevPoem);
+            
+            // 导航链接
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    const pageId = link.getAttribute('data-page');
+                    switchPage(pageId);
+                });
+            });
+            
+            // 设置选项
+            document.querySelectorAll('.setting-option').forEach(option => {
+                option.addEventListener('click', handleSettingOptionClick);
+            });
+            
+            // 保存和重置设置
+            saveSettingsBtn.addEventListener('click', saveSettings);
+            resetSettingsBtn.addEventListener('click', resetSettings);
+            
+            // 主页链接
+            homeLink.addEventListener('click', () => {
+                window.location.href = 'index.html';
+            });
+        }
+
+        // 处理设置选项点击
+        function handleSettingOptionClick(e) {
+            const option = e.currentTarget;
+            const group = option.parentElement;
+            const options = group.querySelectorAll('.setting-option');
+            
+            options.forEach(opt => opt.classList.remove('active'));
+            option.classList.add('active');
+            
+            // 根据选项类型更新设置
+            if (group.parentElement.querySelector('.setting-title').textContent.includes('语音')) {
+                voiceType = option.getAttribute('data-voice');
+            } else if (group.parentElement.querySelector('.setting-title').textContent.includes('主题')) {
+                currentTheme = option.getAttribute('data-theme');
+            } else if (group.parentElement.querySelector('.setting-title').textContent.includes('字体')) {
+                currentFontSize = option.getAttribute('data-fontsize');
+            }
+        }
+
+        // 保存设置
+        function saveSettings() {
+            localStorage.setItem('voiceType', voiceType);
+            localStorage.setItem('theme', currentTheme);
+            localStorage.setItem('fontSize', currentFontSize);
+            
+            applyTheme();
+            applyFontSize();
+            
+            // 显示保存成功提示
+            alert('设置已保存！');
+        }
+
+        // 重置设置
+        function resetSettings() {
+            voiceType = '普通话';
+            currentTheme = 'dark';
+            currentFontSize = 'medium';
+            
+            // 更新UI
+            document.querySelectorAll('.setting-option').forEach(option => {
+                option.classList.remove('active');
+                
+                if (option.getAttribute('data-voice') === voiceType) {
+                    option.classList.add('active');
+                }
+                if (option.getAttribute('data-theme') === currentTheme) {
+                    option.classList.add('active');
+                }
+                if (option.getAttribute('data-fontsize') === currentFontSize) {
+                    option.classList.add('active');
+                }
+            });
+            
+            applyTheme();
+            applyFontSize();
+            
+            // 显示重置成功提示
+            alert('设置已重置为默认值！');
+        }
+
+        // 应用主题
+        function applyTheme() {
+            if (currentTheme === 'dark') {
+                document.documentElement.style.setProperty('--bg-color', '#0a1929');
+                document.documentElement.style.setProperty('--text-color', '#ffffff');
+                document.documentElement.style.setProperty('--card-bg-color', 'rgba(15, 35, 55, 0.7)');
+            } else if (currentTheme === 'light') {
+                document.documentElement.style.setProperty('--bg-color', '#f0f2f5');
+                document.documentElement.style.setProperty('--text-color', '#333333');
+                document.documentElement.style.setProperty('--card-bg-color', 'rgba(255, 255, 255, 0.9)');
+            } else if (currentTheme === 'blue') {
+                document.documentElement.style.setProperty('--bg-color', '#0a2f5e');
+                document.documentElement.style.setProperty('--text-color', '#ffffff');
+                document.documentElement.style.setProperty('--card-bg-color', 'rgba(25, 55, 109, 0.7)');
+            }
+        }
+
+        // 应用字体大小
+        function applyFontSize() {
+            if (currentFontSize === 'small') {
+                document.documentElement.style.setProperty('--font-size', '14px');
+            } else if (currentFontSize === 'medium') {
+                document.documentElement.style.setProperty('--font-size', '16px');
+            } else if (currentFontSize === 'large') {
+                document.documentElement.style.setProperty('--font-size', '18px');
+            }
+        }
+
+        // 加载设置
+        function loadSettings() {
+            const savedVoiceType = localStorage.getItem('voiceType');
+            const savedTheme = localStorage.getItem('theme');
+            const savedFontSize = localStorage.getItem('fontSize');
+            
+            if (savedVoiceType) voiceType = savedVoiceType;
+            if (savedTheme) currentTheme = savedTheme;
+            if (savedFontSize) currentFontSize = savedFontSize;
+            
+            // 更新设置UI
+            document.querySelectorAll('.setting-option').forEach(option => {
+                if (option.getAttribute('data-voice') === voiceType) {
+                    option.classList.add('active');
+                }
+                if (option.getAttribute('data-theme') === currentTheme) {
+                    option.classList.add('active');
+                }
+                if (option.getAttribute('data-fontsize') === currentFontSize) {
+                    option.classList.add('active');
+                }
+            });
+        }
+
+        // 切换页面
+        function switchPage(pageId) {
+            // 更新活动导航链接
+            navLinks.forEach(link => {
+                if (link.getAttribute('data-page') === pageId) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+            
+            // 显示对应页面
+            pages.forEach(page => {
+                if (page.id === pageId + 'Page') {
+                    page.classList.add('active');
+                } else {
+                    page.classList.remove('active');
+                }
+            });
+        }
+
+        // 显示当前诗词
+        function showCurrentPoem() {
+            if (!poemsData[currentBook] || !poemsData[currentBook][currentPoemIndex]) {
+                return;
+            }
+            
+            const poemData = poemsData[currentBook][currentPoemIndex];
+            poemTitleElement.textContent = poemData.title;
+            poemAuthorElement.textContent = poemData.author;
+            
+            // 清空原有内容
+            poemContentElement.innerHTML = '';
+            
+            // 添加诗词内容
+            poemData.content.forEach(line => {
+                const lineElement = document.createElement('span');
+                lineElement.className = 'poem-line';
+                lineElement.textContent = line;
+                poemContentElement.appendChild(lineElement);
+            });
+            
+            poemTranslationElement.textContent = poemData.translation;
+        }
+
+        // 朗读当前诗词
+        function readCurrentPoem() {
+            if (!poemsData[currentBook] || !poemsData[currentBook][currentPoemIndex]) {
+                return;
+            }
+            
+            const poemData = poemsData[currentBook][currentPoemIndex];
+            const poemText = poemData.content.join(' ');
+            
+            const utterance = new SpeechSynthesisUtterance(poemText);
+            utterance.lang = 'zh-CN';
+            utterance.rate = 0.8;
+            
+            // 根据语音设置选择语音
+            const voices = speechSynthesis.getVoices();
+            const chineseVoice = voices.find(voice => 
+                voice.lang.includes('zh') && voice.name.toLowerCase().includes('chinese')
+            );
+            
+            if (chineseVoice) {
+                utterance.voice = chineseVoice;
+            }
+            
+            speechSynthesis.speak(utterance);
+        }
+
+        // 标记为已背诵
+        function markAsMemorized() {
+            if (!poemsData[currentBook] || !poemsData[currentBook][currentPoemIndex]) {
+                return;
+            }
+            
+            const poemTitle = poemsData[currentBook][currentPoemIndex].title;
+            masteredPoems[poemTitle] = true;
+            learnedPoems[poemTitle] = true;
+            saveProgress();
+            updateProgress();
+            updatePoemList();
+            showNextPoem();
+        }
+
+        // 标记为未掌握
+        function markAsNotMemorized() {
+            if (!poemsData[currentBook] || !poemsData[currentBook][currentPoemIndex]) {
+                return;
+            }
+            
+            const poemTitle = poemsData[currentBook][currentPoemIndex].title;
+            masteredPoems[poemTitle] = false;
+            learnedPoems[poemTitle] = true;
+            saveProgress();
+            updateProgress();
+            updatePoemList();
+            showNextPoem();
+        }
+
+        // 显示下一首诗词
+        function showNextPoem() {
+            if (!poemsData[currentBook]) {
+                return;
+            }
+            
+            currentPoemIndex = (currentPoemIndex + 1) % poemsData[currentBook].length;
+            showCurrentPoem();
+        }
+
+        // 显示上一首诗词
+        function showPrevPoem() {
+            if (!poemsData[currentBook]) {
+                return;
+            }
+            
+            currentPoemIndex = (currentPoemIndex - 1 + poemsData[currentBook].length) % poemsData[currentBook].length;
+            showCurrentPoem();
+        }
+
+        // 处理诗词本变更
+        function handleBookChange() {
+            currentBook = bookSelectorElement.value;
+            currentPoemIndex = 0;
+            showCurrentPoem();
+            updateProgress();
+            updatePoemList();
+        }
+
+        // 更新进度显示
+        function updateProgress() {
+            if (!poemsData[currentBook]) {
+                return;
+            }
+            
+            const totalPoems = poemsData[currentBook].length;
+            const learned = Object.keys(learnedPoems).filter(title => 
+                poemsData[currentBook].some(p => p.title === title)
+            ).length;
+            const mastered = Object.keys(masteredPoems).filter(title => 
+                masteredPoems[title] && poemsData[currentBook].some(p => p.title === title)
+            ).length;
+            
+            totalCountElement.textContent = totalPoems;
+            learnedCountElement.textContent = learned;
+            masteredCountElement.textContent = mastered;
+            
+            const progress = totalPoems > 0 ? (learned / totalPoems) * 100 : 0;
+            progressFillElement.style.width = `${progress}%`;
+            progressPercentageElement.textContent = `${Math.round(progress)}%`;
+        }
+
+        // 更新诗词列表显示
+        function updatePoemList() {
+            if (!poemsData[currentBook]) {
+                poemListElement.innerHTML = '<div class="error-message">暂无诗词数据</div>';
+                return;
+            }
+            
+            poemListElement.innerHTML = '';
+            
+            poemsData[currentBook].forEach((poem, index) => {
+                const poemItem = document.createElement('div');
+                poemItem.className = 'poem-item';
+                
+                if (masteredPoems[poem.title]) {
+                    poemItem.classList.add('mastered');
+                }
+                
+                poemItem.innerHTML = `
+                    <div>
+                        <div class="poem-name">${poem.title}</div>
+                        <div class="poem-author">${poem.author.replace('【', '').replace('】', '')}</div>
+                    </div>
+                    <div class="poem-item-status">
+                        <div class="status-badge">${masteredPoems[poem.title] ? '已背诵' : (learnedPoems[poem.title] ? '学习中' : '未学习')}</div>
+                    </div>
+                `;
+                
+                poemItem.addEventListener('click', () => {
+                    currentPoemIndex = index;
+                    showCurrentPoem();
+                });
+                
+                poemListElement.appendChild(poemItem);
+            });
+        }
+
+        // 保存进度到本地存储
+        function saveProgress() {
+            localStorage.setItem('learnedPoems', JSON.stringify(learnedPoems));
+            localStorage.setItem('masteredPoems', JSON.stringify(masteredPoems));
+        }
+
+        // 从本地存储加载进度
+        function loadProgress() {
+            const learned = localStorage.getItem('learnedPoems');
+            const mastered = localStorage.getItem('masteredPoems');
+            
+            if (learned) {
+                learnedPoems = JSON.parse(learned);
+            }
+            
+            if (mastered) {
+                masteredPoems = JSON.parse(mastered);
+            }
+        }
+
+        // 初始化应用
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

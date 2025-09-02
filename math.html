@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>快乐学习 - 小学数学</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #f4b400;
+            --secondary: #ff9900;
+            --accent: #ea4335;
+            --success: #ff6b00;
+            --warning: #ea4335;
+            --info: #4285f4;
+            --dark: #1a1a1a;
+            --darker: #0d0d0d;
+            --card-bg: rgba(40, 40, 40, 0.8);
+            --text: #ffffff;
+            --text-secondary: #cccccc;
+            --transition: all 0.3s ease;
+            --bg-color: #1a1a1a;
+            --text-color: #ffffff;
+            --card-bg-color: rgba(15, 35, 55, 0.7);
+            --font-size: 16px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--darker), var(--dark));
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-size: var(--font-size);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 导航样式 */
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(66, 133, 244, 0.3);
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(66, 133, 244, 0.5);
+            cursor: pointer;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+        
+        .nav-link {
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: var(--transition);
+        }
+        
+        .nav-link:hover::before {
+            width: 100%;
+        }
+        
+        .nav-link.active {
+            background: rgba(66, 133, 244, 0.1);
+        }
+        
+        .nav-link.active::before {
+            width: 100%;
+        }
+        
+        /* 页面内容 */
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 主页样式 */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+        }
+        
+        .math-card {
+            background: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(66, 133, 244, 0.2);
+            text-align: center;
+        }
+        
+        .math-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .math-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(66, 133, 244, 0.1) 0%, transparent 70%);
+            transform: rotate(30deg);
+            z-index: 0;
+        }
+        
+        .title-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .math-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(66, 133, 244, 0.3);
+        }
+        
+        .example-btn {
+            background: rgba(66, 133, 244, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--primary);
+        }
+        
+        .example-btn:hover {
+            background: rgba(66, 133, 244, 0.3);
+            transform: scale(1.1);
+        }
+        
+        .math-category {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+            font-style: italic;
+        }
+        
+        .math-content {
+            font-size: 24px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .math-line {
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .math-explanation {
+            font-style: italic;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+            border-left: 3px solid var(--secondary);
+            padding-left: 15px;
+            font-size: 18px;
+        }
+        
+        .card-controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary), var(--info));
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            box-shadow: 0 0 15px rgba(66, 133, 244, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background: linear-gradient(90deg, var(--success), var(--secondary));
+            color: white;
+        }
+        
+        .btn-success:hover {
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(90deg, var(--warning), var(--accent));
+            color: white;
+        }
+        
+        .btn-warning:hover {
+            box-shadow: 0 0 15px rgba(251, 188, 5, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-color);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(66, 133, 244, 0.3);
+        }
+        
+        /* 进度容器 */
+        .progress-container {
+            background: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(66, 133, 244, 0.2);
+        }
+        
+        .progress-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .stat-card {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .progress-bar-container {
+            margin: 20px 0;
+        }
+        
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        .progress-bar {
+            height: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            width: 0%;
+            box-shadow: 0 0 10px rgba(66, 133, 244, 0.3);
+            transition: width 0.5s ease;
+        }
+        
+        /* 数学概念选集 */
+        .concept-selector {
+            margin-top: 20px;
+        }
+        
+        .concept-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+        
+        .concept-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .concept-item:hover {
+            background: rgba(66, 133, 244, 0.1);
+        }
+        
+        .concept-item.mastered {
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .concept-item .concept-name {
+            font-weight: 600;
+        }
+        
+        .concept-item .concept-category {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        
+        .concept-item-status {
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            background: rgba(52, 168, 83, 0.2);
+            color: var(--secondary);
+        }
+        
+        /* 练习题样式 */
+        .exercise-container {
+            background: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid rgba(66, 133, 244, 0.2);
+        }
+        
+        .exercise-title {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .exercise-question {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        
+        .exercise-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .exercise-option {
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+        
+        .exercise-option:hover {
+            background: rgba(66, 133, 244, 0.1);
+        }
+        
+        .exercise-option.correct {
+            background: rgba(52, 168, 83, 0.3);
+        }
+        
+        .exercise-option.incorrect {
+            background: rgba(234, 67, 53, 0.3);
+        }
+        
+        .exercise-result {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 15px;
+            min-height: 24px;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .exercise-options {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .card-controls {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .math-content {
+                font-size: 20px;
+            }
+            
+            .math-title {
+                font-size: 26px;
+            }
+            
+            .title-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+        
+        /* 动画效果 */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(66, 133, 244, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(66, 133, 244, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(66, 133, 244, 0); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-secondary);
+        }
+        
+        .error-message {
+            text-align: center;
+            padding: 10px;
+            color: var(--primary);
+            background: rgba(66, 133, 244, 0.1);
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        
+        .formula {
+            font-family: 'Courier New', monospace;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin: 0 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-container">
+            <div class="logo" id="homeLink">
+                <i class="fas fa-brain"></i>
+                <span>快乐学习</span>
+            </div>
+            
+            <div class="nav-links">
+                <div class="nav-link active" data-page="math">
+                    <i class="fas fa-calculator"></i>
+                    <span>数学学习</span>
+                </div>
+                <div class="nav-link" data-page="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>设置</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 数学学习页面 -->
+        <div class="page active" id="mathPage">
+            <div class="main-content">
+                <div class="math-card">
+                    <div class="title-container">
+                        <h2 class="math-title" id="mathTitle">加法运算</h2>
+                        <button class="example-btn" id="exampleBtn" title="显示示例">
+                            <i class="fas fa-lightbulb"></i>
+                        </button>
+                    </div>
+                    <div class="math-category" id="mathCategory">【一年级上册】</div>
+                    
+                    <div class="math-content" id="mathContent">
+                        <span class="math-line">加法是将两个或多个数合并成一个数的运算。</span>
+                        <span class="math-line">符号："+" 读作"加"或"加上"</span>
+                        <span class="math-line">例如：<span class="formula">3 + 2 = 5</span></span>
+                    </div>
+                    
+                    <div class="math-explanation" id="mathExplanation">
+                        加法是数学中最基本的运算之一。当我们把两个数量合并在一起时，就是在做加法运算。
+                    </div>
+                    
+                    <div class="card-controls">
+                        <button class="btn btn-secondary" id="prevBtn">
+                            <i class="fas fa-arrow-left"></i>
+                            <span>上一个</span>
+                        </button>
+                        <button class="btn btn-success" id="knowBtn">
+                            <i class="fas fa-check"></i>
+                            <span>已掌握</span>
+                        </button>
+                        <button class="btn btn-warning" id="notKnowBtn">
+                            <i class="fas fa-times"></i>
+                            <span>未掌握</span>
+                        </button>
+                        <button class="btn btn-primary" id="nextBtn">
+                            <span>下一个</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="exercise-container" id="exerciseContainer">
+                        <div class="exercise-title">
+                            <i class="fas fa-pencil-alt"></i>
+                            <span>练习题</span>
+                        </div>
+                        <div class="exercise-question" id="exerciseQuestion">5 + 3 = ?</div>
+                        <div class="exercise-options" id="exerciseOptions">
+                            <div class="exercise-option" data-value="7">7</div>
+                            <div class="exercise-option" data-value="8">8</div>
+                            <div class="exercise-option" data-value="9">9</div>
+                            <div class="exercise-option" data-value="10">10</div>
+                        </div>
+                        <div class="exercise-result" id="exerciseResult"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-title">
+                        <i class="fas fa-chart-line"></i>
+                        <span>学习进度</span>
+                    </div>
+                    
+                    <div class="stats">
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalCount">25</div>
+                            <div class="stat-label">概念总数</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="learnedCount">8</div>
+                            <div class="stat-label">已学概念</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="masteredCount">5</div>
+                            <div class="stat-label">已掌握</div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-bar-container">
+                        <div class="progress-info">
+                            <span>掌握进度</span>
+                            <span id="progressPercentage">32%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill" style="width: 32%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-title">
+                        <i class="fas fa-book"></i>
+                        <span>数学概念</span>
+                    </div>
+                    
+                    <select class="form-control" id="gradeSelector">
+                        <option value="grade1">小学一年级</option>
+                        <option value="grade2">小学二年级</option>
+                        <option value="grade3">小学三年级</option>
+                        <option value="grade4">小学四年级</option>
+                        <option value="grade5">小学五年级</option>
+                        <option value="grade6">小学六年级</option>
+                    </select>
+                    
+                    <div class="concept-list" id="conceptList">
+                        <div class="loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <span>加载概念列表中...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2025 快乐学习 - Sevenking Studio</p>
+        </footer>
+    </div>
+
+    <script>
+        // 数学概念数据
+        const mathData = {
+            grade1: [
+                {
+                    title: "加法运算",
+                    category: "【一年级上册】",
+                    content: ["加法是将两个或多个数合并成一个数的运算。", "符号：\"+\" 读作\"加\"或\"加上\"", "例如：<span class='formula'>3 + 2 = 5</span>"],
+                    explanation: "加法是数学中最基本的运算之一。当我们把两个数量合并在一起时，就是在做加法运算。",
+                    exercise: {
+                        question: "5 + 3 = ?",
+                        options: ["7", "8", "9", "10"],
+                        answer: "8"
+                    }
+                },
+                {
+                    title: "减法运算",
+                    category: "【一年级下册】",
+                    content: ["减法是从一个数中去掉另一个数的运算。", "符号：\"-\" 读作\"减\"或\"减去\"", "例如：<span class='formula'>5 - 2 = 3</span>"],
+                    explanation: "减法是与加法相反的运算。当我们从一个数量中取出部分时，就是在做减法运算。",
+                    exercise: {
+                        question: "7 - 2 = ?",
+                        options: ["4", "5", "6", "7"],
+                        answer: "5"
+                    }
+                },
+                {
+                    title: "数字认识",
+                    category: "【一年级上册】",
+                    content: ["数字0-9的认识和书写", "数字的大小比较", "数字的顺序排列"],
+                    explanation: "数字是表示数量的符号，学会认识和书写数字是数学学习的基础。",
+                    exercise: {
+                        question: "下列哪个数字最大？",
+                        options: ["3", "7", "5", "2"],
+                        answer: "7"
+                    }
+                }
+            ],
+            grade2: [
+                {
+                    title: "乘法初步",
+                    category: "【二年级上册】",
+                    content: ["乘法是相同数连加的简便运算。", "符号：\"×\" 读作\"乘\"或\"乘以\"", "例如：<span class='formula'>3 × 4 = 12</span>"],
+                    explanation: "乘法可以理解为重复加法，比如3×4就是3+3+3+3，结果是12。",
+                    exercise: {
+                        question: "4 × 5 = ?",
+                        options: ["16", "18", "20", "22"],
+                        answer: "20"
+                    }
+                },
+                {
+                    title: "除法初步",
+                    category: "【二年级下册】",
+                    content: ["除法是平均分物品的运算。", "符号：\"÷\" 读作\"除以\"", "例如：<span class='formula'>12 ÷ 4 = 3</span>"],
+                    explanation: "除法是将一个数平均分成若干等份，求每份是多少的运算。",
+                    exercise: {
+                        question: "18 ÷ 3 = ?",
+                        options: ["5", "6", "7", "8"],
+                        answer: "6"
+                    }
+                }
+            ],
+            grade3: [
+                {
+                    title: "分数初步",
+                    category: "【三年级上册】",
+                    content: ["分数表示一个整体中的一部分", "分数由分子和分母组成", "例如：<span class='formula'>1/2</span> 表示一半"],
+                    explanation: "分数是表示部分与整体关系的数，分母表示整体被分成的份数，分子表示取出的份数。",
+                    exercise: {
+                        question: "1/2 + 1/2 = ?",
+                        options: ["1/4", "1/2", "1", "2"],
+                        answer: "1"
+                    }
+                },
+                {
+                    title: "时间计算",
+                    category: "【三年级下册】",
+                    content: ["认识时钟和日历", "时间单位：时、分、秒", "时间的基本计算"],
+                    explanation: "时间是生活中的重要概念，学会读写时间和进行简单的时间计算非常实用。",
+                    exercise: {
+                        question: "2小时30分钟等于多少分钟？",
+                        options: ["120", "150", "180", "210"],
+                        answer: "150"
+                    }
+                }
+            ]
+        };
+
+        let currentGrade = 'grade1';
+        let currentConceptIndex = 0;
+        let learnedConcepts = {};
+        let masteredConcepts = {};
+
+        // DOM元素
+        const mathTitleElement = document.getElementById('mathTitle');
+        const mathCategoryElement = document.getElementById('mathCategory');
+        const mathContentElement = document.getElementById('mathContent');
+        const mathExplanationElement = document.getElementById('mathExplanation');
+        const gradeSelectorElement = document.getElementById('gradeSelector');
+        const exampleBtnElement = document.getElementById('exampleBtn');
+        const knowBtnElement = document.getElementById('knowBtn');
+        const notKnowBtnElement = document.getElementById('notKnowBtn');
+        const nextBtnElement = document.getElementById('nextBtn');
+        const prevBtnElement = document.getElementById('prevBtn');
+        const totalCountElement = document.getElementById('totalCount');
+        const learnedCountElement = document.getElementById('learnedCount');
+        const masteredCountElement = document.getElementById('masteredCount');
+        const progressFillElement = document.getElementById('progressFill');
+        const progressPercentageElement = document.getElementById('progressPercentage');
+        const conceptListElement = document.getElementById('conceptList');
+        const exerciseQuestionElement = document.getElementById('exerciseQuestion');
+        const exerciseOptionsElement = document.getElementById('exerciseOptions');
+        const exerciseResultElement = document.getElementById('exerciseResult');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pages = document.querySelectorAll('.page');
+        const homeLink = document.getElementById('homeLink');
+
+        // 初始化
+        function init() {
+            // 加载学习进度
+            loadProgress();
+            
+            // 初始化UI
+            showCurrentConcept();
+            updateProgress();
+            updateConceptList();
+            setupExercise();
+            
+            // 设置事件监听
+            setupEventListeners();
+        }
+
+        // 设置事件监听
+        function setupEventListeners() {
+            // 年级选择
+            gradeSelectorElement.addEventListener('change', handleGradeChange);
+            
+            // 控制按钮
+            exampleBtnElement.addEventListener('click', showExample);
+            knowBtnElement.addEventListener('click', markAsMastered);
+            notKnowBtnElement.addEventListener('click', markAsNotMastered);
+            nextBtnElement.addEventListener('click', showNextConcept);
+            prevBtnElement.addEventListener('click', showPrevConcept);
+            
+            // 导航链接
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    const pageId = link.getAttribute('data-page');
+                    switchPage(pageId);
+                });
+            });
+            
+            // 主页链接
+            homeLink.addEventListener('click', () => {
+                window.location.href = 'index.html';
+            });
+        }
+
+        // 切换页面
+        function switchPage(pageId) {
+            // 更新活动导航链接
+            navLinks.forEach(link => {
+                if (link.getAttribute('data-page') === pageId) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+            
+            // 显示对应页面
+            pages.forEach(page => {
+                if (page.id === pageId + 'Page') {
+                    page.classList.add('active');
+                } else {
+                    page.classList.remove('active');
+                }
+            });
+        }
+
+        // 显示当前概念
+        function showCurrentConcept() {
+            const conceptData = mathData[currentGrade][currentConceptIndex];
+            mathTitleElement.textContent = conceptData.title;
+            mathCategoryElement.textContent = conceptData.category;
+            
+            // 清空原有内容
+            mathContentElement.innerHTML = '';
+            
+            // 添加概念内容
+            conceptData.content.forEach(line => {
+                const lineElement = document.createElement('span');
+                lineElement.className = 'math-line';
+                lineElement.innerHTML = line;
+                mathContentElement.appendChild(lineElement);
+            });
+            
+            mathExplanationElement.textContent = conceptData.explanation;
+            
+            // 更新练习题
+            setupExercise();
+        }
+
+        // 显示示例
+        function showExample() {
+            const conceptData = mathData[currentGrade][currentConceptIndex];
+            alert(`示例：${conceptData.explanation}`);
+        }
+
+        // 设置练习题
+        function setupExercise() {
+            const conceptData = mathData[currentGrade][currentConceptIndex];
+            exerciseQuestionElement.textContent = conceptData.exercise.question;
+            
+            // 清空原有选项
+            exerciseOptionsElement.innerHTML = '';
+            
+            // 添加选项
+            conceptData.exercise.options.forEach(option => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'exercise-option';
+                optionElement.textContent = option;
+                optionElement.setAttribute('data-value', option);
+                optionElement.addEventListener('click', checkAnswer);
+                exerciseOptionsElement.appendChild(optionElement);
+            });
+            
+            exerciseResultElement.textContent = '';
+        }
+
+        // 检查答案
+        function checkAnswer(e) {
+            const selectedOption = e.target;
+            const conceptData = mathData[currentGrade][currentConceptIndex];
+            const correctAnswer = conceptData.exercise.answer;
+            const selectedAnswer = selectedOption.getAttribute('data-value');
+            
+            // 清除所有选项的样式
+            document.querySelectorAll('.exercise-option').forEach(option => {
+                option.classList.remove('correct', 'incorrect');
+            });
+            
+            // 标记正确答案和错误答案
+            if (selectedAnswer === correctAnswer) {
+                selectedOption.classList.add('correct');
+                exerciseResultElement.textContent = '回答正确！👍';
+                exerciseResultElement.style.color = 'var(--success)';
+            } else {
+                selectedOption.classList.add('incorrect');
+                document.querySelectorAll('.exercise-option').forEach(option => {
+                    if (option.getAttribute('data-value') === correctAnswer) {
+                        option.classList.add('correct');
+                    }
+                });
+                exerciseResultElement.textContent = `回答错误，正确答案是：${correctAnswer}`;
+                exerciseResultElement.style.color = 'var(--accent)';
+            }
+        }
+
+        // 标记为已掌握
+        function markAsMastered() {
+            const conceptTitle = mathData[currentGrade][currentConceptIndex].title;
+            masteredConcepts[conceptTitle] = true;
+            learnedConcepts[conceptTitle] = true;
+            saveProgress();
+            updateProgress();
+            updateConceptList();
+            showNextConcept();
+        }
+
+        // 标记为未掌握
+        function markAsNotMastered() {
+            const conceptTitle = mathData[currentGrade][currentConceptIndex].title;
+            masteredConcepts[conceptTitle] = false;
+            learnedConcepts[conceptTitle] = true;
+            saveProgress();
+            updateProgress();
+            updateConceptList();
+            showNextConcept();
+        }
+
+        // 显示下一个概念
+        function showNextConcept() {
+            currentConceptIndex = (currentConceptIndex + 1) % mathData[currentGrade].length;
+            showCurrentConcept();
+        }
+
+        // 显示上一个概念
+        function showPrevConcept() {
+            currentConceptIndex = (currentConceptIndex - 1 + mathData[currentGrade].length) % mathData[currentGrade].length;
+            showCurrentConcept();
+        }
+
+        // 处理年级变更
+        function handleGradeChange() {
+            currentGrade = gradeSelectorElement.value;
+            currentConceptIndex = 0;
+            showCurrentConcept();
+            updateProgress();
+            updateConceptList();
+        }
+
+        // 更新进度显示
+        function updateProgress() {
+            const totalConcepts = mathData[currentGrade].length;
+            const learned = Object.keys(learnedConcepts).filter(title => 
+                mathData[currentGrade].some(c => c.title === title)
+            ).length;
+            const mastered = Object.keys(masteredConcepts).filter(title => 
+                masteredConcepts[title] && mathData[currentGrade].some(c => c.title === title)
+            ).length;
+            
+            totalCountElement.textContent = totalConcepts;
+            learnedCountElement.textContent = learned;
+            masteredCountElement.textContent = mastered;
+            
+            const progress = totalConcepts > 0 ? (learned / totalConcepts) * 100 : 0;
+            progressFillElement.style.width = `${progress}%`;
+            progressPercentageElement.textContent = `${Math.round(progress)}%`;
+        }
+
+        // 更新概念列表显示
+        function updateConceptList() {
+            conceptListElement.innerHTML = '';
+            
+            mathData[currentGrade].forEach((concept, index) => {
+                const conceptItem = document.createElement('div');
+                conceptItem.className = 'concept-item';
+                
+                if (masteredConcepts[concept.title]) {
+                    conceptItem.classList.add('mastered');
+                }
+                
+                conceptItem.innerHTML = `
+                    <div>
+                        <div class="concept-name">${concept.title}</div>
+                        <div class="concept-category">${concept.category.replace('【', '').replace('】', '')}</div>
+                    </div>
+                    <div class="concept-item-status">
+                        <div class="status-badge">${masteredConcepts[concept.title] ? '已掌握' : (learnedConcepts[concept.title] ? '学习中' : '未学习')}</div>
+                    </div>
+                `;
+                
+                conceptItem.addEventListener('click', () => {
+                    currentConceptIndex = index;
+                    showCurrentConcept();
+                });
+                
+                conceptListElement.appendChild(conceptItem);
+            });
+        }
+
+        // 保存进度到本地存储
+        function saveProgress() {
+            localStorage.setItem('learnedConcepts', JSON.stringify(learnedConcepts));
+            localStorage.setItem('masteredConcepts', JSON.stringify(masteredConcepts));
+        }
+
+        // 从本地存储加载进度
+        function loadProgress() {
+            const learned = localStorage.getItem('learnedConcepts');
+            const mastered = localStorage.getItem('masteredConcepts');
+            
+            if (learned) {
+                learnedConcepts = JSON.parse(learned);
+            }
+            
+            if (mastered) {
+                masteredConcepts = JSON.parse(mastered);
+            }
+        }
+
+        // 初始化应用
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

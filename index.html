@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>快乐学习 - 学习主页</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00a2ff;
+            --secondary: #00d9a6;
+            --accent: #ff6b6b;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --info: #2196f3;
+            --english: #4285f4;
+            --chinese: #ea4335;
+            --math: #fbbc05;
+            --pe: #34a853;
+            --dark: #0a1929;
+            --darker: #051321;
+            --card-bg: rgba(15, 35, 55, 0.7);
+            --text: #ffffff;
+            --text-secondary: #a0aec0;
+            --transition: all 0.3s ease;
+            --bg-color: #0a1929;
+            --text-color: #ffffff;
+            --card-bg-color: rgba(15, 35, 55, 0.7);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--darker), var(--dark));
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-size: 16px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 导航样式 */
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(0, 247, 255, 0.3);
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(0, 247, 255, 0.5);
+            cursor: pointer;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+        
+        .nav-link {
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: var(--transition);
+        }
+        
+        .nav-link:hover::before {
+            width: 100%;
+        }
+        
+        .nav-link.active {
+            background: rgba(0, 247, 255, 0.1);
+        }
+        
+        .nav-link.active::before {
+            width: 100%;
+        }
+        
+        /* 主页标题 */
+        .main-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 36px;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 15px rgba(0, 247, 255, 0.3);
+        }
+        
+        .subtitle {
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--text-secondary);
+            font-size: 18px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* 科目卡片网格 */
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .subject-card {
+            background: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+        }
+        
+        .subject-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .subject-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 247, 255, 0.1) 0%, transparent 70%);
+            transform: rotate(30deg);
+            z-index: 0;
+        }
+        
+        .subject-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .english-card {
+            border-top: 4px solid var(--english);
+        }
+        
+        .chinese-card {
+            border-top: 4px solid var(--chinese);
+        }
+        
+        .math-card {
+            border-top: 4px solid var(--math);
+        }
+        
+        .pe-card {
+            border-top: 4px solid var(--pe);
+        }
+        
+        .english-card .subject-icon {
+            color: var(--english);
+            box-shadow: 0 0 20px rgba(66, 133, 244, 0.3);
+        }
+        
+        .chinese-card .subject-icon {
+            color: var(--chinese);
+            box-shadow: 0 0 20px rgba(234, 67, 53, 0.3);
+        }
+        
+        .math-card .subject-icon {
+            color: var(--math);
+            box-shadow: 0 0 20px rgba(251, 188, 5, 0.3);
+        }
+        
+        .pe-card .subject-icon {
+            color: var(--pe);
+            box-shadow: 0 0 20px rgba(52, 168, 83, 0.3);
+        }
+        
+        .subject-name {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .english-card .subject-name {
+            color: var(--english);
+        }
+        
+        .chinese-card .subject-name {
+            color: var(--chinese);
+        }
+        
+        .math-card .subject-name {
+            color: var(--math);
+        }
+        
+        .pe-card .subject-name {
+            color: var(--pe);
+        }
+        
+        .subject-desc {
+            text-align: center;
+            color: var(--text-secondary);
+            position: relative;
+            z-index: 1;
+            margin-bottom: 20px;
+        }
+        
+        .subject-stats {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .english-card .stat-value {
+            color: var(--english);
+        }
+        
+        .chinese-card .stat-value {
+            color: var(--chinese);
+        }
+        
+        .math-card .stat-value {
+            color: var(--math);
+        }
+        
+        .pe-card .stat-value {
+            color: var(--pe);
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        /* 设置页面样式 */
+        .settings-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            display: none;
+        }
+        
+        .settings-title {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+        
+        .settings-card {
+            background: var(--card-bg-color);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .settings-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .settings-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            color: var(--primary);
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .settings-icon {
+            font-size: 22px;
+            width: 30px;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+        
+        .form-control {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            padding: 10px 12px;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(0, 247, 255, 0.3);
+        }
+        
+        .range-slider {
+            width: 100%;
+            -webkit-appearance: none;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            outline: none;
+            margin: 10px 0;
+        }
+        
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            box-shadow: 0 0 8px rgba(0, 247, 255, 0.3);
+        }
+        
+        .slider-value {
+            text-align: center;
+            font-size: 16px;
+            color: var(--primary);
+            margin-top: 8px;
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+            margin-left: 10px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider-round {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .slider-round:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider-round {
+            background-color: var(--primary);
+        }
+        
+        input:checked + .slider-round:before {
+            transform: translateX(26px);
+        }
+        
+        .control-label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            color: var(--text-secondary);
+        }
+        
+        /* 页脚样式 */
+        footer {
+            text-align: center;
+            margin-top: 80px;
+            padding: 30px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 900px) {
+            .subjects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .subjects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .main-title {
+                font-size: 28px;
+            }
+            
+            .subtitle {
+                font-size: 16px;
+            }
+            
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* 动画效果 */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 247, 255, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(0, 247, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 247, 255, 0); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* 页面切换 */
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        /* 链接样式 */
+        .card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-container">
+            <div class="logo" id="homeLink">
+                <i class="fas fa-brain"></i>
+                <span>快乐学习</span>
+            </div>
+            
+            <div class="nav-links">
+                <div class="nav-link active" data-page="home">
+                    <i class="fas fa-home"></i>
+                    <span>学习主页</span>
+                </div>
+                <div class="nav-link" data-page="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>设置</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 主页内容 -->
+        <div class="page active" id="homePage">
+		<h1 class="main-title">快乐学习平台</h1>
+		<p class="subtitle">选择科目开始学习，全面提升你的知识水平</p>
+		
+		<div class="subjects-grid">
+		    <!-- 英语卡片 -->
+		    <div class="subject-card english-card" id="englishCard">
+			<div class="subject-icon">
+			    <i class="fas fa-language"></i>
+			</div>
+			<h2 class="subject-name">英语</h2>
+			<p class="subject-desc">掌握英语单词、语法和听说读写能力</p>
+			<div class="subject-stats">
+			    <div class="stat">
+				<div class="stat-value">1,258</div>
+				<div class="stat-label">已学单词</div>
+			    </div>
+			    <div class="stat">
+				<div class="stat-value">87%</div>
+				<div class="stat-label">掌握程度</div>
+			    </div>
+			</div>
+		    </div>
+		    
+		    <!-- 语文卡片 -->
+		    <div class="subject-card chinese-card" id="chineseCard">
+			<div class="subject-icon">
+			    <i class="fas fa-pen-fancy"></i>
+			</div>
+			<h2 class="subject-name">语文</h2>
+			<p class="subject-desc">学习古诗词、现代文阅读与写作技巧</p>
+			<div class="subject-stats">
+			    <div class="stat">
+				<div class="stat-value">64</div>
+				<div class="stat-label">古诗掌握</div>
+			    </div>
+			    <div class="stat">
+				<div class="stat-value">92%</div>
+				<div class="stat-label">阅读能力</div>
+			    </div>
+			</div>
+		    </div>
+		    
+		    <!-- 数学卡片 -->
+		    <div class="subject-card math-card" id="mathCard">
+			<div class="subject-icon">
+			    <i class="fas fa-calculator"></i>
+			</div>
+			<h2 class="subject-name">数学</h2>
+			<p class="subject-desc">培养逻辑思维与问题解决能力</p>
+			<div class="subject-stats">
+			    <div class="stat">
+				<div class="stat-value">128</div>
+				<div class="stat-label">公式掌握</div>
+			    </div>
+			    <div class="stat">
+				<div class="stat-value">79%</div>
+				<div class="stat-label">解题能力</div>
+			    </div>
+			</div>
+		    </div>
+		    
+		    <!-- 体育卡片 -->
+		    <div class="subject-card pe-card" id="peCard">
+			<div class="subject-icon">
+			    <i class="fas fa-running"></i>
+			</div>
+			<h2 class="subject-name">体育</h2>
+			<p class="subject-desc">增强体质，学习运动技巧与健康知识</p>
+			<div class="subject-stats">
+			    <div class="stat">
+				<div class="stat-value">36</div>
+				<div class="stat-label">运动项目</div>
+			    </div>
+			    <div class="stat">
+				<div class="stat-value">95%</div>
+				<div class="stat-label">体能指数</div>
+			    </div>
+			</div>
+		    </div>
+		</div>
+	</div>
+
+        <!-- 设置页面 -->
+        <div class="page" id="settingsPage">
+            <h2 class="settings-title">系统设置</h2>
+            
+            <div class="settings-grid">
+                <div class="settings-card">
+                    <div class="settings-header">
+                        <i class="fas fa-paint-brush settings-icon"></i>
+                        <div class="settings-title">界面设置</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">主题</label>
+                        <select class="form-control" id="themeSelect">
+                            <option value="dark">深色主题</option>
+                            <option value="light">浅色主题</option>
+                            <option value="auto">跟随系统</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">字体大小</label>
+                        <input type="range" min="14" max="24" value="16" class="range-slider" id="fontSizeSlider">
+                        <div class="slider-value" id="fontSizeValue">16px</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">动画效果</label>
+                        <select class="form-control" id="animationSelect">
+                            <option value="full">全部动画</option>
+                            <option value="reduced">减少动画</option>
+                            <option value="none">无动画</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="settings-card">
+                    <div class="settings-header">
+                        <i class="fas fa-volume-up settings-icon"></i>
+                        <div class="settings-title">发音设置</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">发音速度</label>
+                        <input type="range" min="0.5" max="1.5" step="0.1" value="1.0" class="range-slider" id="speechRateSlider">
+                        <div class="slider-value" id="speechRateValue">1.0</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">发音音调</label>
+                        <input type="range" min="0.5" max="2.0" step="0.1" value="1.0" class="range-slider" id="speechPitchSlider">
+                        <div class="slider-value" id="speechPitchValue">1.0</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">发音人</label>
+                        <select class="form-control" id="voiceSelect">
+                            <option value="">默认发音人</option>
+                            <option value="Alex">Alex (en-US)</option>
+                            <option value="Samantha">Samantha (en-US)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="settings-card">
+                    <div class="settings-header">
+                        <i class="fas fa-database settings-icon"></i>
+                        <div class="settings-title">数据管理</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button class="form-control" style="background: var(--primary); color: white; margin-bottom: 15px; cursor: pointer;">
+                            <i class="fas fa-download"></i>
+                            <span>导出学习数据</span>
+                        </button>
+                        
+                        <button class="form-control" style="background: rgba(0, 0, 0, 0.2); color: var(--text-color); margin-bottom: 15px; cursor: pointer;">
+                            <i class="fas fa-upload"></i>
+                            <span>导入学习数据</span>
+                        </button>
+                        
+                        <button class="form-control" style="background: rgba(255, 0, 0, 0.2); color: var(--text-color); cursor: pointer;">
+                            <i class="fas fa-trash"></i>
+                            <span>重置学习进度</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2025 快乐学习 - Sevenking Studio</p>
+        </footer>
+    </div>
+
+    <script>
+        // 初始化函数
+        function init() {
+            // 设置事件监听
+            setupEventListeners();
+            
+            // 初始化设置滑块
+            setupSettingsSliders();
+        }
+
+        // 设置事件监听
+        function setupEventListeners() {
+            // 导航链接点击事件
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function() {
+                    const pageId = this.getAttribute('data-page');
+                    switchPage(pageId);
+                    
+                    // 更新活动链接
+                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // 主页链接点击事件
+            document.getElementById('homeLink').addEventListener('click', function() {
+                window.location.reload();
+            });
+
+            // 卡片点击事件
+            document.getElementById('englishCard').addEventListener('click', function() {
+                switchPage('englishCard');
+            });
+            document.getElementById('chineseCard').addEventListener('click', function() {
+                switchPage('chineseCard');
+            });
+            document.getElementById('mathCard').addEventListener('click', function() {
+                switchPage('mathCard');
+            });
+            document.getElementById('peCard').addEventListener('click', function() {
+                switchPage('peCard');
+            });
+        }
+
+        // 设置页面滑块
+        function setupSettingsSliders() {
+            const sliders = [
+                { id: 'fontSizeSlider', output: 'fontSizeValue', format: v => `${v}px` },
+                { id: 'dailyWordsSlider', output: 'dailyWordsValue', format: v => `${v} 个` },
+                { id: 'reviewWordsSlider', output: 'reviewWordsValue', format: v => `${v} 个` },
+                { id: 'speechRateSlider', output: 'speechRateValue', format: v => v },
+                { id: 'speechPitchSlider', output: 'speechPitchValue', format: v => v }
+            ];
+            
+            sliders.forEach(({ id, output, format }) => {
+                const slider = document.getElementById(id);
+                const outputElement = document.getElementById(output);
+                
+                if (slider && outputElement) {
+                    outputElement.textContent = format(slider.value);
+                    slider.addEventListener('input', () => {
+                        outputElement.textContent = format(slider.value);
+                    });
+                }
+            });
+        }
+
+        // 切换页面
+        function switchPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+	    if (pageId === 'englishCard') {
+                window.location.href = 'english.html';
+                document.getElementById('homePage').classList.add('active');
+	    } else if (pageId === 'chineseCard') {
+                window.location.href = 'chinese.html';
+                document.getElementById('homePage').classList.add('active');
+	    } else if (pageId === 'mathCard') {
+                window.location.href = 'math.html';
+                document.getElementById('homePage').classList.add('active');
+	    } else if (pageId === 'peCard') {
+                window.location.href = 'pe.html';
+                document.getElementById('homePage').classList.add('active');
+            } else {
+                document.getElementById(pageId + 'Page').classList.add('active');
+            }
+        }
+
+        // 初始化应用
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
