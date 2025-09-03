@@ -828,6 +828,7 @@
             color: var(--text-secondary);
         }
     </style>
+    <script src="common.js"></script>
 </head>
 
 <body>
@@ -1106,7 +1107,6 @@
 
         // 初始化
         async function init() {
-
             syncThemeFromIndex();
 
             // 加载当前单词本
@@ -1130,32 +1130,6 @@
             // 自动播放
             startAutoPlay();
 
-        }
-
-        function applyTheme(theme) {
-            if (theme === 'light') {
-                document.body.classList.add('light-theme');
-            } else if (theme === 'dark') {
-                document.body.classList.remove('light-theme');
-            } else if (theme === 'auto') {
-                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                if (prefersDark) {
-                    document.body.classList.remove('light-theme');
-                } else {
-                    document.body.classList.add('light-theme');
-                }
-            }
-        }
-        function syncThemeFromIndex() {
-
-            const theme = localStorage.getItem('theme') || 'dark';
-            applyTheme(theme);
-            // 监听系统主题变化
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-                if ((localStorage.getItem('theme') || 'dark') === 'auto') {
-                    applyTheme('auto');
-                }
-            });
         }
 
         // 按需加载单词数据
@@ -1284,23 +1258,15 @@
 
         // 设置事件监听
         function setupEventListeners() {
-            // 导航链接
-            navLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    const pageId = link.getAttribute('data-page');
-                    switchPage(pageId);
-
-                    // 更新活动链接
-                    navLinks.forEach(l => l.classList.remove('active'));
-                    link.classList.add('active');
-                });
+            // 使用公共导航事件绑定
+            setupNavLinks(navLinks, pages, (pageId) => {
+                if (pageId === 'wordlist' || pageId === 'settings') stopAutoPlay();
+                if (pageId === 'wordlist') renderWordList();
+                if (pageId === 'wordcard' && autoPlayEnabled) startAutoPlay();
             });
-
 
             // 主页链接点击事件
-            document.getElementById('homeLink').addEventListener('click', function () {
-                window.location.href = 'index.html';
-            });
+            setupHomeLink('homeLink', 'index.html');
 
             // 单词本选择
             bookSelectorElement.addEventListener('change', handleBookChange);
@@ -1390,23 +1356,14 @@
 
         // 切换页面
         function switchPage(pageId) {
-            pages.forEach(page => {
-                page.classList.remove('active');
-            });
-
-            document.getElementById(`${pageId}Page`).classList.add('active');
-
+            switchPageCommon(pageId, navLinks, pages);
             if (pageId === 'wordcard') {
-                if (autoPlayEnabled) {
-                    startAutoPlay();
-                } 
+                if (autoPlayEnabled) startAutoPlay();
             }
-            // 如果是单词列表页面，重新渲染
             if (pageId === 'wordlist') {
                 renderWordList();
-                stopAutoPlay(); // 停止自动播放
+                stopAutoPlay();
             }
-            // 如果是设置页面，也停止自动播放
             if (pageId === 'settings') {
                 stopAutoPlay();
             }

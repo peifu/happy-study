@@ -82,7 +82,7 @@
             font-size: 28px;
             font-weight: 700;
             background: linear-gradient(90deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0 0 10px rgba(234, 67, 53, 0.5);
             cursor: pointer;
@@ -1281,30 +1281,6 @@
         }
 
         // 保存进度到本地存储
-        function saveProgress() {
-            localStorage.setItem('learnedPoems', JSON.stringify(learnedPoems));
-            localStorage.setItem('masteredPoems', JSON.stringify(masteredPoems));
-        }
-
-        // 从本地存储加载进度
-        function loadProgress() {
-            const learned = localStorage.getItem('learnedPoems');
-            const mastered = localStorage.getItem('masteredPoems');
-            
-            if (learned) {
-                learnedPoems = JSON.parse(learned);
-            }
-            
-            if (mastered) {
-                masteredPoems = JSON.parse(mastered);
-            }
-        }
-
-        // 初始化应用
-        window.addEventListener('DOMContentLoaded', init);
-    </script>
-</body>
-</html>
         function saveProgress() {
             localStorage.setItem('learnedPoems', JSON.stringify(learnedPoems));
             localStorage.setItem('masteredPoems', JSON.stringify(masteredPoems));
