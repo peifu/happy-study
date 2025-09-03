@@ -1550,7 +1550,15 @@
             const searchTerm = wordSearchElement.value.toLowerCase();
             const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
 
-            wordLists[currentBook].forEach((wordData, index) => {
+            // 修改这里确保使用当前的单词本数据
+            const currentWordList = wordLists[currentBook] || [];
+            
+            if (currentWordList.length === 0) {
+                wordsGridElement.innerHTML = '<div class="stat-card">当前单词本没有数据</div>';
+                return;
+            }
+
+            currentWordList.forEach((wordData, index) => {
                 // 搜索过滤
                 if (searchTerm && !wordData.word.toLowerCase().includes(searchTerm) &&
                     !wordData.meaning.toLowerCase().includes(searchTerm)) {

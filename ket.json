@@ -1258,432 +1258,432 @@
         "phonetic": "/kʌt/",
         "meaning": "切，割",
         "example": "Be careful not to cut your finger."
-    }，
-  {
-    word: "dog",
-    phonetic: "/dɒɡ/",
-    meaning: "狗",
-    example: "The dog is barking loudly."
     },
     {
-    word: "day",
-    phonetic: "/deɪ/",
-    meaning: "天，白天",
-    example: "I go to school every day."
+        "word": "dog",
+        "phonetic": "/dɒɡ/",
+        "meaning": "狗",
+        "example": "The dog is barking loudly."
     },
     {
-    word: "door",
-    phonetic: "/dɔːr/",
-    meaning: "门",
-    example: "Please close the door."
+        "word": "day",
+        "phonetic": "/deɪ/",
+        "meaning": "天，白天",
+        "example": "I go to school every day."
     },
     {
-    word: "desk",
-    phonetic: "/desk/",
-    meaning: "书桌",
-    example: "My books are on the desk."
+        "word": "door",
+        "phonetic": "/dɔːr/",
+        "meaning": "门",
+        "example": "Please close the door."
     },
     {
-    word: "dance",
-    phonetic: "/dæns/",
-    meaning: "跳舞",
-    example: "She likes to dance."
+        "word": "desk",
+        "phonetic": "/desk/",
+        "meaning": "书桌",
+        "example": "My books are on the desk."
     },
     {
-    word: "drink",
-    phonetic: "/drɪŋk/",
-    meaning: "喝，饮料",
-    example: "I drink water every morning."
+        "word": "dance",
+        "phonetic": "/dæns/",
+        "meaning": "跳舞",
+        "example": "She likes to dance."
     },
     {
-    word: "drive",
-    phonetic: "/draɪv/",
-    meaning: "驾驶",
-    example: "My father drives a car."
+        "word": "drink",
+        "phonetic": "/drɪŋk/",
+        "meaning": "喝，饮料",
+        "example": "I drink water every morning."
     },
     {
-    word: "dress",
-    phonetic: "/dres/",
-    meaning: "连衣裙，穿衣",
-    example: "She wears a beautiful dress."
+        "word": "drive",
+        "phonetic": "/draɪv/",
+        "meaning": "驾驶",
+        "example": "My father drives a car."
     },
     {
-    word: "dinner",
-    phonetic: "/ˈdɪnər/",
-    meaning: "晚餐",
-    example: "We have dinner at 7 PM."
+        "word": "dress",
+        "phonetic": "/dres/",
+        "meaning": "连衣裙，穿衣",
+        "example": "She wears a beautiful dress."
     },
     {
-    word: "dollar",
-    phonetic: "/ˈdɒlər/",
-    meaning: "美元",
-    example: "This book costs ten dollars."
+        "word": "dinner",
+        "phonetic": "/ˈdɪnər/",
+        "meaning": "晚餐",
+        "example": "We have dinner at 7 PM."
     },
     {
-    word: "doctor",
-    phonetic: "/ˈdɒktər/",
-    meaning: "医生",
-    example: "The doctor helps sick people."
+        "word": "dollar",
+        "phonetic": "/ˈdɒlər/",
+        "meaning": "美元",
+        "example": "This book costs ten dollars."
     },
     {
-    word: "daughter",
-    phonetic: "/ˈdɔːtər/",
-    meaning: "女儿",
-    example: "Their daughter is very smart."
+        "word": "doctor",
+        "phonetic": "/ˈdɒktər/",
+        "meaning": "医生",
+        "example": "The doctor helps sick people."
     },
     {
-    word: "different",
-    phonetic: "/ˈdɪfərənt/",
-    meaning: "不同的",
-    example: "We have different opinions."
+        "word": "daughter",
+        "phonetic": "/ˈdɔːtər/",
+        "meaning": "女儿",
+        "example": "Their daughter is very smart."
     },
     {
-    word: "difficult",
-    phonetic: "/ˈdɪfɪkəlt/",
-    meaning: "困难的",
-    example: "Math is difficult for me."
+        "word": "different",
+        "phonetic": "/ˈdɪfərənt/",
+        "meaning": "不同的",
+        "example": "We have different opinions."
     },
     {
-    word: "dream",
-    phonetic: "/driːm/",
-    meaning: "梦想，做梦",
-    example: "I have a dream to travel."
+        "word": "difficult",
+        "phonetic": "/ˈdɪfɪkəlt/",
+        "meaning": "困难的",
+        "example": "Math is difficult for me."
     },
     {
-    word: "during",
-    phonetic: "/ˈdjʊərɪŋ/",
-    meaning: "在…期间",
-    example: "I read during my free time."
+        "word": "dream",
+        "phonetic": "/driːm/",
+        "meaning": "梦想，做梦",
+        "example": "I have a dream to travel."
     },
     {
-    word: "dark",
-    phonetic: "/dɑːk/",
-    meaning: "黑暗的",
-    example: "It's dark outside at night."
+        "word": "during",
+        "phonetic": "/ˈdjʊərɪŋ/",
+        "meaning": "在…期间",
+        "example": "I read during my free time."
     },
     {
-    word: "date",
-    phonetic: "/deɪt/",
-    meaning: "日期，约会",
-    example: "What's the date today?"
+        "word": "dark",
+        "phonetic": "/dɑːk/",
+        "meaning": "黑暗的",
+        "example": "It's dark outside at night."
     },
     {
-    word: "decide",
-    phonetic: "/dɪˈsaɪd/",
-    meaning: "决定",
-    example: "I decide to study harder."
+        "word": "date",
+        "phonetic": "/deɪt/",
+        "meaning": "日期，约会",
+        "example": "What's the date today?"
     },
     {
-    word: "delicious",
-    phonetic: "/dɪˈlɪʃəs/",
-    meaning: "美味的",
-    example: "The cake is delicious."
+        "word": "decide",
+        "phonetic": "/dɪˈsaɪd/",
+        "meaning": "决定",
+        "example": "I decide to study harder."
     },
     {
-    word: "describe",
-    phonetic: "/dɪˈskraɪb/",
-    meaning: "描述",
-    example: "Can you describe your house?"
+        "word": "delicious",
+        "phonetic": "/dɪˈlɪʃəs/",
+        "meaning": "美味的",
+        "example": "The cake is delicious."
     },
     {
-    word: "develop",
-    phonetic: "/dɪˈveləp/",
-    meaning: "发展",
-    example: "Cities develop quickly."
+        "word": "describe",
+        "phonetic": "/dɪˈskraɪb/",
+        "meaning": "描述",
+        "example": "Can you describe your house?"
     },
     {
-    word: "dictionary",
-    phonetic: "/ˈdɪkʃənəri/",
-    meaning: "字典",
-    example: "I use a dictionary to learn words."
+        "word": "develop",
+        "phonetic": "/dɪˈveləp/",
+        "meaning": "发展",
+        "example": "Cities develop quickly."
     },
     {
-    word: "discuss",
-    phonetic: "/dɪˈskʌs/",
-    meaning: "讨论",
-    example: "Let's discuss the plan."
+        "word": "dictionary",
+        "phonetic": "/ˈdɪkʃənəri/",
+        "meaning": "字典",
+        "example": "I use a dictionary to learn words."
     },
     {
-    word: "distance",
-    phonetic: "/ˈdɪstəns/",
-    meaning: "距离",
-    example: "The distance is not far."
+        "word": "discuss",
+        "phonetic": "/dɪˈskʌs/",
+        "meaning": "讨论",
+        "example": "Let's discuss the plan."
     },
     {
-    word: "draw",
-    phonetic: "/drɔː/",
-    meaning: "画画",
-    example: "I like to draw pictures."
+        "word": "distance",
+        "phonetic": "/ˈdɪstəns/",
+        "meaning": "距离",
+        "example": "The distance is not far."
     },
     {
-    word: "egg",
-    phonetic: "/eɡ/",
-    meaning: "鸡蛋",
-    example: "I eat an egg for breakfast."
+        "word": "draw",
+        "phonetic": "/drɔː/",
+        "meaning": "画画",
+        "example": "I like to draw pictures."
     },
     {
-    word: "eye",
-    phonetic: "/aɪ/",
-    meaning: "眼睛",
-    example: "She has blue eyes."
+        "word": "egg",
+        "phonetic": "/eɡ/",
+        "meaning": "鸡蛋",
+        "example": "I eat an egg for breakfast."
     },
     {
-    word: "ear",
-    phonetic: "/ɪər/",
-    meaning: "耳朵",
-    example: "The rabbit has long ears."
+        "word": "eye",
+        "phonetic": "/aɪ/",
+        "meaning": "眼睛",
+        "example": "She has blue eyes."
     },
     {
-    word: "eat",
-    phonetic: "/iːt/",
-    meaning: "吃",
-    example: "We eat lunch at school."
+        "word": "ear",
+        "phonetic": "/ɪər/",
+        "meaning": "耳朵",
+        "example": "The rabbit has long ears."
     },
     {
-    word: "eight",
-    phonetic: "/eɪt/",
-    meaning: "八",
-    example: "There are eight students."
+        "word": "eat",
+        "phonetic": "/iːt/",
+        "meaning": "吃",
+        "example": "We eat lunch at school."
     },
     {
-    word: "eleven",
-    phonetic: "/ɪˈlevən/",
-    meaning: "十一",
-    example: "I have eleven pencils."
+        "word": "eight",
+        "phonetic": "/eɪt/",
+        "meaning": "八",
+        "example": "There are eight students."
     },
     {
-    word: "email",
-    phonetic: "/ˈiːmeɪl/",
-    meaning: "电子邮件",
-    example: "I send an email to my friend."
+        "word": "eleven",
+        "phonetic": "/ɪˈlevən/",
+        "meaning": "十一",
+        "example": "I have eleven pencils."
     },
     {
-    word: "end",
-    phonetic: "/end/",
-    meaning: "结束，末端",
-    example: "The movie has a happy end."
+        "word": "email",
+        "phonetic": "/ˈiːmeɪl/",
+        "meaning": "电子邮件",
+        "example": "I send an email to my friend."
     },
     {
-    word: "enjoy",
-    phonetic: "/ɪnˈdʒɔɪ/",
-    meaning: "享受",
-    example: "I enjoy playing football."
+        "word": "end",
+        "phonetic": "/end/",
+        "meaning": "结束，末端",
+        "example": "The movie has a happy end."
     },
     {
-    word: "enough",
-    phonetic: "/ɪˈnʌf/",
-    meaning: "足够的",
-    example: "I have enough time to finish."
+        "word": "enjoy",
+        "phonetic": "/ɪnˈdʒɔɪ/",
+        "meaning": "享受",
+        "example": "I enjoy playing football."
     },
     {
-    word: "enter",
-    phonetic: "/ˈentər/",
-    meaning: "进入",
-    example: "Please enter the room quietly."
+        "word": "enough",
+        "phonetic": "/ɪˈnʌf/",
+        "meaning": "足够的",
+        "example": "I have enough time to finish."
     },
     {
-    word: "evening",
-    phonetic: "/ˈiːvnɪŋ/",
-    meaning: "晚上",
-    example: "We watch TV in the evening."
+        "word": "enter",
+        "phonetic": "/ˈentər/",
+        "meaning": "进入",
+        "example": "Please enter the room quietly."
     },
     {
-    word: "every",
-    phonetic: "/ˈevri/",
-    meaning: "每个",
-    example: "Every student has a book."
+        "word": "evening",
+        "phonetic": "/ˈiːvnɪŋ/",
+        "meaning": "晚上",
+        "example": "We watch TV in the evening."
     },
     {
-    word: "example",
-    phonetic: "/ɪɡˈzæmpl/",
-    meaning: "例子",
-    example: "This is a good example."
+        "word": "every",
+        "phonetic": "/ˈevri/",
+        "meaning": "每个",
+        "example": "Every student has a book."
     },
     {
-    word: "excellent",
-    phonetic: "/ˈeksələnt/",
-    meaning: "优秀的",
-    example: "Your work is excellent."
+        "word": "example",
+        "phonetic": "/ɪɡˈzæmpl/",
+        "meaning": "例子",
+        "example": "This is a good example."
     },
     {
-    word: "excuse",
-    phonetic: "/ɪkˈskjuːz/",
-    meaning: "借口，原谅",
-    example: "Excuse me, can you help me?"
+        "word": "excellent",
+        "phonetic": "/ˈeksələnt/",
+        "meaning": "优秀的",
+        "example": "Your work is excellent."
     },
     {
-    word: "exercise",
-    phonetic: "/ˈeksəsaɪz/",
-    meaning: "锻炼，练习",
-    example: "I do exercise every morning."
+        "word": "excuse",
+        "phonetic": "/ɪkˈskjuːz/",
+        "meaning": "借口，原谅",
+        "example": "Excuse me, can you help me?"
     },
     {
-    word: "expect",
-    phonetic: "/ɪkˈspekt/",
-    meaning: "期待",
-    example: "I expect to see you tomorrow."
+        "word": "exercise",
+        "phonetic": "/ˈeksəsaɪz/",
+        "meaning": "锻炼，练习",
+        "example": "I do exercise every morning."
     },
     {
-    word: "expensive",
-    phonetic: "/ɪkˈspensɪv/",
-    meaning: "昂贵的",
-    example: "The phone is too expensive."
+        "word": "expect",
+        "phonetic": "/ɪkˈspekt/",
+        "meaning": "期待",
+        "example": "I expect to see you tomorrow."
     },
     {
-    word: "explain",
-    phonetic: "/ɪkˈspleɪn/",
-    meaning: "解释",
-    example: "Can you explain this question?"
+        "word": "expensive",
+        "phonetic": "/ɪkˈspensɪv/",
+        "meaning": "昂贵的",
+        "example": "The phone is too expensive."
     },
     {
-    word: "express",
-    phonetic: "/ɪkˈspres/",
-    meaning: "表达",
-    example: "It's hard to express my feelings."
+        "word": "explain",
+        "phonetic": "/ɪkˈspleɪn/",
+        "meaning": "解释",
+        "example": "Can you explain this question?"
     },
     {
-    word: "face",
-    phonetic: "/feɪs/",
-    meaning: "脸",
-    example: "She has a round face."
+        "word": "express",
+        "phonetic": "/ɪkˈspres/",
+        "meaning": "表达",
+        "example": "It's hard to express my feelings."
     },
     {
-    word: "family",
-    phonetic: "/ˈfæməli/",
-    meaning: "家庭",
-    example: "My family is very big."
+        "word": "face",
+        "phonetic": "/feɪs/",
+        "meaning": "脸",
+        "example": "She has a round face."
     },
     {
-    word: "father",
-    phonetic: "/ˈfɑːðər/",
-    meaning: "父亲",
-    example: "My father works in an office."
+        "word": "family",
+        "phonetic": "/ˈfæməli/",
+        "meaning": "家庭",
+        "example": "My family is very big."
     },
     {
-    word: "friend",
-    phonetic: "/frend/",
-    meaning: "朋友",
-    example: "She is my best friend."
+        "word": "father",
+        "phonetic": "/ˈfɑːðər/",
+        "meaning": "父亲",
+        "example": "My father works in an office."
     },
     {
-    word: "food",
-    phonetic: "/fuːd/",
-    meaning: "食物",
-    example: "I like Chinese food."
+        "word": "friend",
+        "phonetic": "/frend/",
+        "meaning": "朋友",
+        "example": "She is my best friend."
     },
     {
-    word: "foot",
-    phonetic: "/fʊt/",
-    meaning: "脚",
-    example: "My foot hurts after running."
+        "word": "food",
+        "phonetic": "/fuːd/",
+        "meaning": "食物",
+        "example": "I like Chinese food."
     },
     {
-    word: "four",
-    phonetic: "/fɔːr/",
-    meaning: "四",
-    example: "There are four seasons."
+        "word": "foot",
+        "phonetic": "/fʊt/",
+        "meaning": "脚",
+        "example": "My foot hurts after running."
     },
     {
-    word: "five",
-    phonetic: "/faɪv/",
-    meaning: "五",
-    example: "I have five fingers on each hand."
+        "word": "four",
+        "phonetic": "/fɔːr/",
+        "meaning": "四",
+        "example": "There are four seasons."
     },
     {
-    word: "fifteen",
-    phonetic: "/ˌfɪfˈtiːn/",
-    meaning: "十五",
-    example: "She is fifteen years old."
+        "word": "five",
+        "phonetic": "/faɪv/",
+        "meaning": "五",
+        "example": "I have five fingers on each hand."
     },
     {
-    word: "fifty",
-    phonetic: "/ˈfɪfti/",
-    meaning: "五十",
-    example: "There are fifty students in my class."
+        "word": "fifteen",
+        "phonetic": "/ˌfɪfˈtiːn/",
+        "meaning": "十五",
+        "example": "She is fifteen years old."
     },
     {
-    word: "find",
-    phonetic: "/faɪnd/",
-    meaning: "找到",
-    example: "I can't find my keys."
+        "word": "fifty",
+        "phonetic": "/ˈfɪfti/",
+        "meaning": "五十",
+        "example": "There are fifty students in my class."
     },
     {
-    word: "first",
-    phonetic: "/fɜːst/",
-    meaning: "第一",
-    example: "This is my first time here."
+        "word": "find",
+        "phonetic": "/faɪnd/",
+        "meaning": "找到",
+        "example": "I can't find my keys."
     },
     {
-    word: "floor",
-    phonetic: "/flɔːr/",
-    meaning: "地板，楼层",
-    example: "The book is on the floor."
+        "word": "first",
+        "phonetic": "/fɜːst/",
+        "meaning": "第一",
+        "example": "This is my first time here."
     },
     {
-    word: "flower",
-    phonetic: "/ˈflaʊər/",
-    meaning: "花",
-    example: "The garden has many flowers."
+        "word": "floor",
+        "phonetic": "/flɔːr/",
+        "meaning": "地板，楼层",
+        "example": "The book is on the floor."
     },
     {
-    word: "fly",
-    phonetic: "/flaɪ/",
-    meaning: "飞",
-    example: "Birds can fly in the sky."
+        "word": "flower",
+        "phonetic": "/ˈflaʊər/",
+        "meaning": "花",
+        "example": "The garden has many flowers."
     },
     {
-    word: "follow",
-    phonetic: "/ˈfɒləʊ/",
-    meaning: "跟随",
-    example: "Please follow me to the office."
+        "word": "fly",
+        "phonetic": "/flaɪ/",
+        "meaning": "飞",
+        "example": "Birds can fly in the sky."
     },
     {
-    word: "forget",
-    phonetic: "/fəˈɡet/",
-    meaning: "忘记",
-    example: "Don't forget your homework."
+        "word": "follow",
+        "phonetic": "/ˈfɒləʊ/",
+        "meaning": "跟随",
+        "example": "Please follow me to the office."
     },
     {
-    word: "free",
-    phonetic: "/friː/",
-    meaning: "免费的，自由的",
-    example: "The water is free here."
+        "word": "forget",
+        "phonetic": "/fəˈɡet/",
+        "meaning": "忘记",
+        "example": "Don't forget your homework."
     },
     {
-    word: "Friday",
-    phonetic: "/ˈfraɪdeɪ/",
-    meaning: "星期五",
-    example: "We have a test on Friday."
+        "word": "free",
+        "phonetic": "/friː/",
+        "meaning": "免费的，自由的",
+        "example": "The water is free here."
     },
     {
-    word: "from",
-    phonetic: "/frɒm/",
-    meaning: "从…",
-    example: "I come from China."
+        "word": "Friday",
+        "phonetic": "/ˈfraɪdeɪ/",
+        "meaning": "星期五",
+        "example": "We have a test on Friday."
     },
     {
-    word: "fruit",
-    phonetic: "/fruːt/",
-    meaning: "水果",
-    example: "Apples are my favorite fruit."
+        "word": "from",
+        "phonetic": "/frɒm/",
+        "meaning": "从…",
+        "example": "I come from China."
     },
     {
-    word: "full",
-    phonetic: "/fʊl/",
-    meaning: "满的",
-    example: "The glass is full of water."
+        "word": "fruit",
+        "phonetic": "/fruːt/",
+        "meaning": "水果",
+        "example": "Apples are my favorite fruit."
     },
     {
-    word: "fun",
-    phonetic: "/fʌn/",
-    meaning: "有趣的",
-    example: "Playing games is fun."
+        "word": "full",
+        "phonetic": "/fʊl/",
+        "meaning": "满的",
+        "example": "The glass is full of water."
     },
     {
-    word: "future",
-    phonetic: "/ˈfjuːtʃər/",
-    meaning: "未来",
-    example: "I want to be a doctor in the future."
+        "word": "fun",
+        "phonetic": "/fʌn/",
+        "meaning": "有趣的",
+        "example": "Playing games is fun."
+    },
+    {
+        "word": "future",
+        "phonetic": "/ˈfjuːtʃər/",
+        "meaning": "未来",
+        "example": "I want to be a doctor in the future."
     },
     {
         "word": "game",
