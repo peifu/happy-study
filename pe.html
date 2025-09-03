@@ -83,7 +83,7 @@
             font-size: 28px;
             font-weight: 700;
             background: linear-gradient(90deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0 0 10px rgba(15, 157, 88, 0.5);
             cursor: pointer;
@@ -589,6 +589,7 @@
             flex-grow: 1;
         }
     </style>
+    <script src="common.js"></script>
 </head>
 
 <body>
@@ -1298,34 +1299,7 @@
 
             // 设置事件监听
             setupEventListeners();
-
-            // 检查系统主题偏好
             syncThemeFromIndex();
-        }
-
-        function syncThemeFromIndex() {
-            function applyTheme(theme) {
-                if (theme === 'light') {
-                    document.body.classList.add('light-theme');
-                } else if (theme === 'dark') {
-                    document.body.classList.remove('light-theme');
-                } else if (theme === 'auto') {
-                    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                    if (prefersDark) {
-                        document.body.classList.remove('light-theme');
-                    } else {
-                        document.body.classList.add('light-theme');
-                    }
-                }
-            }
-            const theme = localStorage.getItem('theme') || 'dark';
-            applyTheme(theme);
-            // 监听系统主题变化
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-                if ((localStorage.getItem('theme') || 'dark') === 'auto') {
-                    applyTheme('auto');
-                }
-            });
         }
 
         // 修改:更新导航链接事件处理
@@ -1355,30 +1329,13 @@
 
         }
 
-        // 修改:切换页面函数
+        // 切换页面
         function switchPage(pageId) {
             if (pageId === 'home') {
                 window.location.href = 'index.html';
                 return;
             }
-
-            // 更新活动导航链接
-            navLinks.forEach(link => {
-                if (link.getAttribute('data-page') === pageId) {
-                    link.classList.add('active');
-                } else {
-                    link.classList.remove('active');
-                }
-            });
-
-            // 显示对应页面
-            pages.forEach(page => {
-                if (page.id === pageId + 'Page') {
-                    page.classList.add('active');
-                } else {
-                    page.classList.remove('active');
-                }
-            });
+            switchPageCommon(pageId, navLinks, pages);
         }
 
         // 显示当前体育项目

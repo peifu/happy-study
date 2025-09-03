@@ -588,6 +588,7 @@
             margin: 0 3px;
         }
     </style>
+    <script src="common.js"></script>
 </head>
 <body>
     <div class="container">
@@ -898,38 +899,15 @@
             prevBtnElement.addEventListener('click', showPrevConcept);
             
             // 导航链接
-            navLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    const pageId = link.getAttribute('data-page');
-                    switchPage(pageId);
-                });
-            });
+            setupNavLinks(navLinks, pages);
             
             // 主页链接
-            homeLink.addEventListener('click', () => {
-                window.location.href = 'index.html';
-            });
+            setupHomeLink('homeLink', 'index.html');
         }
 
         // 切换页面
         function switchPage(pageId) {
-            // 更新活动导航链接
-            navLinks.forEach(link => {
-                if (link.getAttribute('data-page') === pageId) {
-                    link.classList.add('active');
-                } else {
-                    link.classList.remove('active');
-                }
-            });
-            
-            // 显示对应页面
-            pages.forEach(page => {
-                if (page.id === pageId + 'Page') {
-                    page.classList.add('active');
-                } else {
-                    page.classList.remove('active');
-                }
-            });
+            switchPageCommon(pageId, navLinks, pages);
         }
 
         // 显示当前概念
@@ -1107,6 +1085,28 @@
         // 保存进度到本地存储
         function saveProgress() {
             localStorage.setItem('learnedConcepts', JSON.stringify(learnedConcepts));
+            localStorage.setItem('masteredConcepts', JSON.stringify(masteredConcepts));
+        }
+
+        // 从本地存储加载进度
+        function loadProgress() {
+            const learned = localStorage.getItem('learnedConcepts');
+            const mastered = localStorage.getItem('masteredConcepts');
+            
+            if (learned) {
+                learnedConcepts = JSON.parse(learned);
+            }
+            
+            if (mastered) {
+                masteredConcepts = JSON.parse(mastered);
+            }
+        }
+
+        // 初始化应用
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
             localStorage.setItem('masteredConcepts', JSON.stringify(masteredConcepts));
         }
 

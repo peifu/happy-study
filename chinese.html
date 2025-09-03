@@ -573,6 +573,7 @@
             margin-top: 10px;
         }
     </style>
+    <script src="common.js"></script>
 </head>
 <body>
     <div class="container">
@@ -877,9 +878,7 @@
 
         // 初始化
         function init() {
-
             syncThemeFromIndex();
-
             // 加载学习进度
             loadProgress();
             
@@ -970,6 +969,9 @@
 
         // 设置事件监听
         function setupEventListeners() {
+            // 使用公共导航事件绑定
+            setupNavLinks(navLinks, pages);
+
             // 诗词本选择
             bookSelectorElement.addEventListener('change', handleBookChange);
             
@@ -979,14 +981,6 @@
             notKnowBtnElement.addEventListener('click', markAsNotMemorized);
             nextBtnElement.addEventListener('click', showNextPoem);
             prevBtnElement.addEventListener('click', showPrevPoem);
-            
-            // 导航链接
-            navLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    const pageId = link.getAttribute('data-page');
-                    switchPage(pageId);
-                });
-            });
             
             // 设置选项
             document.querySelectorAll('.setting-option').forEach(option => {
@@ -998,9 +992,7 @@
             resetSettingsBtn.addEventListener('click', resetSettings);
             
             // 主页链接
-            homeLink.addEventListener('click', () => {
-                window.location.href = 'index.html';
-            });
+            setupHomeLink('homeLink', 'index.html');
         }
 
         // 处理设置选项点击
@@ -1117,23 +1109,7 @@
 
         // 切换页面
         function switchPage(pageId) {
-            // 更新活动导航链接
-            navLinks.forEach(link => {
-                if (link.getAttribute('data-page') === pageId) {
-                    link.classList.add('active');
-                } else {
-                    link.classList.remove('active');
-                }
-            });
-            
-            // 显示对应页面
-            pages.forEach(page => {
-                if (page.id === pageId + 'Page') {
-                    page.classList.add('active');
-                } else {
-                    page.classList.remove('active');
-                }
-            });
+            switchPageCommon(pageId, navLinks, pages);
         }
 
         // 显示当前诗词
@@ -1305,6 +1281,30 @@
         }
 
         // 保存进度到本地存储
+        function saveProgress() {
+            localStorage.setItem('learnedPoems', JSON.stringify(learnedPoems));
+            localStorage.setItem('masteredPoems', JSON.stringify(masteredPoems));
+        }
+
+        // 从本地存储加载进度
+        function loadProgress() {
+            const learned = localStorage.getItem('learnedPoems');
+            const mastered = localStorage.getItem('masteredPoems');
+            
+            if (learned) {
+                learnedPoems = JSON.parse(learned);
+            }
+            
+            if (mastered) {
+                masteredPoems = JSON.parse(mastered);
+            }
+        }
+
+        // 初始化应用
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
         function saveProgress() {
             localStorage.setItem('learnedPoems', JSON.stringify(learnedPoems));
             localStorage.setItem('masteredPoems', JSON.stringify(masteredPoems));

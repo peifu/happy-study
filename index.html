@@ -573,6 +573,7 @@
             width: 100%;
         }
     </style>
+    <script src="common.js"></script>
 </head>
 <body>
     <div class="container">
@@ -776,13 +777,9 @@
     <script>
         // 初始化函数
         function init() {
-            // 设置主题
-            applyTheme(getSavedTheme() || 'dark');
-            // 设置事件监听
+            syncThemeFromIndex();
             setupEventListeners();
-            // 初始化设置滑块
             setupSettingsSliders();
-            // 主题选择监听
             setupThemeSelect();
         }
 
@@ -823,22 +820,11 @@
         }
         // 设置事件监听
         function setupEventListeners() {
-            // 导航链接点击事件
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', function() {
-                    const pageId = this.getAttribute('data-page');
-                    switchPage(pageId);
-                    
-                    // 更新活动链接
-                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-                    this.classList.add('active');
-                });
-            });
-            
+            // 使用公共导航事件绑定
+            setupNavLinks(document.querySelectorAll('.nav-link'), document.querySelectorAll('.page'));
+
             // 主页链接点击事件
-            document.getElementById('homeLink').addEventListener('click', function() {
-                window.location.reload();
-            });
+            setupHomeLink('homeLink', 'index.html');
 
             // 卡片点击事件
             document.getElementById('englishCard').addEventListener('click', function() {
@@ -880,13 +866,27 @@
 
         // 切换页面
         function switchPage(pageId) {
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-            
-	    if (pageId === 'englishCard') {
+            switchPageCommon(pageId, document.querySelectorAll('.nav-link'), document.querySelectorAll('.page'));
+            if (pageId === 'englishCard') {
                 window.location.href = 'english.html';
                 document.getElementById('homePage').classList.add('active');
+            } else if (pageId === 'chineseCard') {
+                window.location.href = 'chinese.html';
+                document.getElementById('homePage').classList.add('active');
+            } else if (pageId === 'mathCard') {
+                window.location.href = 'math.html';
+                document.getElementById('homePage').classList.add('active');
+            } else if (pageId === 'peCard') {
+                window.location.href = 'pe.html';
+                document.getElementById('homePage').classList.add('active');
+            }
+        }
+
+        // 初始化应用
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
 	    } else if (pageId === 'chineseCard') {
                 window.location.href = 'chinese.html';
                 document.getElementById('homePage').classList.add('active');
