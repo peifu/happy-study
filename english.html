@@ -1021,37 +1021,6 @@
 
                 <div class="settings-card">
                     <div class="settings-header">
-                        <i class="fas fa-paint-brush settings-icon"></i>
-                        <div class="settings-title">界面设置</div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">主题</label>
-                        <select class="form-control" id="themeSelect">
-                            <option value="dark">深色主题</option>
-                            <option value="light">浅色主题</option>
-                            <option value="auto">跟随系统</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">字体大小</label>
-                        <input type="range" min="14" max="24" value="16" class="range-slider" id="fontSizeSlider">
-                        <div class="slider-value" id="fontSizeValue">16px</div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">动画效果</label>
-                        <select class="form-control" id="animationSelect">
-                            <option value="full">全部动画</option>
-                            <option value="reduced">减少动画</option>
-                            <option value="none">无动画</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="settings-card">
-                    <div class="settings-header">
                         <i class="fas fa-database settings-icon"></i>
                         <div class="settings-title">数据管理</div>
                     </div>
@@ -1089,8 +1058,9 @@
         let autoPlayInterval = 5; // 默认5秒
         let autoPlayTimer = null;
         let autoPlayEnabled = true;
-        let learnedWords = {};
-        let masteredWords = {};
+        // 修改：每个单词本单独存储进度
+        let learnedWordsMap = {};   // { book: { word: true/false } }
+        let masteredWordsMap = {};  // { book: { word: true/false } }
 
         // DOM元素
         const currentWordElement = document.getElementById('currentWord');
@@ -1251,21 +1221,6 @@
 
         // 加载设置
         function loadSettings() {
-            // 主题设置
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme) {
-                themeSelectElement.value = savedTheme;
-                applyTheme(savedTheme);
-            }
-
-            // 字体大小设置
-            const savedFontSize = localStorage.getItem('fontSize');
-            if (savedFontSize) {
-                fontSizeSliderElement.value = savedFontSize;
-                document.body.style.fontSize = `${savedFontSize}px`;
-                document.getElementById('fontSizeValue').textContent = `${savedFontSize}px`;
-            }
-
             // 自动翻页设置
             const savedAutoPlay = localStorage.getItem('autoPlay');
             if (savedAutoPlay !== null) {
@@ -1274,8 +1229,6 @@
                 autoPlayStatusElement.textContent = autoPlayEnabled ? '开启' : '关闭';
             }
         }
-
-
 
         // 初始化设置
         function initSettings() {
@@ -1303,6 +1256,16 @@
                 option.textContent = `${voice.name} (${voice.lang})`;
                 voiceSelect.appendChild(option);
             });
+        }
+
+        // 获取当前单词本的进度对象
+        function getLearnedWords() {
+            if (!learnedWordsMap[currentBook]) learnedWordsMap[currentBook] = {};
+            return learnedWordsMap[currentBook];
+        }
+        function getMasteredWords() {
+            if (!masteredWordsMap[currentBook]) masteredWordsMap[currentBook] = {};
+            return masteredWordsMap[currentBook];
         }
 
         // 设置事件监听
@@ -1366,24 +1329,27 @@
                     renderWordList();
                 });
             });
-
-            // 主题设置
-            themeSelectElement.addEventListener('change', () => {
-                const theme = themeSelectElement.value;
-                localStorage.setItem('theme', theme);
-                applyTheme(theme);
-            });
-
-            // 字体大小设置
-            fontSizeSliderElement.addEventListener('input', () => {
-                const fontSize = fontSizeSliderElement.value;
-                document.body.style.fontSize = `${fontSize}px`;
-                document.getElementById('fontSizeValue').textContent = `${fontSize}px`;
-                localStorage.setItem('fontSize', fontSize);
-            });
-
+            
             // 设置页面滑块
             setupSettingsSliders();
+
+            // 数据管理：重置学习进度
+            const resetBtn = document.querySelector('.settings-card .btn-warning');
+            if (resetBtn) {
+                resetBtn.addEventListener('click', () => {
+                    showCustomConfirm(
+                        '确定要重置所有单词本的学习进度吗？<br><span style="color:var(--warning)">此操作不可恢复。</span>',
+                        () => {
+                            learnedWordsMap = {};
+                            masteredWordsMap = {};
+                            saveProgress();
+                            updateProgress();
+                            renderWordList();
+                            showCurrentWord();
+                        }
+                    );
+                });
+            }
         }
 
         // 设置页面滑块
@@ -1416,9 +1382,19 @@
 
             document.getElementById(`${pageId}Page`).classList.add('active');
 
+            if (pageId === 'wordcard') {
+                if (autoPlayEnabled) {
+                    startAutoPlay();
+                } 
+            }
             // 如果是单词列表页面，重新渲染
             if (pageId === 'wordlist') {
                 renderWordList();
+                stopAutoPlay(); // 停止自动播放
+            }
+            // 如果是设置页面，也停止自动播放
+            if (pageId === 'settings') {
+                stopAutoPlay();
             }
         }
 
@@ -1474,8 +1450,8 @@
             if (!wordLists[currentBook] || wordLists[currentBook].length === 0) return;
 
             const word = wordLists[currentBook][currentIndex].word;
-            masteredWords[word] = true;
-            learnedWords[word] = true;
+            getMasteredWords()[word] = true;
+            getLearnedWords()[word] = true;
             saveProgress();
             updateProgress();
             renderWordList();
@@ -1487,8 +1463,8 @@
             if (!wordLists[currentBook] || wordLists[currentBook].length === 0) return;
 
             const word = wordLists[currentBook][currentIndex].word;
-            masteredWords[word] = false;
-            learnedWords[word] = true;
+            getMasteredWords()[word] = false;
+            getLearnedWords()[word] = true;
             saveProgress();
             updateProgress();
             renderWordList();
@@ -1550,9 +1526,10 @@
             const searchTerm = wordSearchElement.value.toLowerCase();
             const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
 
-            // 修改这里确保使用当前的单词本数据
             const currentWordList = wordLists[currentBook] || [];
-            
+            const learnedWords = getLearnedWords();
+            const masteredWords = getMasteredWords();
+
             if (currentWordList.length === 0) {
                 wordsGridElement.innerHTML = '<div class="stat-card">当前单词本没有数据</div>';
                 return;
@@ -1624,6 +1601,9 @@
             }
 
             const totalWords = wordLists[currentBook].length;
+            const learnedWords = getLearnedWords();
+            const masteredWords = getMasteredWords();
+
             const learned = Object.keys(learnedWords).filter(word =>
                 wordLists[currentBook].some(w => w.word === word)
             ).length;
@@ -1642,21 +1622,20 @@
 
         // 保存进度到本地存储
         function saveProgress() {
-            localStorage.setItem('learnedWords', JSON.stringify(learnedWords));
-            localStorage.setItem('masteredWords', JSON.stringify(masteredWords));
+            localStorage.setItem('learnedWordsMap', JSON.stringify(learnedWordsMap));
+            localStorage.setItem('masteredWordsMap', JSON.stringify(masteredWordsMap));
         }
 
         // 从本地存储加载进度
         function loadProgress() {
-            const learned = localStorage.getItem('learnedWords');
-            const mastered = localStorage.getItem('masteredWords');
+            const learned = localStorage.getItem('learnedWordsMap');
+            const mastered = localStorage.getItem('masteredWordsMap');
 
             if (learned) {
-                learnedWords = JSON.parse(learned);
+                learnedWordsMap = JSON.parse(learned);
             }
-
             if (mastered) {
-                masteredWords = JSON.parse(mastered);
+                masteredWordsMap = JSON.parse(mastered);
             }
         }
 
@@ -1666,6 +1645,59 @@
         // 语音合成API加载
         if (speechSynthesis.onvoiceschanged !== undefined) {
             speechSynthesis.onvoiceschanged = populateVoiceList;
+        }
+
+        // 美化confirm弹框
+        function showCustomConfirm(message, onConfirm) {
+            // 避免重复弹窗
+            if (document.getElementById('customConfirmMask')) return;
+
+            const mask = document.createElement('div');
+            mask.id = 'customConfirmMask';
+            mask.style.position = 'fixed';
+            mask.style.left = 0;
+            mask.style.top = 0;
+            mask.style.width = '100vw';
+            mask.style.height = '100vh';
+            mask.style.background = 'rgba(0,0,0,0.35)';
+            mask.style.zIndex = 9999;
+            mask.style.display = 'flex';
+            mask.style.alignItems = 'center';
+            mask.style.justifyContent = 'center';
+
+            const box = document.createElement('div');
+            box.style.background = 'var(--card-bg-color)';
+            box.style.color = 'var(--text-color)';
+            box.style.borderRadius = '16px';
+            box.style.boxShadow = '0 8px 32px rgba(0,0,0,0.25)';
+            box.style.padding = '32px 28px 20px 28px';
+            box.style.minWidth = '320px';
+            box.style.maxWidth = '90vw';
+            box.style.textAlign = 'center';
+            box.style.position = 'relative';
+            box.style.border = '1px solid rgba(0,247,255,0.15)';
+            box.innerHTML = `
+                <div style="font-size:20px;font-weight:600;margin-bottom:18px;">
+                    <i class="fas fa-exclamation-triangle" style="color:var(--warning);margin-right:8px;"></i>
+                    操作确认
+                </div>
+                <div style="font-size:16px;margin-bottom:28px;">${message}</div>
+                <div style="display:flex;gap:18px;justify-content:center;">
+                    <button id="confirmBtn" style="padding:10px 28px;border:none;border-radius:8px;font-weight:600;background:linear-gradient(90deg,var(--primary),var(--secondary));color:#fff;cursor:pointer;transition:all 0.2s;">确定</button>
+                    <button id="cancelBtn" style="padding:10px 28px;border:none;border-radius:8px;font-weight:600;background:rgba(255,255,255,0.08);color:var(--text-color);border:1px solid rgba(0,0,0,0.08);cursor:pointer;transition:all 0.2s;">取消</button>
+                </div>
+            `;
+
+            mask.appendChild(box);
+            document.body.appendChild(mask);
+
+            document.getElementById('confirmBtn').onclick = () => {
+                document.body.removeChild(mask);
+                if (onConfirm) onConfirm();
+            };
+            document.getElementById('cancelBtn').onclick = () => {
+                document.body.removeChild(mask);
+            };
         }
     </script>
 </body>
