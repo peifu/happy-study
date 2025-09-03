@@ -1,0 +1,410 @@
+[
+  {
+    "word": "science",
+    "phonetic": "/ˈsaɪəns/",
+    "meaning": "科学",
+    "example": "We have science class on Wednesday."
+  },
+  {
+    "word": "museum",
+    "phonetic": "/mjuˈziːəm/",
+    "meaning": "博物馆",
+    "example": "The science museum is near the park."
+  },
+  {
+    "word": "post office",
+    "phonetic": "/pəʊst ˈɒfɪs/",
+    "meaning": "邮局",
+    "example": "I send a letter at the post office."
+  },
+  {
+    "word": "bookstore",
+    "phonetic": "/ˈbʊkstɔː(r)/",
+    "meaning": "书店",
+    "example": "I buy a new book in the bookstore."
+  },
+  {
+    "word": "cinema",
+    "phonetic": "/ˈsɪnəmə/",
+    "meaning": "电影院",
+    "example": "We watch a film in the cinema."
+  },
+  {
+    "word": "hospital",
+    "phonetic": "/ˈhɒspɪtl/",
+    "meaning": "医院",
+    "example": "My mother works in a hospital."
+  },
+  {
+    "word": "crossing",
+    "phonetic": "/ˈkrɒsɪŋ/",
+    "meaning": "十字路口",
+    "example": "Turn left at the first crossing."
+  },
+  {
+    "word": "turn",
+    "phonetic": "/tɜːn/",
+    "meaning": "转弯",
+    "example": "Turn right at the bank."
+  },
+  {
+    "word": "left",
+    "phonetic": "/left/",
+    "meaning": "左",
+    "example": "The library is on the left."
+  },
+  {
+    "word": "right",
+    "phonetic": "/raɪt/",
+    "meaning": "右",
+    "example": "His house is on the right."
+  },
+  {
+    "word": "straight",
+    "phonetic": "/streɪt/",
+    "meaning": "笔直地",
+    "example": "Go straight for five minutes."
+  },
+  {
+    "word": "go straight",
+    "phonetic": "/ɡəʊ streɪt/",
+    "meaning": "直走",
+    "example": "Go straight and you'll see the school."
+  },
+  {
+    "word": "ask",
+    "phonetic": "/ɑːsk/",
+    "meaning": "问",
+    "example": "You can ask the policeman for help."
+  },
+  {
+    "word": "sir",
+    "phonetic": "/sɜː(r)/",
+    "meaning": "（用于男子的姓氏或姓名前）先生",
+    "example": "Excuse me, sir. Where is the bank?"
+  },
+  {
+    "word": "interesting",
+    "phonetic": "/ˈɪntrəstɪŋ/",
+    "meaning": "有趣的",
+    "example": "The science museum is interesting."
+  },
+  {
+    "word": "Italian",
+    "phonetic": "/ɪˈtæliən/",
+    "meaning": "意大利的",
+    "example": "We eat Italian food tonight."
+  },
+  {
+    "word": "restaurant",
+    "phonetic": "/ˈrestrɒnt/",
+    "meaning": "餐馆",
+    "example": "We have dinner in a Chinese restaurant."
+  },
+  {
+    "word": "pizza",
+    "phonetic": "/ˈpiːtsə/",
+    "meaning": "比萨饼",
+    "example": "I like pizza with cheese."
+  },
+  {
+    "word": "get",
+    "phonetic": "/ɡet/",
+    "meaning": "到达",
+    "example": "How can I get to the park?"
+  },
+  {
+    "word": "GPS",
+    "phonetic": "/ˌdʒiː piː ˈes/",
+    "meaning": "全球（卫星）定位系统",
+    "example": "We use GPS to find the way."
+  },
+  {
+    "word": "gave",
+    "phonetic": "/ɡeɪv/",
+    "meaning": "（give的过去式）提供；交给",
+    "example": "She gave me a map."
+  },
+  {
+    "word": "feature",
+    "phonetic": "/ˈfiːtʃə(r)/",
+    "meaning": "特点",
+    "example": "This phone has a new feature."
+  },
+  {
+    "word": "follow",
+    "phonetic": "/ˈfɒləʊ/",
+    "meaning": "跟着",
+    "example": "Follow me, please. I know the way."
+  },
+  {
+    "word": "far",
+    "phonetic": "/fɑː(r)/",
+    "meaning": "较远的",
+    "example": "My home is far from school."
+  },
+  {
+    "word": "tell",
+    "phonetic": "/tel/",
+    "meaning": "告诉",
+    "example": "Can you tell me the way to the zoo?"
+  },
+  {
+    "word": "on foot",
+    "phonetic": "/ɒn fʊt/",
+    "meaning": "步行",
+    "example": "I go to school on foot every day."
+  },
+  {
+    "word": "by",
+    "phonetic": "/baɪ/",
+    "meaning": "（表示方式）乘",
+    "example": "She goes to work by bus."
+  },
+  {
+    "word": "bus",
+    "phonetic": "/bʌs/",
+    "meaning": "公共汽车",
+    "example": "The bus is coming."
+  },
+  {
+    "word": "plane",
+    "phonetic": "/pleɪn/",
+    "meaning": "飞机",
+    "example": "We go to Beijing by plane."
+  },
+  {
+    "word": "taxi",
+    "phonetic": "/ˈtæksi/",
+    "meaning": "出租汽车",
+    "example": "Take a taxi to the airport."
+  },
+  {
+    "word": "ship",
+    "phonetic": "/ʃɪp/",
+    "meaning": "（大）船",
+    "example": "We go across the sea by ship."
+  },
+  {
+    "word": "subway",
+    "phonetic": "/ˈsʌbweɪ/",
+    "meaning": "地铁",
+    "example": "Taking subway is fast."
+  },
+  {
+    "word": "train",
+    "phonetic": "/treɪn/",
+    "meaning": "火车",
+    "example": "The train arrives at 3 p.m."
+  },
+  {
+    "word": "slow",
+    "phonetic": "/sləʊ/",
+    "meaning": "慢的",
+    "example": "The old bus is slow."
+  },
+  {
+    "word": "down",
+    "phonetic": "/daʊn/",
+    "meaning": "减少；降低",
+    "example": "Slow down when driving."
+  },
+  {
+    "word": "slow down",
+    "phonetic": "/sləʊ daʊn/",
+    "meaning": "减速",
+    "example": "Slow down at the crossing."
+  },
+  {
+    "word": "stop",
+    "phonetic": "/stɒp/",
+    "meaning": "停下",
+    "example": "Stop at the red light."
+  },
+  {
+    "word": "wait",
+    "phonetic": "/weɪt/",
+    "meaning": "等",
+    "example": "Wait for the green light."
+  },
+  {
+    "word": "go",
+    "phonetic": "/ɡəʊ/",
+    "meaning": "走",
+    "example": "Go when the light is green."
+  },
+  {
+    "word": "traffic",
+    "phonetic": "/ˈtræfɪk/",
+    "meaning": "交通",
+    "example": "There is heavy traffic in the morning."
+  },
+  {
+    "word": "traffic light",
+    "phonetic": "/ˈtræfɪk laɪt/",
+    "meaning": "交通信号灯",
+    "example": "Look at the traffic light before crossing."
+  },
+  {
+    "word": "traffic rule",
+    "phonetic": "/ˈtræfɪk ruːl/",
+    "meaning": "交通规则",
+    "example": "We must follow traffic rules."
+  },
+  {
+    "word": "quick",
+    "phonetic": "/kwɪk/",
+    "meaning": "快的",
+    "example": "He has a quick breakfast."
+  },
+  {
+    "word": "must",
+    "phonetic": "/mʌst/",
+    "meaning": "必须",
+    "example": "You must wear a seat belt."
+  },
+  {
+    "word": "wear",
+    "phonetic": "/weə(r)/",
+    "meaning": "穿；戴",
+    "example": "Wear your helmet when riding a bike."
+  },
+  {
+    "word": "helmet",
+    "phonetic": "/ˈhelmɪt/",
+    "meaning": "头盔",
+    "example": "It's safe to wear a helmet."
+  },
+  {
+    "word": "attention",
+    "phonetic": "/əˈtenʃn/",
+    "meaning": "注意",
+    "example": "Pay attention to the teacher."
+  },
+  {
+    "word": "pay attention to",
+    "phonetic": "/peɪ əˈtenʃn tu/",
+    "meaning": "注意",
+    "example": "Pay attention to the traffic lights."
+  },
+  {
+    "word": "sled",
+    "phonetic": "/sled/",
+    "meaning": "雪橇",
+    "example": "We go down the hill by sled."
+  },
+  {
+    "word": "ferry",
+    "phonetic": "/ˈferi/",
+    "meaning": "轮渡",
+    "example": "We take a ferry to the island."
+  },
+  {
+    "word": "Papa Westray",
+    "phonetic": "/pəˈpɑː ˈwestreɪ/",
+    "meaning": "帕帕韦斯特雷岛",
+    "example": "Papa Westray is a small island."
+  },
+  {
+    "word": "Scotland",
+    "phonetic": "/ˈskɒtlənd/",
+    "meaning": "苏格兰",
+    "example": "Scotland is part of the UK."
+  },
+  {
+    "word": "hobby",
+    "phonetic": "/ˈhɒbi/",
+    "meaning": "业余爱好",
+    "example": "My hobby is reading books."
+  },
+  {
+    "word": "sing",
+    "phonetic": "/sɪŋ/",
+    "meaning": "唱歌",
+    "example": "She likes to sing in the music class."
+  },
+  {
+    "word": "dance",
+    "phonetic": "/dɑːns/",
+    "meaning": "跳舞",
+    "example": "They dance happily at the party."
+  },
+  {
+    "word": "read stories",
+    "phonetic": "/riːd ˈstɔːriz/",
+    "meaning": "读故事",
+    "example": "I read stories before going to bed."
+  },
+  {
+    "word": "play football",
+    "phonetic": "/pleɪ ˈfʊtbɔːl/",
+    "meaning": "踢足球",
+    "example": "He plays football with his friends."
+  },
+  {
+    "word": "do kung fu",
+    "phonetic": "/duː ˌkʌŋ ˈfuː/",
+    "meaning": "练武术",
+    "example": "He can do kung fu very well."
+  },
+  {
+    "word": "play the pipa",
+    "phonetic": "/pleɪ ðə piˈpɑː/",
+    "meaning": "弹琵琶",
+    "example": "She learns to play the pipa on weekends."
+  },
+  {
+    "word": "hiking",
+    "phonetic": "/ˈhaɪkɪŋ/",
+    "meaning": "远足",
+    "example": "We go hiking in the mountains."
+  },
+  {
+    "word": "pen pal",
+    "phonetic": "/pen pæl/",
+    "meaning": "笔友",
+    "example": "I have a pen pal in America."
+  },
+  {
+    "word": "dear",
+    "phonetic": "/dɪə(r)/",
+    "meaning": "亲爱的",
+    "example": "Dear Tom, how are you?"
+  },
+  {
+    "word": "twin",
+    "phonetic": "/twɪn/",
+    "meaning": "双胞胎之一",
+    "example": "Lucy and Lily are twins."
+  },
+  {
+    "word": "look",
+    "phonetic": "/lʊk/",
+    "meaning": "看",
+    "example": "Look at this picture."
+  },
+  {
+    "word": "shall",
+    "phonetic": "/ʃæl/",
+    "meaning": "（表示征求意见）",
+    "example": "Shall we go to the park?"
+  },
+  {
+    "word": "goal",
+    "phonetic": "/ɡəʊl/",
+    "meaning": "射门",
+    "example": "He scores a goal in the match."
+  },
+  {
+    "word": "join",
+    "phonetic": "/dʒɔɪn/",
+    "meaning": "加入",
+    "example": "Join our football club."
+  },
+  {
+    "word": "club",
+    "phonetic": "/klʌb/",
+    "meaning": "俱乐部",
+    "example": "We have an English club in our school."
+  }
+]

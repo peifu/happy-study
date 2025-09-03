@@ -1,0 +1,542 @@
+[
+  {
+    "word": "younger",
+    "phonetic": "/ˈjʌŋɡə(r)/",
+    "meaning": "更年轻的（young的比较级）",
+    "example": "My brother is younger than me."
+  },
+  {
+    "word": "older",
+    "phonetic": "/ˈəʊldə(r)/",
+    "meaning": "更年长的（old的比较级）",
+    "example": "My grandmother is older than my grandfather."
+  },
+  {
+    "word": "taller",
+    "phonetic": "/ˈtɔːlə(r)/",
+    "meaning": "更高的（tall的比较级）",
+    "example": "Tom is taller than his best friend."
+  },
+  {
+    "word": "shorter",
+    "phonetic": "/ˈʃɔːtə(r)/",
+    "meaning": "更矮的；更短的（short的比较级）",
+    "example": "This pencil is shorter than that one."
+  },
+  {
+    "word": "longer",
+    "phonetic": "/ˈlɒŋɡə(r)/",
+    "meaning": "更长的（long的比较级）",
+    "example": "The red rope is longer than the blue one."
+  },
+  {
+    "word": "thinner",
+    "phonetic": "/ˈθɪnə(r)/",
+    "meaning": "更瘦的；更薄的（thin的比较级）",
+    "example": "The cat is thinner than it was last month."
+  },
+  {
+    "word": "heavier",
+    "phonetic": "/ˈhevɪə(r)/",
+    "meaning": "更重的（heavy的比较级）",
+    "example": "This box is heavier than the bag."
+  },
+  {
+    "word": "bigger",
+    "phonetic": "/ˈbɪɡə(r)/",
+    "meaning": "更大的（big的比较级）",
+    "example": "The elephant is bigger than the tiger."
+  },
+  {
+    "word": "smaller",
+    "phonetic": "/ˈsmɔːlə(r)/",
+    "meaning": "更小的（small的比较级）",
+    "example": "The ant is smaller than the bee."
+  },
+  {
+    "word": "stronger",
+    "phonetic": "/ˈstrɒŋɡə(r)/",
+    "meaning": "更强壮的（strong的比较级）",
+    "example": "My father is stronger than my uncle."
+  },
+  {
+    "word": "dinosaur",
+    "phonetic": "/ˈdaɪnəsɔː(r)/",
+    "meaning": "恐龙",
+    "example": "We saw a dinosaur model in the museum."
+  },
+  {
+    "word": "hall",
+    "phonetic": "/hɔːl/",
+    "meaning": "大厅；礼堂",
+    "example": "The meeting will be held in the school hall."
+  },
+  {
+    "word": "metre",
+    "phonetic": "/ˈmiːtə(r)/",
+    "meaning": "米（长度单位）",
+    "example": "The tree is about five metres tall."
+  },
+  {
+    "word": "than",
+    "phonetic": "/ðæn; ðən/",
+    "meaning": "比（用于比较级）",
+    "example": "She runs faster than me."
+  },
+  {
+    "word": "both",
+    "phonetic": "/bəʊθ/",
+    "meaning": "两个都；双方都",
+    "example": "Both Lucy and Lily like dancing."
+  },
+  {
+    "word": "kilogram",
+    "phonetic": "/ˈkɪləɡræm/",
+    "meaning": "千克；公斤（重量单位）",
+    "example": "My schoolbag weighs three kilograms."
+  },
+  {
+    "word": "countryside",
+    "phonetic": "/ˈkʌntrisaɪd/",
+    "meaning": "乡村；农村",
+    "example": "We spent our holiday in the countryside."
+  },
+  {
+    "word": "lower",
+    "phonetic": "/ˈləʊə(r)/",
+    "meaning": "更低的；更低地（low的比较级）",
+    "example": "The temperature today is lower than yesterday."
+  },
+  {
+    "word": "shadow",
+    "phonetic": "/ˈʃædəʊ/",
+    "meaning": "影子；阴影",
+    "example": "Our shadows are longer in the evening."
+  },
+  {
+    "word": "smarter",
+    "phonetic": "/ˈsmɑːtə(r)/",
+    "meaning": "更聪明的（smart的比较级）",
+    "example": "The new robot is smarter than the old one."
+  },
+  {
+    "word": "become",
+    "phonetic": "/bɪˈkʌm/",
+    "meaning": "变成；成为",
+    "example": "He wants to become a doctor when he grows up."
+  },
+  {
+    "word": "cleaned",
+    "phonetic": "/kliːnd/",
+    "meaning": "打扫；清洁（clean的过去式/过去分词）",
+    "example": "I cleaned my room yesterday afternoon."
+  },
+  {
+    "word": "stayed",
+    "phonetic": "/steɪd/",
+    "meaning": "停留；待（stay的过去式/过去分词）",
+    "example": "She stayed at home last Sunday."
+  },
+  {
+    "word": "washed",
+    "phonetic": "/wɒʃt/",
+    "meaning": "洗（wash的过去式/过去分词）",
+    "example": "My mother washed the clothes this morning."
+  },
+  {
+    "word": "watched",
+    "phonetic": "/wɒtʃt/",
+    "meaning": "看；观看（watch的过去式/过去分词）",
+    "example": "We watched a film together last night."
+  },
+  {
+    "word": "had",
+    "phonetic": "/hæd; həd/",
+    "meaning": "有；经历；得病（have的过去式/过去分词）",
+    "example": "He had a busy weekend."
+  },
+  {
+    "word": "had a cold",
+    "phonetic": "/hæd ə kəʊld/",
+    "meaning": "感冒",
+    "example": "I had a cold and stayed in bed for two days."
+  },
+  {
+    "word": "slept",
+    "phonetic": "/slept/",
+    "meaning": "睡觉（sleep的过去式/过去分词）",
+    "example": "I slept well last night."
+  },
+  {
+    "word": "read",
+    "phonetic": "/red/",
+    "meaning": "读；阅读（read的过去式/过去分词）",
+    "example": "She read a storybook before going to bed."
+  },
+  {
+    "word": "saw",
+    "phonetic": "/sɔː/",
+    "meaning": "看见（see的过去式）",
+    "example": "I saw a beautiful bird in the park yesterday."
+  },
+  {
+    "word": "last",
+    "phonetic": "/lɑːst/",
+    "meaning": "最近的；上一个的",
+    "example": "We met each other last week."
+  },
+  {
+    "word": "yesterday",
+    "phonetic": "/ˈjestədeɪ/",
+    "meaning": "昨天",
+    "example": "Yesterday was my birthday."
+  },
+  {
+    "word": "before",
+    "phonetic": "/bɪˈfɔː(r)/",
+    "meaning": "在……之前；以前",
+    "example": "I had never been to Beijing before."
+  },
+  {
+    "word": "drank",
+    "phonetic": "/dræŋk/",
+    "meaning": "喝（drink的过去式）",
+    "example": "He drank a glass of milk this morning."
+  },
+  {
+    "word": "show",
+    "phonetic": "/ʃəʊ/",
+    "meaning": "演出；节目；展示",
+    "example": "There will be a talent show in our school."
+  },
+  {
+    "word": "magazine",
+    "phonetic": "/ˌmæɡəˈziːn/",
+    "meaning": "杂志",
+    "example": "My father likes reading sports magazines."
+  },
+  {
+    "word": "better",
+    "phonetic": "/ˈbetə(r)/",
+    "meaning": "更好的（good/well的比较级）",
+    "example": "Her English is better than mine."
+  },
+  {
+    "word": "faster",
+    "phonetic": "/ˈfɑːstə(r)/",
+    "meaning": "更快的（fast的比较级）",
+    "example": "He runs faster than any other student in his class."
+  },
+  {
+    "word": "hotel",
+    "phonetic": "/həʊˈtel/",
+    "meaning": "旅馆；酒店",
+    "example": "We stayed in a nice hotel during our trip."
+  },
+  {
+    "word": "fixed",
+    "phonetic": "/fɪkst/",
+    "meaning": "修理；安装（fix的过去式/过去分词）",
+    "example": "My father fixed the broken bike yesterday."
+  },
+  {
+    "word": "broken",
+    "phonetic": "/ˈbrəʊkən/",
+    "meaning": "破损的；破碎的",
+    "example": "The window is broken. We need to fix it."
+  },
+  {
+    "word": "lamp",
+    "phonetic": "/læmp/",
+    "meaning": "灯；台灯",
+    "example": "There is a lamp on my desk."
+  },
+  {
+    "word": "loud",
+    "phonetic": "/laʊd/",
+    "meaning": "大声的；响亮的",
+    "example": "Please don't be so loud. The baby is sleeping."
+  },
+  {
+    "word": "enjoy",
+    "phonetic": "/ɪnˈdʒɔɪ/",
+    "meaning": "享受；喜爱",
+    "example": "I enjoy listening to music in my free time."
+  },
+  {
+    "word": "went",
+    "phonetic": "/went/",
+    "meaning": "去（go的过去式）",
+    "example": "We went to the zoo last Saturday."
+  },
+  {
+    "word": "camp",
+    "phonetic": "/kæmp/",
+    "meaning": "野营；营地",
+    "example": "We set up a tent at the camp."
+  },
+  {
+    "word": "went camping",
+    "phonetic": "/went ˈkæmpɪŋ/",
+    "meaning": "去野营",
+    "example": "My family went camping in the mountains last month."
+  },
+  {
+    "word": "fish",
+    "phonetic": "/fɪʃ/",
+    "meaning": "钓鱼；鱼",
+    "example": "He likes to fish by the river on weekends."
+  },
+  {
+    "word": "went fishing",
+    "phonetic": "/went ˈfɪʃɪŋ/",
+    "meaning": "去钓鱼",
+    "example": "My grandfather and I went fishing yesterday."
+  },
+  {
+    "word": "rode",
+    "phonetic": "/rəʊd/",
+    "meaning": "骑（ride的过去式）",
+    "example": "She rode a bike to school this morning."
+  },
+  {
+    "word": "hurt",
+    "phonetic": "/hɜːt/",
+    "meaning": "受伤；使疼痛（过去式/过去分词同形）",
+    "example": "He hurt his leg when he played football."
+  },
+  {
+    "word": "ate",
+    "phonetic": "/eɪt/",
+    "meaning": "吃（eat的过去式）",
+    "example": "We ate delicious food at the restaurant."
+  },
+  {
+    "word": "took",
+    "phonetic": "/tʊk/",
+    "meaning": "拿；取；拍照（take的过去式）",
+    "example": "She took many photos during her trip."
+  },
+  {
+    "word": "took pictures",
+    "phonetic": "/tʊk ˈpɪktʃəz/",
+    "meaning": "照相；拍照",
+    "example": "We took pictures in front of the Great Wall."
+  },
+  {
+    "word": "bought",
+    "phonetic": "/bɔːt/",
+    "meaning": "买（buy的过去式/过去分词）",
+    "example": "My mother bought a new dress for me."
+  },
+  {
+    "word": "gift",
+    "phonetic": "/ɡɪft/",
+    "meaning": "礼物；赠品",
+    "example": "I received a nice gift on my birthday."
+  },
+  {
+    "word": "fell",
+    "phonetic": "/fel/",
+    "meaning": "摔倒；落下（fall的过去式）",
+    "example": "She fell down when she was running."
+  },
+  {
+    "word": "off",
+    "phonetic": "/ɒf/",
+    "meaning": "从（某处）落下；离开",
+    "example": "The book fell off the desk."
+  },
+  {
+    "word": "Labour Day",
+    "phonetic": "/ˈleɪbə(r) deɪ/",
+    "meaning": "劳动节（5月1日）",
+    "example": "We have a holiday on Labour Day."
+  },
+  {
+    "word": "mule",
+    "phonetic": "/mjuːl/",
+    "meaning": "骡子",
+    "example": "We saw a mule on the farm."
+  },
+  {
+    "word": "Turpan",
+    "phonetic": "/ˈtʊəpæn/",
+    "meaning": "吐鲁番（中国新疆地名）",
+    "example": "Turpan is famous for its grapes."
+  },
+  {
+    "word": "could",
+    "phonetic": "/kʊd; kəd/",
+    "meaning": "能；可以（can的过去式）",
+    "example": "He could swim when he was five years old."
+  },
+  {
+    "word": "till",
+    "phonetic": "/tɪl/",
+    "meaning": "直到……为止",
+    "example": "We waited till he came back."
+  },
+  {
+    "word": "beach",
+    "phonetic": "/biːtʃ/",
+    "meaning": "沙滩；海滩",
+    "example": "We played on the beach all afternoon."
+  },
+  {
+    "word": "basket",
+    "phonetic": "/ˈbɑːskɪt/",
+    "meaning": "篮子；筐",
+    "example": "She put the apples in a basket."
+  },
+  {
+    "word": "part",
+    "phonetic": "/pɑːt/",
+    "meaning": "角色；部分",
+    "example": "He played an important part in the play."
+  },
+  {
+    "word": "licked",
+    "phonetic": "/lɪkt/",
+    "meaning": "舔（lick的过去式/过去分词）",
+    "example": "The dog licked my hand."
+  },
+  {
+    "word": "laughed",
+    "phonetic": "/lɑːft/",
+    "meaning": "笑；发笑（laugh的过去式/过去分词）",
+    "example": "We laughed at the funny story."
+  },
+  {
+    "word": "dining hall",
+    "phonetic": "/ˈdaɪnɪŋ hɔːl/",
+    "meaning": "餐厅；饭厅",
+    "example": "We have lunch in the school dining hall."
+  },
+  {
+    "word": "grass",
+    "phonetic": "/ɡrɑːs/",
+    "meaning": "草；草地",
+    "example": "The grass in the park is green and soft."
+  },
+  {
+    "word": "gym",
+    "phonetic": "/dʒɪm/",
+    "meaning": "体育馆；健身房",
+    "example": "We have PE class in the gym."
+  },
+  {
+    "word": "ago",
+    "phonetic": "/əˈɡəʊ/",
+    "meaning": "以前",
+    "example": "I met her three years ago."
+  },
+  {
+    "word": "cycling",
+    "phonetic": "/ˈsaɪklɪŋ/",
+    "meaning": "骑自行车运动",
+    "example": "Cycling is good exercise."
+  },
+  {
+    "word": "go cycling",
+    "phonetic": "/ɡəʊ ˈsaɪklɪŋ/",
+    "meaning": "去骑自行车",
+    "example": "We often go cycling in the park."
+  },
+  {
+    "word": "ice-skate",
+    "phonetic": "/ˈaɪs skeɪt/",
+    "meaning": "滑冰",
+    "example": "She can ice-skate very well."
+  },
+  {
+    "word": "badminton",
+    "phonetic": "/ˈbædmɪntən/",
+    "meaning": "羽毛球运动",
+    "example": "We play badminton after school."
+  },
+  {
+    "word": "star",
+    "phonetic": "/stɑː(r)/",
+    "meaning": "星；恒星；明星",
+    "example": "There are many stars in the sky at night."
+  },
+  {
+    "word": "easy",
+    "phonetic": "/ˈiːzi/",
+    "meaning": "容易的；简单的",
+    "example": "This math problem is easy."
+  },
+  {
+    "word": "look up",
+    "phonetic": "/lʊk ʌp/",
+    "meaning": "查阅；向上看",
+    "example": "You can look up new words in a dictionary."
+  },
+  {
+    "word": "Internet",
+    "phonetic": "/ˈɪntənet/",
+    "meaning": "互联网；因特网",
+    "example": "We can get information from the Internet."
+  },
+  {
+    "word": "different",
+    "phonetic": "/ˈdɪfrənt/",
+    "meaning": "不同的",
+    "example": "These two books are different."
+  },
+  {
+    "word": "active",
+    "phonetic": "/ˈæktɪv/",
+    "meaning": "活跃的；积极的",
+    "example": "He is an active student in class."
+  },
+  {
+    "word": "race",
+    "phonetic": "/reɪs/",
+    "meaning": "赛跑；比赛",
+    "example": "He won the 100-meter race."
+  },
+  {
+    "word": "nothing",
+    "phonetic": "/ˈnʌθɪŋ/",
+    "meaning": "没有什么；没有一件东西",
+    "example": "There is nothing in the box."
+  },
+  {
+    "word": "thought",
+    "phonetic": "/θɔːt/",
+    "meaning": "想；认为（think的过去式/过去分词）",
+    "example": "I thought he was a good student."
+  },
+  {
+    "word": "felt",
+    "phonetic": "/felt/",
+    "meaning": "感觉（feel的过去式/过去分词）",
+    "example": "I felt happy when I heard the news."
+  },
+  {
+    "word": "cheetah",
+    "phonetic": "/ˈtʃiːtə/",
+    "meaning": "猎豹",
+    "example": "The cheetah is the fastest animal on land."
+  },
+  {
+    "word": "trip",
+    "phonetic": "/trɪp/",
+    "meaning": "绊倒；旅行",
+    "example": "She tripped and fell on the floor."
+  },
+  {
+    "word": "woke",
+    "phonetic": "/wəʊk/",
+    "meaning": "醒；醒来（wake的过去式）",
+    "example": "I woke up early this morning."
+  },
+  {
+    "word": "dream",
+    "phonetic": "/driːm/",
+    "meaning": "梦；梦想",
+    "example": "I had a good dream last night."
+  }
+]

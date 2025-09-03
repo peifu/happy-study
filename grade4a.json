@@ -1,0 +1,404 @@
+[
+  {
+    "word": "classroom",
+    "phonetic": "/ˈklɑːsruːm/",
+    "meaning": "教室",
+    "example": "Our classroom is big and bright."
+  },
+  {
+    "word": "window",
+    "phonetic": "/ˈwɪndəʊ/",
+    "meaning": "窗户",
+    "example": "Please open the window."
+  },
+  {
+    "word": "blackboard",
+    "phonetic": "/ˈblækbɔːd/",
+    "meaning": "黑板",
+    "example": "The teacher writes on the blackboard."
+  },
+  {
+    "word": "light",
+    "phonetic": "/laɪt/",
+    "meaning": "电灯",
+    "example": "Turn on the light, please."
+  },
+  {
+    "word": "picture",
+    "phonetic": "/ˈpɪktʃə(r)/",
+    "meaning": "图画；照片",
+    "example": "There is a nice picture on the wall."
+  },
+  {
+    "word": "door",
+    "phonetic": "/dɔː(r)/",
+    "meaning": "门",
+    "example": "Close the door, please."
+  },
+  {
+    "word": "teacher's desk",
+    "phonetic": "/ˈtiːtʃəz desk/",
+    "meaning": "讲台",
+    "example": "The book is on the teacher's desk."
+  },
+  {
+    "word": "computer",
+    "phonetic": "/kəmˈpjuːtə(r)/",
+    "meaning": "计算机；电脑",
+    "example": "We have a new computer in our classroom."
+  },
+  {
+    "word": "fan",
+    "phonetic": "/fæn/",
+    "meaning": "风扇",
+    "example": "The fan is on the ceiling."
+  },
+  {
+    "word": "wall",
+    "phonetic": "/wɔːl/",
+    "meaning": "墙壁",
+    "example": "The wall is white."
+  },
+  {
+    "word": "floor",
+    "phonetic": "/flɔː(r)/",
+    "meaning": "地板",
+    "example": "Please clean the floor."
+  },
+  {
+    "word": "near",
+    "phonetic": "/nɪə(r)/",
+    "meaning": "距离近",
+    "example": "My seat is near the window."
+  },
+  {
+    "word": "really",
+    "phonetic": "/ˈriːəli/",
+    "meaning": "（表示兴趣或惊讶）真的",
+    "example": "Really? That's great!"
+  },
+  {
+    "word": "TV",
+    "phonetic": "/ˌtiː ˈviː/",
+    "meaning": "电视",
+    "example": "We watch TV in the evening."
+  },
+  {
+    "word": "clean",
+    "phonetic": "/kliːn/",
+    "meaning": "打扫；清洁",
+    "example": "I clean my room every day."
+  },
+  {
+    "word": "help",
+    "phonetic": "/help/",
+    "meaning": "帮助",
+    "example": "Can you help me?"
+  },
+  {
+    "word": "schoolbag",
+    "phonetic": "/ˈskuːlbæɡ/",
+    "meaning": "书包",
+    "example": "I have a new schoolbag."
+  },
+  {
+    "word": "maths book",
+    "phonetic": "/mæθs bʊk/",
+    "meaning": "数学书",
+    "example": "My maths book is green."
+  },
+  {
+    "word": "English book",
+    "phonetic": "/ˈɪŋɡlɪʃ bʊk/",
+    "meaning": "英语书",
+    "example": "I like my English book."
+  },
+  {
+    "word": "Chinese book",
+    "phonetic": "/ˌtʃaɪˈniːz bʊk/",
+    "meaning": "语文书",
+    "example": "The Chinese book is on the desk."
+  },
+  {
+    "word": "storybook",
+    "phonetic": "/ˈstɔːribʊk/",
+    "meaning": "故事书",
+    "example": "I read a storybook every night."
+  },
+  {
+    "word": "notebook",
+    "phonetic": "/ˈnəʊtbʊk/",
+    "meaning": "笔记本",
+    "example": "I write in my notebook."
+  },
+  {
+    "word": "candy",
+    "phonetic": "/ˈkændi/",
+    "meaning": "糖果",
+    "example": "I have a candy in my schoolbag."
+  },
+  {
+    "word": "toy",
+    "phonetic": "/tɔɪ/",
+    "meaning": "玩具",
+    "example": "He has a toy car in his bag."
+  },
+  {
+    "word": "key",
+    "phonetic": "/kiː/",
+    "meaning": "钥匙",
+    "example": "Where is my key?"
+  },
+  {
+    "word": "wow",
+    "phonetic": "/waʊ/",
+    "meaning": "哇；呀",
+    "example": "Wow! That's a big cake!"
+  },
+  {
+    "word": "lost",
+    "phonetic": "/lɒst/",
+    "meaning": "丢失",
+    "example": "I lost my pencil."
+  },
+  {
+    "word": "so much",
+    "phonetic": "/səʊ mʌtʃ/",
+    "meaning": "非常地",
+    "example": "Thank you so much."
+  },
+  {
+    "word": "cute",
+    "phonetic": "/kjuːt/",
+    "meaning": "可爱的",
+    "example": "The cat is cute."
+  },
+  {
+    "word": "strong",
+    "phonetic": "/strɒŋ/",
+    "meaning": "强壮的",
+    "example": "My father is strong."
+  },
+  {
+    "word": "friendly",
+    "phonetic": "/ˈfrendli/",
+    "meaning": "友好的",
+    "example": "She is a friendly girl."
+  },
+  {
+    "word": "quiet",
+    "phonetic": "/ˈkwaɪət/",
+    "meaning": "安静的",
+    "example": "Be quiet in the library."
+  },
+  {
+    "word": "hair",
+    "phonetic": "/heə(r)/",
+    "meaning": "头发",
+    "example": "She has long hair."
+  },
+  {
+    "word": "shoe",
+    "phonetic": "/ʃuː/",
+    "meaning": "鞋",
+    "example": "My shoes are new."
+  },
+  {
+    "word": "glasses",
+    "phonetic": "/ˈɡlɑːsɪz/",
+    "meaning": "眼镜",
+    "example": "He wears glasses."
+  },
+  {
+    "word": "his",
+    "phonetic": "/hɪz/",
+    "meaning": "他的",
+    "example": "This is his book."
+  },
+  {
+    "word": "or",
+    "phonetic": "/ɔː(r)/",
+    "meaning": "或者",
+    "example": "Is this your pen or his?"
+  },
+  {
+    "word": "right",
+    "phonetic": "/raɪt/",
+    "meaning": "正确的；对的",
+    "example": "You are right."
+  },
+  {
+    "word": "hat",
+    "phonetic": "/hæt/",
+    "meaning": "（常指带檐的）帽子",
+    "example": "He wears a red hat."
+  },
+  {
+    "word": "her",
+    "phonetic": "/hɜː(r)/",
+    "meaning": "她的",
+    "example": "Her bag is blue."
+  },
+  {
+    "word": "bedroom",
+    "phonetic": "/ˈbedruːm/",
+    "meaning": "卧室",
+    "example": "This is my bedroom."
+  },
+  {
+    "word": "living room",
+    "phonetic": "/ˈlɪvɪŋ ruːm/",
+    "meaning": "客厅；起居室",
+    "example": "We watch TV in the living room."
+  },
+  {
+    "word": "study",
+    "phonetic": "/ˈstʌdi/",
+    "meaning": "书房",
+    "example": "My father reads books in the study."
+  },
+  {
+    "word": "kitchen",
+    "phonetic": "/ˈkɪtʃɪn/",
+    "meaning": "厨房",
+    "example": "My mother cooks in the kitchen."
+  },
+  {
+    "word": "bathroom",
+    "phonetic": "/ˈbɑːθruːm/",
+    "meaning": "浴室；洗手间",
+    "example": "I wash my face in the bathroom."
+  },
+  {
+    "word": "bed",
+    "phonetic": "/bed/",
+    "meaning": "床",
+    "example": "I sleep in my bed."
+  },
+  {
+    "word": "phone",
+    "phonetic": "/fəʊn/",
+    "meaning": "电话；电话机",
+    "example": "The phone is on the table."
+  },
+  {
+    "word": "table",
+    "phonetic": "/ˈteɪbl/",
+    "meaning": "桌子",
+    "example": "We eat at the table."
+  },
+  {
+    "word": "sofa",
+    "phonetic": "/ˈsəʊfə/",
+    "meaning": "长沙发",
+    "example": "We sit on the sofa."
+  },
+  {
+    "word": "fridge",
+    "phonetic": "/frɪdʒ/",
+    "meaning": "冰箱",
+    "example": "Milk is in the fridge."
+  },
+  {
+    "word": "find",
+    "phonetic": "/faɪnd/",
+    "meaning": "找到",
+    "example": "I can't find my pen."
+  },
+  {
+    "word": "them",
+    "phonetic": "/ðəm/",
+    "meaning": "他（她、它）们",
+    "example": "I find them."
+  },
+  {
+    "word": "beef",
+    "phonetic": "/biːf/",
+    "meaning": "牛肉",
+    "example": "I like beef."
+  },
+  {
+    "word": "chicken",
+    "phonetic": "/ˈtʃɪkɪn/",
+    "meaning": "鸡肉",
+    "example": "She eats chicken for dinner."
+  },
+  {
+    "word": "noodles",
+    "phonetic": "/ˈnuːdlz/",
+    "meaning": "面条",
+    "example": "I have noodles for lunch."
+  },
+  {
+    "word": "soup",
+    "phonetic": "/suːp/",
+    "meaning": "汤",
+    "example": "The soup is hot."
+  },
+  {
+    "word": "vegetables",
+    "phonetic": "/ˈvedʒtəblz/",
+    "meaning": "蔬菜",
+    "example": "Eat more vegetables."
+  },
+  {
+    "word": "chopsticks",
+    "phonetic": "/ˈtʃɒpstɪks/",
+    "meaning": "筷子",
+    "example": "We use chopsticks to eat."
+  },
+  {
+    "word": "bowl",
+    "phonetic": "/bəʊl/",
+    "meaning": "碗",
+    "example": "I have a bowl of rice."
+  },
+  {
+    "word": "fork",
+    "phonetic": "/fɔːk/",
+    "meaning": "餐叉",
+    "example": "He uses a fork to eat."
+  },
+  {
+    "word": "knife",
+    "phonetic": "/naɪf/",
+    "meaning": "刀",
+    "example": "Be careful with the knife."
+  },
+  {
+    "word": "spoon",
+    "phonetic": "/spuːn/",
+    "meaning": "勺",
+    "example": "I use a spoon to eat soup."
+  },
+  {
+    "word": "dinner",
+    "phonetic": "/ˈdɪnə(r)/",
+    "meaning": "（中午或晚上吃的）正餐",
+    "example": "We have dinner at 7:00."
+  },
+  {
+    "word": "ready",
+    "phonetic": "/ˈredi/",
+    "meaning": "准备好",
+    "example": "Dinner is ready."
+  },
+  {
+    "word": "help yourself",
+    "phonetic": "/help jɔːˈself/",
+    "meaning": "为（自己）取用",
+    "example": "Help yourself to some fish."
+  },
+  {
+    "word": "pass",
+    "phonetic": "/pɑːs/",
+    "meaning": "给；递",
+    "example": "Pass me the bowl, please."
+  },
+  {
+    "word": "try",
+    "phonetic": "/traɪ/",
+    "meaning": "尝试",
+    "example": "Please try this soup."
+  }
+]

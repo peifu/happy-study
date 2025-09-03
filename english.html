@@ -926,7 +926,14 @@
                     </div>
 
                     <select class="form-control" id="bookSelector">
-                        <option value="grade3">小学三年级词汇</option>
+                        <option value="grade3a">小学三年级词汇A</option>
+                        <option value="grade3b">小学三年级词汇B</option>
+                        <option value="grade4a">小学四年级词汇A</option>
+                        <option value="grade4b">小学四年级词汇B</option>
+                        <option value="grade5a">小学五年级词汇A</option>
+                        <option value="grade5b">小学五年级词汇B</option>
+                        <option value="grade6a">小学六年级词汇A</option>
+                        <option value="grade6b">小学六年级词汇B</option>
                         <option value="ket">KET单词表</option>
                     </select>
                     <div class="timer-setting-container">
@@ -988,7 +995,14 @@
                     <div class="form-group">
                         <label class="form-label">默认单词本</label>
                         <select class="form-control" id="defaultBook">
-                            <option value="grade3">小学三年级词汇</option>
+                            <option value="grade3a">小学三年级词汇A</option>
+                            <option value="grade3b">小学三年级词汇B</option>
+                            <option value="grade4a">小学四年级词汇A</option>
+                            <option value="grade4b">小学四年级词汇B</option>
+                            <option value="grade5a">小学五年级词汇A</option>
+                            <option value="grade5b">小学五年级词汇B</option>
+                            <option value="grade6a">小学六年级词汇A</option>
+                            <option value="grade6b">小学六年级词汇B</option>
                             <option value="ket">KET词汇</option>
                         </select>
                     </div>
@@ -1139,7 +1153,14 @@
 
             // 文件名映射
             const fileMap = {
-                grade3: 'grade3.json',
+                grade3a: 'grade3a.json',
+                grade3b: 'grade3b.json',
+                grade4a: 'grade4a.json',
+                grade4b: 'grade4b.json',
+                grade5a: 'grade5a.json',
+                grade5b: 'grade5b.json',
+                grade6a: 'grade6a.json',
+                grade6b: 'grade6b.json',
                 ket: 'ket.json'
             };
             const file = fileMap[book];
@@ -1182,7 +1203,7 @@
                 currentExampleElement.textContent = `错误详情: ${error.message}。请检查文件路径或服务器配置。`;
 
                 // 针对不同词本提供不同的默认数据
-                if (book === 'grade3') {
+                if (book === 'grade3a') {
                     wordLists[book] = [
                         { word: "apple", phonetic: "/ˈæpl/", meaning: "n. 苹果", example: "I eat an apple every day." },
                         { word: "school", phonetic: "/skuːl/", meaning: "n. 学校", example: "She goes to school by bus." }
@@ -1309,7 +1330,7 @@
                     renderWordList();
                 });
             });
-            
+
             // 设置页面滑块
             setupSettingsSliders();
 

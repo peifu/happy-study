@@ -1,0 +1,386 @@
+[
+  {
+    "word": "eat breakfast",
+    "phonetic": "/iːt ˈbrekfəst/",
+    "meaning": "吃早饭",
+    "example": "I eat breakfast at 7:00 every morning."
+  },
+  {
+    "word": "have class",
+    "phonetic": "/hæv klɑːs/",
+    "meaning": "上课",
+    "example": "We have class from 8:30 a.m. to 4:30 p.m."
+  },
+  {
+    "word": "play sports",
+    "phonetic": "/pleɪ spɔːts/",
+    "meaning": "进行体育运动",
+    "example": "I often play sports after school."
+  },
+  {
+    "word": "do morning exercises",
+    "phonetic": "/duː ˈmɔːnɪŋ ˈeksəsaɪzɪz/",
+    "meaning": "做早操",
+    "example": "We do morning exercises at 9:00 every day."
+  },
+  {
+    "word": "eat dinner",
+    "phonetic": "/iːt ˈdɪnə(r)/",
+    "meaning": "吃晚饭",
+    "example": "My family eats dinner together at 7:00 p.m."
+  },
+  {
+    "word": "clean my room",
+    "phonetic": "/kliːn maɪ ruːm/",
+    "meaning": "打扫我的房间",
+    "example": "I clean my room every Saturday."
+  },
+  {
+    "word": "go for a walk",
+    "phonetic": "/ɡəʊ fɔː(r) ə wɔːk/",
+    "meaning": "散步",
+    "example": "My grandparents go for a walk after dinner."
+  },
+  {
+    "word": "go shopping",
+    "phonetic": "/ɡəʊ ˈʃɒpɪŋ/",
+    "meaning": "去买东西；购物",
+    "example": "My mother and I go shopping on weekends."
+  },
+  {
+    "word": "take a dancing class",
+    "phonetic": "/teɪk ə ˈdɑːnsɪŋ klɑːs/",
+    "meaning": "上舞蹈课",
+    "example": "She takes a dancing class every Friday."
+  },
+  {
+    "word": "when",
+    "phonetic": "/wen/",
+    "meaning": "什么时候；何时",
+    "example": "When do you get up in the morning?"
+  },
+  {
+    "word": "after",
+    "phonetic": "/ˈɑːftə(r)/",
+    "meaning": "在（时间）后",
+    "example": "I do my homework after school."
+  },
+  {
+    "word": "start",
+    "phonetic": "/stɑːt/",
+    "meaning": "开始",
+    "example": "Our class starts at 8:30 a.m."
+  },
+  {
+    "word": "usually",
+    "phonetic": "/ˈjuːʒuəli/",
+    "meaning": "通常地；惯常地",
+    "example": "I usually go to bed at 9:30 p.m."
+  },
+  {
+    "word": "Spain",
+    "phonetic": "/speɪn/",
+    "meaning": "西班牙",
+    "example": "My pen pal lives in Spain."
+  },
+  {
+    "word": "late",
+    "phonetic": "/leɪt/",
+    "meaning": "晚；迟",
+    "example": "Don't be late for school."
+  },
+  {
+    "word": "a.m.",
+    "phonetic": "/ˌeɪ ˈem/",
+    "meaning": "午前；上午",
+    "example": "We have four classes in the a.m."
+  },
+  {
+    "word": "p.m.",
+    "phonetic": "/ˌpiː ˈem/",
+    "meaning": "午后；下午",
+    "example": "It's 3 p.m. now."
+  },
+  {
+    "word": "why",
+    "phonetic": "/waɪ/",
+    "meaning": "为什么",
+    "example": "Why do you like summer?"
+  },
+  {
+    "word": "shop",
+    "phonetic": "/ʃɒp/",
+    "meaning": "去买东西；购物",
+    "example": "I shop for clothes with my sister."
+  },
+  {
+    "word": "work",
+    "phonetic": "/wɜːk/",
+    "meaning": "工作",
+    "example": "My father works in a hospital."
+  },
+  {
+    "word": "last",
+    "phonetic": "/lɑːst/",
+    "meaning": "上一个的；刚过去的",
+    "example": "I visited my uncle last week."
+  },
+  {
+    "word": "sound",
+    "phonetic": "/saʊnd/",
+    "meaning": "听起来好像",
+    "example": "That sounds like fun."
+  },
+  {
+    "word": "also",
+    "phonetic": "/ˈɔːlsəʊ/",
+    "meaning": "还；也",
+    "example": "I also like playing basketball."
+  },
+  {
+    "word": "busy",
+    "phonetic": "/ˈbɪzi/",
+    "meaning": "忙的",
+    "example": "My mother is busy cooking dinner."
+  },
+  {
+    "word": "need",
+    "phonetic": "/niːd/",
+    "meaning": "需要",
+    "example": "I need a new pencil."
+  },
+  {
+    "word": "play",
+    "phonetic": "/pleɪ/",
+    "meaning": "戏剧；剧本",
+    "example": "We are going to see a play."
+  },
+  {
+    "word": "spring",
+    "phonetic": "/sprɪŋ/",
+    "meaning": "春天",
+    "example": "Flowers bloom in spring."
+  },
+  {
+    "word": "summer",
+    "phonetic": "/ˈsʌmə(r)/",
+    "meaning": "夏天",
+    "example": "I like swimming in summer."
+  },
+  {
+    "word": "autumn",
+    "phonetic": "/ˈɔːtəm/",
+    "meaning": "秋天",
+    "example": "Leaves fall in autumn."
+  },
+  {
+    "word": "winter",
+    "phonetic": "/ˈwɪntə(r)/",
+    "meaning": "冬天",
+    "example": "We can make snowmen in winter."
+  },
+  {
+    "word": "season",
+    "phonetic": "/ˈsiːzn/",
+    "meaning": "季节",
+    "example": "My favorite season is spring."
+  },
+  {
+    "word": "picnic",
+    "phonetic": "/ˈpɪknɪk/",
+    "meaning": "野餐",
+    "example": "We have a picnic in the park."
+  },
+  {
+    "word": "go on a picnic",
+    "phonetic": "/ɡəʊ ɒn ə ˈpɪknɪk/",
+    "meaning": "去野餐",
+    "example": "We often go on a picnic in autumn."
+  },
+  {
+    "word": "pick",
+    "phonetic": "/pɪk/",
+    "meaning": "摘；采集",
+    "example": "We pick apples on the farm."
+  },
+  {
+    "word": "pick apples",
+    "phonetic": "/pɪk ˈæplz/",
+    "meaning": "摘苹果",
+    "example": "I like to pick apples with my family."
+  },
+  {
+    "word": "snowman",
+    "phonetic": "/ˈsnəʊmæn/",
+    "meaning": "雪人",
+    "example": "We make a snowman in winter."
+  },
+  {
+    "word": "make a snowman",
+    "phonetic": "/meɪk ə ˈsnəʊmæn/",
+    "meaning": "堆雪人",
+    "example": "Children like to make a snowman."
+  },
+  {
+    "word": "plant",
+    "phonetic": "/plɑːnt/",
+    "meaning": "种植",
+    "example": "We plant trees in spring."
+  },
+  {
+    "word": "plant flowers",
+    "phonetic": "/plɑːnt ˈflaʊəz/",
+    "meaning": "种花",
+    "example": "My mother likes to plant flowers."
+  },
+  {
+    "word": "because",
+    "phonetic": "/bɪˈkɒz/",
+    "meaning": "因为",
+    "example": "I like summer because I can swim."
+  },
+  {
+    "word": "vacation",
+    "phonetic": "/veɪˈkeɪʃn/",
+    "meaning": "假期",
+    "example": "We have a long vacation in summer."
+  },
+  {
+    "word": "good job",
+    "phonetic": "/ɡʊd dʒɒb/",
+    "meaning": "做得好",
+    "example": "You finished your homework. Good job!"
+  },
+  {
+    "word": "January",
+    "phonetic": "/ˈdʒænjuəri/",
+    "meaning": "一月",
+    "example": "January is the first month of the year."
+  },
+  {
+    "word": "February",
+    "phonetic": "/ˈfebruəri/",
+    "meaning": "二月",
+    "example": "February is the second month."
+  },
+  {
+    "word": "March",
+    "phonetic": "/mɑːtʃ/",
+    "meaning": "三月",
+    "example": "We plant trees in March."
+  },
+  {
+    "word": "April",
+    "phonetic": "/ˈeɪprəl/",
+    "meaning": "四月",
+    "example": "April has 30 days."
+  },
+  {
+    "word": "May",
+    "phonetic": "/meɪ/",
+    "meaning": "五月",
+    "example": "Mother's Day is in May."
+  },
+  {
+    "word": "June",
+    "phonetic": "/dʒuːn/",
+    "meaning": "六月",
+    "example": "Children's Day is in June."
+  },
+  {
+    "word": "July",
+    "phonetic": "/dʒuˈlaɪ/",
+    "meaning": "七月",
+    "example": "Summer vacation starts in July."
+  },
+  {
+    "word": "August",
+    "phonetic": "/ˈɔːɡəst/",
+    "meaning": "八月",
+    "example": "August is hot in China."
+  },
+  {
+    "word": "September",
+    "phonetic": "/sepˈtembə(r)/",
+    "meaning": "九月",
+    "example": "School starts in September."
+  },
+  {
+    "word": "October",
+    "phonetic": "/ɒkˈtəʊbə(r)/",
+    "meaning": "十月",
+    "example": "National Day is in October."
+  },
+  {
+    "word": "November",
+    "phonetic": "/nəʊˈvembə(r)/",
+    "meaning": "十一月",
+    "example": "November comes after October."
+  },
+  {
+    "word": "December",
+    "phonetic": "/dɪˈsembə(r)/",
+    "meaning": "十二月",
+    "example": "Christmas is in December."
+  },
+  {
+    "word": "few",
+    "phonetic": "/fjuː/",
+    "meaning": "不多；很少",
+    "example": "There are a few apples left."
+  },
+  {
+    "word": "a few",
+    "phonetic": "/ə fjuː/",
+    "meaning": "一些；几个",
+    "example": "I have a few friends in this city."
+  },
+  {
+    "word": "thing",
+    "phonetic": "/θɪŋ/",
+    "meaning": "事情",
+    "example": "I have many things to do today."
+  },
+  {
+    "word": "meet",
+    "phonetic": "/miːt/",
+    "meaning": "集会；开会",
+    "example": "We have a class meet on Friday."
+  },
+  {
+    "word": "sports meet",
+    "phonetic": "/spɔːts miːt/",
+    "meaning": "运动会",
+    "example": "Our school has a sports meet in October."
+  },
+  {
+    "word": "trip",
+    "phonetic": "/trɪp/",
+    "meaning": "旅行",
+    "example": "We go on a trip in summer."
+  },
+  {
+    "word": "year",
+    "phonetic": "/jɪə(r)/",
+    "meaning": "年",
+    "example": "A year has twelve months."
+  },
+  {
+    "word": "plant",
+    "phonetic": "/plɑːnt/",
+    "meaning": "植物",
+    "example": "We water the plants every day."
+  },
+  {
+    "word": "contest",
+    "phonetic": "/ˈkɒntest/",
+    "meaning": "比赛；竞赛",
+    "example": "We have an English contest in May."
+  },
+  {
+    "word": "长城",
+    "phonetic": "/ɡreɪt wɔːl/",
+    "meaning": "the Great Wall",
+    "example": "I want to visit the Great Wall."
+  }
+]

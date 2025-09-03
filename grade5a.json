@@ -1,0 +1,386 @@
+[
+  {
+    "word": "young",
+    "phonetic": "/jʌŋ/",
+    "meaning": "年轻的；岁数不大的",
+    "example": "Our English teacher is young."
+  },
+  {
+    "word": "funny",
+    "phonetic": "/ˈfʌni/",
+    "meaning": "滑稽的；可笑的",
+    "example": "The funny story makes us laugh."
+  },
+  {
+    "word": "kind",
+    "phonetic": "/kaɪnd/",
+    "meaning": "体贴的；慈祥的；宽容的",
+    "example": "My mother is very kind."
+  },
+  {
+    "word": "strict",
+    "phonetic": "/strɪkt/",
+    "meaning": "要求严格的；严厉的",
+    "example": "Our maths teacher is strict but nice."
+  },
+  {
+    "word": "polite",
+    "phonetic": "/pəˈlaɪt/",
+    "meaning": "有礼貌的；客气的",
+    "example": "The boy is polite to everyone."
+  },
+  {
+    "word": "hard-working",
+    "phonetic": "/ˌhɑːd ˈwɜːkɪŋ/",
+    "meaning": "工作努力的；辛勤的",
+    "example": "She is a hard-working student."
+  },
+  {
+    "word": "helpful",
+    "phonetic": "/ˈhelpfl/",
+    "meaning": "有用的；愿意帮忙的",
+    "example": "He is helpful at home."
+  },
+  {
+    "word": "clever",
+    "phonetic": "/ˈklevə(r)/",
+    "meaning": "聪明的；聪颖的",
+    "example": "The clever boy solves the problem quickly."
+  },
+  {
+    "word": "shy",
+    "phonetic": "/ʃaɪ/",
+    "meaning": "羞怯的；腼腆的；怕生的",
+    "example": "She is shy when talking to strangers."
+  },
+  {
+    "word": "know",
+    "phonetic": "/nəʊ/",
+    "meaning": "知道；了解",
+    "example": "I know his name."
+  },
+  {
+    "word": "our",
+    "phonetic": "/ˈaʊə(r)/",
+    "meaning": "我们的",
+    "example": "This is our classroom."
+  },
+  {
+    "word": "will",
+    "phonetic": "/wɪl/",
+    "meaning": "（谈及将来）将要",
+    "example": "I will go to school tomorrow."
+  },
+  {
+    "word": "sometimes",
+    "phonetic": "/ˈsʌmtaɪmz/",
+    "meaning": "有时；间或",
+    "example": "He sometimes walks to school."
+  },
+  {
+    "word": "robot",
+    "phonetic": "/ˈrəʊbɒt/",
+    "meaning": "机器人",
+    "example": "The robot can help us clean the room."
+  },
+  {
+    "word": "him",
+    "phonetic": "/hɪm/",
+    "meaning": "他（宾格）",
+    "example": "I give him a book."
+  },
+  {
+    "word": "speak",
+    "phonetic": "/spiːk/",
+    "meaning": "会说；会讲（某种语言）；用（某种语言）说话",
+    "example": "She can speak English."
+  },
+  {
+    "word": "finish",
+    "phonetic": "/ˈfɪnɪʃ/",
+    "meaning": "完成；做好",
+    "example": "I finish my homework at 7 p.m."
+  },
+  {
+    "word": "Monday",
+    "phonetic": "/ˈmʌndeɪ/",
+    "meaning": "星期一",
+    "example": "We have maths on Monday."
+  },
+  {
+    "word": "Tuesday",
+    "phonetic": "/ˈtjuːzdeɪ/",
+    "meaning": "星期二",
+    "example": "I play basketball on Tuesday."
+  },
+  {
+    "word": "Wednesday",
+    "phonetic": "/ˈwenzdeɪ/",
+    "meaning": "星期三",
+    "example": "She has music on Wednesday."
+  },
+  {
+    "word": "Thursday",
+    "phonetic": "/ˈθɜːzdeɪ/",
+    "meaning": "星期四",
+    "example": "We clean the classroom on Thursday."
+  },
+  {
+    "word": "Friday",
+    "phonetic": "/ˈfraɪdeɪ/",
+    "meaning": "星期五",
+    "example": "Friday is my favorite day."
+  },
+  {
+    "word": "Saturday",
+    "phonetic": "/ˈsætədeɪ/",
+    "meaning": "星期六",
+    "example": "I go shopping on Saturday."
+  },
+  {
+    "word": "Sunday",
+    "phonetic": "/ˈsʌndeɪ/",
+    "meaning": "星期日",
+    "example": "We often go to the park on Sunday."
+  },
+  {
+    "word": "weekend",
+    "phonetic": "/ˌwiːkˈend/",
+    "meaning": "周末",
+    "example": "What do you do on the weekend?"
+  },
+  {
+    "word": "wash",
+    "phonetic": "/wɒʃ/",
+    "meaning": "洗",
+    "example": "I wash my clothes on Sunday."
+  },
+  {
+    "word": "watch",
+    "phonetic": "/wɒtʃ/",
+    "meaning": "看；观看",
+    "example": "I watch TV in the evening."
+  },
+  {
+    "word": "do",
+    "phonetic": "/duː/",
+    "meaning": "做；干",
+    "example": "I do my homework every day."
+  },
+  {
+    "word": "read",
+    "phonetic": "/riːd/",
+    "meaning": "看；读",
+    "example": "I read books after school."
+  },
+  {
+    "word": "play",
+    "phonetic": "/pleɪ/",
+    "meaning": "踢；玩；参加（体育运动）",
+    "example": "I play football with my friends."
+  },
+  {
+    "word": "cooking",
+    "phonetic": "/ˈkʊkɪŋ/",
+    "meaning": "烹饪；烹调",
+    "example": "My mother likes cooking."
+  },
+  {
+    "word": "often",
+    "phonetic": "/ˈɒfn/",
+    "meaning": "时常；常常",
+    "example": "He often goes to the library."
+  },
+  {
+    "word": "park",
+    "phonetic": "/pɑːk/",
+    "meaning": "公园",
+    "example": "We go to the park on weekends."
+  },
+  {
+    "word": "tired",
+    "phonetic": "/ˈtaɪəd/",
+    "meaning": "疲倦的",
+    "example": "I feel tired after running."
+  },
+  {
+    "word": "sport",
+    "phonetic": "/spɔːt/",
+    "meaning": "体育运动",
+    "example": "I like doing sport."
+  },
+  {
+    "word": "should",
+    "phonetic": "/ʃʊd/",
+    "meaning": "（常用于纠正别人）应该；应当",
+    "example": "You should study hard."
+  },
+  {
+    "word": "every",
+    "phonetic": "/ˈevri/",
+    "meaning": "每一个；每个",
+    "example": "I brush my teeth every day."
+  },
+  {
+    "word": "delicious",
+    "phonetic": "/dɪˈlɪʃəs/",
+    "meaning": "美味的；可口的",
+    "example": "The cake is delicious."
+  },
+  {
+    "word": "salad",
+    "phonetic": "/ˈsæləd/",
+    "meaning": "蔬菜沙拉；混合沙拉",
+    "example": "I like fruit salad."
+  },
+  {
+    "word": "hamburger",
+    "phonetic": "/ˈhæmbɜːɡə(r)/",
+    "meaning": "汉堡包",
+    "example": "He eats a hamburger for lunch."
+  },
+  {
+    "word": "sandwich",
+    "phonetic": "/ˈsænwɪtʃ/",
+    "meaning": "三明治",
+    "example": "I make a sandwich for breakfast."
+  },
+  {
+    "word": "ice cream",
+    "phonetic": "/ˈaɪs kriːm/",
+    "meaning": "冰淇淋",
+    "example": "I like chocolate ice cream."
+  },
+  {
+    "word": "tea",
+    "phonetic": "/tiː/",
+    "meaning": "茶；茶水",
+    "example": "My grandfather drinks tea every day."
+  },
+  {
+    "word": "fresh",
+    "phonetic": "/freʃ/",
+    "meaning": "新鲜的；刚摘的",
+    "example": "The vegetables are fresh."
+  },
+  {
+    "word": "healthy",
+    "phonetic": "/ˈhelθi/",
+    "meaning": "健康的",
+    "example": "Fruit is healthy food."
+  },
+  {
+    "word": "sweet",
+    "phonetic": "/swiːt/",
+    "meaning": "含糖的；甜的",
+    "example": "Candy is sweet."
+  },
+  {
+    "word": "hot",
+    "phonetic": "/hɒt/",
+    "meaning": "辣的；辛辣的",
+    "example": "Chili is hot."
+  },
+  {
+    "word": "favourite",
+    "phonetic": "/ˈfeɪvərɪt/",
+    "meaning": "特别喜爱的",
+    "example": "My favourite food is noodles."
+  },
+  {
+    "word": "drink",
+    "phonetic": "/drɪŋk/",
+    "meaning": "喝；饮",
+    "example": "I drink milk every morning."
+  },
+  {
+    "word": "thirsty",
+    "phonetic": "/ˈθɜːsti/",
+    "meaning": "渴的；口渴的",
+    "example": "I am thirsty. I want to drink water."
+  },
+  {
+    "word": "carrot",
+    "phonetic": "/ˈkærət/",
+    "meaning": "胡萝卜",
+    "example": "Carrots are good for our eyes."
+  },
+  {
+    "word": "above",
+    "phonetic": "/əˈbʌv/",
+    "meaning": "在（或向）……上面",
+    "example": "The picture is above the desk."
+  },
+  {
+    "word": "beside",
+    "phonetic": "/bɪˈsaɪd/",
+    "meaning": "在旁边（附近）",
+    "example": "The cat is beside the dog."
+  },
+  {
+    "word": "between",
+    "phonetic": "/bɪˈtwiːn/",
+    "meaning": "在……中间",
+    "example": "The ball is between the two chairs."
+  },
+  {
+    "word": "front",
+    "phonetic": "/frʌnt/",
+    "meaning": "正面",
+    "example": "There is a tree in front of the house."
+  },
+  {
+    "word": "behind",
+    "phonetic": "/bɪˈhaɪnd/",
+    "meaning": "在（或向）……后面",
+    "example": "The dog is behind the door."
+  },
+  {
+    "word": "there",
+    "phonetic": "/ðeə(r)/",
+    "meaning": "表示存在或发生",
+    "example": "There is a book on the desk."
+  },
+  {
+    "word": "grandparent",
+    "phonetic": "/ˈɡrænpærənt/",
+    "meaning": "祖父；祖母；外祖父；外祖母",
+    "example": "I visit my grandparents on Sunday."
+  },
+  {
+    "word": "their",
+    "phonetic": "/ðeə(r)/",
+    "meaning": "他（她、它）们的",
+    "example": "This is their house."
+  },
+  {
+    "word": "house",
+    "phonetic": "/haʊs/",
+    "meaning": "房屋；房子；住宅",
+    "example": "We live in a big house."
+  },
+  {
+    "word": "lot",
+    "phonetic": "/lɒt/",
+    "meaning": "大量；许多",
+    "example": "There are a lot of books in the library."
+  },
+  {
+    "word": "flower",
+    "phonetic": "/ˈflaʊə(r)/",
+    "meaning": "花；花朵",
+    "example": "The garden has many beautiful flowers."
+  },
+  {
+    "word": "move",
+    "phonetic": "/muːv/",
+    "meaning": "搬家",
+    "example": "We will move to a new house."
+  },
+  {
+    "word": "live",
+    "phonetic": "/lɪv/",
+    "meaning": "住；居住",
+    "example": "I live in Beijing."
+  }
+]

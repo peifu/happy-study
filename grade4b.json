@@ -1,0 +1,404 @@
+[
+  {
+    "word": "first floor",
+    "phonetic": "/fɜːst flɔː(r)/",
+    "meaning": "一楼",
+    "example": "The library is on the first floor."
+  },
+  {
+    "word": "second floor",
+    "phonetic": "/ˈsekənd flɔː(r)/",
+    "meaning": "二楼",
+    "example": "Our classroom is on the second floor."
+  },
+  {
+    "word": "teacher's office",
+    "phonetic": "/ˈtiːtʃəz ˈɒfɪs/",
+    "meaning": "教师办公室",
+    "example": "The teacher's office is next to the library."
+  },
+  {
+    "word": "library",
+    "phonetic": "/ˈlaɪbrəri/",
+    "meaning": "图书馆",
+    "example": "We can read books in the library."
+  },
+  {
+    "word": "playground",
+    "phonetic": "/ˈpleɪɡraʊnd/",
+    "meaning": "操场",
+    "example": "We play football on the playground."
+  },
+  {
+    "word": "garden",
+    "phonetic": "/ˈɡɑːdn/",
+    "meaning": "花园",
+    "example": "There are many flowers in the garden."
+  },
+  {
+    "word": "classroom",
+    "phonetic": "/ˈklɑːsruːm/",
+    "meaning": "教室",
+    "example": "We have lessons in the classroom."
+  },
+  {
+    "word": "computer room",
+    "phonetic": "/kəmˈpjuːtə(r) ruːm/",
+    "meaning": "计算机房",
+    "example": "We learn computer skills in the computer room."
+  },
+  {
+    "word": "art room",
+    "phonetic": "/ɑːt ruːm/",
+    "meaning": "美术教室",
+    "example": "We draw pictures in the art room."
+  },
+  {
+    "word": "music room",
+    "phonetic": "/ˈmjuːzɪk ruːm/",
+    "meaning": "音乐教室",
+    "example": "We sing songs in the music room."
+  },
+  {
+    "word": "next to",
+    "phonetic": "/nekst tu/",
+    "meaning": "紧邻；在……近旁",
+    "example": "The toilet is next to the classroom."
+  },
+  {
+    "word": "welcome",
+    "phonetic": "/ˈwelkəm/",
+    "meaning": "欢迎",
+    "example": "Welcome to our school."
+  },
+  {
+    "word": "forty",
+    "phonetic": "/ˈfɔːti/",
+    "meaning": "四十",
+    "example": "There are forty students in our class."
+  },
+  {
+    "word": "way",
+    "phonetic": "/weɪ/",
+    "meaning": "方向",
+    "example": "This way, please."
+  },
+  {
+    "word": "this",
+    "phonetic": "/ðɪs/",
+    "meaning": "这；这个",
+    "example": "This is my book."
+  },
+  {
+    "word": "that",
+    "phonetic": "/ðæt/",
+    "meaning": "那；那个",
+    "example": "That is his pencil."
+  },
+  {
+    "word": "these",
+    "phonetic": "/ðiːz/",
+    "meaning": "这些",
+    "example": "These are apples."
+  },
+  {
+    "word": "those",
+    "phonetic": "/ðəʊz/",
+    "meaning": "那些",
+    "example": "Those are birds."
+  },
+  {
+    "word": "my",
+    "phonetic": "/maɪ/",
+    "meaning": "我的",
+    "example": "This is my pen."
+  },
+  {
+    "word": "your",
+    "phonetic": "/jɔː(r)/",
+    "meaning": "你的；你们的",
+    "example": "Is this your ruler?"
+  },
+  {
+    "word": "his",
+    "phonetic": "/hɪz/",
+    "meaning": "他的",
+    "example": "His bag is blue."
+  },
+  {
+    "word": "her",
+    "phonetic": "/hɜː(r)/",
+    "meaning": "她的",
+    "example": "Her hair is long."
+  },
+  {
+    "word": "coat",
+    "phonetic": "/kəʊt/",
+    "meaning": "外套",
+    "example": "Put on your coat, please."
+  },
+  {
+    "word": "pants",
+    "phonetic": "/pænts/",
+    "meaning": "裤子",
+    "example": "These pants are new."
+  },
+  {
+    "word": "socks",
+    "phonetic": "/sɒks/",
+    "meaning": "袜子",
+    "example": "My socks are white."
+  },
+  {
+    "word": "shoes",
+    "phonetic": "/ʃuːz/",
+    "meaning": "鞋子",
+    "example": "I like my new shoes."
+  },
+  {
+    "word": "hat",
+    "phonetic": "/hæt/",
+    "meaning": "帽子",
+    "example": "He wears a red hat."
+  },
+  {
+    "word": "shirt",
+    "phonetic": "/ʃɜːt/",
+    "meaning": "衬衫",
+    "example": "This is a blue shirt."
+  },
+  {
+    "word": "dress",
+    "phonetic": "/dres/",
+    "meaning": "连衣裙",
+    "example": "She has a beautiful dress."
+  },
+  {
+    "word": "skirt",
+    "phonetic": "/skɜːt/",
+    "meaning": "女裙",
+    "example": "Her skirt is pink."
+  },
+  {
+    "word": "sweater",
+    "phonetic": "/ˈswetə(r)/",
+    "meaning": "毛衣",
+    "example": "I wear a sweater in winter."
+  },
+  {
+    "word": "yours",
+    "phonetic": "/jɔːz/",
+    "meaning": "你的；你们的",
+    "example": "This book is yours."
+  },
+  {
+    "word": "mine",
+    "phonetic": "/maɪn/",
+    "meaning": "我的",
+    "example": "The red pen is mine."
+  },
+  {
+    "word": "pack",
+    "phonetic": "/pæk/",
+    "meaning": "收拾（行李）",
+    "example": "I pack my schoolbag every night."
+  },
+  {
+    "word": "wait",
+    "phonetic": "/weɪt/",
+    "meaning": "等待",
+    "example": "Please wait for me."
+  },
+  {
+    "word": "sunny",
+    "phonetic": "/ˈsʌni/",
+    "meaning": "晴朗的",
+    "example": "It's a sunny day today."
+  },
+  {
+    "word": "windy",
+    "phonetic": "/ˈwɪndi/",
+    "meaning": "多风的",
+    "example": "It's windy outside."
+  },
+  {
+    "word": "cloudy",
+    "phonetic": "/ˈklaʊdi/",
+    "meaning": "多云的",
+    "example": "The sky is cloudy."
+  },
+  {
+    "word": "rainy",
+    "phonetic": "/ˈreɪni/",
+    "meaning": "阴雨的；多雨的",
+    "example": "Take an umbrella on rainy days."
+  },
+  {
+    "word": "snowy",
+    "phonetic": "/ˈsnəʊi/",
+    "meaning": "下雪的",
+    "example": "We can make a snowman on snowy days."
+  },
+  {
+    "word": "weather",
+    "phonetic": "/ˈweðə(r)/",
+    "meaning": "天气",
+    "example": "What's the weather like today?"
+  },
+  {
+    "word": "outside",
+    "phonetic": "/ˌaʊtˈsaɪd/",
+    "meaning": "在户外",
+    "example": "It's cold outside."
+  },
+  {
+    "word": "inside",
+    "phonetic": "/ˌɪnˈsaɪd/",
+    "meaning": "在室内",
+    "example": "Let's go inside."
+  },
+  {
+    "word": "warm",
+    "phonetic": "/wɔːm/",
+    "meaning": "暖和的；温暖的",
+    "example": "Spring is warm."
+  },
+  {
+    "word": "cold",
+    "phonetic": "/kəʊld/",
+    "meaning": "寒冷的；冷的",
+    "example": "Winter is cold."
+  },
+  {
+    "word": "hot",
+    "phonetic": "/hɒt/",
+    "meaning": "热的",
+    "example": "Summer is hot."
+  },
+  {
+    "word": "cool",
+    "phonetic": "/kuːl/",
+    "meaning": "凉爽的",
+    "example": "Autumn is cool."
+  },
+  {
+    "word": "degree",
+    "phonetic": "/dɪˈɡriː/",
+    "meaning": "度；度数",
+    "example": "It's 25 degrees today."
+  },
+  {
+    "word": "world",
+    "phonetic": "/wɜːld/",
+    "meaning": "世界",
+    "example": "I want to travel around the world."
+  },
+  {
+    "word": "London",
+    "phonetic": "/ˈlʌndən/",
+    "meaning": "伦敦",
+    "example": "It's rainy in London."
+  },
+  {
+    "word": "Moscow",
+    "phonetic": "/ˈmɒskəʊ/",
+    "meaning": "莫斯科",
+    "example": "It's snowy in Moscow."
+  },
+  {
+    "word": "Singapore",
+    "phonetic": "/ˌsɪŋəˈpɔː(r)/",
+    "meaning": "新加坡",
+    "example": "Singapore is hot."
+  },
+  {
+    "word": "Sydney",
+    "phonetic": "/ˈsɪdni/",
+    "meaning": "悉尼",
+    "example": "It's sunny in Sydney."
+  },
+  {
+    "word": "carrot",
+    "phonetic": "/ˈkærət/",
+    "meaning": "胡萝卜",
+    "example": "I like eating carrots."
+  },
+  {
+    "word": "potato",
+    "phonetic": "/pəˈteɪtəʊ/",
+    "meaning": "土豆；马铃薯",
+    "example": "Potatoes are good for us."
+  },
+  {
+    "word": "tomato",
+    "phonetic": "/təˈmɑːtəʊ/",
+    "meaning": "西红柿；番茄",
+    "example": "I have a tomato in my hand."
+  },
+  {
+    "word": "green beans",
+    "phonetic": "/ɡriːn biːnz/",
+    "meaning": "豆角；四季豆",
+    "example": "My mother cooks green beans."
+  },
+  {
+    "word": "horse",
+    "phonetic": "/hɔːs/",
+    "meaning": "马",
+    "example": "The horse is strong."
+  },
+  {
+    "word": "cow",
+    "phonetic": "/kaʊ/",
+    "meaning": "母牛；奶牛",
+    "example": "The cow gives us milk."
+  },
+  {
+    "word": "sheep",
+    "phonetic": "/ʃiːp/",
+    "meaning": "羊；绵羊",
+    "example": "There are many sheep on the farm."
+  },
+  {
+    "word": "hen",
+    "phonetic": "/hen/",
+    "meaning": "母鸡",
+    "example": "The hen lays eggs."
+  },
+  {
+    "word": "farm",
+    "phonetic": "/fɑːm/",
+    "meaning": "农场",
+    "example": "We visit a farm today."
+  },
+  {
+    "word": "farmer",
+    "phonetic": "/ˈfɑːmə(r)/",
+    "meaning": "农民；农场主",
+    "example": "The farmer works hard."
+  },
+  {
+    "word": "eat",
+    "phonetic": "/iːt/",
+    "meaning": "吃",
+    "example": "We eat breakfast in the morning."
+  },
+  {
+    "word": "those",
+    "phonetic": "/ðəʊz/",
+    "meaning": "那些",
+    "example": "Those are apples."
+  },
+  {
+    "word": "animal",
+    "phonetic": "/ˈænɪml/",
+    "meaning": "动物",
+    "example": "I like animals."
+  },
+  {
+    "word": "garden",
+    "phonetic": "/ˈɡɑːdn/",
+    "meaning": "菜园；花园",
+    "example": "We grow vegetables in the garden."
+  }
+]
