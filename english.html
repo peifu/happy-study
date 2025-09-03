@@ -508,6 +508,21 @@
             box-shadow: 0 0 15px rgba(0, 247, 255, 0.3);
         }
 
+        /* 下拉选项样式 - 提高可读性 */
+        .form-control option {
+            background: var(--card-bg-color);
+            color: var(--text-color);
+            padding: 8px 12px;
+        }
+
+        /* 下拉选项悬停效果 */
+        .form-control option:hover,
+        .form-control option:focus,
+        .form-control option:checked {
+            background: var(--primary);
+            color: white;
+        }
+
         .range-slider {
             width: 100%;
             -webkit-appearance: none;

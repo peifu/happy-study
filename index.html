@@ -392,11 +392,26 @@
             border-radius: 8px;
             transition: var(--transition);
         }
-        
+
         .form-control:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 10px rgba(0, 247, 255, 0.3);
+        }
+
+        /* 下拉选项样式 - 提高可读性 */
+        .form-control option {
+            background: var(--card-bg-color);
+            color: var(--text-color);
+            padding: 8px 12px;
+        }
+
+        /* 下拉选项悬停效果 */
+        .form-control option:hover,
+        .form-control option:focus,
+        .form-control option:checked {
+            background: var(--primary);
+            color: white;
         }
         
         .range-slider {
@@ -407,6 +422,10 @@
             background: rgba(255, 255, 255, 0.1);
             outline: none;
             margin: 10px 0;
+        }
+        
+        .light-theme .range-slider {
+            background: rgba(0, 0, 0, 0.2);
         }
         
         .range-slider::-webkit-slider-thumb {
