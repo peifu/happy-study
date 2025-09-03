@@ -890,12 +890,8 @@
                     
                     <select class="form-control" id="bookSelector">
                         <option value="grade3">小学三年级词汇</option>
-                        <option value="cet6">大学英语六级词汇</option>
-                        <option value="toefl">托福核心词汇</option>
-                        <option value="ielts">雅思核心词汇</option>
-                        <option value="gre">GRE高频词汇</option>
+                        <option value="ket">KET单词表</option>
                     </select>
-                    
                     <div class="timer-setting-container">
                         <div class="control-group">
                             <div class="control-label">
@@ -956,10 +952,7 @@
                         <label class="form-label">默认单词本</label>
                         <select class="form-control" id="defaultBook">
                             <option value="grade3">小学三年级词汇</option>
-                            <option value="cet6">大学英语六级词汇</option>
-                            <option value="toefl">托福核心词汇</option>
-                            <option value="ielts">雅思核心词汇</option>
-                            <option value="gre">GRE高频词汇</option>
+                            <option value="ket">KET词汇</option>
                         </select>
                     </div>
                     
@@ -1065,7 +1058,7 @@
     </div>
 
     <script>
-        // 单词数据将从JSON文件加载
+        // 只存储已加载的词表
         let wordLists = {};
         let currentBook = 'grade3';
         let currentIndex = 0;
@@ -1108,8 +1101,8 @@
 
             syncThemeFromIndex();
 
-            // 加载单词数据
-            await loadWordData();
+            // 加载当前单词本
+            await loadWordData(currentBook);
             
             // 加载学习进度
             loadProgress();
@@ -1156,66 +1149,72 @@
             });
         }
 
-        // 从JSON文件加载单词数据
-        async function loadWordData() {
+        // 按需加载单词数据
+        async function loadWordData(book = currentBook) {
+            // 若已加载则直接返回
+            if (wordLists[book]) return;
+
+            // 文件名映射
+            const fileMap = {
+                grade3: 'grade3.json',
+                ket: 'ket.json'
+            };
+            const file = fileMap[book] || 'wordlists.json';
+
             try {
                 // 显示加载状态
                 currentWordElement.textContent = "加载中...";
                 currentPhoneticElement.textContent = "//";
                 currentMeaningElement.textContent = "正在加载单词数据";
                 currentExampleElement.textContent = "请稍候，正在从JSON文件加载数据。";
-                
+
                 // 加载单词数据
-                const response = await fetch('wordlists.json');
-                if (!response.ok) {
-                    throw new Error('无法加载单词数据');
+                const response = await fetch(file);
+                if (!response.ok) throw new Error('无法加载单词数据');
+                let data = await response.json();
+
+                // 兼容旧格式
+                if (Array.isArray(data)) {
+                    wordLists[book] = data;
+                } else if (data[book]) {
+                    wordLists[book] = data[book];
+                } else {
+                    wordLists[book] = [];
                 }
-                
-                wordLists = await response.json();
-                
+
                 // 启用按钮
                 speakBtnElement.disabled = false;
                 knowBtnElement.disabled = false;
                 notKnowBtnElement.disabled = false;
                 nextBtnElement.disabled = false;
                 prevBtnElement.disabled = false;
-                
             } catch (error) {
                 console.error('加载单词数据失败:', error);
-                
-                // 使用默认数据作为后备
-                wordLists = {
-                    grade3: [
-                        { word: "technology", phonetic: "/tekˈnɒlədʒi/", meaning: "n. 技术，科技；工艺学", example: "Modern technology has transformed the way we communicate." },
-                        { word: "innovation", phonetic: "/ˌɪnəˈveɪʃn/", meaning: "n. 创新，革新", example: "The company encourages innovation and creative thinking." },
-                        { word: "analysis", phonetic: "/əˈnæləsɪs/", meaning: "n. 分析", example: "Further analysis of the data is needed." },
-                        { word: "environment", phonetic: "/ɪnˈvaɪrənmənt/", meaning: "n. 环境，生态环境", example: "We need to protect the environment for future generations." }
-                    ],
-                    cet6: [
-                        { word: "algorithm", phonetic: "/ˈælɡərɪðəm/", meaning: "n. 算法", example: "The software uses a complex algorithm to predict market trends." },
-                        { word: "sustainability", phonetic: "/səˌsteɪnəˈbɪləti/", meaning: "n. 可持续性", example: "Environmental sustainability is crucial for our future." }
-                    ],
-                    toefl: [
-                        { word: "academic", phonetic: "/ˌækəˈdemɪk/", meaning: "adj. 学术的", example: "She has had a brilliant academic career." },
-                        { word: "hypothesis", phonetic: "/haɪˈpɒθəsɪs/", meaning: "n. 假设", example: "The results of the experiment supported his hypothesis." }
-                    ],
-                    ielts: [
-                        { word: "proficient", phonetic: "/prəˈfɪʃnt/", meaning: "adj. 精通的，熟练的", example: "She is proficient in three languages." },
-                        { word: "ambiguity", phonetic: "/ˌæmbɪˈɡjuːəti/", meaning: "n. 歧义，模棱两可", example: "The law should be written without ambiguity." }
-                    ],
-                    gre: [
-                        { word: "esoteric", phonetic: "/ˌesəˈterɪk/", meaning: "adj. 深奥的，难懂的", example: "His lectures are often esoteric and hard to follow." },
-                        { word: "ubiquitous", phonetic: "/juːˈbɪkwɪtəs/", meaning: "adj. 无所不在的", example: "Smartphones have become ubiquitous in modern society." }
-                    ]
-                };
-                
+
+                // 针对不同词本提供不同的默认数据
+                if (book === 'grade3') {
+                    wordLists[book] = [
+                        { word: "apple", phonetic: "/ˈæpl/", meaning: "n. 苹果", example: "I eat an apple every day." },
+                        { word: "school", phonetic: "/skuːl/", meaning: "n. 学校", example: "She goes to school by bus." }
+                    ];
+                } else if (book === 'ket') {
+                    wordLists[book] = [
+                        { word: "cat", phonetic: "/kæt/", meaning: "n. 猫", example: "The cat is under the table." },
+                        { word: "book", phonetic: "/bʊk/", meaning: "n. 书", example: "This is my favorite book." }
+                    ];
+                } else {
+                    wordLists[book] = [
+                        { word: "example", phonetic: "/ɪɡˈzɑːmpl/", meaning: "n. 例子", example: "This is an example." }
+                    ];
+                }
+
                 // 启用按钮
                 speakBtnElement.disabled = false;
                 knowBtnElement.disabled = false;
                 notKnowBtnElement.disabled = false;
                 nextBtnElement.disabled = false;
                 prevBtnElement.disabled = false;
-                
+
                 // 显示错误消息
                 currentWordElement.textContent = "加载失败";
                 currentPhoneticElement.textContent = "//";
@@ -1480,9 +1479,10 @@
         }
 
         // 处理单词本变更
-        function handleBookChange() {
+        async function handleBookChange() {
             currentBook = bookSelectorElement.value;
             currentIndex = 0;
+            await loadWordData(currentBook);
             showCurrentWord();
             renderWordList();
             resetAutoPlay();

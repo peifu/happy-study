@@ -1,0 +1,4796 @@
+[
+    {
+        "word": "a",
+        "phonetic": "/ə/",
+        "meaning": "一个（用于单数可数名词前）",
+        "example": "I need a pen."
+    },
+    {
+        "word": "about",
+        "phonetic": "/əˈbaʊt/",
+        "meaning": "关于；大约",
+        "example": "The book is about animals."
+    },
+    {
+        "word": "above",
+        "phonetic": "/əˈbʌv/",
+        "meaning": "在...上面",
+        "example": "The picture is above the sofa."
+    },
+    {
+        "word": "across",
+        "phonetic": "/əˈkrɒs/",
+        "meaning": "横过，穿过",
+        "example": "Walk across the street carefully."
+    },
+    {
+        "word": "act",
+        "phonetic": "/ækt/",
+        "meaning": "行动；表演",
+        "example": "He can act very well in the play."
+    },
+    {
+        "word": "activity",
+        "phonetic": "/ækˈtɪvəti/",
+        "meaning": "活动",
+        "example": "Swimming is a fun activity."
+    },
+    {
+        "word": "actor",
+        "phonetic": "/ˈæktə(r)/",
+        "meaning": "男演员",
+        "example": "He is a famous actor."
+    },
+    {
+        "word": "actress",
+        "phonetic": "/ˈæktrəs/",
+        "meaning": "女演员",
+        "example": "She dreams of being an actress."
+    },
+    {
+        "word": "actually",
+        "phonetic": "/ˈæktʃuəli/",
+        "meaning": "实际上",
+        "example": "I thought he was French, but actually he's from Belgium."
+    },
+    {
+        "word": "add",
+        "phonetic": "/æd/",
+        "meaning": "增加，添加",
+        "example": "Add some sugar to your tea."
+    },
+    {
+        "word": "address",
+        "phonetic": "/əˈdres/",
+        "meaning": "地址",
+        "example": "Please write your address here."
+    },
+    {
+        "word": "adult",
+        "phonetic": "/ˈædʌlt/",
+        "meaning": "成年人",
+        "example": "The museum is free for children but adults must pay."
+    },
+    {
+        "word": "advanced",
+        "phonetic": "/ədˈvɑːnst/",
+        "meaning": "先进的；高级的",
+        "example": "This is an advanced English course."
+    },
+    {
+        "word": "adventure",
+        "phonetic": "/ədˈventʃə(r)/",
+        "meaning": "冒险",
+        "example": "The trip was a great adventure."
+    },
+    {
+        "word": "advertisement",
+        "phonetic": "/ədˈvɜːtɪsmənt/",
+        "meaning": "广告",
+        "example": "I saw an advertisement for a new phone."
+    },
+    {
+        "word": "afraid",
+        "phonetic": "/əˈfreɪd/",
+        "meaning": "害怕的",
+        "example": "She is afraid of spiders."
+    },
+    {
+        "word": "after",
+        "phonetic": "/ˈɑːftə(r)/",
+        "meaning": "在...之后",
+        "example": "We will play after school."
+    },
+    {
+        "word": "afternoon",
+        "phonetic": "/ˌɑːftəˈnuːn/",
+        "meaning": "下午",
+        "example": "Let's meet tomorrow afternoon."
+    },
+    {
+        "word": "again",
+        "phonetic": "/əˈɡen/",
+        "meaning": "又，再",
+        "example": "Please say that again."
+    },
+    {
+        "word": "against",
+        "phonetic": "/əˈɡenst/",
+        "meaning": "反对；靠着",
+        "example": "The ladder is against the wall."
+    },
+    {
+        "word": "age",
+        "phonetic": "/eɪdʒ/",
+        "meaning": "年龄",
+        "example": "What is your age?"
+    },
+    {
+        "word": "ago",
+        "phonetic": "/əˈɡəʊ/",
+        "meaning": "以前",
+        "example": "He left five minutes ago."
+    },
+    {
+        "word": "agree",
+        "phonetic": "/əˈɡriː/",
+        "meaning": "同意",
+        "example": "I agree with you."
+    },
+    {
+        "word": "air",
+        "phonetic": "/eə(r)/",
+        "meaning": "空气",
+        "example": "The air is fresh in the mountains."
+    },
+    {
+        "word": "airport",
+        "phonetic": "/ˈeəpɔːt/",
+        "meaning": "机场",
+        "example": "We will wait for you at the airport."
+    },
+    {
+        "word": "all",
+        "phonetic": "/ɔːl/",
+        "meaning": "所有的",
+        "example": "All students must finish their homework."
+    },
+    {
+        "word": "almost",
+        "phonetic": "/ˈɔːlməʊst/",
+        "meaning": "几乎，差不多",
+        "example": "I have almost finished my work."
+    },
+    {
+        "word": "alone",
+        "phonetic": "/əˈləʊn/",
+        "meaning": "独自的",
+        "example": "She lives alone in a small apartment."
+    },
+    {
+        "word": "along",
+        "phonetic": "/əˈlɒŋ/",
+        "meaning": "沿着",
+        "example": "We walked along the river."
+    },
+    {
+        "word": "already",
+        "phonetic": "/ɔːlˈredi/",
+        "meaning": "已经",
+        "example": "I have already seen that movie."
+    },
+    {
+        "word": "also",
+        "phonetic": "/ˈɔːlsəʊ/",
+        "meaning": "也",
+        "example": "She sings and also plays the piano."
+    },
+    {
+        "word": "although",
+        "phonetic": "/ɔːlˈðəʊ/",
+        "meaning": "虽然，尽管",
+        "example": "Although it was raining, we went for a walk."
+    },
+    {
+        "word": "always",
+        "phonetic": "/ˈɔːlweɪz/",
+        "meaning": "总是",
+        "example": "He always arrives on time."
+    },
+    {
+        "word": "amazing",
+        "phonetic": "/əˈmeɪzɪŋ/",
+        "meaning": "令人惊奇的",
+        "example": "The view from the top was amazing."
+    },
+    {
+        "word": "ambulance",
+        "phonetic": "/ˈæmbjələns/",
+        "meaning": "救护车",
+        "example": "Call an ambulance quickly!"
+    },
+    {
+        "word": "among",
+        "phonetic": "/əˈmʌŋ/",
+        "meaning": "在...之中",
+        "example": "She was among the crowd."
+    },
+    {
+        "word": "an",
+        "phonetic": "/ən/",
+        "meaning": "一个（用于元音音素前）",
+        "example": "I need an umbrella."
+    },
+    {
+        "word": "and",
+        "phonetic": "/ənd/",
+        "meaning": "和，与",
+        "example": "I like tea and coffee."
+    },
+    {
+        "word": "angry",
+        "phonetic": "/ˈæŋɡri/",
+        "meaning": "生气的",
+        "example": "My dad was angry because I broke the window."
+    },
+    {
+        "word": "animal",
+        "phonetic": "/ˈænɪml/",
+        "meaning": "动物",
+        "example": "The elephant is a large animal."
+    },
+    {
+        "word": "another",
+        "phonetic": "/əˈnʌðə(r)/",
+        "meaning": "另一个",
+        "example": "Would you like another cup of tea?"
+    },
+    {
+        "word": "answer",
+        "phonetic": "/ˈɑːnsə(r)/",
+        "meaning": "回答；答案",
+        "example": "Please answer my question."
+    },
+    {
+        "word": "any",
+        "phonetic": "/ˈeni/",
+        "meaning": "任何的",
+        "example": "Do you have any questions?"
+    },
+    {
+        "word": "anyone",
+        "phonetic": "/ˈeniwʌn/",
+        "meaning": "任何人",
+        "example": "Did anyone call me?"
+    },
+    {
+        "word": "anything",
+        "phonetic": "/ˈeniθɪŋ/",
+        "meaning": "任何事",
+        "example": "You can ask me anything."
+    },
+    {
+        "word": "apartment",
+        "phonetic": "/əˈpɑːtmənt/",
+        "meaning": "公寓",
+        "example": "They live in a small apartment in the city."
+    },
+    {
+        "word": "apple",
+        "phonetic": "/ˈæpl/",
+        "meaning": "苹果",
+        "example": "An apple a day keeps the doctor away."
+    },
+    {
+        "word": "appointment",
+        "phonetic": "/əˈpɔɪntmənt/",
+        "meaning": "约会；预约",
+        "example": "I have a doctor's appointment at 3 PM."
+    },
+    {
+        "word": "area",
+        "phonetic": "/ˈeəriə/",
+        "meaning": "区域，地区",
+        "example": "This area is very quiet."
+    },
+    {
+        "word": "arm",
+        "phonetic": "/ɑːm/",
+        "meaning": "手臂",
+        "example": "She broke her arm in the accident."
+    },
+    {
+        "word": "around",
+        "phonetic": "/əˈraʊnd/",
+        "meaning": "围绕；大约",
+        "example": "We walked around the old town."
+    },
+    {
+        "word": "arrive",
+        "phonetic": "/əˈraɪv/",
+        "meaning": "到达",
+        "example": "The train will arrive at 10 o'clock."
+    },
+    {
+        "word": "art",
+        "phonetic": "/ɑːt/",
+        "meaning": "艺术",
+        "example": "I love studying art at school."
+    },
+    {
+        "word": "article",
+        "phonetic": "/ˈɑːtɪkl/",
+        "meaning": "文章；物品",
+        "example": "I read an interesting article in the newspaper."
+    },
+    {
+        "word": "artist",
+        "phonetic": "/ˈɑːtɪst/",
+        "meaning": "艺术家",
+        "example": "Picasso was a famous artist."
+    },
+    {
+        "word": "as",
+        "phonetic": "/əz/",
+        "meaning": "作为；如同；因为",
+        "example": "As it was late, we went home."
+    },
+    {
+        "word": "ask",
+        "phonetic": "/ɑːsk/",
+        "meaning": "问，询问",
+        "example": "Don't be afraid to ask for help."
+    },
+    {
+        "word": "at",
+        "phonetic": "/æt/",
+        "meaning": "在（某处或某时）",
+        "example": "Meet me at the station."
+    },
+    {
+        "word": "aunt",
+        "phonetic": "/ɑːnt/",
+        "meaning": "姑母；姨母；伯母；婶母；舅母",
+        "example": "My aunt is coming to visit us."
+    },
+    {
+        "word": "autumn",
+        "phonetic": "/ˈɔːtəm/",
+        "meaning": "秋天",
+        "example": "The leaves change color in autumn."
+    },
+    {
+        "word": "away",
+        "phonetic": "/əˈweɪ/",
+        "meaning": "离开，远离",
+        "example": "The beach is five miles away."
+    },
+    {
+        "word": "baby",
+        "phonetic": "/ˈbeɪbi/",
+        "meaning": "婴儿",
+        "example": "The baby is sleeping."
+    },
+    {
+        "word": "back",
+        "phonetic": "/bæk/",
+        "meaning": "背部；回来；后面的",
+        "example": "I'll be back in a minute."
+    },
+    {
+        "word": "bad",
+        "phonetic": "/bæd/",
+        "meaning": "坏的",
+        "example": "The weather was bad yesterday."
+    },
+    {
+        "word": "bag",
+        "phonetic": "/bæɡ/",
+        "meaning": "包，袋",
+        "example": "She carried her books in a bag."
+    },
+    {
+        "word": "ball",
+        "phonetic": "/bɔːl/",
+        "meaning": "球",
+        "example": "The children are playing with a ball."
+    },
+    {
+        "word": "banana",
+        "phonetic": "/bəˈnɑːnə/",
+        "meaning": "香蕉",
+        "example": "Monkeys like to eat bananas."
+    },
+    {
+        "word": "band",
+        "phonetic": "/bænd/",
+        "meaning": "乐队；带子",
+        "example": "My brother plays guitar in a band."
+    },
+    {
+        "word": "bank",
+        "phonetic": "/bæŋk/",
+        "meaning": "银行；河岸",
+        "example": "I need to go to the bank to get some money."
+    },
+    {
+        "word": "basketball",
+        "phonetic": "/ˈbɑːskɪtbɔːl/",
+        "meaning": "篮球",
+        "example": "We play basketball every weekend."
+    },
+    {
+        "word": "bat",
+        "phonetic": "/bæt/",
+        "meaning": "蝙蝠；球棒",
+        "example": "A bat uses sound to see in the dark."
+    },
+    {
+        "word": "bath",
+        "phonetic": "/bɑːθ/",
+        "meaning": "洗澡；浴缸",
+        "example": "I have a bath every evening."
+    },
+    {
+        "word": "bathroom",
+        "phonetic": "/ˈbɑːθruːm/",
+        "meaning": "浴室",
+        "example": "The bathroom is upstairs."
+    },
+    {
+        "word": "be",
+        "phonetic": "/bi/",
+        "meaning": "是；存在",
+        "example": "I want to be a doctor."
+    },
+    {
+        "word": "beach",
+        "phonetic": "/biːtʃ/",
+        "meaning": "海滩",
+        "example": "We spent the day at the beach."
+    },
+    {
+        "word": "bear",
+        "phonetic": "/beə(r)/",
+        "meaning": "熊",
+        "example": "The bear is a dangerous animal."
+    },
+    {
+        "word": "beautiful",
+        "phonetic": "/ˈbjuːtɪfl/",
+        "meaning": "美丽的",
+        "example": "She has a beautiful voice."
+    },
+    {
+        "word": "because",
+        "phonetic": "/bɪˈkɒz/",
+        "meaning": "因为",
+        "example": "I stay at home because it's raining."
+    },
+    {
+        "word": "become",
+        "phonetic": "/bɪˈkʌm/",
+        "meaning": "变成，成为",
+        "example": "He wants to become a pilot."
+    },
+    {
+        "word": "bed",
+        "phonetic": "/bed/",
+        "meaning": "床",
+        "example": "It's time to go to bed."
+    },
+    {
+        "word": "bedroom",
+        "phonetic": "/ˈbedruːm/",
+        "meaning": "卧室",
+        "example": "My bedroom is painted blue."
+    },
+    {
+        "word": "beef",
+        "phonetic": "/biːf/",
+        "meaning": "牛肉",
+        "example": "We are having roast beef for dinner."
+    },
+    {
+        "word": "before",
+        "phonetic": "/bɪˈfɔː(r)/",
+        "meaning": "在...之前",
+        "example": "Wash your hands before you eat."
+    },
+    {
+        "word": "begin",
+        "phonetic": "/bɪˈɡɪn/",
+        "meaning": "开始",
+        "example": "The film begins at 7 o'clock."
+    },
+    {
+        "word": "behind",
+        "phonetic": "/bɪˈhaɪnd/",
+        "meaning": "在...后面",
+        "example": "The cat is hiding behind the sofa."
+    },
+    {
+        "word": "believe",
+        "phonetic": "/bɪˈliːv/",
+        "meaning": "相信",
+        "example": "I believe you are right."
+    },
+    {
+        "word": "bell",
+        "phonetic": "/bel/",
+        "meaning": "铃，钟",
+        "example": "The school bell rings at 3 PM."
+    },
+    {
+        "word": "below",
+        "phonetic": "/bɪˈləʊ/",
+        "meaning": "在...下面",
+        "example": "The temperature is below zero."
+    },
+    {
+        "word": "belt",
+        "phonetic": "/belt/",
+        "meaning": "腰带",
+        "example": "He wore a leather belt."
+    },
+    {
+        "word": "between",
+        "phonetic": "/bɪˈtwiːn/",
+        "meaning": "在...之间",
+        "example": "The bank is between the post office and the supermarket."
+    },
+    {
+        "word": "bicycle",
+        "phonetic": "/ˈbaɪsɪkl/",
+        "meaning": "自行车",
+        "example": "I ride my bicycle to school."
+    },
+    {
+        "word": "big",
+        "phonetic": "/bɪɡ/",
+        "meaning": "大的",
+        "example": "They live in a big house."
+    },
+    {
+        "word": "bill",
+        "phonetic": "/bɪl/",
+        "meaning": "账单；纸币",
+        "example": "Can I have the bill, please?"
+    },
+    {
+        "word": "bird",
+        "phonetic": "/bɜːd/",
+        "meaning": "鸟",
+        "example": "A bird is singing in the tree."
+    },
+    {
+        "word": "birthday",
+        "phonetic": "/ˈbɜːθdeɪ/",
+        "meaning": "生日",
+        "example": "Happy birthday to you!"
+    },
+    {
+        "word": "biscuit",
+        "phonetic": "/ˈbɪskɪt/",
+        "meaning": "饼干",
+        "example": "Would you like a biscuit with your tea?"
+    },
+    {
+        "word": "bit",
+        "phonetic": "/bɪt/",
+        "meaning": "一点，少量",
+        "example": "I'm a bit tired."
+    },
+    {
+        "word": "black",
+        "phonetic": "/blæk/",
+        "meaning": "黑色的",
+        "example": "He was wearing a black jacket."
+    },
+    {
+        "word": "blanket",
+        "phonetic": "/ˈblæŋkɪt/",
+        "meaning": "毯子",
+        "example": "It's cold, I need another blanket."
+    },
+    {
+        "word": "block",
+        "phonetic": "/blɒk/",
+        "meaning": "街区；块；阻挡",
+        "example": "The school is two blocks away."
+    },
+    {
+        "word": "blonde",
+        "phonetic": "/blɒnd/",
+        "meaning": "金发的",
+        "example": "She has long blonde hair."
+    },
+    {
+        "word": "blood",
+        "phonetic": "/blʌd/",
+        "meaning": "血",
+        "example": "The hospital needs more blood for operations."
+    },
+    {
+        "word": "blouse",
+        "phonetic": "/blaʊz/",
+        "meaning": "女式衬衫",
+        "example": "She wore a white blouse to the interview."
+    },
+    {
+        "word": "blue",
+        "phonetic": "/bluː/",
+        "meaning": "蓝色的",
+        "example": "The sky is blue today."
+    },
+    {
+        "word": "boat",
+        "phonetic": "/bəʊt/",
+        "meaning": "船",
+        "example": "We went across the lake in a small boat."
+    },
+    {
+        "word": "body",
+        "phonetic": "/ˈbɒdi/",
+        "meaning": "身体",
+        "example": "Regular exercise is good for your body."
+    },
+    {
+        "word": "book",
+        "phonetic": "/bʊk/",
+        "meaning": "书；预订",
+        "example": "I'm reading a very interesting book."
+    },
+    {
+        "word": "bored",
+        "phonetic": "/bɔːd/",
+        "meaning": "无聊的，厌烦的",
+        "example": "The children were bored during the long car journey."
+    },
+    {
+        "word": "boring",
+        "phonetic": "/ˈbɔːrɪŋ/",
+        "meaning": "令人无聊的",
+        "example": "The film was really boring."
+    },
+    {
+        "word": "born",
+        "phonetic": "/bɔːn/",
+        "meaning": "出生",
+        "example": "I was born in London."
+    },
+    {
+        "word": "borrow",
+        "phonetic": "/ˈbɒrəʊ/",
+        "meaning": "借入",
+        "example": "Can I borrow your pen?"
+    },
+    {
+        "word": "boss",
+        "phonetic": "/bɒs/",
+        "meaning": "老板",
+        "example": "My boss is very kind."
+    },
+    {
+        "word": "both",
+        "phonetic": "/bəʊθ/",
+        "meaning": "两者都",
+        "example": "Both of my parents are teachers."
+    },
+    {
+        "word": "bottle",
+        "phonetic": "/ˈbɒtl/",
+        "meaning": "瓶子",
+        "example": "A bottle of water, please."
+    },
+    {
+        "word": "bottom",
+        "phonetic": "/ˈbɒtəm/",
+        "meaning": "底部",
+        "example": "The answer is at the bottom of the page."
+    },
+    {
+        "word": "bowl",
+        "phonetic": "/bəʊl/",
+        "meaning": "碗",
+        "example": "I ate a bowl of cereal for breakfast."
+    },
+    {
+        "word": "box",
+        "phonetic": "/bɒks/",
+        "meaning": "盒子；箱子",
+        "example": "She put the books in a cardboard box."
+    },
+    {
+        "word": "boy",
+        "phonetic": "/bɔɪ/",
+        "meaning": "男孩",
+        "example": "The little boy is playing with his toys."
+    },
+    {
+        "word": "bread",
+        "phonetic": "/bred/",
+        "meaning": "面包",
+        "example": "I bought a loaf of bread from the bakery."
+    },
+    {
+        "word": "break",
+        "phonetic": "/breɪk/",
+        "meaning": "打破；休息",
+        "example": "Be careful not to break the glass."
+    },
+    {
+        "word": "breakfast",
+        "phonetic": "/ˈbrekfəst/",
+        "meaning": "早餐",
+        "example": "I usually have toast for breakfast."
+    },
+    {
+        "word": "bridge",
+        "phonetic": "/brɪdʒ/",
+        "meaning": "桥",
+        "example": "We walked across the old bridge."
+    },
+    {
+        "word": "bright",
+        "phonetic": "/braɪt/",
+        "meaning": "明亮的；聪明的",
+        "example": "The sun is very bright today."
+    },
+    {
+        "word": "bring",
+        "phonetic": "/brɪŋ/",
+        "meaning": "带来",
+        "example": "Please bring your homework tomorrow."
+    },
+    {
+        "word": "brother",
+        "phonetic": "/ˈbrʌðə(r)/",
+        "meaning": "兄弟",
+        "example": "My older brother helps me with my homework."
+    },
+    {
+        "word": "brown",
+        "phonetic": "/braʊn/",
+        "meaning": "棕色的",
+        "example": "He has brown eyes."
+    },
+    {
+        "word": "build",
+        "phonetic": "/bɪld/",
+        "meaning": "建造",
+        "example": "They want to build a new house."
+    },
+    {
+        "word": "building",
+        "phonetic": "/ˈbɪldɪŋ/",
+        "meaning": "建筑物",
+        "example": "That is the tallest building in the city."
+    },
+    {
+        "word": "burger",
+        "phonetic": "/ˈbɜːɡə(r)/",
+        "meaning": "汉堡包",
+        "example": "I'd like a cheeseburger and fries."
+    },
+    {
+        "word": "bus",
+        "phonetic": "/bʌs/",
+        "meaning": "公共汽车",
+        "example": "I take the bus to work every day."
+    },
+    {
+        "word": "business",
+        "phonetic": "/ˈbɪznəs/",
+        "meaning": "生意；商业",
+        "example": "My father runs his own business."
+    },
+    {
+        "word": "busy",
+        "phonetic": "/ˈbɪzi/",
+        "meaning": "忙碌的",
+        "example": "The doctor is very busy today."
+    },
+    {
+        "word": "but",
+        "phonetic": "/bʌt/",
+        "meaning": "但是",
+        "example": "I wanted to go, but I was too tired."
+    },
+    {
+        "word": "butter",
+        "phonetic": "/ˈbʌtə(r)/",
+        "meaning": "黄油",
+        "example": "I spread butter on my bread."
+    },
+    {
+        "word": "buy",
+        "phonetic": "/baɪ/",
+        "meaning": "买",
+        "example": "I need to buy some milk."
+    },
+    {
+        "word": "by",
+        "phonetic": "/baɪ/",
+        "meaning": "被；由；靠近；通过",
+        "example": "The book was written by a famous author."
+    },
+    {
+        "word": "cafe",
+        "phonetic": "/ˈkæfeɪ/",
+        "meaning": "咖啡馆",
+        "example": "Let's meet at the cafe for a coffee."
+    },
+    {
+        "word": "cake",
+        "phonetic": "/keɪk/",
+        "meaning": "蛋糕",
+        "example": "We had chocolate cake for dessert."
+    },
+    {
+        "word": "call",
+        "phonetic": "/kɔːl/",
+        "meaning": "打电话；呼叫",
+        "example": "I'll call you later."
+    },
+    {
+        "word": "camera",
+        "phonetic": "/ˈkæmərə/",
+        "meaning": "照相机",
+        "example": "I forgot my camera at home."
+    },
+    {
+        "word": "can",
+        "phonetic": "/kæn/",
+        "meaning": "能；可以；罐头",
+        "example": "I can swim very well."
+    },
+    {
+        "word": "candy",
+        "phonetic": "/ˈkændi/",
+        "meaning": "糖果",
+        "example": "Children love eating candy."
+    },
+    {
+        "word": "capital",
+        "phonetic": "/ˈkæpɪtl/",
+        "meaning": "首都；大写字母；资本",
+        "example": "Paris is the capital of France."
+    },
+    {
+        "word": "car",
+        "phonetic": "/kɑː(r)/",
+        "meaning": "汽车",
+        "example": "We went to the beach by car."
+    },
+    {
+        "word": "card",
+        "phonetic": "/kɑːd/",
+        "meaning": "卡片；纸牌",
+        "example": "I sent her a birthday card."
+    },
+    {
+        "word": "careful",
+        "phonetic": "/ˈkeəfl/",
+        "meaning": "小心的",
+        "example": "Be careful! The floor is wet."
+    },
+    {
+        "word": "carry",
+        "phonetic": "/ˈkæri/",
+        "meaning": "携带，搬运",
+        "example": "Can you help me carry these boxes?"
+    },
+    {
+        "word": "case",
+        "phonetic": "/keɪs/",
+        "meaning": "情况；案例；箱子",
+        "example": "In that case, we should leave early."
+    },
+    {
+        "word": "cash",
+        "phonetic": "/kæʃ/",
+        "meaning": "现金",
+        "example": "Do you have any cash on you?"
+    },
+    {
+        "word": "cat",
+        "phonetic": "/kæt/",
+        "meaning": "猫",
+        "example": "My cat likes to sleep on the sofa."
+    },
+    {
+        "word": "catch",
+        "phonetic": "/kætʃ/",
+        "meaning": "抓住；赶上",
+        "example": "Catch the ball!"
+    },
+    {
+        "word": "centre",
+        "phonetic": "/ˈsentə(r)/",
+        "meaning": "中心",
+        "example": "There is a large park in the centre of the city."
+    },
+    {
+        "word": "century",
+        "phonetic": "/ˈsentʃəri/",
+        "meaning": "世纪",
+        "example": "We live in the 21st century."
+    },
+    {
+        "word": "chair",
+        "phonetic": "/tʃeə(r)/",
+        "meaning": "椅子",
+        "example": "Please sit on that chair."
+    },
+    {
+        "word": "change",
+        "phonetic": "/tʃeɪndʒ/",
+        "meaning": "改变；零钱",
+        "example": "The town has changed a lot."
+    },
+    {
+        "word": "channel",
+        "phonetic": "/ˈtʃænl/",
+        "meaning": "频道；海峡",
+        "example": "What's your favourite TV channel?"
+    },
+    {
+        "word": "cheap",
+        "phonetic": "/tʃiːp/",
+        "meaning": "便宜的",
+        "example": "The food at this market is very cheap."
+    },
+    {
+        "word": "check",
+        "phonetic": "/tʃek/",
+        "meaning": "检查；核对",
+        "example": "Check your answers before handing in the test."
+    },
+    {
+        "word": "cheese",
+        "phonetic": "/tʃiːz/",
+        "meaning": "奶酪",
+        "example": "I like cheese on my pizza."
+    },
+    {
+        "word": "chicken",
+        "phonetic": "/ˈtʃɪkɪn/",
+        "meaning": "鸡；鸡肉",
+        "example": "We had roast chicken for dinner."
+    },
+    {
+        "word": "child",
+        "phonetic": "/tʃaɪld/",
+        "meaning": "小孩",
+        "example": "Every child needs love and care."
+    },
+    {
+        "word": "chips",
+        "phonetic": "/tʃɪps/",
+        "meaning": "炸薯条",
+        "example": "Fish and chips is a popular dish in the UK."
+    },
+    {
+        "word": "chocolate",
+        "phonetic": "/ˈtʃɒklət/",
+        "meaning": "巧克力",
+        "example": "I love dark chocolate."
+    },
+    {
+        "word": "choice",
+        "phonetic": "/tʃɔɪs/",
+        "meaning": "选择",
+        "example": "You have a choice between tea and coffee."
+    },
+    {
+        "word": "choose",
+        "phonetic": "/tʃuːz/",
+        "meaning": "选择",
+        "example": "You can choose any book you like."
+    },
+    {
+        "word": "cinema",
+        "phonetic": "/ˈsɪnəmə/",
+        "meaning": "电影院",
+        "example": "Let's go to the cinema tonight."
+    },
+    {
+        "word": "city",
+        "phonetic": "/ˈsɪti/",
+        "meaning": "城市",
+        "example": "New York is a very big city."
+    },
+    {
+        "word": "class",
+        "phonetic": "/klɑːs/",
+        "meaning": "班级；课；等级",
+        "example": "My English class starts at 9 AM."
+    },
+    {
+        "word": "classroom",
+        "phonetic": "/ˈklɑːsruːm/",
+        "meaning": "教室",
+        "example": "Our classroom is on the second floor."
+    },
+    {
+        "word": "clean",
+        "phonetic": "/kliːn/",
+        "meaning": "干净的；清洁",
+        "example": "Please keep your room clean."
+    },
+    {
+        "word": "climb",
+        "phonetic": "/klaɪm/",
+        "meaning": "爬，攀登",
+        "example": "It's dangerous to climb that mountain."
+    },
+    {
+        "word": "clock",
+        "phonetic": "/klɒk/",
+        "meaning": "时钟",
+        "example": "The clock on the wall is slow."
+    },
+    {
+        "word": "close",
+        "phonetic": "/kləʊz/",
+        "meaning": "关闭；亲密的；接近的",
+        "example": "Please close the door."
+    },
+    {
+        "word": "clothes",
+        "phonetic": "/kləʊðz/",
+        "meaning": "衣服",
+        "example": "She bought some new clothes for the party."
+    },
+    {
+        "word": "cloud",
+        "phonetic": "/klaʊd/",
+        "meaning": "云",
+        "example": "The sky is full of white clouds today."
+    },
+    {
+        "word": "cloudy",
+        "phonetic": "/ˈklaʊdi/",
+        "meaning": "多云的",
+        "example": "It was a cloudy day yesterday."
+    },
+    {
+        "word": "coat",
+        "phonetic": "/kəʊt/",
+        "meaning": "外套",
+        "example": "It's cold outside, wear your coat."
+    },
+    {
+        "word": "coffee",
+        "phonetic": "/ˈkɒfi/",
+        "meaning": "咖啡",
+        "example": "I drink coffee every morning."
+    },
+    {
+        "word": "cold",
+        "phonetic": "/kəʊld/",
+        "meaning": "冷的；感冒",
+        "example": "The water is very cold."
+    },
+    {
+        "word": "college",
+        "phonetic": "/ˈkɒlɪdʒ/",
+        "meaning": "学院，大学",
+        "example": "My sister is studying at college."
+    },
+    {
+        "word": "colour",
+        "phonetic": "/ˈkʌlə(r)/",
+        "meaning": "颜色",
+        "example": "What's your favourite colour?"
+    },
+    {
+        "word": "come",
+        "phonetic": "/kʌm/",
+        "meaning": "来",
+        "example": "Please come to my party on Saturday."
+    },
+    {
+        "word": "comfortable",
+        "phonetic": "/ˈkʌmftəbl/",
+        "meaning": "舒适的",
+        "example": "These shoes are very comfortable."
+    },
+    {
+        "word": "common",
+        "phonetic": "/ˈkɒmən/",
+        "meaning": "常见的；普通的",
+        "example": "It's a common mistake."
+    },
+    {
+        "word": "compare",
+        "phonetic": "/kəmˈpeə(r)/",
+        "meaning": "比较",
+        "example": "Compare the prices before you buy."
+    },
+    {
+        "word": "complete",
+        "phonetic": "/kəmˈpliːt/",
+        "meaning": "完整的；完成",
+        "example": "Please complete this form."
+    },
+    {
+        "word": "computer",
+        "phonetic": "/kəmˈpjuːtə(r)/",
+        "meaning": "电脑",
+        "example": "I use my computer for work."
+    },
+    {
+        "word": "concert",
+        "phonetic": "/ˈkɒnsət/",
+        "meaning": "音乐会",
+        "example": "We went to a rock concert last night."
+    },
+    {
+        "word": "contact",
+        "phonetic": "/ˈkɒntækt/",
+        "meaning": "联系；接触",
+        "example": "Please contact me by email."
+    },
+    {
+        "word": "cook",
+        "phonetic": "/kʊk/",
+        "meaning": "烹饪；厨师",
+        "example": "My father likes to cook dinner."
+    },
+    {
+        "word": "cooking",
+        "phonetic": "/ˈkʊkɪŋ/",
+        "meaning": "烹饪",
+        "example": "I enjoy cooking for my friends."
+    },
+    {
+        "word": "cool",
+        "phonetic": "/kuːl/",
+        "meaning": "凉爽的；很棒的",
+        "example": "The weather is cool today."
+    },
+    {
+        "word": "copy",
+        "phonetic": "/ˈkɒpi/",
+        "meaning": "复制；副本",
+        "example": "Can you copy this document for me?"
+    },
+    {
+        "word": "corner",
+        "phonetic": "/ˈkɔːnə(r)/",
+        "meaning": "角落",
+        "example": "The shop is on the corner of the street."
+    },
+    {
+        "word": "correct",
+        "phonetic": "/kəˈrekt/",
+        "meaning": "正确的；纠正",
+        "example": "Your answer is correct."
+    },
+    {
+        "word": "cost",
+        "phonetic": "/kɒst/",
+        "meaning": "花费；成本",
+        "example": "How much does this book cost?"
+    },
+    {
+        "word": "could",
+        "phonetic": "/kʊd/",
+        "meaning": "可以（can的过去式）；可能",
+        "example": "Could you help me, please?"
+    },
+    {
+        "word": "country",
+        "phonetic": "/ˈkʌntri/",
+        "meaning": "国家；乡村",
+        "example": "France is a European country."
+    },
+    {
+        "word": "course",
+        "phonetic": "/kɔːs/",
+        "meaning": "课程；过程；一道菜",
+        "example": "I'm taking a French course."
+    },
+    {
+        "word": "cousin",
+        "phonetic": "/ˈkʌzn/",
+        "meaning": "堂兄弟姊妹；表兄弟姊妹",
+        "example": "My cousin is coming to stay with us."
+    },
+    {
+        "word": "cover",
+        "phonetic": "/ˈkʌvə(r)/",
+        "meaning": "覆盖；盖子；封面",
+        "example": "Cover the food with a lid."
+    },
+    {
+        "word": "cow",
+        "phonetic": "/kaʊ/",
+        "meaning": "奶牛",
+        "example": "Cows produce milk."
+    },
+    {
+        "word": "crazy",
+        "phonetic": "/ˈkreɪzi/",
+        "meaning": "疯狂的",
+        "example": "You're crazy to go out in this storm!"
+    },
+    {
+        "word": "cream",
+        "phonetic": "/kriːm/",
+        "meaning": "奶油；乳霜",
+        "example": "I like strawberries and cream."
+    },
+    {
+        "word": "credit card",
+        "phonetic": "/ˈkredɪt kɑːd/",
+        "meaning": "信用卡",
+        "example": "Can I pay by credit card?"
+    },
+    {
+        "word": "cross",
+        "phonetic": "/krɒs/",
+        "meaning": "穿过；十字形",
+        "example": "Look both ways before you cross the road."
+    },
+    {
+        "word": "cry",
+        "phonetic": "/kraɪ/",
+        "meaning": "哭；喊叫",
+        "example": "The baby started to cry."
+    },
+    {
+        "word": "cup",
+        "phonetic": "/kʌp/",
+        "meaning": "杯子",
+        "example": "Would you like a cup of tea?"
+    },
+    {
+        "word": "cupboard",
+        "phonetic": "/ˈkʌbəd/",
+        "meaning": "橱柜",
+        "example": "The plates are in the cupboard."
+    },
+    {
+        "word": "cut",
+        "phonetic": "/kʌt/",
+        "meaning": "切，割",
+        "example": "Be careful not to cut your finger."
+    }，
+  {
+    word: "dog",
+    phonetic: "/dɒɡ/",
+    meaning: "狗",
+    example: "The dog is barking loudly."
+    },
+    {
+    word: "day",
+    phonetic: "/deɪ/",
+    meaning: "天，白天",
+    example: "I go to school every day."
+    },
+    {
+    word: "door",
+    phonetic: "/dɔːr/",
+    meaning: "门",
+    example: "Please close the door."
+    },
+    {
+    word: "desk",
+    phonetic: "/desk/",
+    meaning: "书桌",
+    example: "My books are on the desk."
+    },
+    {
+    word: "dance",
+    phonetic: "/dæns/",
+    meaning: "跳舞",
+    example: "She likes to dance."
+    },
+    {
+    word: "drink",
+    phonetic: "/drɪŋk/",
+    meaning: "喝，饮料",
+    example: "I drink water every morning."
+    },
+    {
+    word: "drive",
+    phonetic: "/draɪv/",
+    meaning: "驾驶",
+    example: "My father drives a car."
+    },
+    {
+    word: "dress",
+    phonetic: "/dres/",
+    meaning: "连衣裙，穿衣",
+    example: "She wears a beautiful dress."
+    },
+    {
+    word: "dinner",
+    phonetic: "/ˈdɪnər/",
+    meaning: "晚餐",
+    example: "We have dinner at 7 PM."
+    },
+    {
+    word: "dollar",
+    phonetic: "/ˈdɒlər/",
+    meaning: "美元",
+    example: "This book costs ten dollars."
+    },
+    {
+    word: "doctor",
+    phonetic: "/ˈdɒktər/",
+    meaning: "医生",
+    example: "The doctor helps sick people."
+    },
+    {
+    word: "daughter",
+    phonetic: "/ˈdɔːtər/",
+    meaning: "女儿",
+    example: "Their daughter is very smart."
+    },
+    {
+    word: "different",
+    phonetic: "/ˈdɪfərənt/",
+    meaning: "不同的",
+    example: "We have different opinions."
+    },
+    {
+    word: "difficult",
+    phonetic: "/ˈdɪfɪkəlt/",
+    meaning: "困难的",
+    example: "Math is difficult for me."
+    },
+    {
+    word: "dream",
+    phonetic: "/driːm/",
+    meaning: "梦想，做梦",
+    example: "I have a dream to travel."
+    },
+    {
+    word: "during",
+    phonetic: "/ˈdjʊərɪŋ/",
+    meaning: "在…期间",
+    example: "I read during my free time."
+    },
+    {
+    word: "dark",
+    phonetic: "/dɑːk/",
+    meaning: "黑暗的",
+    example: "It's dark outside at night."
+    },
+    {
+    word: "date",
+    phonetic: "/deɪt/",
+    meaning: "日期，约会",
+    example: "What's the date today?"
+    },
+    {
+    word: "decide",
+    phonetic: "/dɪˈsaɪd/",
+    meaning: "决定",
+    example: "I decide to study harder."
+    },
+    {
+    word: "delicious",
+    phonetic: "/dɪˈlɪʃəs/",
+    meaning: "美味的",
+    example: "The cake is delicious."
+    },
+    {
+    word: "describe",
+    phonetic: "/dɪˈskraɪb/",
+    meaning: "描述",
+    example: "Can you describe your house?"
+    },
+    {
+    word: "develop",
+    phonetic: "/dɪˈveləp/",
+    meaning: "发展",
+    example: "Cities develop quickly."
+    },
+    {
+    word: "dictionary",
+    phonetic: "/ˈdɪkʃənəri/",
+    meaning: "字典",
+    example: "I use a dictionary to learn words."
+    },
+    {
+    word: "discuss",
+    phonetic: "/dɪˈskʌs/",
+    meaning: "讨论",
+    example: "Let's discuss the plan."
+    },
+    {
+    word: "distance",
+    phonetic: "/ˈdɪstəns/",
+    meaning: "距离",
+    example: "The distance is not far."
+    },
+    {
+    word: "draw",
+    phonetic: "/drɔː/",
+    meaning: "画画",
+    example: "I like to draw pictures."
+    },
+    {
+    word: "egg",
+    phonetic: "/eɡ/",
+    meaning: "鸡蛋",
+    example: "I eat an egg for breakfast."
+    },
+    {
+    word: "eye",
+    phonetic: "/aɪ/",
+    meaning: "眼睛",
+    example: "She has blue eyes."
+    },
+    {
+    word: "ear",
+    phonetic: "/ɪər/",
+    meaning: "耳朵",
+    example: "The rabbit has long ears."
+    },
+    {
+    word: "eat",
+    phonetic: "/iːt/",
+    meaning: "吃",
+    example: "We eat lunch at school."
+    },
+    {
+    word: "eight",
+    phonetic: "/eɪt/",
+    meaning: "八",
+    example: "There are eight students."
+    },
+    {
+    word: "eleven",
+    phonetic: "/ɪˈlevən/",
+    meaning: "十一",
+    example: "I have eleven pencils."
+    },
+    {
+    word: "email",
+    phonetic: "/ˈiːmeɪl/",
+    meaning: "电子邮件",
+    example: "I send an email to my friend."
+    },
+    {
+    word: "end",
+    phonetic: "/end/",
+    meaning: "结束，末端",
+    example: "The movie has a happy end."
+    },
+    {
+    word: "enjoy",
+    phonetic: "/ɪnˈdʒɔɪ/",
+    meaning: "享受",
+    example: "I enjoy playing football."
+    },
+    {
+    word: "enough",
+    phonetic: "/ɪˈnʌf/",
+    meaning: "足够的",
+    example: "I have enough time to finish."
+    },
+    {
+    word: "enter",
+    phonetic: "/ˈentər/",
+    meaning: "进入",
+    example: "Please enter the room quietly."
+    },
+    {
+    word: "evening",
+    phonetic: "/ˈiːvnɪŋ/",
+    meaning: "晚上",
+    example: "We watch TV in the evening."
+    },
+    {
+    word: "every",
+    phonetic: "/ˈevri/",
+    meaning: "每个",
+    example: "Every student has a book."
+    },
+    {
+    word: "example",
+    phonetic: "/ɪɡˈzæmpl/",
+    meaning: "例子",
+    example: "This is a good example."
+    },
+    {
+    word: "excellent",
+    phonetic: "/ˈeksələnt/",
+    meaning: "优秀的",
+    example: "Your work is excellent."
+    },
+    {
+    word: "excuse",
+    phonetic: "/ɪkˈskjuːz/",
+    meaning: "借口，原谅",
+    example: "Excuse me, can you help me?"
+    },
+    {
+    word: "exercise",
+    phonetic: "/ˈeksəsaɪz/",
+    meaning: "锻炼，练习",
+    example: "I do exercise every morning."
+    },
+    {
+    word: "expect",
+    phonetic: "/ɪkˈspekt/",
+    meaning: "期待",
+    example: "I expect to see you tomorrow."
+    },
+    {
+    word: "expensive",
+    phonetic: "/ɪkˈspensɪv/",
+    meaning: "昂贵的",
+    example: "The phone is too expensive."
+    },
+    {
+    word: "explain",
+    phonetic: "/ɪkˈspleɪn/",
+    meaning: "解释",
+    example: "Can you explain this question?"
+    },
+    {
+    word: "express",
+    phonetic: "/ɪkˈspres/",
+    meaning: "表达",
+    example: "It's hard to express my feelings."
+    },
+    {
+    word: "face",
+    phonetic: "/feɪs/",
+    meaning: "脸",
+    example: "She has a round face."
+    },
+    {
+    word: "family",
+    phonetic: "/ˈfæməli/",
+    meaning: "家庭",
+    example: "My family is very big."
+    },
+    {
+    word: "father",
+    phonetic: "/ˈfɑːðər/",
+    meaning: "父亲",
+    example: "My father works in an office."
+    },
+    {
+    word: "friend",
+    phonetic: "/frend/",
+    meaning: "朋友",
+    example: "She is my best friend."
+    },
+    {
+    word: "food",
+    phonetic: "/fuːd/",
+    meaning: "食物",
+    example: "I like Chinese food."
+    },
+    {
+    word: "foot",
+    phonetic: "/fʊt/",
+    meaning: "脚",
+    example: "My foot hurts after running."
+    },
+    {
+    word: "four",
+    phonetic: "/fɔːr/",
+    meaning: "四",
+    example: "There are four seasons."
+    },
+    {
+    word: "five",
+    phonetic: "/faɪv/",
+    meaning: "五",
+    example: "I have five fingers on each hand."
+    },
+    {
+    word: "fifteen",
+    phonetic: "/ˌfɪfˈtiːn/",
+    meaning: "十五",
+    example: "She is fifteen years old."
+    },
+    {
+    word: "fifty",
+    phonetic: "/ˈfɪfti/",
+    meaning: "五十",
+    example: "There are fifty students in my class."
+    },
+    {
+    word: "find",
+    phonetic: "/faɪnd/",
+    meaning: "找到",
+    example: "I can't find my keys."
+    },
+    {
+    word: "first",
+    phonetic: "/fɜːst/",
+    meaning: "第一",
+    example: "This is my first time here."
+    },
+    {
+    word: "floor",
+    phonetic: "/flɔːr/",
+    meaning: "地板，楼层",
+    example: "The book is on the floor."
+    },
+    {
+    word: "flower",
+    phonetic: "/ˈflaʊər/",
+    meaning: "花",
+    example: "The garden has many flowers."
+    },
+    {
+    word: "fly",
+    phonetic: "/flaɪ/",
+    meaning: "飞",
+    example: "Birds can fly in the sky."
+    },
+    {
+    word: "follow",
+    phonetic: "/ˈfɒləʊ/",
+    meaning: "跟随",
+    example: "Please follow me to the office."
+    },
+    {
+    word: "forget",
+    phonetic: "/fəˈɡet/",
+    meaning: "忘记",
+    example: "Don't forget your homework."
+    },
+    {
+    word: "free",
+    phonetic: "/friː/",
+    meaning: "免费的，自由的",
+    example: "The water is free here."
+    },
+    {
+    word: "Friday",
+    phonetic: "/ˈfraɪdeɪ/",
+    meaning: "星期五",
+    example: "We have a test on Friday."
+    },
+    {
+    word: "from",
+    phonetic: "/frɒm/",
+    meaning: "从…",
+    example: "I come from China."
+    },
+    {
+    word: "fruit",
+    phonetic: "/fruːt/",
+    meaning: "水果",
+    example: "Apples are my favorite fruit."
+    },
+    {
+    word: "full",
+    phonetic: "/fʊl/",
+    meaning: "满的",
+    example: "The glass is full of water."
+    },
+    {
+    word: "fun",
+    phonetic: "/fʌn/",
+    meaning: "有趣的",
+    example: "Playing games is fun."
+    },
+    {
+    word: "future",
+    phonetic: "/ˈfjuːtʃər/",
+    meaning: "未来",
+    example: "I want to be a doctor in the future."
+    },
+    {
+        "word": "game",
+        "phonetic": "/ɡeɪm/",
+        "meaning": "游戏，比赛",
+        "example": "We play a game after school."
+    },
+    {
+        "word": "garden",
+        "phonetic": "/ˈɡɑːrdn/",
+        "meaning": "花园",
+        "example": "My mother grows flowers in the garden."
+    },
+    {
+        "word": "get",
+        "phonetic": "/ɡet/",
+        "meaning": "得到，获得",
+        "example": "I get a present for my birthday."
+    },
+    {
+        "word": "girl",
+        "phonetic": "/ɡɜːrl/",
+        "meaning": "女孩",
+        "example": "The girl is reading a book."
+    },
+    {
+        "word": "give",
+        "phonetic": "/ɡɪv/",
+        "meaning": "给",
+        "example": "Please give me the pencil."
+    },
+    {
+        "word": "glass",
+        "phonetic": "/ɡlæs/",
+        "meaning": "玻璃杯，玻璃",
+        "example": "I drink water from a glass."
+    },
+    {
+        "word": "go",
+        "phonetic": "/ɡoʊ/",
+        "meaning": "去",
+        "example": "I go to school by bus."
+    },
+    {
+        "word": "good",
+        "phonetic": "/ɡʊd/",
+        "meaning": "好的",
+        "example": "She is a good student."
+    },
+    {
+        "word": "goodbye",
+        "phonetic": "/ˌɡʊdˈbaɪ/",
+        "meaning": "再见",
+        "example": "Goodbye, see you tomorrow!"
+    },
+    {
+        "word": "grandfather",
+        "phonetic": "/ˈɡrændfɑːðər/",
+        "meaning": "祖父，外祖父",
+        "example": "My grandfather tells good stories."
+    },
+    {
+        "word": "grandmother",
+        "phonetic": "/ˈɡrændmʌðər/",
+        "meaning": "祖母，外祖母",
+        "example": "My grandmother makes delicious cookies."
+    },
+    {
+        "word": "great",
+        "phonetic": "/ɡreɪt/",
+        "meaning": "伟大的，很好的",
+        "example": "That's a great idea!"
+    },
+    {
+        "word": "green",
+        "phonetic": "/ɡriːn/",
+        "meaning": "绿色的",
+        "example": "The grass is green in spring."
+    },
+    {
+        "word": "grey",
+        "phonetic": "/ɡreɪ/",
+        "meaning": "灰色的",
+        "example": "The sky is grey today."
+    },
+    {
+        "word": "ground",
+        "phonetic": "/ɡraʊnd/",
+        "meaning": "地面",
+        "example": "The ball is on the ground."
+    },
+    {
+        "word": "group",
+        "phonetic": "/ɡruːp/",
+        "meaning": "组，群",
+        "example": "We work in a group of four."
+    },
+    {
+        "word": "grow",
+        "phonetic": "/ɡroʊ/",
+        "meaning": "生长，种植",
+        "example": "Plants grow in the sun."
+    },
+    {
+        "word": "guess",
+        "phonetic": "/ɡes/",
+        "meaning": "猜",
+        "example": "Can you guess my age?"
+    },
+    {
+        "word": "guest",
+        "phonetic": "/ɡest/",
+        "meaning": "客人",
+        "example": "We have guests for dinner tonight."
+    },
+    {
+        "word": "guide",
+        "phonetic": "/ɡaɪd/",
+        "meaning": "向导，指南",
+        "example": "The guide shows us around the museum."
+    },
+    {
+        "word": "guitar",
+        "phonetic": "/ɡɪˈtɑːr/",
+        "meaning": "吉他",
+        "example": "He plays the guitar very well."
+    },
+    {
+        "word": "hair",
+        "phonetic": "/heər/",
+        "meaning": "头发",
+        "example": "She has long brown hair."
+    },
+    {
+        "word": "half",
+        "phonetic": "/hæf/",
+        "meaning": "一半",
+        "example": "I eat half an apple."
+    },
+    {
+        "word": "hand",
+        "phonetic": "/hænd/",
+        "meaning": "手",
+        "example": "Raise your hand if you know the answer."
+    },
+    {
+        "word": "happen",
+        "phonetic": "/ˈhæpən/",
+        "meaning": "发生",
+        "example": "What happened to your leg?"
+    },
+    {
+        "word": "happy",
+        "phonetic": "/ˈhæpi/",
+        "meaning": "快乐的",
+        "example": "I am happy to see you."
+    },
+    {
+        "word": "hard",
+        "phonetic": "/hɑːrd/",
+        "meaning": "困难的，硬的",
+        "example": "This test is very hard."
+    },
+    {
+        "word": "hat",
+        "phonetic": "/hæt/",
+        "meaning": "帽子",
+        "example": "He wears a blue hat."
+    },
+    {
+        "word": "hate",
+        "phonetic": "/heɪt/",
+        "meaning": "讨厌",
+        "example": "I hate getting up early."
+    },
+    {
+        "word": "have",
+        "phonetic": "/hæv/",
+        "meaning": "有",
+        "example": "I have two brothers."
+    },
+    {
+        "word": "he",
+        "phonetic": "/hiː/",
+        "meaning": "他",
+        "example": "He is my best friend."
+    },
+    {
+        "word": "head",
+        "phonetic": "/hed/",
+        "meaning": "头",
+        "example": "My head hurts."
+    },
+    {
+        "word": "hear",
+        "phonetic": "/hɪər/",
+        "meaning": "听见",
+        "example": "I can hear the music."
+    },
+    {
+        "word": "heart",
+        "phonetic": "/hɑːrt/",
+        "meaning": "心脏",
+        "example": "My heart beats fast when I run."
+    },
+    {
+        "word": "heavy",
+        "phonetic": "/ˈhevi/",
+        "meaning": "重的",
+        "example": "This box is too heavy to carry."
+    },
+    {
+        "word": "hello",
+        "phonetic": "/həˈloʊ/",
+        "meaning": "你好",
+        "example": "Hello, how are you today?"
+    },
+    {
+        "word": "help",
+        "phonetic": "/help/",
+        "meaning": "帮助",
+        "example": "Can you help me with my homework?"
+    },
+    {
+        "word": "her",
+        "phonetic": "/hɜːr/",
+        "meaning": "她的",
+        "example": "This is her book."
+    },
+    {
+        "word": "here",
+        "phonetic": "/hɪər/",
+        "meaning": "这里",
+        "example": "Come here, please."
+    },
+    {
+        "word": "high",
+        "phonetic": "/haɪ/",
+        "meaning": "高的",
+        "example": "The mountain is very high."
+    },
+    {
+        "word": "hill",
+        "phonetic": "/hɪl/",
+        "meaning": "小山",
+        "example": "We walk up the hill."
+    },
+    {
+        "word": "him",
+        "phonetic": "/hɪm/",
+        "meaning": "他（宾格）",
+        "example": "I give him a present."
+    },
+    {
+        "word": "his",
+        "phonetic": "/hɪz/",
+        "meaning": "他的",
+        "example": "This is his bicycle."
+    },
+    {
+        "word": "history",
+        "phonetic": "/ˈhɪstəri/",
+        "meaning": "历史",
+        "example": "I like studying history."
+    },
+    {
+        "word": "hit",
+        "phonetic": "/hɪt/",
+        "meaning": "打，击中",
+        "example": "The ball hit the window."
+    },
+    {
+        "word": "hobby",
+        "phonetic": "/ˈhɒbi/",
+        "meaning": "爱好",
+        "example": "My hobby is collecting stamps."
+    },
+    {
+        "word": "hold",
+        "phonetic": "/hoʊld/",
+        "meaning": "拿，握",
+        "example": "Please hold my hand."
+    },
+    {
+        "word": "holiday",
+        "phonetic": "/ˈhɒlədeɪ/",
+        "meaning": "假期",
+        "example": "We go to the beach on holiday."
+    },
+    {
+        "word": "home",
+        "phonetic": "/hoʊm/",
+        "meaning": "家",
+        "example": "I go home after school."
+    },
+    {
+        "word": "homework",
+        "phonetic": "/ˈhoʊmwɜːrk/",
+        "meaning": "家庭作业",
+        "example": "I do my homework every evening."
+    },
+    {
+        "word": "hope",
+        "phonetic": "/hoʊp/",
+        "meaning": "希望",
+        "example": "I hope you feel better soon."
+    },
+    {
+        "word": "horse",
+        "phonetic": "/hɔːrs/",
+        "meaning": "马",
+        "example": "She rides a horse every weekend."
+    },
+    {
+        "word": "hospital",
+        "phonetic": "/ˈhɒspɪtl/",
+        "meaning": "医院",
+        "example": "My father works in a hospital."
+    },
+    {
+        "word": "hot",
+        "phonetic": "/hɒt/",
+        "meaning": "热的",
+        "example": "The tea is too hot to drink."
+    },
+    {
+        "word": "hotel",
+        "phonetic": "/hoʊˈtel/",
+        "meaning": "酒店",
+        "example": "We stay in a nice hotel."
+    },
+    {
+        "word": "hour",
+        "phonetic": "/ˈaʊər/",
+        "meaning": "小时",
+        "example": "I study for two hours every day."
+    },
+    {
+        "word": "house",
+        "phonetic": "/haʊs/",
+        "meaning": "房子",
+        "example": "They live in a big house."
+    },
+    {
+        "word": "how",
+        "phonetic": "/haʊ/",
+        "meaning": "怎样",
+        "example": "How do you go to school?"
+    },
+    {
+        "word": "hundred",
+        "phonetic": "/ˈhʌndrəd/",
+        "meaning": "一百",
+        "example": "There are one hundred students in our grade."
+    },
+    {
+        "word": "hungry",
+        "phonetic": "/ˈhʌŋɡri/",
+        "meaning": "饥饿的",
+        "example": "I'm hungry after playing football."
+    },
+    {
+        "word": "hurry",
+        "phonetic": "/ˈhʌri/",
+        "meaning": "匆忙",
+        "example": "Hurry up, we're late!"
+    },
+    {
+        "word": "hurt",
+        "phonetic": "/hɜːrt/",
+        "meaning": "受伤，疼痛",
+        "example": "My arm hurts after falling down."
+    },
+    {
+        "word": "ice",
+        "phonetic": "/aɪs/",
+        "meaning": "冰",
+        "example": "The ice melts in the sun."
+    },
+    {
+        "word": "ice cream",
+        "phonetic": "/ˈaɪs kriːm/",
+        "meaning": "冰淇淋",
+        "example": "I love chocolate ice cream."
+    },
+    {
+        "word": "idea",
+        "phonetic": "/aɪˈdɪə/",
+        "meaning": "想法，主意",
+        "example": "That's a good idea!"
+    },
+    {
+        "word": "if",
+        "phonetic": "/ɪf/",
+        "meaning": "如果",
+        "example": "If it rains, we will stay home."
+    },
+    {
+        "word": "important",
+        "phonetic": "/ɪmˈpɔːrtnt/",
+        "meaning": "重要的",
+        "example": "It's important to study hard."
+    },
+    {
+        "word": "in",
+        "phonetic": "/ɪn/",
+        "meaning": "在…里面",
+        "example": "The book is in the bag."
+    },
+    {
+        "word": "information",
+        "phonetic": "/ˌɪnfərˈmeɪʃn/",
+        "meaning": "信息",
+        "example": "I need more information about the trip."
+    },
+    {
+        "word": "interest",
+        "phonetic": "/ˈɪntrəst/",
+        "meaning": "兴趣",
+        "example": "I have an interest in science."
+    },
+    {
+        "word": "interesting",
+        "phonetic": "/ˈɪntrəstɪŋ/",
+        "meaning": "有趣的",
+        "example": "This is an interesting book."
+    },
+    {
+        "word": "internet",
+        "phonetic": "/ˈɪntərnet/",
+        "meaning": "互联网",
+        "example": "I search for information on the internet."
+    },
+    {
+        "word": "into",
+        "phonetic": "/ˈɪntuː/",
+        "meaning": "进入",
+        "example": "We go into the classroom."
+    },
+    {
+        "word": "invite",
+        "phonetic": "/ɪnˈvaɪt/",
+        "meaning": "邀请",
+        "example": "I invite my friends to my birthday party."
+    },
+    {
+        "word": "island",
+        "phonetic": "/ˈaɪlənd/",
+        "meaning": "岛屿",
+        "example": "We visit a beautiful island on holiday."
+    },
+    {
+        "word": "it",
+        "phonetic": "/ɪt/",
+        "meaning": "它",
+        "example": "It is raining outside."
+    },
+    {
+        "word": "its",
+        "phonetic": "/ɪts/",
+        "meaning": "它的",
+        "example": "The cat is washing its face."
+    },
+    {
+        "word": "jacket",
+        "phonetic": "/ˈdʒækɪt/",
+        "meaning": "夹克",
+        "example": "I wear a warm jacket in winter."
+    },
+    {
+        "word": "jeans",
+        "phonetic": "/dʒiːnz/",
+        "meaning": "牛仔裤",
+        "example": "She wears blue jeans to school."
+    },
+    {
+        "word": "job",
+        "phonetic": "/dʒɒb/",
+        "meaning": "工作",
+        "example": "My father has a new job."
+    },
+    {
+        "word": "join",
+        "phonetic": "/dʒɔɪn/",
+        "meaning": "加入",
+        "example": "I want to join the football team."
+    },
+    {
+        "word": "juice",
+        "phonetic": "/dʒuːs/",
+        "meaning": "果汁",
+        "example": "I drink orange juice for breakfast."
+    },
+    {
+        "word": "jump",
+        "phonetic": "/dʒʌmp/",
+        "meaning": "跳",
+        "example": "The children jump in the playground."
+    },
+    {
+        "word": "just",
+        "phonetic": "/dʒʌst/",
+        "meaning": "刚刚，只是",
+        "example": "I just finished my homework."
+    },
+    {
+        "word": "keep",
+        "phonetic": "/kiːp/",
+        "meaning": "保持，保存",
+        "example": "Please keep your room clean."
+    },
+    {
+        "word": "key",
+        "phonetic": "/kiː/",
+        "meaning": "钥匙，关键",
+        "example": "I lost my house key."
+    },
+    {
+        "word": "keyboard",
+        "phonetic": "/ˈkiːbɔːrd/",
+        "meaning": "键盘",
+        "example": "I type on the computer keyboard."
+    },
+    {
+        "word": "kick",
+        "phonetic": "/kɪk/",
+        "meaning": "踢",
+        "example": "He can kick the ball very far."
+    },
+    {
+        "word": "kid",
+        "phonetic": "/kɪd/",
+        "meaning": "小孩",
+        "example": "The kids are playing in the park."
+    },
+    {
+        "word": "kill",
+        "phonetic": "/kɪl/",
+        "meaning": "杀死",
+        "example": "We should not kill animals."
+    },
+    {
+        "word": "kilogram",
+        "phonetic": "/ˈkɪləɡræm/",
+        "meaning": "千克",
+        "example": "I weigh 50 kilograms."
+    },
+    {
+        "word": "kilometre",
+        "phonetic": "/ˈkɪləmiːtər/",
+        "meaning": "公里",
+        "example": "The school is two kilometres from my home."
+    },
+    {
+        "word": "kind",
+        "phonetic": "/kaɪnd/",
+        "meaning": "种类；善良的",
+        "example": "She is very kind to everyone."
+    },
+    {
+        "word": "king",
+        "phonetic": "/kɪŋ/",
+        "meaning": "国王",
+        "example": "The king lives in a palace."
+    },
+    {
+        "word": "kitchen",
+        "phonetic": "/ˈkɪtʃɪn/",
+        "meaning": "厨房",
+        "example": "My mother is cooking in the kitchen."
+    },
+    {
+        "word": "kite",
+        "phonetic": "/kaɪt/",
+        "meaning": "风筝",
+        "example": "We fly kites on windy days."
+    },
+    {
+        "word": "knee",
+        "phonetic": "/niː/",
+        "meaning": "膝盖",
+        "example": "I hurt my knee when I fell."
+    },
+    {
+        "word": "knife",
+        "phonetic": "/naɪf/",
+        "meaning": "刀",
+        "example": "Be careful with that sharp knife."
+    },
+    {
+        "word": "knock",
+        "phonetic": "/nɒk/",
+        "meaning": "敲",
+        "example": "Please knock before entering."
+    },
+    {
+        "word": "know",
+        "phonetic": "/noʊ/",
+        "meaning": "知道，认识",
+        "example": "I know the answer to that question."
+    },
+    {
+        "word": "lake",
+        "phonetic": "/leɪk/",
+        "meaning": "湖",
+        "example": "We go swimming in the lake in summer."
+    },
+    {
+        "word": "lamp",
+        "phonetic": "/læmp/",
+        "meaning": "灯",
+        "example": "I read by the light of the lamp."
+    },
+    {
+        "word": "land",
+        "phonetic": "/lænd/",
+        "meaning": "陆地，土地",
+        "example": "The plane will land soon."
+    },
+    {
+        "word": "language",
+        "phonetic": "/ˈlæŋɡwɪdʒ/",
+        "meaning": "语言",
+        "example": "English is an important language."
+    },
+    {
+        "word": "large",
+        "phonetic": "/lɑːrdʒ/",
+        "meaning": "大的",
+        "example": "We live in a large house."
+    },
+    {
+        "word": "last",
+        "phonetic": "/læst/",
+        "meaning": "最后的；持续",
+        "example": "This is the last piece of cake."
+    },
+    {
+        "word": "late",
+        "phonetic": "/leɪt/",
+        "meaning": "迟的，晚的",
+        "example": "Don't be late for school."
+    },
+    {
+        "word": "laugh",
+        "phonetic": "/læf/",
+        "meaning": "笑",
+        "example": "The joke made everyone laugh."
+    },
+    {
+        "word": "law",
+        "phonetic": "/lɔː/",
+        "meaning": "法律",
+        "example": "It's important to obey the law."
+    },
+    {
+        "word": "lazy",
+        "phonetic": "/ˈleɪzi/",
+        "meaning": "懒惰的",
+        "example": "He's too lazy to do his homework."
+    },
+    {
+        "word": "learn",
+        "phonetic": "/lɜːrn/",
+        "meaning": "学习",
+        "example": "I want to learn how to swim."
+    },
+    {
+        "word": "leave",
+        "phonetic": "/liːv/",
+        "meaning": "离开；留下",
+        "example": "We leave home at 8 o'clock."
+    },
+    {
+        "word": "left",
+        "phonetic": "/left/",
+        "meaning": "左边；离开（过去式）",
+        "example": "Turn left at the next corner."
+    },
+    {
+        "word": "leg",
+        "phonetic": "/leɡ/",
+        "meaning": "腿",
+        "example": "My legs are tired after running."
+    },
+    {
+        "word": "lemon",
+        "phonetic": "/ˈlemən/",
+        "meaning": "柠檬",
+        "example": "I like lemon in my tea."
+    },
+    {
+        "word": "lend",
+        "phonetic": "/lend/",
+        "meaning": "借出",
+        "example": "Can you lend me your pencil?"
+    },
+    {
+        "word": "lesson",
+        "phonetic": "/ˈlesn/",
+        "meaning": "课程，教训",
+        "example": "We have an English lesson today."
+    },
+    {
+        "word": "let",
+        "phonetic": "/let/",
+        "meaning": "让",
+        "example": "Let me help you with that."
+    },
+    {
+        "word": "letter",
+        "phonetic": "/ˈletər/",
+        "meaning": "信；字母",
+        "example": "I write a letter to my friend."
+    },
+    {
+        "word": "library",
+        "phonetic": "/ˈlaɪbrəri/",
+        "meaning": "图书馆",
+        "example": "I borrow books from the library."
+    },
+    {
+        "word": "lie",
+        "phonetic": "/laɪ/",
+        "meaning": "躺；说谎",
+        "example": "Don't lie to your parents."
+    },
+    {
+        "word": "life",
+        "phonetic": "/laɪf/",
+        "meaning": "生活，生命",
+        "example": "Life is beautiful."
+    },
+    {
+        "word": "light",
+        "phonetic": "/laɪt/",
+        "meaning": "光；轻的",
+        "example": "Turn on the light, please."
+    },
+    {
+        "word": "like",
+        "phonetic": "/laɪk/",
+        "meaning": "喜欢；像",
+        "example": "I like ice cream."
+    },
+    {
+        "word": "line",
+        "phonetic": "/laɪn/",
+        "meaning": "线，队伍",
+        "example": "Stand in a straight line."
+    },
+    {
+        "word": "lion",
+        "phonetic": "/ˈlaɪən/",
+        "meaning": "狮子",
+        "example": "The lion is the king of animals."
+    },
+    {
+        "word": "list",
+        "phonetic": "/lɪst/",
+        "meaning": "列表",
+        "example": "I make a shopping list."
+    },
+    {
+        "word": "listen",
+        "phonetic": "/ˈlɪsən/",
+        "meaning": "听",
+        "example": "Listen to the teacher carefully."
+    },
+    {
+        "word": "little",
+        "phonetic": "/ˈlɪtl/",
+        "meaning": "小的；一点",
+        "example": "I have a little brother."
+    },
+    {
+        "word": "live",
+        "phonetic": "/lɪv/",
+        "meaning": "居住；活的",
+        "example": "We live in a big city."
+    },
+    {
+        "word": "long",
+        "phonetic": "/lɒŋ/",
+        "meaning": "长的",
+        "example": "She has long hair."
+    },
+    {
+        "word": "look",
+        "phonetic": "/lʊk/",
+        "meaning": "看",
+        "example": "Look at that beautiful bird!"
+    },
+    {
+        "word": "lose",
+        "phonetic": "/luːz/",
+        "meaning": "丢失，输",
+        "example": "Don't lose your keys."
+    },
+    {
+        "word": "lot",
+        "phonetic": "/lɒt/",
+        "meaning": "很多",
+        "example": "I have a lot of homework."
+    },
+    {
+        "word": "love",
+        "phonetic": "/lʌv/",
+        "meaning": "爱，喜欢",
+        "example": "I love my family."
+    },
+    {
+        "word": "low",
+        "phonetic": "/loʊ/",
+        "meaning": "低的",
+        "example": "The table is too low."
+    },
+    {
+        "word": "lunch",
+        "phonetic": "/lʌntʃ/",
+        "meaning": "午餐",
+        "example": "We have lunch at school."
+    },
+    {
+        "word": "machine",
+        "phonetic": "/məˈʃiːn/",
+        "meaning": "机器",
+        "example": "This machine makes coffee."
+    },
+    {
+        "word": "mad",
+        "phonetic": "/mæd/",
+        "meaning": "疯狂的；生气的",
+        "example": "My father was mad when I broke the window."
+    },
+    {
+        "word": "magazine",
+        "phonetic": "/ˈmæɡəziːn/",
+        "meaning": "杂志",
+        "example": "I read a fashion magazine."
+    },
+    {
+        "word": "make",
+        "phonetic": "/meɪk/",
+        "meaning": "制作，使",
+        "example": "I make my bed every morning."
+    },
+    {
+        "word": "man",
+        "phonetic": "/mæn/",
+        "meaning": "男人",
+        "example": "That man is my teacher."
+    },
+    {
+        "word": "many",
+        "phonetic": "/ˈmeni/",
+        "meaning": "许多",
+        "example": "How many books do you have?"
+    },
+    {
+        "word": "map",
+        "phonetic": "/mæp/",
+        "meaning": "地图",
+        "example": "We use a map to find the way."
+    },
+    {
+        "word": "market",
+        "phonetic": "/ˈmɑːrkɪt/",
+        "meaning": "市场",
+        "example": "My mother buys vegetables at the market."
+    },
+    {
+        "word": "match",
+        "phonetic": "/mætʃ/",
+        "meaning": "比赛；匹配",
+        "example": "We watch a football match on TV."
+    },
+    {
+        "word": "maths",
+        "phonetic": "/mæθs/",
+        "meaning": "数学",
+        "example": "I'm good at maths."
+    },
+    {
+        "word": "matter",
+        "phonetic": "/ˈmætər/",
+        "meaning": "事情；物质",
+        "example": "What's the matter with you?"
+    },
+    {
+        "word": "may",
+        "phonetic": "/meɪ/",
+        "meaning": "可以；可能",
+        "example": "May I go to the toilet?"
+    },
+    {
+        "word": "maybe",
+        "phonetic": "/ˈmeɪbi/",
+        "meaning": "也许",
+        "example": "Maybe it will rain tomorrow."
+    },
+    {
+        "word": "me",
+        "phonetic": "/miː/",
+        "meaning": "我（宾格）",
+        "example": "Can you help me?"
+    },
+    {
+        "word": "meal",
+        "phonetic": "/miːl/",
+        "meaning": "餐",
+        "example": "We have three meals a day."
+    },
+    {
+        "word": "mean",
+        "phonetic": "/miːn/",
+        "meaning": "意思是；吝啬的",
+        "example": "What does this word mean?"
+    },
+    {
+        "word": "meat",
+        "phonetic": "/miːt/",
+        "meaning": "肉",
+        "example": "I don't eat meat."
+    },
+    {
+        "word": "medicine",
+        "phonetic": "/ˈmedsɪn/",
+        "meaning": "药",
+        "example": "Take this medicine when you're sick."
+    },
+    {
+        "word": "meet",
+        "phonetic": "/miːt/",
+        "meaning": "遇见",
+        "example": "Nice to meet you!"
+    },
+    {
+        "word": "member",
+        "phonetic": "/ˈmembər/",
+        "meaning": "成员",
+        "example": "I'm a member of the swimming club."
+    },
+    {
+        "word": "menu",
+        "phonetic": "/ˈmenjuː/",
+        "meaning": "菜单",
+        "example": "Let's look at the menu."
+    },
+    {
+        "word": "message",
+        "phonetic": "/ˈmesɪdʒ/",
+        "meaning": "消息",
+        "example": "I send a message to my friend."
+    },
+    {
+        "word": "metre",
+        "phonetic": "/ˈmiːtər/",
+        "meaning": "米",
+        "example": "The room is five metres long."
+    },
+    {
+        "word": "middle",
+        "phonetic": "/ˈmɪdl/",
+        "meaning": "中间",
+        "example": "I sit in the middle of the classroom."
+    },
+    {
+        "word": "milk",
+        "phonetic": "/mɪlk/",
+        "meaning": "牛奶",
+        "example": "I drink milk every day."
+    },
+    {
+        "word": "mind",
+        "phonetic": "/maɪnd/",
+        "meaning": "介意；头脑",
+        "example": "Do you mind if I sit here?"
+    },
+    {
+        "word": "minute",
+        "phonetic": "/ˈmɪnɪt/",
+        "meaning": "分钟",
+        "example": "Wait a minute, please."
+    },
+    {
+        "word": "miss",
+        "phonetic": "/mɪs/",
+        "meaning": "想念；错过",
+        "example": "I miss my grandparents."
+    },
+    {
+        "word": "mistake",
+        "phonetic": "/mɪˈsteɪk/",
+        "meaning": "错误",
+        "example": "I made a mistake in the test."
+    },
+    {
+        "word": "model",
+        "phonetic": "/ˈmɒdl/",
+        "meaning": "模型",
+        "example": "I build a model airplane."
+    },
+    {
+        "word": "modern",
+        "phonetic": "/ˈmɒdən/",
+        "meaning": "现代的",
+        "example": "We live in a modern house."
+    },
+    {
+        "word": "moment",
+        "phonetic": "/ˈmoʊmənt/",
+        "meaning": "时刻",
+        "example": "Wait a moment, please."
+    },
+    {
+        "word": "money",
+        "phonetic": "/ˈmʌni/",
+        "meaning": "钱",
+        "example": "I save money to buy a new bike."
+    },
+    {
+        "word": "month",
+        "phonetic": "/mʌnθ/",
+        "meaning": "月",
+        "example": "There are twelve months in a year."
+    },
+    {
+        "word": "moon",
+        "phonetic": "/muːn/",
+        "meaning": "月亮",
+        "example": "The moon is bright tonight."
+    },
+    {
+        "word": "more",
+        "phonetic": "/mɔːr/",
+        "meaning": "更多",
+        "example": "I want more chocolate."
+    },
+    {
+        "word": "morning",
+        "phonetic": "/ˈmɔːrnɪŋ/",
+        "meaning": "早上",
+        "example": "Good morning!"
+    },
+    {
+        "word": "most",
+        "phonetic": "/moʊst/",
+        "meaning": "最多的",
+        "example": "Most students like sports."
+    },
+    {
+        "word": "mother",
+        "phonetic": "/ˈmʌðər/",
+        "meaning": "母亲",
+        "example": "My mother cooks delicious food."
+    },
+    {
+        "word": "mountain",
+        "phonetic": "/ˈmaʊntən/",
+        "meaning": "山",
+        "example": "We climb the mountain on weekends."
+    },
+    {
+        "word": "mouse",
+        "phonetic": "/maʊs/",
+        "meaning": "老鼠；鼠标",
+        "example": "The cat chases the mouse."
+    },
+    {
+        "word": "mouth",
+        "phonetic": "/maʊθ/",
+        "meaning": "嘴",
+        "example": "Open your mouth, please."
+    },
+    {
+        "word": "move",
+        "phonetic": "/muːv/",
+        "meaning": "移动",
+        "example": "Don't move while I take the photo."
+    },
+    {
+        "word": "movie",
+        "phonetic": "/ˈmuːvi/",
+        "meaning": "电影",
+        "example": "We watch a movie on Saturday."
+    },
+    {
+        "word": "much",
+        "phonetic": "/mʌtʃ/",
+        "meaning": "许多",
+        "example": "How much does it cost?"
+    },
+    {
+        "word": "music",
+        "phonetic": "/ˈmjuːzɪk/",
+        "meaning": "音乐",
+        "example": "I listen to music every day."
+    },
+    {
+        "word": "must",
+        "phonetic": "/mʌst/",
+        "meaning": "必须",
+        "example": "You must do your homework."
+    },
+    {
+        "word": "my",
+        "phonetic": "/maɪ/",
+        "meaning": "我的",
+        "example": "This is my book."
+    },
+    {
+        "word": "name",
+        "phonetic": "/neɪm/",
+        "meaning": "名字",
+        "example": "What's your name?"
+    },
+    {
+        "word": "national",
+        "phonetic": "/ˈnæʃnəl/",
+        "meaning": "国家的",
+        "example": "We celebrate national holidays."
+    },
+    {
+        "word": "natural",
+        "phonetic": "/ˈnætʃrəl/",
+        "meaning": "自然的",
+        "example": "I love natural beauty."
+    },
+    {
+        "word": "near",
+        "phonetic": "/nɪər/",
+        "meaning": "靠近",
+        "example": "The school is near my house."
+    },
+    {
+        "word": "nearly",
+        "phonetic": "/ˈnɪəli/",
+        "meaning": "几乎",
+        "example": "I nearly missed the bus."
+    },
+    {
+        "word": "neck",
+        "phonetic": "/nek/",
+        "meaning": "脖子",
+        "example": "She wears a necklace around her neck."
+    },
+    {
+        "word": "need",
+        "phonetic": "/niːd/",
+        "meaning": "需要",
+        "example": "I need help with my homework."
+    },
+    {
+        "word": "neighbour",
+        "phonetic": "/ˈneɪbər/",
+        "meaning": "邻居",
+        "example": "Our neighbour is very friendly."
+    },
+    {
+        "word": "never",
+        "phonetic": "/ˈnevər/",
+        "meaning": "从不",
+        "example": "I never eat fast food."
+    },
+    {
+        "word": "new",
+        "phonetic": "/njuː/",
+        "meaning": "新的",
+        "example": "I have a new bicycle."
+    },
+    {
+        "word": "news",
+        "phonetic": "/njuːz/",
+        "meaning": "新闻",
+        "example": "I watch the news on TV."
+    },
+    {
+        "word": "newspaper",
+        "phonetic": "/ˈnjuːzpeɪpər/",
+        "meaning": "报纸",
+        "example": "My father reads the newspaper every morning."
+    },
+    {
+        "word": "next",
+        "phonetic": "/nekst/",
+        "meaning": "下一个",
+        "example": "See you next week!"
+    },
+    {
+        "word": "nice",
+        "phonetic": "/naɪs/",
+        "meaning": "好的，友好的",
+        "example": "She's a nice person."
+    },
+    {
+        "word": "night",
+        "phonetic": "/naɪt/",
+        "meaning": "夜晚",
+        "example": "Good night!"
+    },
+    {
+        "word": "no",
+        "phonetic": "/noʊ/",
+        "meaning": "不",
+        "example": "No, I don't want any more."
+    },
+    {
+        "word": "nobody",
+        "phonetic": "/ˈnoʊbədi/",
+        "meaning": "没有人",
+        "example": "Nobody knows the answer."
+    },
+    {
+        "word": "noise",
+        "phonetic": "/nɔɪz/",
+        "meaning": "噪音",
+        "example": "Don't make too much noise."
+    },
+    {
+        "word": "none",
+        "phonetic": "/nʌn/",
+        "meaning": "没有一个",
+        "example": "None of the students were late."
+    },
+    {
+        "word": "north",
+        "phonetic": "/nɔːrθ/",
+        "meaning": "北",
+        "example": "Canada is north of the United States."
+    },
+    {
+        "word": "nose",
+        "phonetic": "/noʊz/",
+        "meaning": "鼻子",
+        "example": "I have a cold and my nose is running."
+    },
+    {
+        "word": "not",
+        "phonetic": "/nɒt/",
+        "meaning": "不",
+        "example": "I'm not tired."
+    },
+    {
+        "word": "note",
+        "phonetic": "/noʊt/",
+        "meaning": "笔记；注意",
+        "example": "I take notes in class."
+    },
+    {
+        "word": "nothing",
+        "phonetic": "/ˈnʌθɪŋ/",
+        "meaning": "没有什么",
+        "example": "There's nothing in the box."
+    },
+    {
+        "word": "notice",
+        "phonetic": "/ˈnoʊtɪs/",
+        "meaning": "注意；通知",
+        "example": "Did you notice the new student?"
+    },
+    {
+        "word": "now",
+        "phonetic": "/naʊ/",
+        "meaning": "现在",
+        "example": "I'm doing my homework now."
+    },
+    {
+        "word": "number",
+        "phonetic": "/ˈnʌmbər/",
+        "meaning": "数字",
+        "example": "What's your phone number?"
+    },
+    {
+        "word": "o'clock",
+        "phonetic": "/əˈklɒk/",
+        "meaning": "点钟",
+        "example": "It's three o'clock now."
+    },
+    {
+        "word": "of",
+        "phonetic": "/ɒv/",
+        "meaning": "的",
+        "example": "The color of the sky is blue."
+    },
+    {
+        "word": "off",
+        "phonetic": "/ɒf/",
+        "meaning": "离开，关闭",
+        "example": "Turn off the light, please."
+    },
+    {
+        "word": "office",
+        "phonetic": "/ˈɒfɪs/",
+        "meaning": "办公室",
+        "example": "My father works in an office."
+    },
+    {
+        "word": "often",
+        "phonetic": "/ˈɒfn/",
+        "meaning": "经常",
+        "example": "I often go to the library."
+    },
+    {
+        "word": "oil",
+        "phonetic": "/ɔɪl/",
+        "meaning": "油",
+        "example": "We cook with olive oil."
+    },
+    {
+        "word": "old",
+        "phonetic": "/əʊld/",
+        "meaning": "老的，旧的",
+        "example": "My grandfather is very old."
+    },
+    {
+        "word": "on",
+        "phonetic": "/ɒn/",
+        "meaning": "在...上面",
+        "example": "The book is on the table."
+    },
+    {
+        "word": "once",
+        "phonetic": "/wʌns/",
+        "meaning": "一次，曾经",
+        "example": "I visit my grandparents once a week."
+    },
+    {
+        "word": "one",
+        "phonetic": "/wʌn/",
+        "meaning": "一",
+        "example": "I have one brother."
+    },
+    {
+        "word": "only",
+        "phonetic": "/ˈəʊnli/",
+        "meaning": "只有",
+        "example": "I have only one pencil."
+    },
+    {
+        "word": "open",
+        "phonetic": "/ˈəʊpən/",
+        "meaning": "打开，开放的",
+        "example": "Please open the window."
+    },
+    {
+        "word": "or",
+        "phonetic": "/ɔːr/",
+        "meaning": "或者",
+        "example": "Do you want tea or coffee?"
+    },
+    {
+        "word": "orange",
+        "phonetic": "/ˈɒrɪndʒ/",
+        "meaning": "橙子；橙色的",
+        "example": "I eat an orange for breakfast."
+    },
+    {
+        "word": "order",
+        "phonetic": "/ˈɔːdər/",
+        "meaning": "命令；顺序；点餐",
+        "example": "I order pizza for dinner."
+    },
+    {
+        "word": "other",
+        "phonetic": "/ˈʌðər/",
+        "meaning": "其他的",
+        "example": "Do you have any other questions?"
+    },
+    {
+        "word": "our",
+        "phonetic": "/ˈaʊər/",
+        "meaning": "我们的",
+        "example": "This is our classroom."
+    },
+    {
+        "word": "out",
+        "phonetic": "/aʊt/",
+        "meaning": "外面",
+        "example": "Let's go out to play."
+    },
+    {
+        "word": "outside",
+        "phonetic": "/ˌaʊtˈsaɪd/",
+        "meaning": "外面",
+        "example": "It's raining outside."
+    },
+    {
+        "word": "over",
+        "phonetic": "/ˈəʊvər/",
+        "meaning": "在...上方；结束",
+        "example": "The bridge goes over the river."
+    },
+    {
+        "word": "own",
+        "phonetic": "/əʊn/",
+        "meaning": "自己的；拥有",
+        "example": "I have my own room."
+    },
+    {
+        "word": "page",
+        "phonetic": "/peɪdʒ/",
+        "meaning": "页",
+        "example": "Turn to page 10."
+    },
+    {
+        "word": "pain",
+        "phonetic": "/peɪn/",
+        "meaning": "疼痛",
+        "example": "I have a pain in my stomach."
+    },
+    {
+        "word": "paint",
+        "phonetic": "/peɪnt/",
+        "meaning": "油漆；绘画",
+        "example": "I paint pictures in art class."
+    },
+    {
+        "word": "pair",
+        "phonetic": "/peər/",
+        "meaning": "一对",
+        "example": "I need a new pair of shoes."
+    },
+    {
+        "word": "paper",
+        "phonetic": "/ˈpeɪpər/",
+        "meaning": "纸",
+        "example": "Write your answer on paper."
+    },
+    {
+        "word": "parent",
+        "phonetic": "/ˈpeərənt/",
+        "meaning": "父母",
+        "example": "My parents love me very much."
+    },
+    {
+        "word": "park",
+        "phonetic": "/pɑːk/",
+        "meaning": "公园；停车",
+        "example": "We play football in the park."
+    },
+    {
+        "word": "part",
+        "phonetic": "/pɑːt/",
+        "meaning": "部分",
+        "example": "Which part of the movie did you like?"
+    },
+    {
+        "word": "party",
+        "phonetic": "/ˈpɑːti/",
+        "meaning": "派对",
+        "example": "I go to a birthday party."
+    },
+    {
+        "word": "pass",
+        "phonetic": "/pɑːs/",
+        "meaning": "通过；传递",
+        "example": "Please pass me the salt."
+    },
+    {
+        "word": "past",
+        "phonetic": "/pɑːst/",
+        "meaning": "过去",
+        "example": "In the past, life was different."
+    },
+    {
+        "word": "pay",
+        "phonetic": "/peɪ/",
+        "meaning": "支付",
+        "example": "I pay for my lunch."
+    },
+    {
+        "word": "pen",
+        "phonetic": "/pen/",
+        "meaning": "钢笔",
+        "example": "I write with a blue pen."
+    },
+    {
+        "word": "pencil",
+        "phonetic": "/ˈpensl/",
+        "meaning": "铅笔",
+        "example": "I draw with a pencil."
+    },
+    {
+        "word": "people",
+        "phonetic": "/ˈpiːpl/",
+        "meaning": "人们",
+        "example": "Many people live in this city."
+    },
+    {
+        "word": "pepper",
+        "phonetic": "/ˈpepər/",
+        "meaning": "胡椒",
+        "example": "I put pepper on my food."
+    },
+    {
+        "word": "perfect",
+        "phonetic": "/ˈpɜːfɪkt/",
+        "meaning": "完美的",
+        "example": "Your English is perfect!"
+    },
+    {
+        "word": "perhaps",
+        "phonetic": "/pəˈhæps/",
+        "meaning": "也许",
+        "example": "Perhaps it will rain tomorrow."
+    },
+    {
+        "word": "person",
+        "phonetic": "/ˈpɜːsn/",
+        "meaning": "人",
+        "example": "She is a nice person."
+    },
+    {
+        "word": "pet",
+        "phonetic": "/pet/",
+        "meaning": "宠物",
+        "example": "I have a dog as a pet."
+    },
+    {
+        "word": "phone",
+        "phonetic": "/fəʊn/",
+        "meaning": "电话",
+        "example": "I call my friend on the phone."
+    },
+    {
+        "word": "photo",
+        "phonetic": "/ˈfəʊtəʊ/",
+        "meaning": "照片",
+        "example": "I take a photo of my family."
+    },
+    {
+        "word": "piano",
+        "phonetic": "/piˈænəʊ/",
+        "meaning": "钢琴",
+        "example": "She plays the piano very well."
+    },
+    {
+        "word": "pick",
+        "phonetic": "/pɪk/",
+        "meaning": "挑选；捡起",
+        "example": "Pick up your toys, please."
+    },
+    {
+        "word": "picture",
+        "phonetic": "/ˈpɪktʃər/",
+        "meaning": "图片",
+        "example": "I draw a picture of my house."
+    },
+    {
+        "word": "piece",
+        "phonetic": "/piːs/",
+        "meaning": "块，片",
+        "example": "I eat a piece of cake."
+    },
+    {
+        "word": "place",
+        "phonetic": "/pleɪs/",
+        "meaning": "地方",
+        "example": "This is a nice place to live."
+    },
+    {
+        "word": "plan",
+        "phonetic": "/plæn/",
+        "meaning": "计划",
+        "example": "I have a plan for the weekend."
+    },
+    {
+        "word": "plane",
+        "phonetic": "/pleɪn/",
+        "meaning": "飞机",
+        "example": "We fly to London by plane."
+    },
+    {
+        "word": "plant",
+        "phonetic": "/plɑːnt/",
+        "meaning": "植物；种植",
+        "example": "I water the plants every day."
+    },
+    {
+        "word": "plate",
+        "phonetic": "/pleɪt/",
+        "meaning": "盘子",
+        "example": "Put the food on the plate."
+    },
+    {
+        "word": "play",
+        "phonetic": "/pleɪ/",
+        "meaning": "玩；戏剧",
+        "example": "Children play in the playground."
+    },
+    {
+        "word": "please",
+        "phonetic": "/pliːz/",
+        "meaning": "请",
+        "example": "Please help me."
+    },
+    {
+        "word": "pocket",
+        "phonetic": "/ˈpɒkɪt/",
+        "meaning": "口袋",
+        "example": "I put my money in my pocket."
+    },
+    {
+        "word": "point",
+        "phonetic": "/pɔɪnt/",
+        "meaning": "点；指向",
+        "example": "Point to the correct answer."
+    },
+    {
+        "word": "police",
+        "phonetic": "/pəˈliːs/",
+        "meaning": "警察",
+        "example": "Call the police in emergency."
+    },
+    {
+        "word": "pool",
+        "phonetic": "/puːl/",
+        "meaning": "游泳池",
+        "example": "We swim in the pool in summer."
+    },
+    {
+        "word": "poor",
+        "phonetic": "/pɔːr/",
+        "meaning": "贫穷的；可怜的",
+        "example": "We should help poor people."
+    },
+    {
+        "word": "popular",
+        "phonetic": "/ˈpɒpjələr/",
+        "meaning": "流行的",
+        "example": "This song is very popular."
+    },
+    {
+        "word": "possible",
+        "phonetic": "/ˈpɒsəbl/",
+        "meaning": "可能的",
+        "example": "Is it possible to finish today?"
+    },
+    {
+        "word": "post",
+        "phonetic": "/pəʊst/",
+        "meaning": "邮寄；帖子",
+        "example": "I post a letter to my friend."
+    },
+    {
+        "word": "potato",
+        "phonetic": "/pəˈteɪtəʊ/",
+        "meaning": "土豆",
+        "example": "I like fried potatoes."
+    },
+    {
+        "word": "practice",
+        "phonetic": "/ˈpræktɪs/",
+        "meaning": "练习",
+        "example": "Practice makes perfect."
+    },
+    {
+        "word": "present",
+        "phonetic": "/ˈpreznt/",
+        "meaning": "礼物；现在的",
+        "example": "I get a present for my birthday."
+    },
+    {
+        "word": "pretty",
+        "phonetic": "/ˈprɪti/",
+        "meaning": "漂亮的",
+        "example": "She wears a pretty dress."
+    },
+    {
+        "word": "price",
+        "phonetic": "/praɪs/",
+        "meaning": "价格",
+        "example": "What's the price of this book?"
+    },
+    {
+        "word": "problem",
+        "phonetic": "/ˈprɒbləm/",
+        "meaning": "问题",
+        "example": "I have a problem with my computer."
+    },
+    {
+        "word": "pull",
+        "phonetic": "/pʊl/",
+        "meaning": "拉",
+        "example": "Pull the door to open it."
+    },
+    {
+        "word": "push",
+        "phonetic": "/pʊʃ/",
+        "meaning": "推",
+        "example": "Push the button to start."
+    },
+    {
+        "word": "put",
+        "phonetic": "/pʊt/",
+        "meaning": "放",
+        "example": "Put your books on the table."
+    },
+    {
+        "word": "quarter",
+        "phonetic": "/ˈkwɔːtər/",
+        "meaning": "四分之一",
+        "example": "A quarter of an hour is 15 minutes."
+    },
+    {
+        "word": "queen",
+        "phonetic": "/kwiːn/",
+        "meaning": "女王",
+        "example": "The queen lives in a palace."
+    },
+    {
+        "word": "question",
+        "phonetic": "/ˈkwestʃən/",
+        "meaning": "问题",
+        "example": "Answer the question, please."
+    },
+    {
+        "word": "quick",
+        "phonetic": "/kwɪk/",
+        "meaning": "快的",
+        "example": "Be quick! We're late."
+    },
+    {
+        "word": "quickly",
+        "phonetic": "/ˈkwɪkli/",
+        "meaning": "快速地",
+        "example": "He runs quickly."
+    },
+    {
+        "word": "quiet",
+        "phonetic": "/ˈkwaɪət/",
+        "meaning": "安静的",
+        "example": "Please be quiet in the library."
+    },
+    {
+        "word": "quite",
+        "phonetic": "/kwaɪt/",
+        "meaning": "相当",
+        "example": "It's quite cold today."
+    },
+    {
+        "word": "radio",
+        "phonetic": "/ˈreɪdiəʊ/",
+        "meaning": "收音机",
+        "example": "I listen to the radio in the morning."
+    },
+    {
+        "word": "rain",
+        "phonetic": "/reɪn/",
+        "meaning": "雨；下雨",
+        "example": "It rains a lot in spring."
+    },
+    {
+        "word": "read",
+        "phonetic": "/riːd/",
+        "meaning": "读",
+        "example": "I read books every day."
+    },
+    {
+        "word": "ready",
+        "phonetic": "/ˈredi/",
+        "meaning": "准备好的",
+        "example": "Are you ready for school?"
+    },
+    {
+        "word": "real",
+        "phonetic": "/rɪəl/",
+        "meaning": "真实的",
+        "example": "Is this real gold?"
+    },
+    {
+        "word": "really",
+        "phonetic": "/ˈrɪəli/",
+        "meaning": "真的",
+        "example": "I really like ice cream."
+    },
+    {
+        "word": "reason",
+        "phonetic": "/ˈriːzn/",
+        "meaning": "原因",
+        "example": "What's the reason for your absence?"
+    },
+    {
+        "word": "receive",
+        "phonetic": "/rɪˈsiːv/",
+        "meaning": "收到",
+        "example": "I receive a letter from my friend."
+    },
+    {
+        "word": "red",
+        "phonetic": "/red/",
+        "meaning": "红色的",
+        "example": "I have a red bicycle."
+    },
+    {
+        "word": "remember",
+        "phonetic": "/rɪˈmembər/",
+        "meaning": "记得",
+        "example": "Remember to do your homework."
+    },
+    {
+        "word": "repeat",
+        "phonetic": "/rɪˈpiːt/",
+        "meaning": "重复",
+        "example": "Please repeat after me."
+    },
+    {
+        "word": "rest",
+        "phonetic": "/rest/",
+        "meaning": "休息；剩余",
+        "example": "I need to rest after running."
+    },
+    {
+        "word": "restaurant",
+        "phonetic": "/ˈrestrɒnt/",
+        "meaning": "餐厅",
+        "example": "We eat dinner at a restaurant."
+    },
+    {
+        "word": "return",
+        "phonetic": "/rɪˈtɜːn/",
+        "meaning": "返回；归还",
+        "example": "I return home at 5 o'clock."
+    },
+    {
+        "word": "rice",
+        "phonetic": "/raɪs/",
+        "meaning": "米饭",
+        "example": "I eat rice with my meals."
+    },
+    {
+        "word": "rich",
+        "phonetic": "/rɪtʃ/",
+        "meaning": "富有的",
+        "example": "He is a rich businessman."
+    },
+    {
+        "word": "ride",
+        "phonetic": "/raɪd/",
+        "meaning": "骑，乘",
+        "example": "I ride my bicycle to school."
+    },
+    {
+        "word": "right",
+        "phonetic": "/raɪt/",
+        "meaning": "右边；正确的",
+        "example": "Turn right at the corner."
+    },
+    {
+        "word": "ring",
+        "phonetic": "/rɪŋ/",
+        "meaning": "戒指；铃声",
+        "example": "The telephone rings."
+    },
+    {
+        "word": "river",
+        "phonetic": "/ˈrɪvər/",
+        "meaning": "河流",
+        "example": "We swim in the river in summer."
+    },
+    {
+        "word": "road",
+        "phonetic": "/rəʊd/",
+        "meaning": "路",
+        "example": "Be careful when crossing the road."
+    },
+    {
+        "word": "room",
+        "phonetic": "/ruːm/",
+        "meaning": "房间",
+        "example": "My room is very clean."
+    },
+    {
+        "word": "round",
+        "phonetic": "/raʊnd/",
+        "meaning": "圆的",
+        "example": "The moon is round."
+    },
+    {
+        "word": "run",
+        "phonetic": "/rʌn/",
+        "meaning": "跑",
+        "example": "I run in the park every morning."
+    },
+    {
+        "word": "sad",
+        "phonetic": "/sæd/",
+        "meaning": "悲伤的",
+        "example": "She looks sad today."
+    },
+    {
+        "word": "safe",
+        "phonetic": "/seɪf/",
+        "meaning": "安全的",
+        "example": "This is a safe place to play."
+    },
+    {
+        "word": "salt",
+        "phonetic": "/sɔːlt/",
+        "meaning": "盐",
+        "example": "I put salt on my food."
+    },
+    {
+        "word": "same",
+        "phonetic": "/seɪm/",
+        "meaning": "相同的",
+        "example": "We have the same birthday."
+    },
+    {
+        "word": "sand",
+        "phonetic": "/sænd/",
+        "meaning": "沙子",
+        "example": "Children play with sand at the beach."
+    },
+    {
+        "word": "save",
+        "phonetic": "/seɪv/",
+        "meaning": "节省；拯救",
+        "example": "I save money to buy a new bike."
+    },
+    {
+        "word": "say",
+        "phonetic": "/seɪ/",
+        "meaning": "说",
+        "example": "What did you say?"
+    },
+    {
+        "word": "school",
+        "phonetic": "/skuːl/",
+        "meaning": "学校",
+        "example": "I go to school by bus."
+    },
+    {
+        "word": "sea",
+        "phonetic": "/siː/",
+        "meaning": "海",
+        "example": "We swim in the sea on holiday."
+    },
+    {
+        "word": "seat",
+        "phonetic": "/siːt/",
+        "meaning": "座位",
+        "example": "Please take a seat."
+    },
+    {
+        "word": "second",
+        "phonetic": "/ˈsekənd/",
+        "meaning": "第二；秒",
+        "example": "Wait a second, please."
+    },
+    {
+        "word": "see",
+        "phonetic": "/siː/",
+        "meaning": "看见",
+        "example": "I see a bird in the tree."
+    },
+    {
+        "word": "seem",
+        "phonetic": "/siːm/",
+        "meaning": "似乎",
+        "example": "You seem tired today."
+    },
+    {
+        "word": "sell",
+        "phonetic": "/sel/",
+        "meaning": "卖",
+        "example": "I sell my old books."
+    },
+    {
+        "word": "send",
+        "phonetic": "/send/",
+        "meaning": "发送",
+        "example": "I send an email to my teacher."
+    },
+    {
+        "word": "sentence",
+        "phonetic": "/ˈsentəns/",
+        "meaning": "句子",
+        "example": "Write a sentence using this word."
+    },
+    {
+        "word": "serve",
+        "phonetic": "/sɜːv/",
+        "meaning": "服务",
+        "example": "The waiter serves food in the restaurant."
+    },
+    {
+        "word": "set",
+        "phonetic": "/set/",
+        "meaning": "设置；一套",
+        "example": "Set the table for dinner."
+    },
+    {
+        "word": "seven",
+        "phonetic": "/ˈsevn/",
+        "meaning": "七",
+        "example": "There are seven days in a week."
+    },
+    {
+        "word": "several",
+        "phonetic": "/ˈsevrəl/",
+        "meaning": "几个",
+        "example": "I have several friends in this class."
+    },
+    {
+        "word": "shall",
+        "phonetic": "/ʃæl/",
+        "meaning": "将要",
+        "example": "Shall we go to the park?"
+    },
+    {
+        "word": "she",
+        "phonetic": "/ʃiː/",
+        "meaning": "她",
+        "example": "She is my best friend."
+    },
+    {
+        "word": "ship",
+        "phonetic": "/ʃɪp/",
+        "meaning": "船",
+        "example": "We travel by ship to the island."
+    },
+    {
+        "word": "shirt",
+        "phonetic": "/ʃɜːt/",
+        "meaning": "衬衫",
+        "example": "I wear a blue shirt to school."
+    },
+    {
+        "word": "shoe",
+        "phonetic": "/ʃuː/",
+        "meaning": "鞋子",
+        "example": "I need new shoes."
+    },
+    {
+        "word": "shop",
+        "phonetic": "/ʃɒp/",
+        "meaning": "商店；购物",
+        "example": "I go to the shop to buy milk."
+    },
+    {
+        "word": "short",
+        "phonetic": "/ʃɔːt/",
+        "meaning": "短的",
+        "example": "She has short hair."
+    },
+    {
+        "word": "should",
+        "phonetic": "/ʃʊd/",
+        "meaning": "应该",
+        "example": "You should study harder."
+    },
+    {
+        "word": "show",
+        "phonetic": "/ʃəʊ/",
+        "meaning": "展示；表演",
+        "example": "Show me your homework."
+    },
+    {
+        "word": "sick",
+        "phonetic": "/sɪk/",
+        "meaning": "生病的",
+        "example": "I feel sick today."
+    },
+    {
+        "word": "side",
+        "phonetic": "/saɪd/",
+        "meaning": "边",
+        "example": "Which side of the road do you drive on?"
+    },
+    {
+        "word": "simple",
+        "phonetic": "/ˈsɪmpl/",
+        "meaning": "简单的",
+        "example": "This is a simple question."
+    },
+    {
+        "word": "since",
+        "phonetic": "/sɪns/",
+        "meaning": "自从",
+        "example": "I have lived here since 2010."
+    },
+    {
+        "word": "sing",
+        "phonetic": "/sɪŋ/",
+        "meaning": "唱歌",
+        "example": "We sing songs in music class."
+    },
+    {
+        "word": "sister",
+        "phonetic": "/ˈsɪstər/",
+        "meaning": "姐妹",
+        "example": "My sister is older than me."
+    },
+    {
+        "word": "sit",
+        "phonetic": "/sɪt/",
+        "meaning": "坐",
+        "example": "Please sit down."
+    },
+    {
+        "word": "six",
+        "phonetic": "/sɪks/",
+        "meaning": "六",
+        "example": "I have six pencils."
+    },
+    {
+        "word": "size",
+        "phonetic": "/saɪz/",
+        "meaning": "尺寸",
+        "example": "What size shoes do you wear?"
+    },
+    {
+        "word": "sky",
+        "phonetic": "/skaɪ/",
+        "meaning": "天空",
+        "example": "The sky is blue today."
+    },
+    {
+        "word": "sleep",
+        "phonetic": "/sliːp/",
+        "meaning": "睡觉",
+        "example": "I sleep for eight hours every night."
+    },
+    {
+        "word": "slow",
+        "phonetic": "/sləʊ/",
+        "meaning": "慢的",
+        "example": "The turtle is very slow."
+    },
+    {
+        "word": "small",
+        "phonetic": "/smɔːl/",
+        "meaning": "小的",
+        "example": "I live in a small town."
+    },
+    {
+        "word": "smile",
+        "phonetic": "/smaɪl/",
+        "meaning": "微笑",
+        "example": "She always has a beautiful smile."
+    },
+    {
+        "word": "snow",
+        "phonetic": "/snəʊ/",
+        "meaning": "雪；下雪",
+        "example": "It snows in winter."
+    },
+    {
+        "word": "so",
+        "phonetic": "/səʊ/",
+        "meaning": "所以；如此",
+        "example": "I'm tired, so I go to bed early."
+    },
+    {
+        "word": "some",
+        "phonetic": "/sʌm/",
+        "meaning": "一些",
+        "example": "Would you like some tea?"
+    },
+    {
+        "word": "someone",
+        "phonetic": "/ˈsʌmwʌn/",
+        "meaning": "某人",
+        "example": "Someone is knocking at the door."
+    },
+    {
+        "word": "something",
+        "phonetic": "/ˈsʌmθɪŋ/",
+        "meaning": "某事",
+        "example": "I want to tell you something."
+    },
+    {
+        "word": "sometimes",
+        "phonetic": "/ˈsʌmtaɪmz/",
+        "meaning": "有时候",
+        "example": "Sometimes I walk to school."
+    },
+    {
+        "word": "son",
+        "phonetic": "/sʌn/",
+        "meaning": "儿子",
+        "example": "Their son is very clever."
+    },
+    {
+        "word": "soon",
+        "phonetic": "/suːn/",
+        "meaning": "很快",
+        "example": "See you soon!"
+    },
+    {
+        "word": "sorry",
+        "phonetic": "/ˈsɒri/",
+        "meaning": "对不起",
+        "example": "I'm sorry for being late."
+    },
+    {
+        "word": "sound",
+        "phonetic": "/saʊnd/",
+        "meaning": "声音；听起来",
+        "example": "That sounds like a good idea."
+    },
+    {
+        "word": "soup",
+        "phonetic": "/suːp/",
+        "meaning": "汤",
+        "example": "I eat soup for lunch."
+    },
+    {
+        "word": "speak",
+        "phonetic": "/spiːk/",
+        "meaning": "说",
+        "example": "I speak English and Chinese."
+    },
+    {
+        "word": "spell",
+        "phonetic": "/spel/",
+        "meaning": "拼写",
+        "example": "Can you spell your name?"
+    },
+    {
+        "word": "spend",
+        "phonetic": "/spend/",
+        "meaning": "花费",
+        "example": "I spend two hours on homework."
+    },
+    {
+        "word": "sport",
+        "phonetic": "/spɔːt/",
+        "meaning": "运动",
+        "example": "Football is my favorite sport."
+    },
+    {
+        "word": "stand",
+        "phonetic": "/stænd/",
+        "meaning": "站",
+        "example": "Please stand up."
+    },
+    {
+        "word": "star",
+        "phonetic": "/stɑːr/",
+        "meaning": "星星",
+        "example": "We see stars at night."
+    },
+    {
+        "word": "start",
+        "phonetic": "/stɑːrt/",
+        "meaning": "开始",
+        "example": "The movie starts at 7 o'clock."
+    },
+    {
+        "word": "station",
+        "phonetic": "/ˈsteɪʃn/",
+        "meaning": "车站",
+        "example": "I wait at the bus station."
+    },
+    {
+        "word": "stay",
+        "phonetic": "/steɪ/",
+        "meaning": "停留",
+        "example": "I stay at home on weekends."
+    },
+    {
+        "word": "still",
+        "phonetic": "/stɪl/",
+        "meaning": "仍然",
+        "example": "I still remember my first day at school."
+    },
+    {
+        "word": "stop",
+        "phonetic": "/stɒp/",
+        "meaning": "停止",
+        "example": "Stop talking, please."
+    },
+    {
+        "word": "story",
+        "phonetic": "/ˈstɔːri/",
+        "meaning": "故事",
+        "example": "My grandmother tells good stories."
+    },
+    {
+        "word": "street",
+        "phonetic": "/striːt/",
+        "meaning": "街道",
+        "example": "I live on Main Street."
+    },
+    {
+        "word": "strong",
+        "phonetic": "/strɒŋ/",
+        "meaning": "强壮的",
+        "example": "He is very strong and can lift heavy things."
+    },
+    {
+        "word": "student",
+        "phonetic": "/ˈstjuːdnt/",
+        "meaning": "学生",
+        "example": "I am a student at this school."
+    },
+    {
+        "word": "study",
+        "phonetic": "/ˈstʌdi/",
+        "meaning": "学习",
+        "example": "I study English every day."
+    },
+    {
+        "word": "subject",
+        "phonetic": "/ˈsʌbdʒɪkt/",
+        "meaning": "科目",
+        "example": "Math is my favorite subject."
+    },
+    {
+        "word": "such",
+        "phonetic": "/sʌtʃ/",
+        "meaning": "这样的",
+        "example": "It's such a beautiful day."
+    },
+    {
+        "word": "sugar",
+        "phonetic": "/ˈʃʊɡər/",
+        "meaning": "糖",
+        "example": "I put sugar in my tea."
+    },
+    {
+        "word": "suggest",
+        "phonetic": "/səˈdʒest/",
+        "meaning": "建议",
+        "example": "I suggest we go to the park."
+    },
+    {
+        "word": "summer",
+        "phonetic": "/ˈsʌmər/",
+        "meaning": "夏天",
+        "example": "We go swimming in summer."
+    },
+    {
+        "word": "sun",
+        "phonetic": "/sʌn/",
+        "meaning": "太阳",
+        "example": "The sun is very hot today."
+    },
+    {
+        "word": "supermarket",
+        "phonetic": "/ˈsuːpəmɑːkɪt/",
+        "meaning": "超市",
+        "example": "We buy food at the supermarket."
+    },
+    {
+        "word": "sure",
+        "phonetic": "/ʃɔːr/",
+        "meaning": "确定的",
+        "example": "I'm sure I locked the door."
+    },
+    {
+        "word": "swim",
+        "phonetic": "/swɪm/",
+        "meaning": "游泳",
+        "example": "I swim in the pool every weekend."
+    },
+    {
+        "word": "table",
+        "phonetic": "/ˈteɪbl/",
+        "meaning": "桌子",
+        "example": "The book is on the table."
+    },
+    {
+        "word": "take",
+        "phonetic": "/teɪk/",
+        "meaning": "拿，取",
+        "example": "Take your umbrella, it's raining."
+    },
+    {
+        "word": "talk",
+        "phonetic": "/tɔːk/",
+        "meaning": "谈话",
+        "example": "Let's talk about our plans."
+    },
+    {
+        "word": "tall",
+        "phonetic": "/tɔːl/",
+        "meaning": "高的",
+        "example": "My brother is very tall."
+    },
+    {
+        "word": "tea",
+        "phonetic": "/tiː/",
+        "meaning": "茶",
+        "example": "Would you like a cup of tea?"
+    },
+    {
+        "word": "teach",
+        "phonetic": "/tiːtʃ/",
+        "meaning": "教",
+        "example": "My mother teaches English."
+    },
+    {
+        "word": "teacher",
+        "phonetic": "/ˈtiːtʃər/",
+        "meaning": "老师",
+        "example": "Our teacher is very kind."
+    },
+    {
+        "word": "telephone",
+        "phonetic": "/ˈtelɪfəʊn/",
+        "meaning": "电话",
+        "example": "I call my friend on the telephone."
+    },
+    {
+        "word": "television",
+        "phonetic": "/ˈtelɪvɪʒn/",
+        "meaning": "电视",
+        "example": "We watch television in the evening."
+    },
+    {
+        "word": "tell",
+        "phonetic": "/tel/",
+        "meaning": "告诉",
+        "example": "Tell me about your day."
+    },
+    {
+        "word": "ten",
+        "phonetic": "/ten/",
+        "meaning": "十",
+        "example": "I have ten fingers."
+    },
+    {
+        "word": "test",
+        "phonetic": "/test/",
+        "meaning": "测试",
+        "example": "We have a math test tomorrow."
+    },
+    {
+        "word": "than",
+        "phonetic": "/ðæn/",
+        "meaning": "比",
+        "example": "She is taller than me."
+    },
+    {
+        "word": "thank",
+        "phonetic": "/θæŋk/",
+        "meaning": "感谢",
+        "example": "Thank you for your help."
+    },
+    {
+        "word": "that",
+        "phonetic": "/ðæt/",
+        "meaning": "那个",
+        "example": "That book is interesting."
+    },
+    {
+        "word": "the",
+        "phonetic": "/ðə/",
+        "meaning": "这，那",
+        "example": "The sun is shining."
+    },
+    {
+        "word": "their",
+        "phonetic": "/ðeər/",
+        "meaning": "他们的",
+        "example": "This is their house."
+    },
+    {
+        "word": "them",
+        "phonetic": "/ðem/",
+        "meaning": "他们（宾格）",
+        "example": "I give them the books."
+    },
+    {
+        "word": "then",
+        "phonetic": "/ðen/",
+        "meaning": "然后",
+        "example": "First study, then play."
+    },
+    {
+        "word": "there",
+        "phonetic": "/ðeər/",
+        "meaning": "那里",
+        "example": "Put the book there."
+    },
+    {
+        "word": "these",
+        "phonetic": "/ðiːz/",
+        "meaning": "这些",
+        "example": "These are my friends."
+    },
+    {
+        "word": "they",
+        "phonetic": "/ðeɪ/",
+        "meaning": "他们",
+        "example": "They are playing football."
+    },
+    {
+        "word": "thing",
+        "phonetic": "/θɪŋ/",
+        "meaning": "东西，事情",
+        "example": "What's that thing on the table?"
+    },
+    {
+        "word": "think",
+        "phonetic": "/θɪŋk/",
+        "meaning": "想，认为",
+        "example": "I think it's going to rain."
+    },
+    {
+        "word": "third",
+        "phonetic": "/θɜːd/",
+        "meaning": "第三",
+        "example": "This is my third visit to London."
+    },
+    {
+        "word": "thirsty",
+        "phonetic": "/ˈθɜːsti/",
+        "meaning": "口渴的",
+        "example": "I'm thirsty after running."
+    },
+    {
+        "word": "thirteen",
+        "phonetic": "/ˌθɜːˈtiːn/",
+        "meaning": "十三",
+        "example": "She is thirteen years old."
+    },
+    {
+        "word": "thirty",
+        "phonetic": "/ˈθɜːti/",
+        "meaning": "三十",
+        "example": "There are thirty students in my class."
+    },
+    {
+        "word": "this",
+        "phonetic": "/ðɪs/",
+        "meaning": "这个",
+        "example": "This is my book."
+    },
+    {
+        "word": "those",
+        "phonetic": "/ðəʊz/",
+        "meaning": "那些",
+        "example": "Those apples look delicious."
+    },
+    {
+        "word": "though",
+        "phonetic": "/ðəʊ/",
+        "meaning": "虽然",
+        "example": "Though it was raining, we went out."
+    },
+    {
+        "word": "thousand",
+        "phonetic": "/ˈθaʊznd/",
+        "meaning": "千",
+        "example": "There are a thousand books in the library."
+    },
+    {
+        "word": "three",
+        "phonetic": "/θriː/",
+        "meaning": "三",
+        "example": "I have three brothers."
+    },
+    {
+        "word": "through",
+        "phonetic": "/θruː/",
+        "meaning": "通过",
+        "example": "We walk through the park."
+    },
+    {
+        "word": "throw",
+        "phonetic": "/θrəʊ/",
+        "meaning": "扔",
+        "example": "Throw the ball to me."
+    },
+    {
+        "word": "Thursday",
+        "phonetic": "/ˈθɜːzdeɪ/",
+        "meaning": "星期四",
+        "example": "We have English on Thursday."
+    },
+    {
+        "word": "ticket",
+        "phonetic": "/ˈtɪkɪt/",
+        "meaning": "票",
+        "example": "I buy a ticket for the concert."
+    },
+    {
+        "word": "time",
+        "phonetic": "/taɪm/",
+        "meaning": "时间",
+        "example": "What time is it?"
+    },
+    {
+        "word": "tired",
+        "phonetic": "/ˈtaɪəd/",
+        "meaning": "疲倦的",
+        "example": "I'm tired after a long day."
+    },
+    {
+        "word": "to",
+        "phonetic": "/tuː/",
+        "meaning": "到，向",
+        "example": "I go to school by bus."
+    },
+    {
+        "word": "today",
+        "phonetic": "/təˈdeɪ/",
+        "meaning": "今天",
+        "example": "Today is Monday."
+    },
+    {
+        "word": "together",
+        "phonetic": "/təˈɡeðər/",
+        "meaning": "一起",
+        "example": "Let's work together."
+    },
+    {
+        "word": "tomorrow",
+        "phonetic": "/təˈmɒrəʊ/",
+        "meaning": "明天",
+        "example": "See you tomorrow!"
+    },
+    {
+        "word": "tonight",
+        "phonetic": "/təˈnaɪt/",
+        "meaning": "今晚",
+        "example": "We're going to the cinema tonight."
+    },
+    {
+        "word": "too",
+        "phonetic": "/tuː/",
+        "meaning": "也；太",
+        "example": "I like ice cream too."
+    },
+    {
+        "word": "tooth",
+        "phonetic": "/tuːθ/",
+        "meaning": "牙齿",
+        "example": "Brush your teeth twice a day."
+    },
+    {
+        "word": "tourist",
+        "phonetic": "/ˈtʊərɪst/",
+        "meaning": "游客",
+        "example": "Many tourists visit London."
+    },
+    {
+        "word": "town",
+        "phonetic": "/taʊn/",
+        "meaning": "城镇",
+        "example": "I live in a small town."
+    },
+    {
+        "word": "train",
+        "phonetic": "/treɪn/",
+        "meaning": "火车；训练",
+        "example": "We take the train to London."
+    },
+    {
+        "word": "travel",
+        "phonetic": "/ˈtrævl/",
+        "meaning": "旅行",
+        "example": "I love to travel to new places."
+    },
+    {
+        "word": "tree",
+        "phonetic": "/triː/",
+        "meaning": "树",
+        "example": "Birds live in trees."
+    },
+    {
+        "word": "trip",
+        "phonetic": "/trɪp/",
+        "meaning": "旅行",
+        "example": "We're planning a trip to the beach."
+    },
+    {
+        "word": "trouble",
+        "phonetic": "/ˈtrʌbl/",
+        "meaning": "麻烦",
+        "example": "I'm having trouble with my homework."
+    },
+    {
+        "word": "true",
+        "phonetic": "/truː/",
+        "meaning": "真实的",
+        "example": "Is that a true story?"
+    },
+    {
+        "word": "try",
+        "phonetic": "/traɪ/",
+        "meaning": "尝试",
+        "example": "Try to do your best."
+    },
+    {
+        "word": "Tuesday",
+        "phonetic": "/ˈtjuːzdeɪ/",
+        "meaning": "星期二",
+        "example": "We have music on Tuesday."
+    },
+    {
+        "word": "turn",
+        "phonetic": "/tɜːn/",
+        "meaning": "转动；轮流",
+        "example": "Turn left at the corner."
+    },
+    {
+        "word": "twelve",
+        "phonetic": "/twelv/",
+        "meaning": "十二",
+        "example": "There are twelve months in a year."
+    },
+    {
+        "word": "twenty",
+        "phonetic": "/ˈtwenti/",
+        "meaning": "二十",
+        "example": "I have twenty books."
+    },
+    {
+        "word": "two",
+        "phonetic": "/tuː/",
+        "meaning": "二",
+        "example": "I have two hands."
+    },
+    {
+        "word": "umbrella",
+        "phonetic": "/ʌmˈbrelə/",
+        "meaning": "雨伞",
+        "example": "Take an umbrella, it's raining."
+    },
+    {
+        "word": "uncle",
+        "phonetic": "/ˈʌŋkl/",
+        "meaning": "叔叔，舅舅",
+        "example": "My uncle visits us every Sunday."
+    },
+    {
+        "word": "under",
+        "phonetic": "/ˈʌndər/",
+        "meaning": "在...下面",
+        "example": "The cat is under the table."
+    },
+    {
+        "word": "understand",
+        "phonetic": "/ˌʌndəˈstænd/",
+        "meaning": "理解",
+        "example": "Do you understand the question?"
+    },
+    {
+        "word": "until",
+        "phonetic": "/ənˈtɪl/",
+        "meaning": "直到",
+        "example": "Wait until I come back."
+    },
+    {
+        "word": "up",
+        "phonetic": "/ʌp/",
+        "meaning": "向上",
+        "example": "Stand up, please."
+    },
+    {
+        "word": "us",
+        "phonetic": "/ʌs/",
+        "meaning": "我们（宾格）",
+        "example": "The teacher helps us with our homework."
+    },
+    {
+        "word": "use",
+        "phonetic": "/juːz/",
+        "meaning": "使用",
+        "example": "I use a computer for my homework."
+    },
+    {
+        "word": "usually",
+        "phonetic": "/ˈjuːʒuəli/",
+        "meaning": "通常",
+        "example": "I usually get up at 7 o'clock."
+    },
+    {
+        "word": "vegetable",
+        "phonetic": "/ˈvedʒtəbl/",
+        "meaning": "蔬菜",
+        "example": "Eat more vegetables for good health."
+    },
+    {
+        "word": "very",
+        "phonetic": "/ˈveri/",
+        "meaning": "非常",
+        "example": "I'm very happy today."
+    },
+    {
+        "word": "village",
+        "phonetic": "/ˈvɪlɪdʒ/",
+        "meaning": "村庄",
+        "example": "My grandparents live in a small village."
+    },
+    {
+        "word": "visit",
+        "phonetic": "/ˈvɪzɪt/",
+        "meaning": "参观，拜访",
+        "example": "We visit the museum on Saturday."
+    },
+    {
+        "word": "wait",
+        "phonetic": "/weɪt/",
+        "meaning": "等待",
+        "example": "Wait for me at the bus stop."
+    },
+    {
+        "word": "wake",
+        "phonetic": "/weɪk/",
+        "meaning": "醒来",
+        "example": "I wake up at 7 o'clock every morning."
+    },
+    {
+        "word": "walk",
+        "phonetic": "/wɔːk/",
+        "meaning": "走路",
+        "example": "I walk to school every day."
+    },
+    {
+        "word": "wall",
+        "phonetic": "/wɔːl/",
+        "meaning": "墙",
+        "example": "Hang the picture on the wall."
+    },
+    {
+        "word": "want",
+        "phonetic": "/wɒnt/",
+        "meaning": "想要",
+        "example": "I want to learn English."
+    },
+    {
+        "word": "warm",
+        "phonetic": "/wɔːm/",
+        "meaning": "温暖的",
+        "example": "The weather is warm today."
+    },
+    {
+        "word": "wash",
+        "phonetic": "/wɒʃ/",
+        "meaning": "洗",
+        "example": "Wash your hands before eating."
+    },
+    {
+        "word": "watch",
+        "phonetic": "/wɒtʃ/",
+        "meaning": "手表；观看",
+        "example": "I watch television in the evening."
+    },
+    {
+        "word": "water",
+        "phonetic": "/ˈwɔːtər/",
+        "meaning": "水",
+        "example": "Drink plenty of water every day."
+    },
+    {
+        "word": "way",
+        "phonetic": "/weɪ/",
+        "meaning": "方式；道路",
+        "example": "Can you show me the way to the station?"
+    },
+    {
+        "word": "we",
+        "phonetic": "/wiː/",
+        "meaning": "我们",
+        "example": "We are going to the park."
+    },
+    {
+        "word": "wear",
+        "phonetic": "/weər/",
+        "meaning": "穿",
+        "example": "I wear a uniform to school."
+    },
+    {
+        "word": "weather",
+        "phonetic": "/ˈweðər/",
+        "meaning": "天气",
+        "example": "The weather is nice today."
+    },
+    {
+        "word": "website",
+        "phonetic": "/ˈwebsaɪt/",
+        "meaning": "网站",
+        "example": "I visit this website every day."
+    },
+    {
+        "word": "Wednesday",
+        "phonetic": "/ˈwenzdeɪ/",
+        "meaning": "星期三",
+        "example": "We have sports on Wednesday."
+    },
+    {
+        "word": "week",
+        "phonetic": "/wiːk/",
+        "meaning": "星期",
+        "example": "There are seven days in a week."
+    },
+    {
+        "word": "weekend",
+        "phonetic": "/ˌwiːkˈend/",
+        "meaning": "周末",
+        "example": "What are you doing this weekend?"
+    },
+    {
+        "word": "welcome",
+        "phonetic": "/ˈwelkəm/",
+        "meaning": "欢迎",
+        "example": "Welcome to our school!"
+    },
+    {
+        "word": "well",
+        "phonetic": "/wel/",
+        "meaning": "好；井",
+        "example": "I speak English well."
+    },
+    {
+        "word": "west",
+        "phonetic": "/west/",
+        "meaning": "西",
+        "example": "The sun sets in the west."
+    },
+    {
+        "word": "wet",
+        "phonetic": "/wet/",
+        "meaning": "湿的",
+        "example": "My clothes are wet from the rain."
+    },
+    {
+        "word": "what",
+        "phonetic": "/wɒt/",
+        "meaning": "什么",
+        "example": "What is your name?"
+    },
+    {
+        "word": "when",
+        "phonetic": "/wen/",
+        "meaning": "什么时候",
+        "example": "When do you go to school?"
+    },
+    {
+        "word": "where",
+        "phonetic": "/weər/",
+        "meaning": "哪里",
+        "example": "Where do you live?"
+    },
+    {
+        "word": "which",
+        "phonetic": "/wɪtʃ/",
+        "meaning": "哪一个",
+        "example": "Which book do you want?"
+    },
+    {
+        "word": "white",
+        "phonetic": "/waɪt/",
+        "meaning": "白色的",
+        "example": "Snow is white."
+    },
+    {
+        "word": "who",
+        "phonetic": "/huː/",
+        "meaning": "谁",
+        "example": "Who is your teacher?"
+    },
+    {
+        "word": "why",
+        "phonetic": "/waɪ/",
+        "meaning": "为什么",
+        "example": "Why are you late?"
+    },
+    {
+        "word": "wife",
+        "phonetic": "/waɪf/",
+        "meaning": "妻子",
+        "example": "My wife is a doctor."
+    },
+    {
+        "word": "will",
+        "phonetic": "/wɪl/",
+        "meaning": "将；意愿",
+        "example": "I will help you tomorrow."
+    },
+    {
+        "word": "win",
+        "phonetic": "/wɪn/",
+        "meaning": "赢",
+        "example": "I hope our team will win."
+    },
+    {
+        "word": "window",
+        "phonetic": "/ˈwɪndəʊ/",
+        "meaning": "窗户",
+        "example": "Open the window, please."
+    },
+    {
+        "word": "winter",
+        "phonetic": "/ˈwɪntər/",
+        "meaning": "冬天",
+        "example": "It snows in winter."
+    },
+    {
+        "word": "with",
+        "phonetic": "/wɪð/",
+        "meaning": "和...一起",
+        "example": "I go to school with my friends."
+    },
+    {
+        "word": "without",
+        "phonetic": "/wɪˈðaʊt/",
+        "meaning": "没有",
+        "example": "I can't live without water."
+    },
+    {
+        "word": "woman",
+        "phonetic": "/ˈwʊmən/",
+        "meaning": "女人",
+        "example": "That woman is my teacher."
+    },
+    {
+        "word": "wonderful",
+        "phonetic": "/ˈwʌndəfl/",
+        "meaning": "精彩的",
+        "example": "We had a wonderful time at the party."
+    },
+    {
+        "word": "word",
+        "phonetic": "/wɜːd/",
+        "meaning": "单词",
+        "example": "Learn five new words every day."
+    },
+    {
+        "word": "work",
+        "phonetic": "/wɜːk/",
+        "meaning": "工作",
+        "example": "My father goes to work at 8 o'clock."
+    },
+    {
+        "word": "world",
+        "phonetic": "/wɜːld/",
+        "meaning": "世界",
+        "example": "I want to travel around the world."
+    },
+    {
+        "word": "worry",
+        "phonetic": "/ˈwʌri/",
+        "meaning": "担心",
+        "example": "Don't worry, everything will be fine."
+    },
+    {
+        "word": "write",
+        "phonetic": "/raɪt/",
+        "meaning": "写",
+        "example": "I write a letter to my friend."
+    },
+    {
+        "word": "wrong",
+        "phonetic": "/rɒŋ/",
+        "meaning": "错误的",
+        "example": "That answer is wrong."
+    },
+    {
+        "word": "year",
+        "phonetic": "/jɪər/",
+        "meaning": "年",
+        "example": "I'm twelve years old."
+    },
+    {
+        "word": "yellow",
+        "phonetic": "/ˈjeləʊ/",
+        "meaning": "黄色的",
+        "example": "The sun is yellow."
+    },
+    {
+        "word": "yes",
+        "phonetic": "/jes/",
+        "meaning": "是的",
+        "example": "Yes, I understand."
+    },
+    {
+        "word": "yesterday",
+        "phonetic": "/ˈjestədeɪ/",
+        "meaning": "昨天",
+        "example": "I went to the cinema yesterday."
+    },
+    {
+        "word": "yet",
+        "phonetic": "/jet/",
+        "meaning": "还，尚",
+        "example": "I haven't finished my homework yet."
+    },
+    {
+        "word": "you",
+        "phonetic": "/juː/",
+        "meaning": "你，你们",
+        "example": "You are my best friend."
+    },
+    {
+        "word": "young",
+        "phonetic": "/jʌŋ/",
+        "meaning": "年轻的",
+        "example": "My sister is very young."
+    },
+    {
+        "word": "your",
+        "phonetic": "/jɔːr/",
+        "meaning": "你的，你们的",
+        "example": "What's your name?"
+    },
+    {
+        "word": "zoo",
+        "phonetic": "/zuː/",
+        "meaning": "动物园",
+        "example": "We see animals at the zoo."
+    }
+]

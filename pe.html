@@ -604,6 +604,10 @@
                     <i class="fas fa-running"></i>
                     <span>体育健康</span>
                 </div>
+                <div class="nav-link" data-page="standards">
+                    <i class="fas fa-award"></i>
+                    <span>达标标准</span>
+                </div>
                 <div class="nav-link" data-page="settings">
                     <i class="fas fa-cog"></i>
                     <span>设置</span>
@@ -832,6 +836,322 @@
             </div>
         </div>
 
+        <!-- 添加:达标标准页面 -->
+        <div class="page" id="standardsPage">
+            <div class="progress-container">
+                <div class="progress-title">
+                    <i class="fas fa-award"></i>
+                    <span>小学体育达标标准</span>
+                </div>
+                
+                <div style="margin-bottom: 20px; padding: 15px; background: rgba(15, 157, 88, 0.1); border-radius: 8px;">
+                    <p>说明：以下标准为各年级体育项目达标要求，分为及格、良好、优秀、满分四个等级。</p>
+                </div>
+                
+                <div style="overflow-x: auto;">
+                    <!-- 50米跑 -->
+                    <h3 style="color:var(--primary);margin-top:24px;">50米跑(秒)</h3>
+                    <table class="standards-table">
+                        <thead>
+                            <tr>
+                                <th>年级</th>
+                                <th>及格</th>
+                                <th>良好</th>
+                                <th>优秀</th>
+                                <th>满分</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>一年级</td>
+                                <td>13.0-13.5</td>
+                                <td>12.5-13.0</td>
+                                <td>12.0-12.5</td>
+                                <td>&lt;12.0</td>
+                            </tr>
+                            <tr>
+                                <td>二年级</td>
+                                <td>12.5-13.0</td>
+                                <td>12.0-12.5</td>
+                                <td>11.5-12.0</td>
+                                <td>&lt;11.5</td>
+                            </tr>
+                            <tr>
+                                <td>三年级</td>
+                                <td>12.0-12.5</td>
+                                <td>11.5-12.0</td>
+                                <td>11.0-11.5</td>
+                                <td>&lt;11.0</td>
+                            </tr>
+                            <tr>
+                                <td>四年级</td>
+                                <td>11.5-12.0</td>
+                                <td>11.0-11.5</td>
+                                <td>10.5-11.0</td>
+                                <td>&lt;10.5</td>
+                            </tr>
+                            <tr>
+                                <td>五年级</td>
+                                <td>11.0-11.5</td>
+                                <td>10.5-11.0</td>
+                                <td>10.0-10.5</td>
+                                <td>&lt;10.0</td>
+                            </tr>
+                            <tr>
+                                <td>六年级</td>
+                                <td>10.5-11.0</td>
+                                <td>10.0-10.5</td>
+                                <td>9.5-10.0</td>
+                                <td>&lt;9.5</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- 坐位体前屈 -->
+                    <h3 style="color:var(--primary);margin-top:24px;">坐位体前屈(cm)</h3>
+                    <table class="standards-table">
+                        <thead>
+                            <tr>
+                                <th>年级</th>
+                                <th>及格</th>
+                                <th>良好</th>
+                                <th>优秀</th>
+                                <th>满分</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>一年级</td>
+                                <td>4.0-5.9</td>
+                                <td>6.0-7.9</td>
+                                <td>8.0-9.9</td>
+                                <td>&ge;10.0</td>
+                            </tr>
+                            <tr>
+                                <td>二年级</td>
+                                <td>5.0-6.9</td>
+                                <td>7.0-8.9</td>
+                                <td>9.0-10.9</td>
+                                <td>&ge;11.0</td>
+                            </tr>
+                            <tr>
+                                <td>三年级</td>
+                                <td>6.0-7.9</td>
+                                <td>8.0-9.9</td>
+                                <td>10.0-11.9</td>
+                                <td>&ge;12.0</td>
+                            </tr>
+                            <tr>
+                                <td>四年级</td>
+                                <td>7.0-8.9</td>
+                                <td>9.0-10.9</td>
+                                <td>11.0-12.9</td>
+                                <td>&ge;13.0</td>
+                            </tr>
+                            <tr>
+                                <td>五年级</td>
+                                <td>8.0-9.9</td>
+                                <td>10.0-11.9</td>
+                                <td>12.0-13.9</td>
+                                <td>&ge;14.0</td>
+                            </tr>
+                            <tr>
+                                <td>六年级</td>
+                                <td>9.0-10.9</td>
+                                <td>11.0-12.9</td>
+                                <td>13.0-14.9</td>
+                                <td>&ge;15.0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- 一分钟跳绳 -->
+                    <h3 style="color:var(--primary);margin-top:24px;">一分钟跳绳(个)</h3>
+                    <table class="standards-table">
+                        <thead>
+                            <tr>
+                                <th>年级</th>
+                                <th>及格</th>
+                                <th>良好</th>
+                                <th>优秀</th>
+                                <th>满分</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>一年级</td>
+                                <td>50-69</td>
+                                <td>70-89</td>
+                                <td>90-109</td>
+                                <td>&ge;110</td>
+                            </tr>
+                            <tr>
+                                <td>二年级</td>
+                                <td>60-79</td>
+                                <td>80-99</td>
+                                <td>100-119</td>
+                                <td>&ge;120</td>
+                            </tr>
+                            <tr>
+                                <td>三年级</td>
+                                <td>70-89</td>
+                                <td>90-109</td>
+                                <td>110-129</td>
+                                <td>&ge;130</td>
+                            </tr>
+                            <tr>
+                                <td>四年级</td>
+                                <td>80-99</td>
+                                <td>100-119</td>
+                                <td>120-139</td>
+                                <td>&ge;140</td>
+                            </tr>
+                            <tr>
+                                <td>五年级</td>
+                                <td>90-109</td>
+                                <td>110-129</td>
+                                <td>130-149</td>
+                                <td>&ge;150</td>
+                            </tr>
+                            <tr>
+                                <td>六年级</td>
+                                <td>100-119</td>
+                                <td>120-139</td>
+                                <td>140-159</td>
+                                <td>&ge;160</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- 仰卧起坐 -->
+                    <h3 style="color:var(--primary);margin-top:24px;">仰卧起坐(个)</h3>
+                    <table class="standards-table">
+                        <thead>
+                            <tr>
+                                <th>年级</th>
+                                <th>及格</th>
+                                <th>良好</th>
+                                <th>优秀</th>
+                                <th>满分</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>一年级</td>
+                                <td>12-14</td>
+                                <td>15-17</td>
+                                <td>18-20</td>
+                                <td>&ge;21</td>
+                            </tr>
+                            <tr>
+                                <td>二年级</td>
+                                <td>15-17</td>
+                                <td>18-20</td>
+                                <td>21-23</td>
+                                <td>&ge;24</td>
+                            </tr>
+                            <tr>
+                                <td>三年级</td>
+                                <td>18-20</td>
+                                <td>21-23</td>
+                                <td>24-27</td>
+                                <td>&ge;28</td>
+                            </tr>
+                            <tr>
+                                <td>四年级</td>
+                                <td>21-23</td>
+                                <td>24-27</td>
+                                <td>28-31</td>
+                                <td>&ge;32</td>
+                            </tr>
+                            <tr>
+                                <td>五年级</td>
+                                <td>24-27</td>
+                                <td>28-31</td>
+                                <td>32-35</td>
+                                <td>&ge;36</td>
+                            </tr>
+                            <tr>
+                                <td>六年级</td>
+                                <td>27-30</td>
+                                <td>31-34</td>
+                                <td>35-38</td>
+                                <td>&ge;39</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- 肺活量 -->
+                    <h3 style="color:var(--primary);margin-top:24px;">肺活量(ml)</h3>
+                    <table class="standards-table">
+                        <thead>
+                            <tr>
+                                <th>年级</th>
+                                <th>及格</th>
+                                <th>良好</th>
+                                <th>优秀</th>
+                                <th>满分</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>一年级</td>
+                                <td>1400-1600</td>
+                                <td>1600-1800</td>
+                                <td>1800-2000</td>
+                                <td>&ge;2000</td>
+                            </tr>
+                            <tr>
+                                <td>二年级</td>
+                                <td>1600-1800</td>
+                                <td>1800-2000</td>
+                                <td>2000-2200</td>
+                                <td>&ge;2200</td>
+                            </tr>
+                            <tr>
+                                <td>三年级</td>
+                                <td>1800-2000</td>
+                                <td>2000-2200</td>
+                                <td>2200-2400</td>
+                                <td>&ge;2400</td>
+                            </tr>
+                            <tr>
+                                <td>四年级</td>
+                                <td>2000-2200</td>
+                                <td>2200-2400</td>
+                                <td>2400-2600</td>
+                                <td>&ge;2600</td>
+                            </tr>
+                            <tr>
+                                <td>五年级</td>
+                                <td>2200-2400</td>
+                                <td>2400-2600</td>
+                                <td>2600-2800</td>
+                                <td>&ge;2800</td>
+                            </tr>
+                            <tr>
+                                <td>六年级</td>
+                                <td>2400-2600</td>
+                                <td>2600-2800</td>
+                                <td>2800-3000</td>
+                                <td>&ge;3000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div style="margin-top: 20px; padding: 15px; background: rgba(244, 180, 0, 0.1); border-radius: 8px;">
+                    <h3 style="color: var(--warning); margin-top: 0;">性能等级说明</h3>
+                    <ul>
+                        <li><strong>及格：</strong>达到基本要求</li>
+                        <li><strong>良好：</strong>超过基本要求，表现较好</li>
+                        <li><strong>优秀：</strong>表现突出，远超基本要求</li>
+                        <li><strong>满分：</strong>达到或超过最高标准</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
         <footer>
             <p>© 2025 快乐学习 - Sevenking Studio</p>
         </footer>
@@ -1008,7 +1328,7 @@
             });
         }
 
-        // 设置事件监听
+        // 修改:更新导航链接事件处理
         function setupEventListeners() {
             // 年级选择
             gradeSelectorElement.addEventListener('change', handleGradeChange);
@@ -1035,7 +1355,7 @@
 
         }
 
-        // 切换页面
+        // 修改:切换页面函数
         function switchPage(pageId) {
             if (pageId === 'home') {
                 window.location.href = 'index.html';
