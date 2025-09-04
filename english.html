@@ -823,10 +823,27 @@
             margin-top: 10px;
         }
 
-        .inline-label {
-            white-space: nowrap;
-            color: var(--text-secondary);
+        /* 增加：在内联控制组中让滑块可伸缩，避免占满整行并让数值保持在同一行 */
+        .inline-control-group .range-slider {
+            flex: 1;
+            /* 允许滑块占据剩余空间 */
+            width: auto;
+            /* 覆盖全局 width:100% 设置 */
+            margin: 0;
+            /* 取消额外上边距 */
+            min-width: 120px;
+            /* 在窄屏下给滑块一个最小宽度（可按需调整） */
         }
+
+        .inline-control-group .slider-value {
+            margin-top: 0;
+            /* 取消原来的上边距，确保垂直居中 */
+            white-space: nowrap;
+            /* 不换行，保持 "5 秒" 在一行 */
+            min-width: 48px;
+            text-align: left;
+        }
+
     </style>
     <script src="common.js"></script>
 </head>
@@ -949,7 +966,7 @@
 
                             <div class="inline-control-group">
                                 <span class="inline-label">间隔时间:</span>
-                                <input type="range" min="1" max="60" value="5" class="range-slider" id="autoPlaySlider">
+                                <input type="range" min="2" max="20" step="1" value="5" class="range-slider" id="autoPlaySlider">
                                 <span class="slider-value" id="sliderValue">5 秒</span>
                             </div>
                         </div>
