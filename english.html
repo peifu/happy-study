@@ -1261,13 +1261,14 @@
             const voiceSelect = document.getElementById('voiceSelect');
             if (!voiceSelect) return;
 
-            // 保留第一个默认选项，移除其它动态选项
+            // 清除现有选项（除了默认选项）
             while (voiceSelect.options.length > 1) {
                 voiceSelect.remove(1);
             }
 
-            const voices = speechSynthesis.getVoices() || [];
-            // 只显示英文发音人（lang 包含 en）
+            const voices = speechSynthesis.getVoices();
+
+            // 只显示英文发音人（lang 包含 'en'）
             const enVoices = voices.filter(v => /(^|\-|\_)en/i.test(v.lang));
 
             enVoices.forEach(voice => {
@@ -1277,7 +1278,7 @@
                 voiceSelect.appendChild(option);
             });
 
-            // 恢复已保存选择（如果存在）
+            // 恢复已保存的发音人（如果有）
             const saved = localStorage.getItem('selectedVoice');
             if (saved) {
                 const found = Array.from(voiceSelect.options).find(o => o.value === saved);
@@ -1287,30 +1288,31 @@
 
         // 测试发音：按所选发音人、速率、音调播放英语示例
         function testVoice() {
-            const voiceSelect = document.getElementById('voiceSelect');
+            const sample = "This is a voice test.";
+            const ut = new SpeechSynthesisUtterance(sample);
+            ut.lang = 'en-US';
+
             const rateEl = document.getElementById('speechRateSlider');
             const pitchEl = document.getElementById('speechPitchSlider');
+            if (rateEl) ut.rate = parseFloat(rateEl.value) || 1.0;
+            if (pitchEl) ut.pitch = parseFloat(pitchEl.value) || 1.0;
 
-            const text = "This is a voice test.";
-            const utter = new SpeechSynthesisUtterance(text);
-
-            // 使用英语为主的朗读语言
-            utter.lang = 'en-US';
-
-            if (rateEl) utter.rate = parseFloat(rateEl.value);
-            if (pitchEl) utter.pitch = parseFloat(pitchEl.value);
-
+            const savedName = localStorage.getItem('selectedVoice');
+            const voiceSelect = document.getElementById('voiceSelect');
             const voices = speechSynthesis.getVoices() || [];
-            if (voiceSelect && voiceSelect.value) {
-                const v = voices.find(voice => voice.name === voiceSelect.value);
-                if (v) utter.voice = v;
+
+            let v = null;
+            if (savedName) v = voices.find(voice => voice.name === savedName);
+            if (!v && voiceSelect && voiceSelect.value) v = voices.find(voice => voice.name === voiceSelect.value);
+            if (!v) v = voices.find(voice => /(^|\-|\_)en/i.test(voice.lang));
+
+            if (v) {
+                try { ut.voice = v; } catch (e) {}
             }
 
-            // 先取消正在播放的
             speechSynthesis.cancel();
-            speechSynthesis.speak(utter);
+            speechSynthesis.speak(ut);
         }
-
 
         // 获取当前单词本的进度对象
         function getLearnedWords() {
@@ -1325,7 +1327,7 @@
 
         // 设置事件监听
         function setupEventListeners() {
-            // 使用公共导航事件绑定
+            // 导航链接
             setupNavLinks(navLinks, pages, (pageId) => {
                 if (pageId === 'wordlist' || pageId === 'settings') stopAutoPlay();
                 if (pageId === 'wordlist') renderWordList();
@@ -1376,11 +1378,11 @@
                     renderWordList();
                 });
             });
-
+            
             // 设置页面滑块
             setupSettingsSliders();
 
-            // 绑定发音人选择保存与测试按钮
+            // 绑定发音人选择保存与测试按钮（如存在）
             const voiceSelectEl = document.getElementById('voiceSelect');
             if (voiceSelectEl) {
                 voiceSelectEl.addEventListener('change', () => {
@@ -1490,8 +1492,46 @@
 
             const word = wordLists[currentBook][currentIndex].word;
             const utterance = new SpeechSynthesisUtterance(word);
+
+            // 优先使用用户设置的语言，如果设置不存在，保留 en-US
             utterance.lang = 'en-US';
-            utterance.rate = 0.8;
+
+            // 从设置中读取速率和音调（存在则应用）
+            const rateEl = document.getElementById('speechRateSlider');
+            const pitchEl = document.getElementById('speechPitchSlider');
+            if (rateEl) {
+                const r = parseFloat(rateEl.value) || 1.0;
+                utterance.rate = r;
+            } else {
+                utterance.rate = 0.9;
+            }
+            if (pitchEl) {
+                const p = parseFloat(pitchEl.value) || 1.0;
+                utterance.pitch = p;
+            } else {
+                utterance.pitch = 1.0;
+            }
+
+            // 选择发音人：优先使用已选择并保存的名字
+            const savedName = localStorage.getItem('selectedVoice');
+            const voiceSelect = document.getElementById('voiceSelect');
+            const voices = speechSynthesis.getVoices() || [];
+
+            let chosenVoice = null;
+            if (savedName) chosenVoice = voices.find(v => v.name === savedName);
+            if (!chosenVoice && voiceSelect && voiceSelect.value) {
+                chosenVoice = voices.find(v => v.name === voiceSelect.value);
+            }
+            // 如果仍未找到，尽量选一个英语语系的 voice 作为回退
+            if (!chosenVoice) {
+                chosenVoice = voices.find(v => /(^|\-|\_)en/i.test(v.lang));
+            }
+            if (chosenVoice) {
+                try { utterance.voice = chosenVoice; } catch (e) { /* ignore */ }
+            }
+
+            // 先取消当前播放，确保立即朗读最新设置
+            speechSynthesis.cancel();
             speechSynthesis.speak(utterance);
         }
 
