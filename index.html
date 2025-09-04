@@ -393,6 +393,36 @@
             transition: var(--transition);
         }
 
+        /* Theme buttons container */
+        .theme-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        /* Theme button styles */
+        .theme-button {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .theme-button:hover {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .theme-button.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
         .form-control:focus {
             outline: none;
             border-color: var(--primary);
@@ -692,11 +722,11 @@
                     
                     <div class="form-group">
                         <label class="form-label">主题</label>
-                        <select class="form-control" id="themeSelect">
-                            <option value="dark">深色主题</option>
-                            <option value="light">浅色主题</option>
-                            <option value="auto">跟随系统</option>
-                        </select>
+                        <div class="theme-buttons">
+                            <button class="theme-button" data-theme="dark">深色主题</button>
+                            <button class="theme-button" data-theme="light">浅色主题</button>
+                            <button class="theme-button" data-theme="auto">跟随系统</button>
+                        </div>
                     </div>
                     
                     <div class="form-group">
@@ -796,9 +826,13 @@
             }
             // 保存主题
             localStorage.setItem('theme', theme);
-            // 设置下拉框选中
-            const themeSelect = document.getElementById('themeSelect');
-            if (themeSelect) themeSelect.value = theme;
+            // 设置按钮选中状态
+            document.querySelectorAll('.theme-button').forEach(button => {
+                button.classList.remove('active');
+                if (button.dataset.theme === theme) {
+                    button.classList.add('active');
+                }
+            });
         }
 
         function getSavedTheme() {
@@ -806,11 +840,15 @@
         }
 
         function setupThemeSelect() {
-            const themeSelect = document.getElementById('themeSelect');
-            if (!themeSelect) return;
-            themeSelect.addEventListener('change', function() {
-                applyTheme(this.value);
+            // 使用按钮替代下拉框
+            const themeButtons = document.querySelectorAll('.theme-button');
+            themeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const theme = this.dataset.theme;
+                    applyTheme(theme);
+                });
             });
+            
             // 响应系统主题变化
             window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', e => {
                 if (getSavedTheme() === 'auto') {
