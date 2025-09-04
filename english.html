@@ -1045,6 +1045,13 @@
                         <select class="form-control" id="voiceSelect">
                             <option value="">默认发音人</option>
                         </select>
+                        <!-- 新增：测试发音按钮 -->
+                        <div style="margin-top:10px;">
+                            <button id="voiceTestBtn" class="btn btn-primary" type="button" style="width: 100%; margin-bottom: 15px;">
+                                <i class="fas fa-microphone"></i>
+                                <span>测试发音</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -1252,20 +1259,58 @@
         // 填充发音人选项
         function populateVoiceList() {
             const voiceSelect = document.getElementById('voiceSelect');
-            const voices = speechSynthesis.getVoices();
+            if (!voiceSelect) return;
 
-            // 清除现有选项（除了默认选项）
+            // 保留第一个默认选项，移除其它动态选项
             while (voiceSelect.options.length > 1) {
                 voiceSelect.remove(1);
             }
 
-            voices.forEach(voice => {
+            const voices = speechSynthesis.getVoices() || [];
+            // 只显示英文发音人（lang 包含 en）
+            const enVoices = voices.filter(v => /(^|\-|\_)en/i.test(v.lang));
+
+            enVoices.forEach(voice => {
                 const option = document.createElement('option');
                 option.value = voice.name;
                 option.textContent = `${voice.name} (${voice.lang})`;
                 voiceSelect.appendChild(option);
             });
+
+            // 恢复已保存选择（如果存在）
+            const saved = localStorage.getItem('selectedVoice');
+            if (saved) {
+                const found = Array.from(voiceSelect.options).find(o => o.value === saved);
+                if (found) voiceSelect.value = saved;
+            }
         }
+
+        // 测试发音：按所选发音人、速率、音调播放英语示例
+        function testVoice() {
+            const voiceSelect = document.getElementById('voiceSelect');
+            const rateEl = document.getElementById('speechRateSlider');
+            const pitchEl = document.getElementById('speechPitchSlider');
+
+            const text = "This is a voice test.";
+            const utter = new SpeechSynthesisUtterance(text);
+
+            // 使用英语为主的朗读语言
+            utter.lang = 'en-US';
+
+            if (rateEl) utter.rate = parseFloat(rateEl.value);
+            if (pitchEl) utter.pitch = parseFloat(pitchEl.value);
+
+            const voices = speechSynthesis.getVoices() || [];
+            if (voiceSelect && voiceSelect.value) {
+                const v = voices.find(voice => voice.name === voiceSelect.value);
+                if (v) utter.voice = v;
+            }
+
+            // 先取消正在播放的
+            speechSynthesis.cancel();
+            speechSynthesis.speak(utter);
+        }
+
 
         // 获取当前单词本的进度对象
         function getLearnedWords() {
@@ -1275,6 +1320,7 @@
         function getMasteredWords() {
             if (!masteredWordsMap[currentBook]) masteredWordsMap[currentBook] = {};
             return masteredWordsMap[currentBook];
+
         }
 
         // 设置事件监听
@@ -1333,6 +1379,18 @@
 
             // 设置页面滑块
             setupSettingsSliders();
+
+            // 绑定发音人选择保存与测试按钮
+            const voiceSelectEl = document.getElementById('voiceSelect');
+            if (voiceSelectEl) {
+                voiceSelectEl.addEventListener('change', () => {
+                    localStorage.setItem('selectedVoice', voiceSelectEl.value);
+                });
+            }
+            const voiceTestBtn = document.getElementById('voiceTestBtn');
+            if (voiceTestBtn) {
+                voiceTestBtn.addEventListener('click', testVoice);
+            }
 
             // 数据管理：重置学习进度
             const resetBtn = document.querySelector('.settings-card .btn-warning');
