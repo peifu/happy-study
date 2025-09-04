@@ -841,6 +841,16 @@
             });
         }
 
+        // 字体大小设置
+        function applyFontSize(fontSize) {
+            document.body.style.fontSize = fontSize + 'px';
+            localStorage.setItem('fontSize', fontSize);
+        }
+
+        function getSavedFontSize() {
+            return localStorage.getItem('fontSize') || '16';
+        }
+
         // 设置页面滑块
         function setupSettingsSliders() {
             const sliders = [
@@ -856,9 +866,21 @@
                 const outputElement = document.getElementById(output);
                 
                 if (slider && outputElement) {
+                    // 加载保存的设置
+                    if (id === 'fontSizeSlider') {
+                        const savedFontSize = getSavedFontSize();
+                        slider.value = savedFontSize;
+                        applyFontSize(savedFontSize);
+                    }
+                    
                     outputElement.textContent = format(slider.value);
                     slider.addEventListener('input', () => {
                         outputElement.textContent = format(slider.value);
+                        
+                        // 字体大小实时应用
+                        if (id === 'fontSizeSlider') {
+                            applyFontSize(slider.value);
+                        }
                     });
                 }
             });
