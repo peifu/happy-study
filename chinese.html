@@ -498,7 +498,8 @@
             background: var(--card-bg-color);
             border-radius: 16px;
             padding: 25px;
-            border: 1px solid rgba(0, 247, 255, 0.2);
+            /* border-color 改为与页面主色协调的红色半透明 */
+            border: 1px solid rgba(234, 67, 53, 0.15);
             transition: var(--transition);
         }
 
@@ -546,7 +547,7 @@
         .form-control:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 15px rgba(0, 247, 255, 0.3);
+            box-shadow: 0 0 15px rgba(234, 67, 53, 0.25);
         }
 
 
@@ -582,7 +583,8 @@
             border-radius: 50%;
             background: var(--primary);
             cursor: pointer;
-            box-shadow: 0 0 10px rgba(0, 247, 255, 0.3);
+            /* 使用红色光晕代替之前的青色 */
+            box-shadow: 0 0 10px rgba(234, 67, 53, 0.3);
         }
 
         .slider-value {
