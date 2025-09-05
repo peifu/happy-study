@@ -1,0 +1,662 @@
+[
+    {
+        "word": "nice",
+        "phonetic": "/naɪs/",
+        "meaning": "令人愉快的",
+        "example": "She is a nice girl."
+    },
+    {
+        "word": "ear",
+        "phonetic": "/ɪə(r)/",
+        "meaning": "耳朵",
+        "example": "I can hear with my ear."
+    },
+    {
+        "word": "hand",
+        "phonetic": "/hænd/",
+        "meaning": "手",
+        "example": "I raise my hand."
+    },
+    {
+        "word": "eye",
+        "phonetic": "/aɪ/",
+        "meaning": "眼睛",
+        "example": "I see with my eye."
+    },
+    {
+        "word": "mouth",
+        "phonetic": "/maʊθ/",
+        "meaning": "嘴",
+        "example": "I speak with my mouth."
+    },
+    {
+        "word": "arm",
+        "phonetic": "/ɑːm/",
+        "meaning": "胳膊",
+        "example": "He has a long arm."
+    },
+    {
+        "word": "can",
+        "phonetic": "/kæn/",
+        "meaning": "可以",
+        "example": "I can swim."
+    },
+    {
+        "word": "share",
+        "phonetic": "/ʃeə(r)/",
+        "meaning": "分享",
+        "example": "We share the toys."
+    },
+    {
+        "word": "smile",
+        "phonetic": "/smaɪl/",
+        "meaning": "微笑",
+        "example": "She has a big smile."
+    },
+    {
+        "word": "listen",
+        "phonetic": "/ˈlɪs(ə)n/",
+        "meaning": "听；倾听",
+        "example": "Listen to the teacher."
+    },
+    {
+        "word": "help",
+        "phonetic": "/help/",
+        "meaning": "帮助",
+        "example": "I help my mom."
+    },
+    {
+        "word": "say",
+        "phonetic": "/seɪ/",
+        "meaning": "说；讲",
+        "example": "Say hello to him."
+    },
+    {
+        "word": "and",
+        "phonetic": "/ænd/",
+        "meaning": "和；与",
+        "example": "I like apples and bananas."
+    },
+    {
+        "word": "goodbye",
+        "phonetic": "/ˌɡʊdˈbaɪ/",
+        "meaning": "再见",
+        "example": "Goodbye, teacher."
+    },
+    {
+        "word": "toy",
+        "phonetic": "/tɔɪ/",
+        "meaning": "玩具",
+        "example": "This is my toy car."
+    },
+    {
+        "word": "friend",
+        "phonetic": "/frend/",
+        "meaning": "朋友",
+        "example": "He is my good friend."
+    },
+    {
+        "word": "good",
+        "phonetic": "/ɡʊd/",
+        "meaning": "好的",
+        "example": "Good morning!"
+    },
+    {
+        "word": "mum",
+        "phonetic": "/mʌm/",
+        "meaning": "妈妈",
+        "example": "Mum, I'm home."
+    },
+    {
+        "word": "dad",
+        "phonetic": "/dæd/",
+        "meaning": "爸爸",
+        "example": "Dad is tall."
+    },
+    {
+        "word": "grandma",
+        "phonetic": "/ˈɡrænmɑ:/",
+        "meaning": "（口语）（外）祖母；奶奶；姥姥；外婆",
+        "example": "Grandma tells me stories."
+    },
+    {
+        "word": "grandpa",
+        "phonetic": "/ˈɡrænpɑ:/",
+        "meaning": "（口语）（外）祖父；爷爷；姥爷；外公",
+        "example": "Grandpa likes to read."
+    },
+    {
+        "word": "grandfather",
+        "phonetic": "/ˈɡrænfɑ:ðə(r)/",
+        "meaning": "（外）祖父；爷爷；姥爷；外公",
+        "example": "My grandfather is old."
+    },
+    {
+        "word": "grandmother",
+        "phonetic": "/ˈɡrænmʌðə(r)/",
+        "meaning": "（外）祖母；奶奶；姥姥；外婆",
+        "example": "Grandmother bakes cookies."
+    },
+    {
+        "word": "mother",
+        "phonetic": "/ˈmʌðə(r)/",
+        "meaning": "母亲；妈妈",
+        "example": "My mother is beautiful."
+    },
+    {
+        "word": "father",
+        "phonetic": "/ˈfɑ:ðə(r)/",
+        "meaning": "父亲；爸爸",
+        "example": "Father goes to work."
+    },
+    {
+        "word": "me",
+        "phonetic": "/mi:/",
+        "meaning": "我",
+        "example": "He helps me."
+    },
+    {
+        "word": "sister",
+        "phonetic": "/ˈsɪstə(r)/",
+        "meaning": "姐；妹",
+        "example": "My sister is young."
+    },
+    {
+        "word": "family",
+        "phonetic": "/ˈfæməli/",
+        "meaning": "家；家庭",
+        "example": "I love my family."
+    },
+    {
+        "word": "have",
+        "phonetic": "/hæv/",
+        "meaning": "有",
+        "example": "I have a cat."
+    },
+    {
+        "word": "big",
+        "phonetic": "/bɪɡ/",
+        "meaning": "大的",
+        "example": "This is a big dog."
+    },
+    {
+        "word": "cousin",
+        "phonetic": "/ˈkʌz(ə)n/",
+        "meaning": "堂（表）兄弟；堂（表）姐妹",
+        "example": "My cousin lives in Beijing."
+    },
+    {
+        "word": "brother",
+        "phonetic": "/ˈbrʌðə(r)/",
+        "meaning": "兄弟",
+        "example": "My brother likes football."
+    },
+    {
+        "word": "baby",
+        "phonetic": "/ˈbeɪbi/",
+        "meaning": "婴儿",
+        "example": "The baby is crying."
+    },
+    {
+        "word": "uncle",
+        "phonetic": "/ˈʌŋk(ə)l/",
+        "meaning": "舅父；叔父；伯父；姑父；姨夫",
+        "example": "Uncle is tall and strong."
+    },
+    {
+        "word": "aunt",
+        "phonetic": "/ɑ:nt/",
+        "meaning": "姑母；姨母；伯母；婶母；舅母",
+        "example": "Aunt gives me a present."
+    },
+    {
+        "word": "some",
+        "phonetic": "/sʌm/",
+        "meaning": "一些",
+        "example": "I have some books."
+    },
+    {
+        "word": "small",
+        "phonetic": "/smɔ:l/",
+        "meaning": "小的",
+        "example": "This is a small bird."
+    },
+    {
+        "word": "like",
+        "phonetic": "/laɪk/",
+        "meaning": "喜欢",
+        "example": "I like apples."
+    },
+    {
+        "word": "dog",
+        "phonetic": "/dɒɡ/",
+        "meaning": "狗",
+        "example": "The dog is black."
+    },
+    {
+        "word": "pet",
+        "phonetic": "/pet/",
+        "meaning": "宠物",
+        "example": "I have a pet cat."
+    },
+    {
+        "word": "cat",
+        "phonetic": "/kæt/",
+        "meaning": "猫",
+        "example": "The cat is cute."
+    },
+    {
+        "word": "fish",
+        "phonetic": "/fɪʃ/",
+        "meaning": "鱼",
+        "example": "I can see a fish."
+    },
+    {
+        "word": "bird",
+        "phonetic": "/bɜ:d/",
+        "meaning": "鸟",
+        "example": "The bird can sing."
+    },
+    {
+        "word": "rabbit",
+        "phonetic": "/ˈræbɪt/",
+        "meaning": "兔",
+        "example": "The rabbit has long ears."
+    },
+    {
+        "word": "go",
+        "phonetic": "/ɡəʊ/",
+        "meaning": "去",
+        "example": "Let's go to school."
+    },
+    {
+        "word": "zoo",
+        "phonetic": "/zu:/",
+        "meaning": "动物园",
+        "example": "We go to the zoo."
+    },
+    {
+        "word": "fox",
+        "phonetic": "/fɒks/",
+        "meaning": "狐狸",
+        "example": "The fox is clever."
+    },
+    {
+        "word": "Miss",
+        "phonetic": "/mɪs/",
+        "meaning": "（学生对女教师的称呼）；女士",
+        "example": "Miss Li is our teacher."
+    },
+    {
+        "word": "panda",
+        "phonetic": "/ˈpændə/",
+        "meaning": "大熊猫",
+        "example": "The panda is black and white."
+    },
+    {
+        "word": "red panda",
+        "phonetic": "/red ˈpændə/",
+        "meaning": "小熊猫",
+        "example": "The red panda is cute."
+    },
+    {
+        "word": "cute",
+        "phonetic": "/kju:t/",
+        "meaning": "可爱的",
+        "example": "The baby is cute."
+    },
+    {
+        "word": "monkey",
+        "phonetic": "/ˈmʌŋki/",
+        "meaning": "猴子",
+        "example": "The monkey likes bananas."
+    },
+    {
+        "word": "tiger",
+        "phonetic": "/ˈtaɪɡə(r)/",
+        "meaning": "老虎",
+        "example": "The tiger is strong."
+    },
+    {
+        "word": "elephant",
+        "phonetic": "/ˈelɪfənt/",
+        "meaning": "大象",
+        "example": "The elephant has a long nose."
+    },
+    {
+        "word": "lion",
+        "phonetic": "/ˈlaɪən/",
+        "meaning": "狮子",
+        "example": "The lion is the king of the forest."
+    },
+    {
+        "word": "giraffe",
+        "phonetic": "/dʒəˈrɑ:f/",
+        "meaning": "长颈鹿",
+        "example": "The giraffe has a long neck."
+    },
+    {
+        "word": "tall",
+        "phonetic": "/tɔ:l/",
+        "meaning": "高的",
+        "example": "He is tall."
+    },
+    {
+        "word": "fast",
+        "phonetic": "/fɑ:st/",
+        "meaning": "快的",
+        "example": "The dog runs fast."
+    },
+    {
+        "word": "apple",
+        "phonetic": "/ˈæp(ə)l/",
+        "meaning": "苹果",
+        "example": "I eat an apple."
+    },
+    {
+        "word": "banana",
+        "phonetic": "/bəˈnɑ:nə/",
+        "meaning": "香蕉",
+        "example": "Monkeys like bananas."
+    },
+    {
+        "word": "farm",
+        "phonetic": "/fɑ:m/",
+        "meaning": "农场",
+        "example": "We visit a farm."
+    },
+    {
+        "word": "air",
+        "phonetic": "/eə(r)/",
+        "meaning": "空气",
+        "example": "We need clean air."
+    },
+    {
+        "word": "orange",
+        "phonetic": "/ˈɒrɪndʒ/",
+        "meaning": "橙子",
+        "example": "This is an orange."
+    },
+    {
+        "word": "grape",
+        "phonetic": "/ɡreɪp/",
+        "meaning": "葡萄",
+        "example": "Grapes are purple."
+    },
+    {
+        "word": "school",
+        "phonetic": "/sku:l/",
+        "meaning": "学校",
+        "example": "I go to school."
+    },
+    {
+        "word": "garden",
+        "phonetic": "/ˈɡɑ:d(ə)n/",
+        "meaning": "花园",
+        "example": "There are flowers in the garden."
+    },
+    {
+        "word": "need",
+        "phonetic": "/ni:d/",
+        "meaning": "需要",
+        "example": "We need water."
+    },
+    {
+        "word": "water",
+        "phonetic": "/ˈwɔ:tə(r)/",
+        "meaning": "给……浇水；水",
+        "example": "I water the plants."
+    },
+    {
+        "word": "flower",
+        "phonetic": "/ˈflaʊə(r)/",
+        "meaning": "花",
+        "example": "The flower is red."
+    },
+    {
+        "word": "grass",
+        "phonetic": "/ɡrɑ:s/",
+        "meaning": "草；草地",
+        "example": "The grass is green."
+    },
+    {
+        "word": "plant",
+        "phonetic": "/plɑ:nt/",
+        "meaning": "种植；植物",
+        "example": "We plant trees."
+    },
+    {
+        "word": "new",
+        "phonetic": "/nju:/",
+        "meaning": "新的",
+        "example": "This is a new book."
+    },
+    {
+        "word": "tree",
+        "phonetic": "/tri:/",
+        "meaning": "树",
+        "example": "The tree is tall."
+    },
+    {
+        "word": "sun",
+        "phonetic": "/sʌn/",
+        "meaning": "太阳",
+        "example": "The sun is bright."
+    },
+    {
+        "word": "give",
+        "phonetic": "/ɡɪv/",
+        "meaning": "给",
+        "example": "Give me a pen."
+    },
+    {
+        "word": "us",
+        "phonetic": "/ʌs/",
+        "meaning": "我们",
+        "example": "He helps us."
+    },
+    {
+        "word": "them",
+        "phonetic": "/ðem/",
+        "meaning": "它们；他们",
+        "example": "I see them."
+    },
+    {
+        "word": "colour",
+        "phonetic": "/ˈkʌlə(r)/",
+        "meaning": "颜色",
+        "example": "What colour is it?"
+    },
+    {
+        "word": "orange",
+        "phonetic": "/ˈɒrɪndʒ/",
+        "meaning": "橙红色；橙红色的",
+        "example": "The orange is orange."
+    },
+    {
+        "word": "green",
+        "phonetic": "/ɡri:n/",
+        "meaning": "绿色；绿色的",
+        "example": "Grass is green."
+    },
+    {
+        "word": "red",
+        "phonetic": "/red/",
+        "meaning": "红色；红色的",
+        "example": "The apple is red."
+    },
+    {
+        "word": "blue",
+        "phonetic": "/blu:/",
+        "meaning": "蓝色；蓝色的",
+        "example": "The sky is blue."
+    },
+    {
+        "word": "make",
+        "phonetic": "/meɪk/",
+        "meaning": "使出现；做",
+        "example": "I make a cake."
+    },
+    {
+        "word": "purple",
+        "phonetic": "/ˈpɜ:p(ə)l/",
+        "meaning": "紫色；紫色的",
+        "example": "Grapes are purple."
+    },
+    {
+        "word": "brown",
+        "phonetic": "/braʊn/",
+        "meaning": "棕色；棕色的",
+        "example": "The bear is brown."
+    },
+    {
+        "word": "bear",
+        "phonetic": "/beə(r)/",
+        "meaning": "熊",
+        "example": "The bear is big."
+    },
+    {
+        "word": "yellow",
+        "phonetic": "/ˈjeləʊ/",
+        "meaning": "黄色（的）",
+        "example": "The sun is yellow."
+    },
+    {
+        "word": "duck",
+        "phonetic": "/dʌk/",
+        "meaning": "鸭",
+        "example": "The duck can swim."
+    },
+    {
+        "word": "sea",
+        "phonetic": "/siː/",
+        "meaning": "海洋",
+        "example": "The sea is blue."
+    },
+    {
+        "word": "pink",
+        "phonetic": "/pɪŋk/",
+        "meaning": "粉色；粉色的",
+        "example": "The flower is pink."
+    },
+    {
+        "word": "draw",
+        "phonetic": "/drɔ:/",
+        "meaning": "画",
+        "example": "I draw a cat."
+    },
+    {
+        "word": "white",
+        "phonetic": "/waɪt/",
+        "meaning": "白色（的）",
+        "example": "Snow is white."
+    },
+    {
+        "word": "black",
+        "phonetic": "/blæk/",
+        "meaning": "黑色（的）",
+        "example": "The cat is black."
+    },
+    {
+        "word": "old",
+        "phonetic": "/əʊld/",
+        "meaning": "（多少）岁；年纪；旧的",
+        "example": "He is five years old."
+    },
+    {
+        "word": "five",
+        "phonetic": "/faɪv/",
+        "meaning": "五",
+        "example": "I have five books."
+    },
+    {
+        "word": "year",
+        "phonetic": "/jɪə(r)/",
+        "meaning": "年纪；年",
+        "example": "I am seven years old."
+    },
+    {
+        "word": "one",
+        "phonetic": "/wʌn/",
+        "meaning": "一",
+        "example": "I have one pen."
+    },
+    {
+        "word": "two",
+        "phonetic": "/tu:/",
+        "meaning": "二",
+        "example": "Two apples, please."
+    },
+    {
+        "word": "three",
+        "phonetic": "/θri:/",
+        "meaning": "三",
+        "example": "I see three birds."
+    },
+    {
+        "word": "four",
+        "phonetic": "/fɔ:(r)/",
+        "meaning": "四",
+        "example": "Four books are on the desk."
+    },
+    {
+        "word": "ten",
+        "phonetic": "/ten/",
+        "meaning": "十",
+        "example": "I have ten fingers."
+    },
+    {
+        "word": "six",
+        "phonetic": "/sɪks/",
+        "meaning": "六",
+        "example": "Six plus four is ten."
+    },
+    {
+        "word": "seven",
+        "phonetic": "/ˈsev(ə)n/",
+        "meaning": "七",
+        "example": "I get up at seven."
+    },
+    {
+        "word": "eight",
+        "phonetic": "/eɪt/",
+        "meaning": "八",
+        "example": "School starts at eight."
+    },
+    {
+        "word": "nine",
+        "phonetic": "/naɪn/",
+        "meaning": "九",
+        "example": "I have nine toys."
+    },
+    {
+        "word": "o’clock",
+        "phonetic": "/əˈklɒk/",
+        "meaning": "（表示整点）……点钟",
+        "example": "It is three o'clock."
+    },
+    {
+        "word": "cut",
+        "phonetic": "/kʌt/",
+        "meaning": "切块",
+        "example": "Cut the cake, please."
+    },
+    {
+        "word": "piece",
+        "phonetic": "/pi:s/",
+        "meaning": "块；片",
+        "example": "A piece of cake."
+    },
+    {
+        "word": "eat",
+        "phonetic": "/i:t/",
+        "meaning": "吃",
+        "example": "I eat breakfast."
+    },
+    {
+        "word": "cake",
+        "phonetic": "/keɪk/",
+        "meaning": "蛋糕",
+        "example": "I like birthday cake."
+    }
+]
