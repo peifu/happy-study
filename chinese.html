@@ -787,12 +787,12 @@
                     </div>
                     
                     <select class="form-control" id="bookSelector">
-                        <option value="primary1">小学一年级</option>
-                        <option value="primary2">小学二年级</option>
-                        <option value="primary3">小学三年级</option>
-                        <option value="primary4">小学四年级</option>
-                        <option value="primary5">小学五年级</option>
-                        <option value="primary6">小学六年级</option>
+                        <option value="grade1">小学一年级</option>
+                        <option value="grade2">小学二年级</option>
+                        <option value="grade3">小学三年级</option>
+                        <option value="grade4">小学四年级</option>
+                        <option value="grade5">小学五年级</option>
+                        <option value="grade6">小学六年级</option>
                     </select>
                     
                     <div class="poem-list" id="poemList">
@@ -902,7 +902,7 @@
     <script>
         // 默认诗词数据（当JSON加载失败时使用）
         const defaultPoemsData = {
-            primary1: [
+            grade1: [
                 {
                     title: "静夜思",
                     author: "【唐】李白",
@@ -922,7 +922,7 @@
                     translation: "盛夏中午，烈日炎炎，农民还在劳作，汗珠滴入泥土。有谁想到，我们碗中的米饭，一粒一粒都是农民辛苦劳动得来的呀？"
                 }
             ],
-            primary2: [
+            grade2: [
                 {
                     title: "登鹳雀楼",
                     author: "【唐】王之涣",
@@ -939,7 +939,7 @@
         };
 
         let poemsData = {};
-        let currentBook = 'primary1';
+        let currentBook = 'grade1';
         let currentPoemIndex = 0;
         let learnedPoems = {};
         let masteredPoems = {};
@@ -1014,7 +1014,7 @@
         // 加载诗词数据
         function loadPoemsData() {
             // 模拟从JSON文件加载数据
-            fetch('https://example.com/api/poems.json')
+            fetch('chinese-poems.json')
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('网络响应不正常');
