@@ -473,6 +473,35 @@
             background: rgba(15, 157, 88, 0.1);
         }
 
+        .form-control {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            padding: 12px 15px;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(234, 67, 53, 0.25);
+        }
+
+        .form-control option {
+            background: var(--card-bg-color);
+            color: var(--text-color);
+            padding: 8px 12px;
+        }
+
+        .form-control option:hover,
+        .form-control option:focus,
+        .form-control option:checked {
+            background: var(--primary);
+            color: white;
+        }
+
         /* 响应式设计 */
         @media (max-width: 900px) {
             .main-content {
@@ -708,11 +737,7 @@
 
                     <select class="form-control" id="gradeSelector">
                         <option value="grade1">小学一年级</option>
-                        <option value="grade2">小学二年级</option>
                         <option value="grade3">小学三年级</option>
-                        <option value="grade4">小学四年级</option>
-                        <option value="grade5">小学五年级</option>
-                        <option value="grade6">小学六年级</option>
                     </select>
 
                     <div class="sports-list" id="sportsList">
@@ -773,11 +798,12 @@
                     <i class="fas fa-award"></i>
                     <span>小学体育达标标准</span>
                 </div>
-                
-                <div style="margin-bottom: 20px; padding: 15px; background: rgba(15, 157, 88, 0.1); border-radius: 8px;">
+
+                <div
+                    style="margin-bottom: 20px; padding: 15px; background: rgba(15, 157, 88, 0.1); border-radius: 8px;">
                     <p>说明：以下标准为各年级体育项目达标要求，分为及格、良好、优秀、满分四个等级。</p>
                 </div>
-                
+
                 <div style="overflow-x: auto;">
                     <!-- 50米跑 -->
                     <h3 style="color:var(--primary);margin-top:24px;">50米跑(秒)（男生-女生）</h3>
@@ -954,7 +980,7 @@
                     </table>
 
                     <!-- 仰卧起坐 -->
-                    <h3 style="color:var(--primary);margin-top:24px;">仰卧起坐(个)</h3>
+                    <h3 style="color:var(--primary);margin-top:24px;">仰卧起坐(个)（男生-女生）</h3>
                     <table class="standards-table">
                         <thead>
                             <tr>
@@ -998,7 +1024,7 @@
                     </table>
 
                     <!-- 肺活量 -->
-                    <h3 style="color:var(--primary);margin-top:24px;">肺活量(ml)</h3>
+                    <h3 style="color:var(--primary);margin-top:24px;">肺活量(ml)（男生-女生）</h3>
                     <table class="standards-table">
                         <thead>
                             <tr>
@@ -1055,7 +1081,7 @@
                         </tbody>
                     </table>
                 </div>
-                
+
                 <div style="margin-top: 20px; padding: 15px; background: rgba(244, 180, 0, 0.1); border-radius: 8px;">
                     <h3 style="color: var(--warning); margin-top: 0;">性能等级说明</h3>
                     <ul>
@@ -1078,22 +1104,12 @@
         const sportsData = {
             grade1: [
                 {
-                    title: "跳绳项目",
-                    category: "【一年级体育要求】",
-                    content: [
-                        { icon: "fas fa-forward", label: "一分钟跳绳：", value: "男生90个，女生95个" },
-                        { icon: "fas fa-tachometer-alt", label: "合格标准：", value: "男生70个，女生75个" },
-                        { icon: "fas fa-star", label: "优秀标准：", value: "男生110个，女生115个" }
-                    ],
-                    explanation: "跳绳是一项全身性有氧运动，能够有效提高心肺功能、协调性和耐力。对小学生身体发育有很好的促进作用。"
-                },
-                {
                     title: "50米跑",
                     category: "【一年级体育要求】",
                     content: [
-                        { icon: "fas fa-running", label: "达标时间：", value: "男生12.0秒，女生12.5秒" },
-                        { icon: "fas fa-tachometer-alt", label: "合格标准：", value: "男生13.0秒，女生13.5秒" },
-                        { icon: "fas fa-star", label: "优秀标准：", value: "男生11.0秒，女生11.5秒" }
+                        { icon: "fas fa-running", label: "及格标准：", value: "男生12.6秒，女生13.8秒" },
+                        { icon: "fas fa-tachometer-alt", label: "良好标准：", value: "男生10.6秒，女生11.8秒" },
+                        { icon: "fas fa-star", label: "优秀标准：", value: "男生10.4秒，女生11.2秒" }
                     ],
                     explanation: "50米跑是测试学生速度、反应能力和爆发力的重要项目，对提高心肺功能有显著效果。"
                 },
@@ -1101,75 +1117,83 @@
                     title: "坐位体前屈",
                     category: "【一年级体育要求】",
                     content: [
-                        { icon: "fas fa-arrows-alt-h", label: "达标要求：", value: "男生8.0cm，女生9.0cm" },
-                        { icon: "fas fa-tachometer-alt", label: "合格标准：", value: "男生6.0cm，女生7.0cm" },
-                        { icon: "fas fa-star", label: "优秀标准：", value: "男生10.0cm，女生11.0cm" }
+                        { icon: "fas fa-arrows-alt-h", label: "及格标准：", value: "男生0.0cm，女生2.4cm" },
+                        { icon: "fas fa-tachometer-alt", label: "良好标准：", value: "男生11.0cm，女生13.4cm" },
+                        { icon: "fas fa-star", label: "优秀标准：", value: "男生13.0cm，女生16.0cm" }
                     ],
                     explanation: "坐位体前屈是测量学生躯干、腰、髋等关节可能达到的活动幅度，主要反映这些部位的关节、韧带和肌肉的伸展性和弹性。"
                 },
                 {
-                    title: "仰卧起坐",
+                    title: "一分钟跳绳",
                     category: "【一年级体育要求】",
                     content: [
-                        { icon: "fas fa-bed", label: "一分钟次数：", value: "男生18个，女生20个" },
-                        { icon: "fas fa-tachometer-alt", label: "合格标准：", value: "男生15个，女生17个" },
-                        { icon: "fas fa-star", label: "优秀标准：", value: "男生22个，女生24个" }
+                        { icon: "fas fa-forward", label: "及格标准：", value: "男生17个，女生17个" },
+                        { icon: "fas fa-tachometer-alt", label: "良好标准：", value: "男生87个，女生87个" },
+                        { icon: "fas fa-star", label: "优秀标准：", value: "男生99个，女生103个" }
                     ],
-                    explanation: "仰卧起坐是测试学生腰腹部肌肉力量和耐力的项目，对核心力量发展非常重要。"
+                    explanation: "跳绳是一项全身性有氧运动，能够有效提高心肺功能、协调性和耐力。对小学生身体发育有很好的促进作用。"
                 },
                 {
-                    title: "立定跳远",
+                    title: "肺活量",
                     category: "【一年级体育要求】",
                     content: [
-                        { icon: "fas fa-arrows-alt-v", label: "达标距离：", value: "男生110cm，女生120cm" },
-                        { icon: "fas fa-tachometer-alt", label: "合格标准：", value: "男生100cm，女生110cm" },
-                        { icon: "fas fa-star", label: "优秀标准：", value: "男生125cm，女生135cm" }
+                        { icon: "fas fa-arrows-alt-v", label: "及格标准：", value: "男生700ml，女生600ml" },
+                        { icon: "fas fa-tachometer-alt", label: "良好标准：", value: "男生1300ml，女生1000ml" },
+                        { icon: "fas fa-star", label: "优秀标准：", value: "男生1500ml，女生1200ml" }
                     ],
-                    explanation: "立定跳远是测试学生下肢爆发力、身体协调性和平衡能力的项目，对全面发展身体素质有重要意义。"
-                }
-            ],
-            grade2: [
-                {
-                    title: "跳绳项目",
-                    category: "【二年级体育要求】",
-                    content: [
-                        { icon: "fas fa-forward", label: "一分钟跳绳：", value: "男生100个，女生105个" },
-                        { icon: "fas fa-tachometer-alt", label: "合格标准：", value: "男生80个，女生85个" },
-                        { icon: "fas fa-star", label: "优秀标准：", value: "男生120个，女生125个" }
-                    ],
-                    explanation: "二年级学生应掌握基本跳绳技巧，并能连续跳跃，提高协调性和耐力。"
-                },
-                {
-                    title: "50米跑",
-                    category: "【二年级体育要求】",
-                    content: [
-                        { icon: "fas fa-running", label: "达标时间：", value: "男生11.5秒，女生12.0秒" },
-                        { icon: "fas fa-tachometer-alt", label: "合格标准：", value: "男生12.5秒，女生13.0秒" },
-                        { icon: "fas fa-star", label: "优秀标准：", value: "男生10.5秒，女生11.0秒" }
-                    ],
-                    explanation: "二年级学生应掌握正确的跑步姿势，提高步频和步幅，发展速度素质。"
+                    explanation: "肺活量是测试学生肺活量的项目，对提高心肺功能和耐力有重要意义。"
                 }
             ],
             grade3: [
                 {
-                    title: "跳绳项目",
-                    category: "【三年级体育要求】",
-                    content: [
-                        { icon: "fas fa-forward", label: "一分钟跳绳：", value: "男生110个，女生115个" },
-                        { icon: "fas fa-tachometer-alt", label: "合格标准：", value: "男生90个，女生95个" },
-                        { icon: "fas fa-star", label: "优秀标准：", value: "男生130个，女生135个" }
-                    ],
-                    explanation: "三年级学生应掌握多种跳绳花样，如交叉跳、双摇等，提高协调性和节奏感。"
-                },
-                {
                     title: "50米跑",
                     category: "【三年级体育要求】",
                     content: [
-                        { icon: "fas fa-running", label: "达标时间：", value: "男生11.0秒，女生11.5秒" },
-                        { icon: "fas fa-tachometer-alt", label: "合格标准：", value: "男生12.0秒，女生12.5秒" },
-                        { icon: "fas fa-star", label: "优秀标准：", value: "男生10.0秒，女生10.5秒" }
+                        { icon: "fas fa-running", label: "及格标准：", value: "男生11.5秒，女生12.0秒" },
+                        { icon: "fas fa-tachometer-alt", label: "良好标准：", value: "男生9.5秒，女生10.0秒" },
+                        { icon: "fas fa-star", label: "优秀标准：", value: "男生9.3秒，女生9.4秒" }
                     ],
-                    explanation: "三年级学生应进一步提高跑步技术，发展速度耐力，掌握起跑和冲刺技巧。"
+                    explanation: "50米跑是测试学生速度、反应能力和爆发力的重要项目，对提高心肺功能有显著效果。"
+                },
+                {
+                    title: "坐位体前屈",
+                    category: "【三年级体育要求】",
+                    content: [
+                        { icon: "fas fa-arrows-alt-h", label: "及格标准：", value: "男生-0.8cm，女生2.2cm" },
+                        { icon: "fas fa-tachometer-alt", label: "良好标准：", value: "男生10.2cm，女生13.2cm" },
+                        { icon: "fas fa-star", label: "优秀标准：", value: "男生13.4cm，女生16.6cm" }
+                    ],
+                    explanation: "坐位体前屈是测量学生躯干、腰、髋等关节可能达到的活动幅度，主要反映这些部位的关节、韧带和肌肉的伸展性和弹性。"
+                },
+                {
+                    title: "一分钟跳绳",
+                    category: "【三年级体育要求】",
+                    content: [
+                        { icon: "fas fa-forward", label: "及格标准：", value: "男生34个，女生39个" },
+                        { icon: "fas fa-tachometer-alt", label: "良好标准：", value: "男生104个，女生109个" },
+                        { icon: "fas fa-star", label: "优秀标准：", value: "男生116个，女生125个" }
+                    ],
+                    explanation: "跳绳是一项全身性有氧运动，能够有效提高心肺功能、协调性和耐力。对小学生身体发育有很好的促进作用。"
+                },
+                {
+                    title: "仰卧起坐",
+                    category: "【三年级体育要求】",
+                    content: [
+                        { icon: "fas fa-bed", label: "及格标准：", value: "男生16个，女生16个" },
+                        { icon: "fas fa-tachometer-alt", label: "良好标准：", value: "男生36个，女生36个" },
+                        { icon: "fas fa-star", label: "优秀标准：", value: "男生42个，女生42个" }
+                    ],
+                    explanation: "仰卧起坐是测试学生腰腹部肌肉力量和耐力的项目，对核心力量发展非常重要。"
+                },
+                {
+                    title: "肺活量",
+                    category: "【三年级体育要求】",
+                    content: [
+                        { icon: "fas fa-arrows-alt-v", label: "及格标准：", value: "男生900ml，女生800ml" },
+                        { icon: "fas fa-tachometer-alt", label: "良好标准：", value: "男生1700ml，女生1400ml" },
+                        { icon: "fas fa-star", label: "优秀标准：", value: "男生2100ml，女生1600ml" }
+                    ],
+                    explanation: "肺活量是测试学生肺活量的项目，对提高心肺功能和耐力有重要意义。"
                 }
             ]
         };
