@@ -811,17 +811,17 @@
                 <h2 class="poem-title">日积月累</h2>
                 <div class="poem-author">知识在于积累</div>
                 
-                <div class="poem-content">
+                <div class="poem-content" id="dailyContent">
                     <span class="poem-line">读书破万卷，下笔如有神。</span>
                     <span class="poem-line">——杜甫</span>
                 </div>
                 
-                <div class="poem-translation">
+                <div class="poem-translation" id="dailyTranslation">
                     形容博览群书，把书读透，这样落实到笔下，运用起来就会得心应手。
                 </div>
                 
                 <div class="card-controls">
-                    <button class="btn btn-primary">
+                    <button class="btn btn-primary" id="randomDailyBtn">
                         <i class="fas fa-random"></i>
                         <span>随机一条</span>
                     </button>
@@ -970,6 +970,9 @@
         const resetSettingsBtn = document.getElementById('resetSettings');
         const homeLink = document.getElementById('homeLink');
 
+        let dailyData = []; // 新增：存储日积月累数据
+        let currentDailyIndex = 0; // 新增：当前日积月累索引
+
         // 初始化
         function init() {
             syncThemeFromIndex();
@@ -981,6 +984,9 @@
             
             // 加载诗词数据
             loadPoemsData();
+            
+            // 加载日积月累数据
+            loadDailyData(); // 新增：加载日积月累数据
             
             // 设置事件监听
             setupEventListeners();
@@ -1075,6 +1081,12 @@
             notKnowBtnElement.addEventListener('click', markAsNotMemorized);
             nextBtnElement.addEventListener('click', showNextPoem);
             prevBtnElement.addEventListener('click', showPrevPoem);
+            
+            // 日积月累按钮
+            const randomDailyBtn = document.getElementById('randomDailyBtn');
+            if (randomDailyBtn) {
+                randomDailyBtn.addEventListener('click', showRandomDaily);
+            }
             
             // 设置选项
             document.querySelectorAll('.setting-option').forEach(option => {
@@ -1533,6 +1545,62 @@
             
             if (mastered) {
                 masteredPoems = JSON.parse(mastered);
+            }
+        }
+
+        // 加载日积月累数据
+        function loadDailyData() {
+            fetch('daily-accumulation.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('网络响应不正常');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    dailyData = data.collections;
+                    showRandomDaily(); // 显示第一条
+                })
+                .catch(error => {
+                    console.error('加载日积月累数据失败:', error);
+                    // 使用默认数据
+                    dailyData = [
+                        {
+                            content: "读书破万卷，下笔如有神。",
+                            author: "杜甫",
+                            translation: "形容博览群书，把书读透，这样落实到笔下，运用起来就会得心应手。"
+                        }
+                    ];
+                    showRandomDaily();
+                });
+        }
+
+        // 显示随机的日积月累内容
+        function showRandomDaily() {
+            if (dailyData.length === 0) return;
+            
+            // 随机选择一条（避免重复选择同一条）
+            let randomIndex;
+            if (dailyData.length > 1) {
+                do {
+                    randomIndex = Math.floor(Math.random() * dailyData.length);
+                } while (randomIndex === currentDailyIndex && dailyData.length > 1);
+            } else {
+                randomIndex = 0;
+            }
+            
+            currentDailyIndex = randomIndex;
+            const dailyItem = dailyData[currentDailyIndex];
+            
+            const dailyContentElement = document.getElementById('dailyContent');
+            const dailyTranslationElement = document.getElementById('dailyTranslation');
+            
+            if (dailyContentElement && dailyTranslationElement) {
+                dailyContentElement.innerHTML = `
+                    <span class="poem-line">${dailyItem.content}</span>
+                    <span class="poem-line">——${dailyItem.author}</span>
+                `;
+                dailyTranslationElement.textContent = dailyItem.translation;
             }
         }
 
