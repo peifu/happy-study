@@ -1,0 +1,995 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>快乐学习 - 科学知识学习系统</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00a2ff;
+            --secondary: #00d9a6;
+            --accent: #ff6b6b;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --info: #2196f3;
+            --science: #9b59b6;
+            --dark: #0a1929;
+            --darker: #051321;
+            --card-bg: rgba(15, 35, 55, 0.7);
+            --text: #ffffff;
+            --text-secondary: #a0aec0;
+            --transition: all 0.3s ease;
+            --bg-color: #0a1929;
+            --text-color: #ffffff;
+            --card-bg-color: rgba(15, 35, 55, 0.7);
+            --progress-bg: rgba(255, 255, 255, 0.1);
+            --progress-fill: linear-gradient(90deg, var(--science), var(--primary));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--darker), var(--dark));
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-size: 16px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body.light-theme {
+            --bg-color: #f5f7fa;
+            --text-color: #2d3748;
+            --card-bg-color: rgba(255, 255, 255, 0.95);
+            --text-secondary: #718096;
+            --darker: #e2e8f0;
+            --dark: #edf2f7;
+            --primary: #3182ce;
+            --secondary: #38a169;
+            --accent: #e53e3e;
+            --success: #38a169;
+            --warning: #d69e2e;
+            --info: #3182ce;
+            --science: #8e44ad;
+            --progress-bg: rgba(0, 0, 0, 0.1);
+            --progress-fill: linear-gradient(90deg, #8e44ad, #3182ce);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* 导航样式 */
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(155, 89, 182, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--science), var(--primary));
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(155, 89, 182, 0.5);
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-link {
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--science), var(--primary));
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::before {
+            width: 100%;
+        }
+
+        .nav-link.active {
+            background: rgba(155, 89, 182, 0.1);
+        }
+
+        .nav-link.active::before {
+            width: 100%;
+        }
+
+        /* 页面内容 */
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 主页样式 */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+        }
+
+        .concept-card {
+            background: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(155, 89, 182, 0.2);
+        }
+
+        .concept-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .concept-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(155, 89, 182, 0.1) 0%, transparent 70%);
+            transform: rotate(30deg);
+            z-index: 0;
+        }
+
+        .concept-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+            gap: 15px;
+        }
+
+        .concept {
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--science);
+            text-shadow: 0 0 10px rgba(155, 89, 182, 0.3);
+        }
+
+        .speak-btn-icon {
+            background: linear-gradient(90deg, var(--science), var(--primary));
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .speak-btn-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(155, 89, 182, 0.5);
+        }
+
+        .speak-btn-icon i {
+            font-size: 20px;
+        }
+
+        .category {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+            background: rgba(155, 89, 182, 0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+
+        .explanation {
+            font-size: 24px;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .example {
+            font-style: italic;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+            border-left: 3px solid var(--science);
+            padding-left: 15px;
+        }
+
+        .card-controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+            justify-content: center;
+            width: 100%;
+            flex-wrap: nowrap;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--science), var(--primary));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 15px rgba(155, 89, 182, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: linear-gradient(90deg, var(--success), var(--secondary));
+            color: white;
+        }
+
+        .btn-success:hover {
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-warning {
+            background: linear-gradient(90deg, var(--warning), var(--accent));
+            color: white;
+        }
+
+        .btn-warning:hover {
+            box-shadow: 0 0 15px rgba(255, 152, 0, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-color);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--science);
+            box-shadow: 0 0 15px rgba(155, 89, 182, 0.3);
+        }
+
+        /* 进度容器 */
+        .progress-container {
+            background: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(155, 89, 182, 0.2);
+        }
+
+        .progress-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--science);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--science);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .progress-bar-container {
+            margin: 20px 0;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .progress-bar {
+            height: 12px;
+            background: var(--progress-bg);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--progress-fill);
+            border-radius: 10px;
+            width: 0%;
+            box-shadow: 0 0 10px rgba(155, 89, 182, 0.3);
+            transition: width 0.5s ease;
+        }
+
+        /* 设置页面样式 */
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .settings-card {
+            background: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(155, 89, 182, 0.2);
+            transition: var(--transition);
+        }
+
+        .settings-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .settings-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            color: var(--science);
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        .settings-icon {
+            font-size: 24px;
+            width: 30px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        .form-control {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            padding: 12px 15px;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--science);
+            box-shadow: 0 0 15px rgba(155, 89, 182, 0.3);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .card-controls {
+                flex-wrap: wrap;
+            }
+
+            .stats {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .concept-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .btn {
+                min-width: 80px;
+                padding: 10px 15px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .card-controls {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+    <script src="common.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="nav-container">
+            <div class="logo" id="homeLink">
+                <i class="fas fa-brain"></i>
+                <span>快乐学习</span>
+            </div>
+
+            <div class="nav-links">
+                <div class="nav-link active" data-page="concept">
+                    <i class="fas fa-home"></i>
+                    <span>科学概念</span>
+                </div>
+                <div class="nav-link" data-page="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>设置</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 科学概念页面 -->
+        <div class="page active" id="conceptPage">
+            <div class="main-content">
+                <div class="concept-card">
+                    <div class="concept-header">
+                        <div class="concept" id="currentConcept">加载中...</div>
+                        <button class="speak-btn-icon" id="speakBtn">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
+                    <div class="category" id="currentCategory">科学</div>
+                    <div class="explanation" id="currentExplanation">加载科学概念数据中</div>
+                    <div class="example" id="currentExample">请稍候，正在加载科学知识数据。</div>
+
+                    <div class="card-controls">
+                        <button class="btn btn-primary" id="prevBtn" disabled>
+                            <i class="fas fa-arrow-left"></i>
+                            <span>上一个</span>
+                        </button>
+                        <button class="btn btn-success" id="knowBtn" disabled>
+                            <i class="fas fa-check"></i>
+                            <span>理解</span>
+                        </button>
+                        <button class="btn btn-warning" id="notKnowBtn" disabled>
+                            <i class="fas fa-times"></i>
+                            <span>不理解</span>
+                        </button>
+                        <button class="btn btn-primary" id="nextBtn" disabled>
+                            <span>下一个</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="progress-container">
+                    <div class="progress-title">
+                        <i class="fas fa-chart-line"></i>
+                        <span>学习进度</span>
+                    </div>
+                    <div class="stats">
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalCount">0</div>
+                            <div class="stat-label">概念总数</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="learnedCount">0</div>
+                            <div class="stat-label">已学概念</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="masteredCount">0</div>
+                            <div class="stat-label">已掌握</div>
+                        </div>
+                    </div>
+
+                    <div class="progress-bar-container">
+                        <div class="progress-info">
+                            <span>学习进度</span>
+                            <span id="progressPercentage">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                    </div>
+
+                    <div class="progress-title">
+                        <i class="fas fa-book"></i>
+                        <span>当前科学主题</span>
+                    </div>
+
+                    <select class="form-control" id="topicSelector">
+                        <option value="physics">物理科学</option>
+                        <option value="chemistry">化学</option>
+                        <option value="biology">生物科学</option>
+                        <option value="earth">地球科学</option>
+                        <option value="space">太空科学</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- 设置页面 -->
+        <div class="page" id="settingsPage">
+            <h2>系统设置</h2>
+
+            <div class="settings-grid">
+                <div class="settings-card">
+                    <div class="settings-header">
+                        <i class="fas fa-book settings-icon"></i>
+                        <div class="settings-title">学习设置</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">默认科学主题</label>
+                        <select class="form-control" id="defaultTopic">
+                            <option value="physics">物理科学</option>
+                            <option value="chemistry">化学</option>
+                            <option value="biology">生物科学</option>
+                            <option value="earth">地球科学</option>
+                            <option value="space">太空科学</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">新概念每日数量</label>
+                        <input type="range" min="5" max="20" value="10" class="range-slider" id="dailyConceptsSlider">
+                        <div class="slider-value" id="dailyConceptsValue">10 个</div>
+                    </div>
+                </div>
+
+                <div class="settings-card">
+                    <div class="settings-header">
+                        <i class="fas fa-database settings-icon"></i>
+                        <div class="settings-title">数据管理</div>
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-primary" style="width: 100%; margin-bottom: 15px;">
+                            <i class="fas fa-download"></i>
+                            <span>导出学习数据</span>
+                        </button>
+
+                        <button class="btn btn-secondary" style="width: 100%; margin-bottom: 15px;">
+                            <i class="fas fa-upload"></i>
+                            <span>导入学习数据</span>
+                        </button>
+
+                        <button class="btn btn-warning" style="width: 100%;">
+                            <i class="fas fa-trash"></i>
+                            <span>重置学习进度</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2025 快乐学习 - Sevenking Studio</p>
+        </footer>
+    </div>
+
+    <script>
+        // 科学概念数据
+        const scienceConcepts = {
+            physics: [
+                {
+                    concept: "重力",
+                    category: "物理",
+                    explanation: "物体之间相互吸引的力，使物体向地面下落",
+                    example: "苹果从树上掉下来是因为地球的引力作用"
+                },
+                {
+                    concept: "摩擦力",
+                    category: "物理",
+                    explanation: "两个物体接触表面相对运动时产生的阻力",
+                    example: "汽车刹车时轮胎与地面之间的摩擦力使车停下"
+                },
+                {
+                    concept: "光的折射",
+                    category: "物理",
+                    explanation: "光从一种介质进入另一种介质时改变传播方向的现象",
+                    example: "筷子插入水中看起来弯曲是因为光的折射"
+                }
+            ],
+            chemistry: [
+                {
+                    concept: "化学反应",
+                    category: "化学",
+                    explanation: "物质之间发生化学变化，生成新物质的过程",
+                    example: "铁生锈是铁与氧气发生的化学反应"
+                },
+                {
+                    concept: "元素",
+                    category: "化学",
+                    explanation: "由相同原子组成的纯物质，无法用化学方法分解",
+                    example: "氧气(O₂)、金(Au)、碳(C)都是元素"
+                },
+                {
+                    concept: "pH值",
+                    category: "化学",
+                    explanation: "表示溶液酸碱性强弱的数值，范围0-14",
+                    example: "柠檬汁的pH值约为2，是酸性物质"
+                }
+            ],
+            biology: [
+                {
+                    concept: "光合作用",
+                    category: "生物",
+                    explanation: "植物利用光能将二氧化碳和水转化为有机物和氧气的过程",
+                    example: "植物通过光合作用制造自己需要的营养物质"
+                },
+                {
+                    concept: "细胞",
+                    category: "生物",
+                    explanation: "生物体的基本结构和功能单位",
+                    example: "人体由数万亿个细胞组成，每个细胞都有特定功能"
+                },
+                {
+                    concept: "生态系统",
+                    category: "生物",
+                    explanation: "生物群落与其环境相互作用的统一整体",
+                    example: "森林生态系统包括树木、动物、微生物和环境因素"
+                }
+            ],
+            earth: [
+                {
+                    concept: "地壳运动",
+                    category: "地球科学",
+                    explanation: "地球外壳板块的相对移动，导致地震和火山活动",
+                    example: "喜马拉雅山脉的形成是印度板块与欧亚板块碰撞的结果"
+                },
+                {
+                    concept: "水循环",
+                    category: "地球科学",
+                    explanation: "水在地球上蒸发、凝结、降水、径流的循环过程",
+                    example: "海洋水蒸发形成云，云中的水以降雨形式回到地面"
+                },
+                {
+                    concept: "矿物",
+                    category: "地球科学",
+                    explanation: "自然界中形成的无机固体物质，有特定化学成分和晶体结构",
+                    example: "石英、金刚石、方解石都是常见的矿物"
+                }
+            ],
+            space: [
+                {
+                    concept: "太阳系",
+                    category: "太空科学",
+                    explanation: "以太阳为中心，包括八大行星及其卫星的天体系统",
+                    example: "地球是太阳系中第三颗行星，距离太阳约1.5亿公里"
+                },
+                {
+                    concept: "星系",
+                    category: "太空科学",
+                    explanation: "由恒星、星际物质、暗物质等组成的天体系统",
+                    example: "银河系是我们所在的星系，包含约2000亿颗恒星"
+                },
+                {
+                    concept: "黑洞",
+                    category: "太空科学",
+                    explanation: "引力极强，连光都无法逃逸的天体区域",
+                    example: "黑洞的形成通常是大质量恒星坍缩的结果"
+                }
+            ]
+        };
+
+        let currentTopic = 'physics';
+        let currentIndex = 0;
+        let learnedConcepts = {};
+        let masteredConcepts = {};
+
+        // DOM元素
+        const currentConceptElement = document.getElementById('currentConcept');
+        const currentCategoryElement = document.getElementById('currentCategory');
+        const currentExplanationElement = document.getElementById('currentExplanation');
+        const currentExampleElement = document.getElementById('currentExample');
+        const topicSelectorElement = document.getElementById('topicSelector');
+        const speakBtnElement = document.getElementById('speakBtn');
+        const knowBtnElement = document.getElementById('knowBtn');
+        const notKnowBtnElement = document.getElementById('notKnowBtn');
+        const nextBtnElement = document.getElementById('nextBtn');
+        const prevBtnElement = document.getElementById('prevBtn');
+        const totalCountElement = document.getElementById('totalCount');
+        const learnedCountElement = document.getElementById('learnedCount');
+        const masteredCountElement = document.getElementById('masteredCount');
+        const progressFillElement = document.getElementById('progressFill');
+        const progressPercentageElement = document.getElementById('progressPercentage');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pages = document.querySelectorAll('.page');
+
+        // 初始化
+        function init() {
+            syncThemeFromIndex();
+            loadProgress();
+            showCurrentConcept();
+            updateProgress();
+            setupEventListeners();
+        }
+
+        // 设置事件监听
+        function setupEventListeners() {
+            // 导航链接
+            setupNavLinks(navLinks, pages);
+
+            // 主页链接点击事件
+            setupHomeLink('homeLink', 'index.html');
+
+            // 主题选择
+            topicSelectorElement.addEventListener('change', handleTopicChange);
+
+            // 控制按钮
+            speakBtnElement.addEventListener('click', speakCurrentConcept);
+            knowBtnElement.addEventListener('click', markAsKnown);
+            notKnowBtnElement.addEventListener('click', markAsUnknown);
+            nextBtnElement.addEventListener('click', showNextConcept);
+            prevBtnElement.addEventListener('click', showPrevConcept);
+        }
+
+        // 显示当前概念
+        function showCurrentConcept() {
+            const concepts = scienceConcepts[currentTopic];
+            if (!concepts || concepts.length === 0) {
+                currentConceptElement.textContent = "无数据";
+                currentCategoryElement.textContent = "科学";
+                currentExplanationElement.textContent = "当前主题没有数据";
+                currentExampleElement.textContent = "请选择其他科学主题";
+                return;
+            }
+
+            const conceptData = concepts[currentIndex];
+            currentConceptElement.textContent = conceptData.concept;
+            currentCategoryElement.textContent = conceptData.category;
+            currentExplanationElement.textContent = conceptData.explanation;
+            currentExampleElement.textContent = conceptData.example;
+
+            // 启用按钮
+            speakBtnElement.disabled = false;
+            knowBtnElement.disabled = false;
+            notKnowBtnElement.disabled = false;
+            nextBtnElement.disabled = false;
+            prevBtnElement.disabled = false;
+        }
+
+        // 朗读当前概念
+        function speakCurrentConcept() {
+            const concepts = scienceConcepts[currentTopic];
+            if (!concepts || concepts.length === 0) return;
+
+            const concept = concepts[currentIndex].concept;
+            const explanation = concepts[currentIndex].explanation;
+            const text = `${concept}。${explanation}`;
+            
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'zh-CN';
+            utterance.rate = 0.9;
+            
+            speechSynthesis.cancel();
+            speechSynthesis.speak(utterance);
+        }
+
+        // 标记为理解
+        function markAsKnown() {
+            const concepts = scienceConcepts[currentTopic];
+            if (!concepts || concepts.length === 0) return;
+
+            const concept = concepts[currentIndex].concept;
+            if (!learnedConcepts[currentTopic]) learnedConcepts[currentTopic] = {};
+            if (!masteredConcepts[currentTopic]) masteredConcepts[currentTopic] = {};
+            
+            learnedConcepts[currentTopic][concept] = true;
+            masteredConcepts[currentTopic][concept] = true;
+            saveProgress();
+            updateProgress();
+            showNextConcept();
+        }
+
+        // 标记为不理解
+        function markAsUnknown() {
+            const concepts = scienceConcepts[currentTopic];
+            if (!concepts || concepts.length === 0) return;
+
+            const concept = concepts[currentIndex].concept;
+            if (!learnedConcepts[currentTopic]) learnedConcepts[currentTopic] = {};
+            if (!masteredConcepts[currentTopic]) masteredConcepts[currentTopic] = {};
+            
+            learnedConcepts[currentTopic][concept] = true;
+            masteredConcepts[currentTopic][concept] = false;
+            saveProgress();
+            updateProgress();
+            showNextConcept();
+        }
+
+        // 显示下一个概念
+        function showNextConcept() {
+            const concepts = scienceConcepts[currentTopic];
+            if (!concepts || concepts.length === 0) return;
+
+            currentIndex = (currentIndex + 1) % concepts.length;
+            showCurrentConcept();
+        }
+
+        // 显示上一个概念
+        function showPrevConcept() {
+            const concepts = scienceConcepts[currentTopic];
+            if (!concepts || concepts.length === 0) return;
+
+            currentIndex = (currentIndex - 1 + concepts.length) % concepts.length;
+            showCurrentConcept();
+        }
+
+        // 处理主题变更
+        function handleTopicChange() {
+            currentTopic = topicSelectorElement.value;
+            currentIndex = 0;
+            showCurrentConcept();
+            updateProgress();
+        }
+
+        // 更新进度显示
+        function updateProgress() {
+            const concepts = scienceConcepts[currentTopic];
+            if (!concepts || concepts.length === 0) {
+                totalCountElement.textContent = "0";
+                learnedCountElement.textContent = "0";
+                masteredCountElement.textContent = "0";
+                progressFillElement.style.width = "0%";
+                progressPercentageElement.textContent = "0%";
+                return;
+            }
+
+            const total = concepts.length;
+            const learned = learnedConcepts[currentTopic] ? Object.keys(learnedConcepts[currentTopic]).length : 0;
+            const mastered = masteredConcepts[currentTopic] ? Object.keys(masteredConcepts[currentTopic]).filter(
+                concept => masteredConcepts[currentTopic][concept]
+            ).length : 0;
+
+            totalCountElement.textContent = total;
+            learnedCountElement.textContent = learned;
+            masteredCountElement.textContent = mastered;
+
+            const progress = total > 0 ? (learned / total) * 100 : 0;
+            progressFillElement.style.width = `${progress}%`;
+            progressPercentageElement.textContent = `${Math.round(progress)}%`;
+        }
+
+        // 保存进度
+        function saveProgress() {
+            localStorage.setItem('scienceLearnedConcepts', JSON.stringify(learnedConcepts));
+            localStorage.setItem('scienceMasteredConcepts', JSON.stringify(masteredConcepts));
+        }
+
+        // 加载进度
+        function loadProgress() {
+            const learned = localStorage.getItem('scienceLearnedConcepts');
+            const mastered = localStorage.getItem('scienceMasteredConcepts');
+
+            if (learned) {
+                learnedConcepts = JSON.parse(learned);
+            }
+            if (mastered) {
+                masteredConcepts = JSON.parse(mastered);
+            }
+        }
+
+        // 初始化应用
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+
+</html>

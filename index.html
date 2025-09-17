@@ -17,6 +17,7 @@
             --chinese: #ea4335;
             --math: #fbbc05;
             --pe: #34a853;
+            --science: #9b59b6;
             --dark: #0a1929;
             --darker: #051321;
             --card-bg: rgba(15, 35, 55, 0.7);
@@ -40,6 +41,7 @@
             --chinese: #ea4335;
             --math: #fbbc05;
             --pe: #34a853;
+            --science: #8e44ad;
             --dark: #f5f7fa;
             --darker: #e3e8ef;
             --card-bg: rgba(255,255,255,0.9);
@@ -228,6 +230,10 @@
         .pe-card {
             border-top: 4px solid var(--pe);
         }
+
+        .science-card {
+            border-top: 4px solid var(--science);
+        }
         
         .english-card .subject-icon {
             color: var(--english);
@@ -247,6 +253,11 @@
         .pe-card .subject-icon {
             color: var(--pe);
             box-shadow: 0 0 20px rgba(52, 168, 83, 0.3);
+        }
+
+        .science-card .subject-icon {
+            color: var(--science);
+            box-shadow: 0 0 20px rgba(155, 89, 182, 0.3);
         }
         
         .subject-name {
@@ -271,6 +282,10 @@
         
         .pe-card .subject-name {
             color: var(--pe);
+        }
+
+        .science-card .subject-name {
+            color: var(--science);
         }
         
         .subject-desc {
@@ -314,6 +329,10 @@
         
         .pe-card .stat-value {
             color: var(--pe);
+        }
+
+        .science-card .stat-value {
+            color: var(--science);
         }
         
         .stat-label {
@@ -706,8 +725,27 @@
 			    </div>
 			</div>
 		    </div>
+		    
+		    <!-- 科学卡片 -->
+		    <div class="subject-card science-card" id="scienceCard">
+		        <div class="subject-icon">
+		            <i class="fas fa-flask"></i>
+		        </div>
+		        <h2 class="subject-name">科学</h2>
+		        <p class="subject-desc">探索自然奥秘，学习科学知识与实验技能</p>
+		        <div class="subject-stats">
+		            <div class="stat">
+		                <div class="stat-value">42</div>
+		                <div class="stat-label">科学概念</div>
+		            </div>
+		            <div class="stat">
+		                <div class="stat-value">76%</div>
+		                <div class="stat-label">理解程度</div>
+		            </div>
+		        </div>
+		    </div>
 		</div>
-	</div>
+</div>
 
         <!-- 设置页面 -->
         <div class="page" id="settingsPage">
@@ -877,6 +915,9 @@
             document.getElementById('peCard').addEventListener('click', function() {
                 switchPage('peCard');
             });
+            document.getElementById('scienceCard').addEventListener('click', function() {
+                switchPage('scienceCard');
+            });
         }
 
         // 字体大小设置
@@ -938,6 +979,9 @@
                 document.getElementById('homePage').classList.add('active');
             } else if (pageId === 'peCard') {
                 window.location.href = 'pe.html';
+                document.getElementById('homePage').classList.add('active');
+            } else if (pageId === 'scienceCard') {
+                window.location.href = 'science.html';
                 document.getElementById('homePage').classList.add('active');
             }
         }
