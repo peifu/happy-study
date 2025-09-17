@@ -631,15 +631,6 @@
 
         <!-- 模拟太空页面 -->
         <div class="page" id="spacePage">
-            <div class="concept-card">
-                <h2 class="space-title">模拟太空</h2>
-                <div class="category" id="currentCategory">太阳系</div>
-                 <div class="explanation" id="currentExplanation">八大行星，绕日而行。</div>
-                <div class="example" id="currentExample">遨游太空</div>
-
-                <div class="card-controls">
-                </div>
-            </div>
             <!-- 添加太阳系模拟器 -->
             <div class="solar-system-container" style="width: 100%; height: 70vh; margin-top: 20px;">
                 <canvas id="solarSystem" style="width: 100%; height: 100%; background: #000a1f; border-radius: 16px;"></canvas>
@@ -682,32 +673,20 @@
             <!-- 天体信息卡片 -->
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px;">
                 <div class="concept-card" style="padding: 15px;">
-                    <h3 style="display: flex; align-items: center; margin-bottom: 10px;">
-                        <div style="width: 15px; height: 15px; border-radius: 50%; background: #ff7d00; margin-right: 10px;"></div>
-                        <span style="font-size: 18px;">太阳</span>
-                    </h3>
-                    <p style="font-size: 14px; color: var(--text-secondary);">太阳系的中心天体，占有太阳系总体质量的99.86%。</p>
+                    <div class="category" id="currentCategory">太阳</div>
+                    <div class="example" id="currentExample">太阳系的中心天体，占有太阳系总体质量的99.86%。</div>
                 </div>
                 <div class="concept-card" style="padding: 15px;">
-                    <h3 style="display: flex; align-items: center; margin-bottom: 10px;">
-                        <div style="width: 10px; height: 10px; border-radius: 50%; background: #a8a8a8; margin-right: 10px;"></div>
-                        <span style="font-size: 18px;">水星</span>
-                    </h3>
-                    <p style="font-size: 14px; color: var(--text-secondary);">离太阳最近的行星，表面布满环形山，没有大气层。</p>
+                    <div class="category" id="currentCategory">水星</div>
+                    <div class="example" id="currentExample">离太阳最近的行星，表面布满环形山，没有大气层。</div>
                 </div>
                 <div class="concept-card" style="padding: 15px;">
-                    <h3 style="display: flex; align-items: center; margin-bottom: 10px;">
-                        <div style="width: 12px; height: 12px; border-radius: 50%; background: #e39e58; margin-right: 10px;"></div>
-                        <span style="font-size: 18px;">金星</span>
-                    </h3>
-                    <p style="font-size: 14px; color: var(--text-secondary);">被称为地球的"姊妹星"，表面有浓密的二氧化碳大气层。</p>
+                    <div class="category" id="currentCategory">金星</div>
+                    <div class="example" id="currentExample">被称为地球的"姊妹星"，表面有浓密的二氧化碳大气层。</div>
                 </div>
                 <div class="concept-card" style="padding: 15px;">
-                    <h3 style="display: flex; align-items: center; margin-bottom: 10px;">
-                        <div style="width: 12px; height: 12px; border-radius: 50%; background: #2e86c1; margin-right: 10px;"></div>
-                        <span style="font-size: 18px;">地球</span>
-                    </h3>
-                    <p style="font-size: 14px; color: var(--text-secondary);">目前已知唯一存在生命的行星，有液态水和适宜的大气层。</p>
+                    <div class="category" id="currentCategory">地球</div>
+                    <div class="example" id="currentExample">目前已知唯一存在生命的行星，有液态水和适宜的大气层。</div>
                 </div>
             </div>
         </div>
@@ -1127,7 +1106,7 @@
                 ctx.beginPath();
                 ctx.arc(center.x, center.y, orbitRadius, 0, Math.PI * 2);
                 ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
-                ctx.lineWidth = 1;
+                ctx.lineWidth = 2;
                 ctx.stroke();
             }
             
