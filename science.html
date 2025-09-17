@@ -521,6 +521,7 @@
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
     </style>
+
     <script src="common.js"></script>
 </head>
 
@@ -536,6 +537,10 @@
                 <div class="nav-link active" data-page="concept">
                     <i class="fas fa-home"></i>
                     <span>科学概念</span>
+                </div>
+                <div class="nav-link" data-page="space">
+                    <i class="fas fa-home"></i>
+                    <span>模拟太空</span>
                 </div>
                 <div class="nav-link" data-page="settings">
                     <i class="fas fa-cog"></i>
@@ -620,6 +625,89 @@
                         <option value="earth">地球科学</option>
                         <option value="space">太空科学</option>
                     </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- 模拟太空页面 -->
+        <div class="page" id="spacePage">
+            <div class="concept-card">
+                <h2 class="space-title">模拟太空</h2>
+                <div class="category" id="currentCategory">太阳系</div>
+                 <div class="explanation" id="currentExplanation">八大行星，绕日而行。</div>
+                <div class="example" id="currentExample">遨游太空</div>
+
+                <div class="card-controls">
+                </div>
+            </div>
+            <!-- 添加太阳系模拟器 -->
+            <div class="solar-system-container" style="width: 100%; height: 70vh; margin-top: 20px;">
+                <canvas id="solarSystem" style="width: 100%; height: 100%; background: #000a1f; border-radius: 16px;"></canvas>
+            </div>
+            
+            <!-- 控制面板 -->
+            <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 20px; justify-content: center;">
+                <button id="pauseBtn" class="btn btn-primary">
+                    <i class="fas fa-pause"></i>
+                    <span>暂停</span>
+                </button>
+                <button id="resetBtn" class="btn btn-secondary">
+                    <i class="fas fa-refresh"></i>
+                    <span>重置</span>
+                </button>
+                
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <label for="speedRange" style="color: var(--text-color);">速度:</label>
+                    <input type="range" id="speedRange" min="0.1" max="5" step="0.1" value="1" 
+                        style="width: 100px;">
+                    <span id="speedValue" style="color: var(--text-color);">1x</span>
+                </div>
+                
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <label for="zoomRange" style="color: var(--text-color);">缩放:</label>
+                    <input type="range" id="zoomRange" min="0.5" max="2" step="0.1" value="1" 
+                        style="width: 100px;">
+                    <span id="zoomValue" style="color: var(--text-color);">1x</span>
+                </div>
+                
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <label for="labelsToggle" style="color: var(--text-color);">显示标签:</label>
+                    <label class="switch">
+                        <input type="checkbox" id="labelsToggle" checked>
+                        <span class="slider-round"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- 天体信息卡片 -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px;">
+                <div class="concept-card" style="padding: 15px;">
+                    <h3 style="display: flex; align-items: center; margin-bottom: 10px;">
+                        <div style="width: 15px; height: 15px; border-radius: 50%; background: #ff7d00; margin-right: 10px;"></div>
+                        <span style="font-size: 18px;">太阳</span>
+                    </h3>
+                    <p style="font-size: 14px; color: var(--text-secondary);">太阳系的中心天体，占有太阳系总体质量的99.86%。</p>
+                </div>
+                <div class="concept-card" style="padding: 15px;">
+                    <h3 style="display: flex; align-items: center; margin-bottom: 10px;">
+                        <div style="width: 10px; height: 10px; border-radius: 50%; background: #a8a8a8; margin-right: 10px;"></div>
+                        <span style="font-size: 18px;">水星</span>
+                    </h3>
+                    <p style="font-size: 14px; color: var(--text-secondary);">离太阳最近的行星，表面布满环形山，没有大气层。</p>
+                </div>
+                <div class="concept-card" style="padding: 15px;">
+                    <h3 style="display: flex; align-items: center; margin-bottom: 10px;">
+                        <div style="width: 12px; height: 12px; border-radius: 50%; background: #e39e58; margin-right: 10px;"></div>
+                        <span style="font-size: 18px;">金星</span>
+                    </h3>
+                    <p style="font-size: 14px; color: var(--text-secondary);">被称为地球的"姊妹星"，表面有浓密的二氧化碳大气层。</p>
+                </div>
+                <div class="concept-card" style="padding: 15px;">
+                    <h3 style="display: flex; align-items: center; margin-bottom: 10px;">
+                        <div style="width: 12px; height: 12px; border-radius: 50%; background: #2e86c1; margin-right: 10px;"></div>
+                        <span style="font-size: 18px;">地球</span>
+                    </h3>
+                    <p style="font-size: 14px; color: var(--text-secondary);">目前已知唯一存在生命的行星，有液态水和适宜的大气层。</p>
                 </div>
             </div>
         </div>
@@ -989,6 +1077,215 @@
 
         // 初始化应用
         window.addEventListener('DOMContentLoaded', init);
+        
+        // 太阳系模拟器脚本
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取Canvas元素并设置上下文
+            const canvas = document.getElementById('solarSystem');
+            const ctx = canvas.getContext('2d');
+            
+            // 设置Canvas尺寸
+            function resizeCanvas() {
+                const container = canvas.parentElement;
+                canvas.width = container.clientWidth;
+                canvas.height = container.clientHeight;
+            }
+            
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            
+            // 天体数据
+            const celestialBodies = [
+                { name: "太阳", radius: 30, color: "#ff7d00", orbitRadius: 0, orbitSpeed: 0, angle: 0, tilt: 0 },
+                { name: "水星", radius: 4, color: "#a8a8a8", orbitRadius: 70, orbitSpeed: 0.04, angle: 0, tilt: 0 },
+                { name: "金星", radius: 7, color: "#e39e58", orbitRadius: 100, orbitSpeed: 0.015, angle: 0, tilt: 0 },
+                { name: "地球", radius: 7.5, color: "#2e86c1", orbitRadius: 140, orbitSpeed: 0.01, angle: 0, tilt: 23.5 },
+                { name: "月球", radius: 2, color: "#d0d0d0", orbitRadius: 20, orbitSpeed: 0.05, angle: 0, tilt: 0, parent: 3 },
+                { name: "火星", radius: 5, color: "#e74c3c", orbitRadius: 180, orbitSpeed: 0.008, angle: 0, tilt: 0 },
+                { name: "木星", radius: 20, color: "#f39c12", orbitRadius: 230, orbitSpeed: 0.002, angle: 0, tilt: 3 },
+                { name: "土星", radius: 16, color: "#f1c40f", orbitRadius: 300, orbitSpeed: 0.0009, angle: 0, tilt: 26.7, ring: { innerRadius: 20, outerRadius: 30, color: "#d4ac0d" } },
+                { name: "天王星", radius: 12, color: "#3498db", orbitRadius: 350, orbitSpeed: 0.0004, angle: 0, tilt: 97.8 },
+                { name: "海王星", radius: 11, color: "#2980b9", orbitRadius: 400, orbitSpeed: 0.0001, angle: 0, tilt: 28.3 }
+            ];
+            
+            // 动画控制变量
+            let isPaused = false;
+            let animationSpeed = 1;
+            let zoomLevel = 1;
+            let showLabels = true;
+            
+            // 计算中心坐标
+            function getCenter() {
+                return {
+                    x: canvas.width / 2,
+                    y: canvas.height / 2
+                };
+            }
+            
+            // 绘制天体轨道
+            function drawOrbit(orbitRadius, center) {
+                ctx.beginPath();
+                ctx.arc(center.x, center.y, orbitRadius, 0, Math.PI * 2);
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+            }
+            
+            // 绘制天体
+            function drawCelestialBody(body, center) {
+                // 计算天体位置
+                let x, y;
+                if (body.orbitRadius === 0) {
+                    // 太阳位于中心
+                    x = center.x;
+                    y = center.y;
+                } else {
+                    const parent = body.parent !== undefined ? celestialBodies[body.parent] : null;
+                    const parentX = parent ? parent.x : center.x;
+                    const parentY = parent ? parent.y : center.y;
+                    
+                    x = parentX + Math.cos(body.angle) * body.orbitRadius * zoomLevel;
+                    y = parentY + Math.sin(body.angle) * body.orbitRadius * zoomLevel;
+                    
+                    // 存储位置用于卫星
+                    body.x = x;
+                    body.y = y;
+                }
+                
+                // 绘制轨道
+                if (body.orbitRadius > 0) {
+                    const orbitCenter = body.parent !== undefined 
+                        ? { x: celestialBodies[body.parent].x, y: celestialBodies[body.parent].y } 
+                        : center;
+                    drawOrbit(body.orbitRadius * zoomLevel, orbitCenter);
+                }
+                
+                // 绘制行星环
+                if (body.ring) {
+                    ctx.beginPath();
+                    ctx.ellipse(x, y, body.ring.outerRadius * zoomLevel, body.ring.innerRadius * zoomLevel, 
+                        body.tilt * Math.PI / 180, 0, Math.PI * 2);
+                    ctx.strokeStyle = body.ring.color;
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                }
+                
+                // 绘制天体
+                ctx.beginPath();
+                ctx.arc(x, y, body.radius * zoomLevel, 0, Math.PI * 2);
+                
+                // 创建径向渐变
+                const gradient = ctx.createRadialGradient(
+                    x - body.radius * zoomLevel * 0.3, y - body.radius * zoomLevel * 0.3, 0,
+                    x, y, body.radius * zoomLevel
+                );
+                
+                if (body.name === "太阳") {
+                    gradient.addColorStop(0, "#fffacd");
+                    gradient.addColorStop(0.5, body.color);
+                    gradient.addColorStop(1, "#ff4500");
+                } else {
+                    gradient.addColorStop(0, body.color);
+                    gradient.addColorStop(1, darkenColor(body.color, 0.7));
+                }
+                
+                ctx.fillStyle = gradient;
+                ctx.fill();
+                
+                // 添加发光效果（仅太阳）
+                if (body.name === "太阳") {
+                    ctx.shadowColor = body.color;
+                    ctx.shadowBlur = 20 * zoomLevel;
+                    ctx.beginPath();
+                    ctx.arc(x, y, body.radius * zoomLevel, 0, Math.PI * 2);
+                    ctx.fillStyle = body.color + "40"; // 添加透明度
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                }
+                
+                // 绘制标签
+                if (showLabels) {
+                    ctx.fillStyle = 'white';
+                    ctx.font = 'bold ' + Math.max(8, 12 * zoomLevel) + 'px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(body.name, x, y - body.radius * zoomLevel - 5);
+                }
+            }
+            
+            // 辅助函数：使颜色变暗
+            function darkenColor(color, amount) {
+                // 处理十六进制颜色
+                if (color.startsWith('#')) {
+                    let r = parseInt(color.substr(1, 2), 16);
+                    let g = parseInt(color.substr(3, 2), 16);
+                    let b = parseInt(color.substr(5, 2), 16);
+                    
+                    r = Math.max(0, Math.floor(r * amount));
+                    g = Math.max(0, Math.floor(g * amount));
+                    b = Math.max(0, Math.floor(b * amount));
+                    
+                    return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+                }
+                return color;
+            }
+            
+            // 动画循环
+            function animate() {
+                if (!isPaused) {
+                    // 更新天体角度
+                    celestialBodies.forEach(body => {
+                        body.angle += body.orbitSpeed * animationSpeed;
+                    });
+                }
+                
+                // 清空画布，使用纯黑色背景
+                ctx.fillStyle = '#000000';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // 获取中心坐标
+                const center = getCenter();
+                
+                // 绘制所有天体
+                celestialBodies.forEach(body => {
+                    drawCelestialBody(body, center);
+                });
+            
+                requestAnimationFrame(animate);
+            }
+            
+            // 初始化动画
+            animate();
+            
+            // 事件监听器
+            document.getElementById('pauseBtn').addEventListener('click', function() {
+                isPaused = !isPaused;
+                this.innerHTML = isPaused ? '<i class="fas fa-play"></i><span>继续</span>' : '<i class="fas fa-pause"></i><span>暂停</span>';
+            });
+            
+            document.getElementById('resetBtn').addEventListener('click', function() {
+                celestialBodies.forEach(body => {
+                    body.angle = 0;
+                });
+            });
+            
+            const speedRange = document.getElementById('speedRange');
+            const speedValue = document.getElementById('speedValue');
+            speedRange.addEventListener('input', function() {
+                animationSpeed = parseFloat(this.value);
+                speedValue.textContent = animationSpeed.toFixed(1) + 'x';
+            });
+            
+            const zoomRange = document.getElementById('zoomRange');
+            const zoomValue = document.getElementById('zoomValue');
+            zoomRange.addEventListener('input', function() {
+                zoomLevel = parseFloat(this.value);
+                zoomValue.textContent = zoomLevel.toFixed(1) + 'x';
+            });
+            
+            document.getElementById('labelsToggle').addEventListener('change', function() {
+                showLabels = this.checked;
+            });
+        });
     </script>
 </body>
 
