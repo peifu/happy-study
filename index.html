@@ -18,6 +18,7 @@
             --math: #fbbc05;
             --pe: #34a853;
             --science: #9b59b6;
+            --music: #ff6b9d;
             --dark: #0a1929;
             --darker: #051321;
             --card-bg: rgba(15, 35, 55, 0.7);
@@ -42,6 +43,7 @@
             --math: #fbbc05;
             --pe: #34a853;
             --science: #8e44ad;
+            --music: #ff85b3;
             --dark: #f5f7fa;
             --darker: #e3e8ef;
             --card-bg: rgba(255,255,255,0.9);
@@ -234,6 +236,10 @@
         .science-card {
             border-top: 4px solid var(--science);
         }
+
+        .music-card {
+            border-top: 4px solid var(--music);
+        }
         
         .english-card .subject-icon {
             color: var(--english);
@@ -258,6 +264,11 @@
         .science-card .subject-icon {
             color: var(--science);
             box-shadow: 0 0 20px rgba(155, 89, 182, 0.3);
+        }
+
+        .music-card .subject-icon {
+            color: var(--music);
+            box-shadow: 0 0 20px rgba(255, 152, 0, 0.3);
         }
         
         .subject-name {
@@ -286,6 +297,10 @@
 
         .science-card .subject-name {
             color: var(--science);
+        }
+
+        .music-card .subject-name {
+            color: var(--music);
         }
         
         .subject-desc {
@@ -333,6 +348,10 @@
 
         .science-card .stat-value {
             color: var(--science);
+        }
+
+        .music-card .stat-value {
+            color: var(--music);
         }
         
         .stat-label {
@@ -744,6 +763,25 @@
 		            </div>
 		        </div>
 		    </div>
+
+		    <!-- 音乐卡片 -->
+		    <div class="subject-card music-card" id="musicCard">
+		        <div class="subject-icon">
+		            <i class="fas fa-music"></i>
+		        </div>
+		        <h2 class="subject-name">音乐</h2>
+		        <p class="subject-desc">学习儿歌，培养音乐节奏感和语言能力</p>
+		        <div class="subject-stats">
+		            <div class="stat">
+		                <div class="stat-value">12</div>
+		                <div class="stat-label">儿歌数量</div>
+		            </div>
+		            <div class="stat">
+		                <div class="stat-value">95%</div>
+		                <div class="stat-label">完成度</div>
+		            </div>
+		        </div>
+		    </div>
 		</div>
 </div>
 
@@ -918,6 +956,9 @@
             document.getElementById('scienceCard').addEventListener('click', function() {
                 switchPage('scienceCard');
             });
+            document.getElementById('musicCard').addEventListener('click', function() {
+                switchPage('musicCard');
+            });
         }
 
         // 字体大小设置
@@ -982,6 +1023,9 @@
                 document.getElementById('homePage').classList.add('active');
             } else if (pageId === 'scienceCard') {
                 window.location.href = 'science.html';
+                document.getElementById('homePage').classList.add('active');
+            } else if (pageId === 'musicCard') {
+                window.location.href = 'music.html';
                 document.getElementById('homePage').classList.add('active');
             }
         }
