@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>快乐学习 - 小学语文诗词</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/learning-assistant.css">
     <style>
         :root {
             --primary: #ea4335;
@@ -682,6 +683,7 @@
         }
     </style>
     <script src="common.js"></script>
+    <script src="assets/js/learning-assistant.js"></script>
 </head>
 <body>
     <div class="container">
@@ -1612,5 +1614,12 @@
             speechSynthesis.onvoiceschanged = populateVoiceList;
         }
     </script>
+
+    <!-- 全局学习助手组件 -->
+    <div class="learning-assistant" id="learningAssistant">
+        <img src="assets/logo/bear.png" alt="学习助手" class="assistant-image">
+    </div>
+    
+    <div class="assistant-speech-bubble" id="assistantSpeechBubble">加油，你是最棒的！</div>
 </body>
 </html>

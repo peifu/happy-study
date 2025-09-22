@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测试所有页面学习助手</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .page-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .page-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-decoration: none;
+            color: #333;
+            transition: transform 0.2s;
+        }
+        .page-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        .status {
+            margin-top: 10px;
+            padding: 5px;
+            border-radius: 4px;
+            font-size: 12px;
+            text-align: center;
+        }
+        .status.ready {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>测试所有页面学习助手功能</h1>
+    
+    <div class="page-list">
+        <a href="index.html" class="page-item" target="_blank">
+            <strong>首页 (index.html)</strong>
+            <div class="status ready">已配置学习助手 ✓</div>
+        </a>
+        
+        <a href="english.html" class="page-item" target="_blank">
+            <strong>英语学习 (english.html)</strong>
+            <div class="status ready">已配置学习助手 ✓</div>
+        </a>
+        
+        <a href="chinese.html" class="page-item" target="_blank">
+            <strong>语文诗词 (chinese.html)</strong>
+            <div class="status ready">已配置学习助手 ✓</div>
+        </a>
+        
+        <a href="math.html" class="page-item" target="_blank">
+            <strong>数学学习 (math.html)</strong>
+            <div class="status ready">已配置学习助手 ✓</div>
+        </a>
+        
+        <a href="music.html" class="page-item" target="_blank">
+            <strong>音乐学习 (music.html)</strong>
+            <div class="status ready">已配置学习助手 ✓</div>
+        </a>
+        
+        <a href="pe.html" class="page-item" target="_blank">
+            <strong>体育健康 (pe.html)</strong>
+            <div class="status ready">已配置学习助手 ✓</div>
+        </a>
+        
+        <a href="science.html" class="page-item" target="_blank">
+            <strong>科学知识 (science.html)</strong>
+            <div class="status ready">已配置学习助手 ✓</div>
+        </a>
+        
+        <a href="test-assistant.html" class="page-item" target="_blank">
+            <strong>测试页面 (test-assistant.html)</strong>
+            <div class="status ready">已配置学习助手 ✓</div>
+        </a>
+    </div>
+
+    <div style="margin-top: 30px; padding: 20px; background: white; border-radius: 8px;">
+        <h3>学习助手功能说明：</h3>
+        <ul>
+            <li>✅ 所有页面都已集成学习助手浮动图标</li>
+            <li>✅ 使用共享的CSS样式文件 (assets/css/learning-assistant.css)</li>
+            <li>✅ 使用共享的JavaScript模块 (assets/js/learning-assistant.js)</li>
+            <li>✅ 支持动物图标选择（小熊、小猫、小狗等）</li>
+            <li>✅ 支持本地存储设置</li>
+            <li>✅ 全局学习助手设置保持一致</li>
+            <li>✅ 点击学习助手图标可以打开设置面板</li>
+        </ul>
+        
+        <p style="margin-top: 20px; color: #666;">
+            <strong>测试方法：</strong>点击上面的链接打开各个页面，检查右下角是否显示学习助手图标，
+            点击图标是否可以打开设置面板，修改设置后刷新页面是否保持设置。
+        </p>
+    </div>
+</body>
+</html>

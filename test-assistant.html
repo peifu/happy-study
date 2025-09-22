@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测试学习助手</title>
+    <link rel="stylesheet" href="assets/css/learning-assistant.css">
+    <script src="assets/js/learning-assistant.js"></script>
+</head>
+<body>
+    <h1>测试学习助手功能</h1>
+    <p>请检查浏览器控制台是否有错误信息，并测试学习助手是否正常工作。</p>
+    
+    <!-- 全局学习助手组件 -->
+    <div class="learning-assistant" id="learningAssistant">
+        <img src="assets/logo/bear.png" alt="学习助手" class="assistant-image">
+    </div>
+    
+    <div class="assistant-speech-bubble" id="assistantSpeechBubble">加油，你是最棒的！</div>
+
+    <script>
+        // 测试助手功能
+        console.log('测试学习助手功能...');
+        
+        // 设置测试配置
+        const testSettings = {
+            enabled: true,
+            animal: 'bear',
+            size: 100,
+            opacity: 100,
+            clickInteraction: true,
+            voiceEncouragement: true,
+            floatAnimation: true
+        };
+        
+        localStorage.setItem('assistantSettings', JSON.stringify(testSettings));
+        
+        // 初始化助手
+        setTimeout(() => {
+            window.learningAssistant.init();
+            console.log('学习助手已初始化');
+            
+            // 测试点击功能
+            setTimeout(() => {
+                const assistant = document.getElementById('learningAssistant');
+                if (assistant) {
+                    console.log('助手元素存在:', assistant.style.display);
+                    assistant.click();
+                    console.log('助手点击测试完成');
+                }
+            }, 1000);
+        }, 500);
+    </script>
+</body>
+</html>
