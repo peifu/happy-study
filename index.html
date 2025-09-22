@@ -640,6 +640,133 @@
             height: 100%;
             width: 100%;
         }
+
+        /* 学习助手样式 */
+        .animal-selection {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .animal-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .animal-option:hover {
+            border-color: var(--primary);
+            background: rgba(0, 247, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .animal-option.selected {
+            border-color: var(--primary);
+            background: rgba(0, 247, 255, 0.2);
+            box-shadow: 0 0 15px rgba(0, 247, 255, 0.3);
+        }
+
+        .animal-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
+
+        .animal-icon.placeholder {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        .animal-option span {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        /* 全局学习助手样式 */
+        .learning-assistant {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(255, 94, 98, 0.4);
+            transition: all 0.3s ease;
+            animation: float 3s ease-in-out infinite;
+            border-radius: 50%;
+            display: none;
+        }
+
+        .learning-assistant:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(255, 94, 98, 0.6);
+        }
+
+        .assistant-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+
+        .assistant-speech-bubble {
+            position: fixed;
+            bottom: 140px;
+            right: 140px;
+            background: white;
+            color: #333;
+            padding: 15px 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            max-width: 200px;
+            font-size: 16px;
+            font-weight: 500;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            display: none;
+        }
+
+        .assistant-speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: 20px;
+            border-width: 10px 10px 0;
+            border-style: solid;
+            border-color: white transparent transparent;
+        }
+
+        .assistant-speech-bubble.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
     </style>
     <script src="common.js"></script>
 </head>
@@ -655,6 +782,10 @@
                 <div class="nav-link active" data-page="home">
                     <i class="fas fa-home"></i>
                     <span>学习主页</span>
+                </div>
+                <div class="nav-link" data-page="assistant">
+                    <i class="fas fa-robot"></i>
+                    <span>学习助手</span>
                 </div>
                 <div class="nav-link" data-page="settings">
                     <i class="fas fa-cog"></i>
@@ -875,6 +1006,126 @@
             </div>
         </div>
         
+        <!-- 学习助手页面 -->
+        <div class="page" id="assistantPage">
+            <h2 class="settings-title">学习助手设置</h2>
+            
+            <div class="settings-grid">
+                <div class="settings-card">
+                    <div class="settings-header">
+                        <i class="fas fa-robot settings-icon"></i>
+                        <div class="settings-title">助手设置</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="control-label">
+                            <span>启用学习助手</span>
+                            <label class="switch">
+                                <input type="checkbox" id="assistantToggle">
+                                <span class="slider-round"></span>
+                            </label>
+                        </label>
+                    </div>
+
+
+                    
+                    <div class="form-group">
+                        <label class="form-label">选择助手形象</label>
+                        <div class="animal-selection" id="animalSelection">
+                            <div class="animal-option" data-animal="bear">
+                                <img src="assets/logo/bear.png" alt="小熊" class="animal-icon">
+                                <span>小熊</span>
+                            </div>
+                            <div class="animal-option" data-animal="cat">
+                                <img src="assets/logo/cat.png" alt="小猫" class="animal-icon">
+                                <span>小猫</span>
+                            </div>
+                            <div class="animal-option" data-animal="dog">
+                                <div class="animal-icon placeholder">🐶</div>
+                                <span>小狗</span>
+                            </div>
+                            <div class="animal-option" data-animal="rabbit">
+                                <div class="animal-icon placeholder">🐰</div>
+                                <span>小兔子</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">助手大小</label>
+                        <input type="range" min="80" max="150" value="100" class="range-slider" id="assistantSizeSlider">
+                        <div class="slider-value" id="assistantSizeValue">100px</div>
+                    </div>
+                </div>
+                
+                <div class="settings-card">
+                    <div class="settings-header">
+                        <i class="fas fa-comment settings-icon"></i>
+                        <div class="settings-title">互动设置</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="control-label">
+                            <span>点击互动</span>
+                            <label class="switch">
+                                <input type="checkbox" id="clickInteractionToggle" checked>
+                                <span class="slider-round"></span>
+                            </label>
+                        </label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="control-label">
+                            <span>语音鼓励</span>
+                            <label class="switch">
+                                <input type="checkbox" id="voiceEncouragementToggle" checked>
+                                <span class="slider-round"></span>
+                            </label>
+                        </label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">鼓励语频率</label>
+                        <input type="range" min="1" max="10" value="3" class="range-slider" id="encouragementFrequencySlider">
+                        <div class="slider-value" id="encouragementFrequencyValue">3</div>
+                    </div>
+                </div>
+                
+                <div class="settings-card">
+                    <div class="settings-header">
+                        <i class="fas fa-eye settings-icon"></i>
+                        <div class="settings-title">显示设置</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="control-label">
+                            <span>始终显示</span>
+                            <label class="switch">
+                                <input type="checkbox" id="alwaysShowToggle" checked>
+                                <span class="slider-round"></span>
+                            </label>
+                        </label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="control-label">
+                            <span>浮动动画</span>
+                            <label class="switch">
+                                <input type="checkbox" id="floatAnimationToggle" checked>
+                                <span class="slider-round"></span>
+                            </label>
+                        </label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">透明度</label>
+                        <input type="range" min="30" max="100" value="100" class="range-slider" id="opacitySlider">
+                        <div class="slider-value" id="opacityValue">100%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <footer>
             <p>© 2025 快乐学习 - Sevenking Studio</p>
         </footer>
@@ -1030,8 +1281,219 @@
             }
         }
 
+        // 学习助手功能
+        function initAssistant() {
+            loadAssistantSettings();
+            setupAssistantEventListeners();
+            updateAssistantUI();
+        }
+
+        function loadAssistantSettings() {
+            const settings = localStorage.getItem('assistantSettings');
+            if (settings) {
+                const parsed = JSON.parse(settings);
+                document.getElementById('assistantToggle').checked = parsed.enabled || false;
+                document.getElementById('clickInteractionToggle').checked = parsed.clickInteraction !== false;
+                document.getElementById('voiceEncouragementToggle').checked = parsed.voiceEncouragement !== false;
+                document.getElementById('alwaysShowToggle').checked = parsed.alwaysShow !== false;
+                document.getElementById('floatAnimationToggle').checked = parsed.floatAnimation !== false;
+                document.getElementById('assistantSizeSlider').value = parsed.size || 100;
+                document.getElementById('opacitySlider').value = parsed.opacity || 100;
+                document.getElementById('encouragementFrequencySlider').value = parsed.frequency || 3;
+                
+                // 更新显示值
+                document.getElementById('assistantSizeValue').textContent = `${parsed.size || 100}px`;
+                document.getElementById('opacityValue').textContent = `${parsed.opacity || 100}%`;
+                document.getElementById('encouragementFrequencyValue').textContent = parsed.frequency || 3;
+                
+                // 选择动物
+                const animal = parsed.animal || 'bear';
+                document.querySelectorAll('.animal-option').forEach(option => {
+                    option.classList.remove('selected');
+                    if (option.dataset.animal === animal) {
+                        option.classList.add('selected');
+                    }
+                });
+            }
+        }
+
+        function saveAssistantSettings() {
+            const settings = {
+                enabled: document.getElementById('assistantToggle').checked,
+                animal: document.querySelector('.animal-option.selected')?.dataset.animal || 'bear',
+                size: parseInt(document.getElementById('assistantSizeSlider').value),
+                opacity: parseInt(document.getElementById('opacitySlider').value),
+                frequency: parseInt(document.getElementById('encouragementFrequencySlider').value),
+                clickInteraction: document.getElementById('clickInteractionToggle').checked,
+                voiceEncouragement: document.getElementById('voiceEncouragementToggle').checked,
+                alwaysShow: document.getElementById('alwaysShowToggle').checked,
+                floatAnimation: document.getElementById('floatAnimationToggle').checked
+            };
+            localStorage.setItem('assistantSettings', JSON.stringify(settings));
+        }
+
+        function setupAssistantEventListeners() {
+            // 动物选择
+            document.querySelectorAll('.animal-option').forEach(option => {
+                option.addEventListener('click', () => {
+                    document.querySelectorAll('.animal-option').forEach(o => o.classList.remove('selected'));
+                    option.classList.add('selected');
+                    saveAssistantSettings();
+                    updateAssistantUI();
+                });
+            });
+
+            // 滑块事件
+            const sliders = [
+                { id: 'assistantSizeSlider', output: 'assistantSizeValue', format: v => `${v}px` },
+                { id: 'opacitySlider', output: 'opacityValue', format: v => `${v}%` },
+                { id: 'encouragementFrequencySlider', output: 'encouragementFrequencyValue', format: v => v }
+            ];
+
+            sliders.forEach(({ id, output, format }) => {
+                const slider = document.getElementById(id);
+                const outputElement = document.getElementById(output);
+                if (slider && outputElement) {
+                    slider.addEventListener('input', () => {
+                        outputElement.textContent = format(slider.value);
+                        saveAssistantSettings();
+                        updateAssistantUI();
+                    });
+                }
+            });
+
+            // 开关事件
+            const toggles = [
+                'assistantToggle',
+                'clickInteractionToggle',
+                'voiceEncouragementToggle',
+                'alwaysShowToggle',
+                'floatAnimationToggle'
+            ];
+
+            toggles.forEach(toggleId => {
+                const toggle = document.getElementById(toggleId);
+                if (toggle) {
+                    toggle.addEventListener('change', () => {
+                        saveAssistantSettings();
+                        updateAssistantUI();
+                    });
+                }
+            });
+        }
+
+        function updateAssistantUI() {
+            const settings = JSON.parse(localStorage.getItem('assistantSettings') || '{}');
+            const assistant = document.getElementById('learningAssistant');
+            const speechBubble = document.getElementById('assistantSpeechBubble');
+            
+            if (assistant && speechBubble) {
+                if (settings.enabled) {
+                    assistant.style.display = 'block';
+                    assistant.style.width = `${settings.size || 100}px`;
+                    assistant.style.height = `${settings.size || 100}px`;
+                    assistant.style.opacity = `${(settings.opacity || 100) / 100}`;
+                    
+                    if (settings.floatAnimation) {
+                        assistant.style.animation = 'float 3s ease-in-out infinite';
+                    } else {
+                        assistant.style.animation = 'none';
+                    }
+                    
+                    // 设置动物图片
+                    const animal = settings.animal || 'bear';
+                    const img = assistant.querySelector('.assistant-image');
+                    if (img) {
+                        if (animal === 'bear') {
+                            img.src = 'assets/logo/bear.png';
+                            img.alt = '小熊学习助手';
+                         } else if (animal === 'cat') {
+                            img.src = 'assets/logo/cat.png';
+                            img.alt = '小猫学习助手';
+                        } else {
+                            // 对于其他动物，使用emoji占位符
+                            img.src = '';
+                            img.alt = `${animal}学习助手`;
+                            img.textContent = animal === 'cat' ? '🐱' : animal === 'dog' ? '🐶' : '🐰';
+                        }
+                    }
+                } else {
+                    assistant.style.display = 'none';
+                    speechBubble.style.display = 'none';
+                }
+            }
+        }
+
+        // 全局学习助手交互
+        function setupGlobalAssistant() {
+            const assistant = document.getElementById('learningAssistant');
+            const speechBubble = document.getElementById('assistantSpeechBubble');
+            
+            if (assistant && speechBubble) {
+                assistant.addEventListener('click', function() {
+                    const settings = JSON.parse(localStorage.getItem('assistantSettings') || '{}');
+                    
+                    if (settings.clickInteraction !== false) {
+                        // 显示语音气泡
+                        speechBubble.style.display = 'block';
+                        speechBubble.classList.add('show');
+                        
+                        const encouragements = [
+                            '加油，你是最棒的！',
+                            '继续努力，你会成功的！',
+                            '学习真有趣，继续加油！',
+                            '你真聪明，继续保持！',
+                            '每天进步一点点！'
+                        ];
+                        
+                        const randomEncouragement = encouragements[Math.floor(Math.random() * encouragements.length)];
+                        speechBubble.textContent = randomEncouragement;
+                        
+                        // 语音鼓励
+                        if (settings.voiceEncouragement !== false) {
+                            const utterance = new SpeechSynthesisUtterance(randomEncouragement);
+                            utterance.lang = 'zh-CN';
+                            utterance.rate = 1.0;
+                            utterance.pitch = 1.2;
+                            
+                            const voices = speechSynthesis.getVoices();
+                            const chineseVoice = voices.find(voice =>
+                                voice.lang.includes('zh') || voice.lang.includes('CN') || voice.lang.includes('zh-CN')
+                            );
+                            
+                            if (chineseVoice) {
+                                utterance.voice = chineseVoice;
+                            }
+                            
+                            speechSynthesis.cancel();
+                            speechSynthesis.speak(utterance);
+                        }
+                        
+                        // 3秒后隐藏语音气泡
+                        setTimeout(() => {
+                            speechBubble.classList.remove('show');
+                            setTimeout(() => {
+                                speechBubble.style.display = 'none';
+                            }, 300);
+                        }, 3000);
+                    }
+                });
+            }
+        }
+
         // 初始化应用
-        window.addEventListener('DOMContentLoaded', init);
+        window.addEventListener('DOMContentLoaded', function() {
+            init();
+            initAssistant();
+            setupGlobalAssistant();
+        });
     </script>
+
+    <!-- 全局学习助手组件 -->
+    <div class="learning-assistant" id="learningAssistant">
+        <img src="assets/logo/bear.png" alt="学习助手" class="assistant-image">
+    </div>
+    
+    <div class="assistant-speech-bubble" id="assistantSpeechBubble">加油，你是最棒的！</div>
 </body>
 </html>

@@ -547,6 +547,61 @@
             margin-top: 10px;
         }
 
+        /* 学习助手样式 */
+        .animal-selection {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .animal-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .animal-option:hover {
+            border-color: var(--primary);
+            background: rgba(0, 247, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .animal-option.selected {
+            border-color: var(--primary);
+            background: rgba(0, 247, 255, 0.2);
+            box-shadow: 0 0 15px rgba(0, 247, 255, 0.3);
+        }
+
+        .animal-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
+
+        .animal-icon.placeholder {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        .animal-option span {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
         /* 单词列表页面样式 */
         .words-header {
             display: flex;
@@ -841,6 +896,77 @@
             text-align: left;
         }
 
+        /* 全局学习助手样式 */
+        .learning-assistant {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(255, 94, 98, 0.4);
+            transition: all 0.3s ease;
+            animation: float 3s ease-in-out infinite;
+            border-radius: 50%;
+            display: none;
+        }
+
+        .learning-assistant:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(255, 94, 98, 0.6);
+        }
+
+        .assistant-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+
+        .assistant-speech-bubble {
+            position: fixed;
+            bottom: 140px;
+            right: 140px;
+            background: white;
+            color: #333;
+            padding: 15px 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            max-width: 200px;
+            font-size: 16px;
+            font-weight: 500;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            display: none;
+        }
+
+        .assistant-speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: 20px;
+            border-width: 10px 10px 0;
+            border-style: solid;
+            border-color: white transparent transparent;
+        }
+
+        .assistant-speech-bubble.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
     </style>
     <script src="common.js"></script>
 </head>
@@ -994,6 +1120,7 @@
                 <div class="loader"></div>
             </div>
         </div>
+
 
         <!-- 设置页面 -->
         <div class="page" id="settingsPage">
@@ -1744,7 +1871,9 @@
         }
 
         // 初始化应用
-        window.addEventListener('DOMContentLoaded', init);
+        window.addEventListener('DOMContentLoaded', function() {
+            init();
+        });
 
         // 语音合成API加载
         if (speechSynthesis.onvoiceschanged !== undefined) {
@@ -1803,7 +1932,121 @@
                 document.body.removeChild(mask);
             };
         }
+
     </script>
+
+    <!-- 全局学习助手功能 -->
+    <script>
+        // 更新学习助手UI
+        function updateAssistantUI() {
+            const settings = JSON.parse(localStorage.getItem('assistantSettings') || '{}');
+            const assistant = document.getElementById('learningAssistant');
+            const speechBubble = document.getElementById('assistantSpeechBubble');
+            
+            if (assistant && speechBubble) {
+                if (settings.enabled) {
+                    assistant.style.display = 'block';
+                    assistant.style.width = `${settings.size || 100}px`;
+                    assistant.style.height = `${settings.size || 100}px`;
+                    assistant.style.opacity = `${(settings.opacity || 100) / 100}`;
+                    
+                    if (settings.floatAnimation) {
+                        assistant.style.animation = 'float 3s ease-in-out infinite';
+                    } else {
+                        assistant.style.animation = 'none';
+                    }
+                    
+                    // 设置动物图片
+                    const animal = settings.animal || 'bear';
+                    const img = assistant.querySelector('.assistant-image');
+                    if (img) {
+                        if (animal === 'bear') {
+                            img.src = 'assets/logo/bear.png';
+                            img.alt = '小熊学习助手';
+                        } else {
+                            // 对于其他动物，使用emoji占位符
+                            img.src = '';
+                            img.alt = `${animal}学习助手`;
+                            img.textContent = animal === 'cat' ? '🐱' : animal === 'dog' ? '🐶' : '🐰';
+                        }
+                    }
+                } else {
+                    assistant.style.display = 'none';
+                    speechBubble.style.display = 'none';
+                }
+            }
+        }
+
+        // 全局学习助手交互
+        function setupGlobalAssistant() {
+            const assistant = document.getElementById('learningAssistant');
+            const speechBubble = document.getElementById('assistantSpeechBubble');
+            
+            if (assistant && speechBubble) {
+                assistant.addEventListener('click', function() {
+                    const settings = JSON.parse(localStorage.getItem('assistantSettings') || '{}');
+                    
+                    if (settings.clickInteraction !== false) {
+                        // 显示语音气泡
+                        speechBubble.style.display = 'block';
+                        speechBubble.classList.add('show');
+                        
+                        const encouragements = [
+                            '加油，你是最棒的！',
+                            '继续努力，你会成功的！',
+                            '学习真有趣，继续加油！',
+                            '你真聪明，继续保持！',
+                            '每天进步一点点！'
+                        ];
+                        
+                        const randomEncouragement = encouragements[Math.floor(Math.random() * encouragements.length)];
+                        speechBubble.textContent = randomEncouragement;
+                        
+                        // 语音鼓励
+                        if (settings.voiceEncouragement !== false) {
+                            const utterance = new SpeechSynthesisUtterance(randomEncouragement);
+                            utterance.lang = 'zh-CN';
+                            utterance.rate = 1.0;
+                            utterance.pitch = 1.2;
+                            
+                            const voices = speechSynthesis.getVoices();
+                            const chineseVoice = voices.find(voice =>
+                                voice.lang.includes('zh') || voice.lang.includes('CN') || voice.lang.includes('zh-CN')
+                            );
+                            
+                            if (chineseVoice) {
+                                utterance.voice = chineseVoice;
+                            }
+                            
+                            speechSynthesis.cancel();
+                            speechSynthesis.speak(utterance);
+                        }
+                        
+                        // 3秒后隐藏语音气泡
+                        setTimeout(() => {
+                            speechBubble.classList.remove('show');
+                            setTimeout(() => {
+                                speechBubble.style.display = 'none';
+                            }, 300);
+                        }, 3000);
+                    }
+                });
+            }
+        }
+
+        // 初始化学习助手
+        window.addEventListener('DOMContentLoaded', function() {
+            updateAssistantUI();
+            setupGlobalAssistant();
+        });
+    </script>
+
+    <!-- 全局学习助手组件 -->
+    <div class="learning-assistant" id="learningAssistant">
+        <img src="assets/logo/bear.png" alt="学习助手" class="assistant-image">
+    </div>
+    
+    <div class="assistant-speech-bubble" id="assistantSpeechBubble">加油，你是最棒的！</div>
 </body>
 
 </html>
