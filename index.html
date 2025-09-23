@@ -1008,6 +1008,13 @@
         </footer>
     </div>
 
+    <!-- 全局学习助手组件 -->
+    <div class="learning-assistant" id="learningAssistant">
+        <img src="assets/logo/bear.png" alt="学习助手" class="assistant-image">
+    </div>
+    
+    <div class="assistant-speech-bubble" id="assistantSpeechBubble">加油，你是最棒的！</div>    
+
     <script>
         // 初始化函数
         function init() {
@@ -1271,7 +1278,7 @@
             } else {
                 assistant.style.display = 'none';
                 if (window.learningAssistant) {
-                    window.learningAssistant.destroy();
+                    //window.learningAssistant.destroy();
                     window.learningAssistant = null;
                 }
             }
@@ -1326,7 +1333,7 @@
                     encouragementFrequency: document.getElementById('encouragementFrequencySlider').value,
                     alwaysShow: alwaysShow
                 };
-                window.learningAssistant.applySettings();
+                //window.learningAssistant.applySettings();
             }
         }
 
@@ -1341,20 +1348,12 @@
                 applyAssistantSettings();
             }
         }
-
-        // 学习助手功能 - 已移动到外部文件 assets/js/learning-assistant.js
-
         // 初始化应用
         window.addEventListener('DOMContentLoaded', function() {
             init();
         });
     </script>
 
-    <!-- 全局学习助手组件 -->
-    <div class="learning-assistant" id="learningAssistant">
-        <img src="assets/logo/bear.png" alt="学习助手" class="assistant-image">
-    </div>
-    
-    <div class="assistant-speech-bubble" id="assistantSpeechBubble">加油，你是最棒的！</div>
+
 </body>
 </html>
