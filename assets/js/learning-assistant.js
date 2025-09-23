@@ -10,6 +10,8 @@ class LearningAssistant {
             '学习让人进步，努力可能更酷！',
             '每天向前一小步，终会长成参天树！'
         ];
+        this.currentAudio = null; // 当前正在播放的音频
+        this.isPlaying = false;   // 是否正在播放音频
     }
 
     // 初始化学习助手
@@ -110,6 +112,64 @@ class LearningAssistant {
 
     // 语音鼓励
     speakEncouragement() {
+        // 如果已经有音频正在播放，先停止并清理
+        if (this.isPlaying && this.currentAudio) {
+            this.currentAudio.pause();
+            this.currentAudio = null;
+            this.isPlaying = false;
+        }
+        
+        const settings = this.getSettings();
+        const animal = settings.animal || 'bear';
+        // 获取当前显示的鼓励语在数组中的索引
+        const encouragementIndex = this.encouragements.indexOf(this.speechBubble.textContent);
+        // 构造音频文件名，格式为 animal-1.mp3, animal-2.mp3 等
+        const audioFile = `assets/audio/${animal}-${encouragementIndex + 1}.mp3`;
+        
+        // 创建新的音频对象
+        this.currentAudio = new Audio(audioFile);
+        this.isPlaying = true;
+        
+        // 设置音频播放结束后的清理逻辑
+        this.currentAudio.addEventListener('ended', () => {
+            this.isPlaying = false;
+            this.currentAudio = null;
+        });
+        
+        this.currentAudio.addEventListener('error', () => {
+            // 音频文件不存在或加载失败，使用语音合成
+            this.isPlaying = false;
+            this.currentAudio = null;
+            this.speakWithSynthesis();
+        });
+        
+        this.currentAudio.addEventListener('canplaythrough', () => {
+            // 音频文件存在，播放音频
+            this.currentAudio.play().catch(error => {
+                console.error('音频播放失败:', error);
+                this.isPlaying = false;
+                this.currentAudio = null;
+            });
+        });
+        
+        // 尝试加载音频文件
+        this.currentAudio.load();
+    }
+    
+    // 使用语音合成
+    speakWithSynthesis() {
+        // 检查是否已经在播放语音，如果是则取消
+        if (speechSynthesis.speaking) {
+            speechSynthesis.cancel();
+        }
+        
+        // 如果音频正在播放，先停止音频
+        if (this.isPlaying && this.currentAudio) {
+            this.currentAudio.pause();
+            this.currentAudio = null;
+            this.isPlaying = false;
+        }
+        
         const utterance = new SpeechSynthesisUtterance(this.speechBubble.textContent);
         utterance.lang = 'zh-CN';
         utterance.rate = 1.0;
@@ -124,7 +184,6 @@ class LearningAssistant {
             utterance.voice = chineseVoice;
         }
         
-        speechSynthesis.cancel();
         speechSynthesis.speak(utterance);
     }
 
