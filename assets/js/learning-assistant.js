@@ -8,7 +8,7 @@ class LearningAssistant {
             '好好学习，天天向上！',
             '学习真有趣，我们齐努力！',
             '学习让人进步，努力可能更酷！',
-            '每天进步一点点！'
+            '每天向前一小步，终会长成参天树！'
         ];
     }
 
@@ -55,6 +55,10 @@ class LearningAssistant {
             img.textContent = '';
         } else if (animal === 'cat') {
             img.src = 'assets/logo/cat.png';
+            img.alt = '学习助手';
+            img.textContent = '';
+        } else if (animal === 'peppa') {
+            img.src = 'assets/logo/peppa.png';
             img.alt = '学习助手';
             img.textContent = '';
         } else if (animal === 'tom') {

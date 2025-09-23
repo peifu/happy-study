@@ -910,12 +910,20 @@
                         <label class="form-label">选择助手形象</label>
                         <div class="animal-selection" id="animalSelection">
                             <div class="animal-option" data-animal="bear">
-                                <img src="assets/logo/bear.png" alt="崽崽熊" class="animal-icon">
-                                <span>崽崽熊</span>
+                                <img src="assets/logo/bear.png" alt="仔仔熊" class="animal-icon">
+                                <span>仔仔熊</span>
                             </div>
                             <div class="animal-option" data-animal="cat">
                                 <img src="assets/logo/cat.png" alt="哆啦A梦" class="animal-icon">
                                 <span>哆啦A梦</span>
+                            </div>
+                            <div class="animal-option" data-animal="peppa">
+                                <img src="assets/logo/peppa.png" alt="小猪佩奇" class="animal-icon">
+                                <span>小猪佩奇</span>
+                            </div>
+                            <div class="animal-option" data-animal="nezha">
+                                <img src="assets/logo/nezha.png" alt="哪吒" class="animal-icon">
+                                <span>哪吒</span>
                             </div>
                             <div class="animal-option" data-animal="tom">
                                 <img src="assets/logo/tom.png" alt="Tom" class="animal-icon">
@@ -1286,14 +1294,30 @@
 
         function changeAssistantAnimal(animal) {
             const assistantImage = document.querySelector('#learningAssistant .assistant-image');
-            if (animal === 'bear'  || animal === 'cat' || animal === 'tom' || animal === 'jerry') {
-                assistantImage.src = `assets/logo/${animal}.png`;
-            } else {
-                // For dog and rabbit, we'll use emoji placeholders for now
+            const imagePath = `assets/logo/${animal}.png`;
+            
+            // Create a test image to check if the file exists
+            const testImage = new Image();
+            testImage.onload = function() {
+                // File exists, use the PNG image
+                assistantImage.src = imagePath;
+                assistantImage.alt = animal;
+                assistantImage.textContent = '';
+            };
+            testImage.onerror = function() {
+                // File doesn't exist, use emoji placeholder
                 assistantImage.src = '';
-                assistantImage.alt = animal === 'dog' ? '🐶' : '🐰';
-                assistantImage.textContent = animal === 'dog' ? '🐶' : '🐰';
-            }
+                const emojiMap = {
+                    'dog': '🐶',
+                    'rabbit': '🐰',
+                    'peppa': '🐷', // Pig emoji for Peppa
+                    'nezha': '👶'  // Baby emoji for Nezha
+                };
+                const emoji = emojiMap[animal] || '🤖'; // Default robot emoji
+                assistantImage.alt = emoji;
+                assistantImage.textContent = emoji;
+            };
+            testImage.src = imagePath;
         }
 
         function applyAssistantSettings() {
