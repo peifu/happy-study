@@ -138,6 +138,7 @@ class LearningAssistant {
         
         this.currentAudio.addEventListener('error', () => {
             // 音频文件不存在或加载失败，使用语音合成
+            console.error('音频加载失败:', audioFile);
             this.isPlaying = false;
             this.currentAudio = null;
             this.speakWithSynthesis();

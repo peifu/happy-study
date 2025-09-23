@@ -1159,6 +1159,13 @@
         </footer>
     </div>
 
+    <!-- 全局学习助手组件 -->
+    <div class="learning-assistant" id="learningAssistant">
+        <img src="assets/logo/bear.png" alt="学习助手" class="assistant-image">
+    </div>
+    
+    <div class="assistant-speech-bubble" id="assistantSpeechBubble">加油，你是最棒的！</div>    
+
     <script>
         // 只存储已加载的词表
         let wordLists = {};
@@ -1224,6 +1231,7 @@
             // 自动播放
             startAutoPlay();
 
+            initLearningAssistant();
         }
 
         // 按需加载单词数据
@@ -1865,16 +1873,19 @@
             };
         }
 
+        function initLearningAssistant() {
+            const assistantEnabled = localStorage.getItem('assistantEnabled') === 'true';
+            if (typeof LearningAssistant !== 'undefined' && assistantEnabled) {
+                window.learningAssistant = new LearningAssistant({
+                    element: document.getElementById('learningAssistant'),
+                    bubble: document.getElementById('assistantSpeechBubble')
+                });
+                window.learningAssistant.init();
+            }
+        }
+
     </script>
 
-    <!-- 全局学习助手功能 - 已移动到外部文件 assets/js/learning-assistant.js -->
-
-    <!-- 全局学习助手组件 -->
-    <div class="learning-assistant" id="learningAssistant">
-        <img src="assets/logo/bear.png" alt="学习助手" class="assistant-image">
-    </div>
-    
-    <div class="assistant-speech-bubble" id="assistantSpeechBubble">加油，你是最棒的！</div>
 </body>
 
 </html>
