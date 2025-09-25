@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>快乐学习 - 小学数学</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/learning-assistant.css">
     <style>
         :root {
             --primary: #f4b400;
@@ -617,7 +618,6 @@
             margin: 0 3px;
         }
     </style>
-    <link rel="stylesheet" href="assets/css/learning-assistant.css">
     <script src="assets/js/learning-assistant.js"></script>
     <script src="common.js"></script>
 </head>
@@ -758,6 +758,12 @@
         </footer>
     </div>
 
+    <!-- 全局学习助手组件 -->
+    <div class="learning-assistant" id="learningAssistant">
+        <img src="assets/logo/bear.png" alt="学习助手" class="assistant-image">
+    </div>
+    <div class="assistant-speech-bubble" id="assistantSpeechBubble">加油，你是最棒的！</div>
+
     <script>
         // 数学概念数据
         const mathData = {
@@ -890,6 +896,8 @@
             
             // 设置事件监听
             setupEventListeners();
+
+            initLearningAssistant();
         }
 
         function syncThemeFromIndex() {
@@ -1133,17 +1141,23 @@
             }
         }
 
+        function initLearningAssistant() {
+            const assistantEnabled = localStorage.getItem('assistantEnabled') === 'true';
+            if (typeof LearningAssistant !== 'undefined' && assistantEnabled) {
+                window.learningAssistant = new LearningAssistant({
+                    element: document.getElementById('learningAssistant'),
+                    bubble: document.getElementById('assistantSpeechBubble')
+                });
+                window.learningAssistant.init();
+            }
+        }
+
         // 初始化应用
         window.addEventListener('DOMContentLoaded', function() {
             init();
         });
     </script>
     
-    <!-- 全局学习助手组件 -->
-    <div class="learning-assistant" id="learningAssistant">
-        <img src="assets/logo/bear.png" alt="学习助手" class="assistant-image">
-    </div>
-    
-    <div class="assistant-speech-bubble" id="assistantSpeechBubble">加油，你是最棒的！</div>
+
 </body>
 </html>

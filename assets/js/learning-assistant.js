@@ -63,6 +63,10 @@ class LearningAssistant {
             img.src = 'assets/logo/peppa.png';
             img.alt = '学习助手';
             img.textContent = '';
+        } else if (animal === 'nezha') {
+            img.src = 'assets/logo/nezha.png';
+            img.alt = '学习助手';
+            img.textContent = '';
         } else if (animal === 'tom') {
             img.src = 'assets/logo/tom.png';
             img.alt = '学习助手';
