@@ -897,6 +897,229 @@
             text-align: left;
         }
 
+        /* 游戏页面样式 */
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .game-header h2 {
+            color: var(--primary);
+            font-size: 28px;
+            margin: 0;
+        }
+
+        .game-info {
+            display: flex;
+            gap: 20px;
+            color: var(--text-secondary);
+        }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+            min-height: 400px;
+        }
+
+        .game-tile {
+            background: var(--card-bg-color);
+            border-radius: 12px;
+            padding: 15px;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            user-select: none;
+            text-align: center;
+            font-weight: 600;
+            color: var(--text-color);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            font-size: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-tile:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            border-color: var(--primary);
+        }
+
+        .game-tile.en {
+            background: linear-gradient(135deg, var(--primary), #4a90e2);
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .game-tile.cn {
+            background: linear-gradient(135deg, var(--secondary), #38b2ac);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .game-tile.matched {
+            opacity: 0;
+            transform: scale(0.8);
+            pointer-events: none;
+        }
+
+        .game-tile.selected {
+            border-color: var(--accent);
+            box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+            transform: scale(1.05);
+            background: var(--accent);
+            /* 选中后变为红色 */
+            color: white;
+        }
+
+        /* 添加联通效果样式 */
+        .game-tile.connected {
+            animation: connectPulse 0.5s ease-out;
+        }
+
+        @keyframes connectPulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+            }
+
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 0 0 15px rgba(76, 175, 80, 0);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .game-tile::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .game-tile:hover::before {
+            opacity: 1;
+        }
+
+        .game-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .game-controls .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .game-status-container {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .game-status {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            font-size: 16px;
+            color: var(--text-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* 紧凑的游戏状态信息 */
+        .compact-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .compact-stat-card {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 10px 5px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .compact-stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 3px;
+        }
+
+        .compact-stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 900px) {
+            .game-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .game-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .game-tile {
+                min-height: 90px;
+                padding: 12px;
+                font-size: 14px;
+            }
+
+            .game-tile.en {
+                font-size: 16px;
+            }
+
+            .game-tile.cn {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .game-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .compact-stats {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .compact-stat-value {
+                font-size: 18px;
+            }
+
+            .compact-stat-label {
+                font-size: 11px;
+            }
+        }
+
         /* 全局学习助手样式 - 已移动到外部文件 assets/css/learning-assistant.css */
     </style>
     <script src="common.js"></script>
@@ -919,6 +1142,10 @@
                 <div class="nav-link" data-page="wordlist">
                     <i class="fas fa-list"></i>
                     <span>单词列表</span>
+                </div>
+                <div class="nav-link" data-page="game">
+                    <i class="fas fa-gamepad"></i>
+                    <span>游戏闯关</span>
                 </div>
                 <div class="nav-link" data-page="settings">
                     <i class="fas fa-cog"></i>
@@ -1021,7 +1248,8 @@
 
                             <div class="inline-control-group">
                                 <span class="inline-label">间隔时间:</span>
-                                <input type="range" min="2" max="20" step="1" value="5" class="range-slider" id="autoPlaySlider">
+                                <input type="range" min="2" max="20" step="1" value="5" class="range-slider"
+                                    id="autoPlaySlider">
                                 <span class="slider-value" id="sliderValue">5 秒</span>
                             </div>
                         </div>
@@ -1120,7 +1348,8 @@
                         </select>
                         <!-- 新增：测试发音按钮 -->
                         <div style="margin-top:10px;">
-                            <button id="voiceTestBtn" class="btn btn-primary" type="button" style="width: 100%; margin-bottom: 15px;">
+                            <button id="voiceTestBtn" class="btn btn-primary" type="button"
+                                style="width: 100%; margin-bottom: 15px;">
                                 <i class="fas fa-microphone"></i>
                                 <span>测试发音</span>
                             </button>
@@ -1154,6 +1383,91 @@
             </div>
         </div>
 
+        <!-- 游戏页面 -->
+        <div class="page" id="gamePage">
+            <div class="main-content">
+                <!-- 游戏区域 -->
+                <div class="word-card">
+                    <div class="game-header">
+                        <h2>单词消消乐</h2>
+                    </div>
+
+                    <div class="game-grid" id="gameGrid">
+                    </div>
+                </div>
+
+                <!-- 游戏控制区域 -->
+                <div class="progress-container">
+
+                        <div class="progress-title">
+                            <i class="fas fa-info-circle"></i>
+                            <span>游戏状态</span>
+                        </div>
+                        <div class="game-status" id="gameStatus">准备就绪</div>
+
+                    <div class="stats">
+                        <div class="stat-card">
+                            <div class="stat-value" id="gameScore">0</div>
+                            <div class="stat-label">得分</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="currentLevel">1</div>
+                            <div class="stat-label">关卡</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="gameTime">00:00</div>
+                            <div class="stat-label">游戏时间</div>
+                        </div>
+                    </div>
+
+                    <div class="progress-bar-container">
+                        <div class="progress-info">
+                            <span>游戏进度</span>
+                            <span id="gamePairsInfo">0 / 0</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="gameProgressFill"></div>
+                        </div>
+                    </div>
+        
+                    <div class="progress-title">
+                        <i class="fas fa-book"></i>
+                        <span>游戏词汇</span>
+                    </div>
+                    <select class="form-control" id="gameBookSelector">
+                        <option value="grade3a">小学三年级词汇A</option>
+                        <option value="grade3b">小学三年级词汇B</option>
+                        <option value="grade4a">小学四年级词汇A</option>
+                        <option value="grade4b">小学四年级词汇B</option>
+                        <option value="grade5a">小学五年级词汇A</option>
+                        <option value="grade5b">小学五年级词汇B</option>
+                        <option value="grade6a">小学六年级词汇A</option>
+                        <option value="grade6b">小学六年级词汇B</option>
+                        <option value="ket">KET单词表</option>
+                    </select>
+
+                    <div class="progress-title">
+                        <i class="fas fa-trophy"></i>
+                        <span>游戏控制</span>
+                    </div>
+                    <div class="game-controls">
+                        <button class="btn btn-success" id="startGameBtn">
+                            <i class="fas fa-play"></i>
+                            <span>开始闯关</span>
+                        </button>
+                        <button class="btn btn-warning" id="pauseGameBtn" disabled>
+                            <i class="fas fa-pause"></i>
+                            <span>暂停游戏</span>
+                        </button>
+                        <button class="btn btn-primary" id="restartGameBtn" disabled>
+                            <i class="fas fa-redo"></i>
+                            <span>重新开始</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <footer>
             <p>© 2025 快乐学习 - Sevenking Studio</p>
         </footer>
@@ -1163,8 +1477,8 @@
     <div class="learning-assistant" id="learningAssistant">
         <img src="assets/logo/bear.png" alt="学习助手" class="assistant-image">
     </div>
-    
-    <div class="assistant-speech-bubble" id="assistantSpeechBubble">加油，你是最棒的！</div>    
+
+    <div class="assistant-speech-bubble" id="assistantSpeechBubble">加油，你是最棒的！</div>
 
     <script>
         // 只存储已加载的词表
@@ -1177,6 +1491,21 @@
         // 修改：每个单词本单独存储进度
         let learnedWordsMap = {};   // { book: { word: true/false } }
         let masteredWordsMap = {};  // { book: { word: true/false } }
+
+        // 游戏状态变量
+        let gamePairs = [];
+        let firstTile = null;
+        let secondTile = null;
+        let matchedCount = 0;
+        let totalPairs = 0;
+        let gameActive = false;
+        let currentGameScore = 0;
+        let gameWrongStreak = 0;
+        let selectedWordsForGame = [];
+        let gameTimer = null;
+        let gameTime = 0;
+        let gameLives = 3;
+        let currentLevel = 1;
 
         // DOM元素
         const currentWordElement = document.getElementById('currentWord');
@@ -1206,6 +1535,19 @@
         const themeSelectElement = document.getElementById('themeSelect');
         const fontSizeSliderElement = document.getElementById('fontSizeSlider');
 
+        // 游戏DOM元素
+        const gameGridElement = document.getElementById('gameGrid');
+        const gameScoreElement = document.getElementById('gameScore');
+        const gameTimeElement = document.getElementById('gameTime');
+        const gameLivesElement = document.getElementById('gameLives');
+        const gameStatusElement = document.getElementById('gameStatus');
+        const gamePairsInfoElement = document.getElementById('gamePairsInfo');
+        const currentLevelElement = document.getElementById('currentLevel');
+        const gameBookSelectorElement = document.getElementById('gameBookSelector');
+        const startGameBtnElement = document.getElementById('startGameBtn');
+        const pauseGameBtnElement = document.getElementById('pauseGameBtn');
+        const restartGameBtnElement = document.getElementById('restartGameBtn');
+
         // 初始化
         async function init() {
             syncThemeFromIndex();
@@ -1232,6 +1574,9 @@
             startAutoPlay();
 
             initLearningAssistant();
+
+            // 初始化游戏页面
+            initGamePage();
         }
 
         // 按需加载单词数据
@@ -1388,7 +1733,7 @@
             if (!v) v = voices.find(voice => /(^|\-|\_)en/i.test(voice.lang));
 
             if (v) {
-                try { ut.voice = v; } catch (e) {}
+                try { ut.voice = v; } catch (e) { }
             }
 
             speechSynthesis.cancel();
@@ -1410,7 +1755,7 @@
         function setupEventListeners() {
             // 导航链接
             setupNavLinks(navLinks, pages, (pageId) => {
-                if (pageId === 'wordlist' || pageId === 'settings') stopAutoPlay();
+                if (pageId === 'wordlist' || pageId === 'game' || pageId === 'settings') stopAutoPlay();
                 if (pageId === 'wordlist') renderWordList();
                 if (pageId === 'wordcard' && autoPlayEnabled) startAutoPlay();
             });
@@ -1459,7 +1804,7 @@
                     renderWordList();
                 });
             });
-            
+
             // 设置页面滑块
             setupSettingsSliders();
 
@@ -1491,6 +1836,20 @@
                         }
                     );
                 });
+            }
+
+            // 游戏控制按钮事件监听
+            if (startGameBtnElement) {
+                startGameBtnElement.addEventListener('click', startGame);
+            }
+            if (pauseGameBtnElement) {
+                pauseGameBtnElement.addEventListener('click', togglePauseGame);
+            }
+            if (restartGameBtnElement) {
+                restartGameBtnElement.addEventListener('click', restartGame);
+            }
+            if (gameBookSelectorElement) {
+                gameBookSelectorElement.addEventListener('change', handleGameBookChange);
             }
         }
 
@@ -1810,8 +2169,352 @@
             }
         }
 
+        // 游戏功能函数
+        function initGamePage() {
+            console.log('初始化游戏页面');
+
+            if (gameBookSelectorElement) {
+                gameBookSelectorElement.innerHTML = bookSelectorElement.innerHTML;
+                gameBookSelectorElement.value = currentBook || 'grade3a';
+            }
+
+            const book = currentBook || 'grade3a';
+            currentGameScore = loadGameScore(book);
+            if (gameScoreElement) gameScoreElement.textContent = currentGameScore;
+            if (gameStatusElement) gameStatusElement.textContent = '准备就绪';
+            renderGamePlaceholder();
+
+            // 确保游戏控制按钮状态正确
+            if (startGameBtnElement) startGameBtnElement.disabled = false;
+            if (pauseGameBtnElement) pauseGameBtnElement.disabled = true;
+            if (restartGameBtnElement) restartGameBtnElement.disabled = true;
+        }
+
+        function loadGameScore(book) {
+            const raw = localStorage.getItem('gameScore_' + book);
+            return raw ? parseInt(raw, 10) || 0 : 0;
+        }
+
+        function saveGameScore(book, score) {
+            localStorage.setItem('gameScore_' + book, String(score));
+        }
+
+        function renderGamePlaceholder() {
+            if (gameGridElement) {
+                gameGridElement.innerHTML = ``;
+            }
+            if (gamePairsInfoElement) gamePairsInfoElement.textContent = '0 / 0';
+            if (currentLevelElement) currentLevelElement.textContent = '1';
+        }
+
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        async function startGame() {
+            console.log('开始游戏');
+
+            const selectedBook = gameBookSelectorElement ? gameBookSelectorElement.value : (currentBook || 'grade3a');
+            console.log('选择的单词本:', selectedBook);
+
+            await loadWordData(selectedBook);
+            const list = wordLists[selectedBook] || [];
+            console.log('单词列表长度:', list.length);
+
+            if (!list || list.length === 0) {
+                console.error('单词列表为空');
+                if (gameGridElement) gameGridElement.innerHTML = '<div class="stat-card">当前单词本没有数据</div>';
+                return;
+            }
+
+            const pairCount = Math.min(10, Math.floor(list.length));
+            console.log('配对数量:', pairCount);
+            totalPairs = pairCount;
+            matchedCount = 0;
+            firstTile = null;
+            secondTile = null;
+            gameWrongStreak = 0;
+            gameActive = true;
+            gameTime = 0;
+            gameLives = 3;
+
+            const indices = shuffleArray(Array.from({ length: list.length }, (_, i) => i)).slice(0, pairCount);
+            selectedWordsForGame = indices.map(i => list[i]);
+            console.log('选中的单词:', selectedWordsForGame);
+
+            // 创建配对卡片 - 同时显示英文和中文
+            gamePairs = [];
+            for (let i = 0; i < selectedWordsForGame.length; i++) {
+                const w = selectedWordsForGame[i];
+                // 提取中文意思中的主要部分（去掉词性标记）
+                const chineseMeaning = w.meaning.replace(/^[a-z]+\.[\s]*/, '');
+                gamePairs.push({ id: i, type: 'en', text: w.word });
+                gamePairs.push({ id: i, type: 'cn', text: chineseMeaning });
+            }
+
+            console.log('游戏配对:', gamePairs);
+            renderGameGrid();
+
+            currentGameScore = loadGameScore(selectedBook);
+            if (gameScoreElement) gameScoreElement.textContent = currentGameScore;
+            if (gamePairsInfoElement) gamePairsInfoElement.textContent = `${matchedCount} / ${totalPairs}`;
+            if (gameStatusElement) gameStatusElement.textContent = '游戏进行中';
+            if (gameLivesElement) gameLivesElement.textContent = gameLives;
+            if (currentLevelElement) currentLevelElement.textContent = currentLevel.toString();
+
+            startGameBtnElement.disabled = true;
+            pauseGameBtnElement.disabled = false;
+            restartGameBtnElement.disabled = false;
+
+            startGameTimer();
+            console.log('游戏开始完成');
+        }
+
+        function renderGameGrid() {
+            if (!gameGridElement) {
+                console.error('游戏网格元素未找到');
+                return;
+            }
+
+            console.log('渲染游戏网格，卡片数量:', gamePairs.length);
+            gameGridElement.innerHTML = '';
+
+            // 创建卡片数组副本并打乱顺序
+            const shuffledPairs = [...gamePairs];
+            for (let i = shuffledPairs.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffledPairs[i], shuffledPairs[j]] = [shuffledPairs[j], shuffledPairs[i]];
+            }
+
+            shuffledPairs.forEach((tileData, idx) => {
+                const tile = document.createElement('div');
+                tile.className = `game-tile ${tileData.type}`;
+                tile.dataset.pairId = tileData.id;
+                tile.dataset.index = idx;
+                tile.dataset.text = tileData.text;
+                tile.textContent = tileData.text; // 直接显示内容，不隐藏
+
+                // 确保点击事件绑定正确
+                tile.addEventListener('click', function () {
+                    console.log('卡片被点击:', tileData);
+                    handleTileClick(this, tileData);
+                });
+
+                gameGridElement.appendChild(tile);
+            });
+
+            console.log('游戏网格渲染完成');
+        }
+
+        function handleTileClick(tileEl, tileData) {
+            console.log('处理卡片点击:', tileData);
+
+            if (!gameActive) {
+                console.log('游戏未激活');
+                return;
+            }
+
+            // 如果已经匹配，不能再点击
+            if (tileEl.classList.contains('matched')) {
+                console.log('卡片已匹配');
+                return;
+            }
+
+            // 如果已经选中，不能再点击
+            if (tileEl.classList.contains('selected')) {
+                console.log('卡片已选中');
+                return;
+            }
+
+            tileEl.classList.add('selected');
+
+            if (!firstTile) {
+                firstTile = { el: tileEl, data: tileData };
+                console.log('选择第一张卡片:', tileData);
+                return;
+            }
+
+            if (firstTile.el === tileEl) {
+                console.log('重复点击同一张卡片');
+                return;
+            }
+
+            secondTile = { el: tileEl, data: tileData };
+            console.log('选择第二张卡片:', tileData);
+
+            if (firstTile.data.id === secondTile.data.id && firstTile.data.type !== secondTile.data.type) {
+                // 正确匹配
+                console.log('匹配成功!');
+                setTimeout(() => {
+                    firstTile.el.classList.add('matched');
+                    secondTile.el.classList.add('matched');
+                    firstTile.el.classList.remove('selected');
+                    secondTile.el.classList.remove('selected');
+
+                    // 添加连接效果
+                    firstTile.el.classList.add('connected');
+                    secondTile.el.classList.add('connected');
+
+                    // 朗读英文单词
+                    const wordObj = selectedWordsForGame[firstTile.data.id];
+                    if (wordObj && wordObj.word) {
+                        speakWordText(wordObj.word);
+                    }
+
+                    // 加分
+                    currentGameScore += 10;
+                    const book = gameBookSelectorElement ? gameBookSelectorElement.value : currentBook;
+                    saveGameScore(book, currentGameScore);
+                    if (gameScoreElement) gameScoreElement.textContent = currentGameScore;
+
+                    matchedCount++;
+                    if (gamePairsInfoElement) gamePairsInfoElement.textContent = `${matchedCount} / ${totalPairs}`;
+                    
+                    // 更新进度条
+                    const progress = totalPairs > 0 ? (matchedCount / totalPairs) * 100 : 0;
+                    const gameProgressFill = document.getElementById('gameProgressFill');
+                    if (gameProgressFill) {
+                        gameProgressFill.style.width = `${progress}%`;
+                    }
+
+                    firstTile = null;
+                    secondTile = null;
+
+                    // 检查是否通关
+                    if (matchedCount >= totalPairs) {
+                        gameActive = false;
+                        stopGameTimer();
+                        if (gameStatusElement) gameStatusElement.textContent = `恭喜通关！得分 ${currentGameScore}`;
+                        startGameBtnElement.disabled = false;
+
+                        // 进入下一关
+                        setTimeout(() => {
+                            currentLevel++;
+                            startGame();
+                        }, 2000);
+                    }
+                }, 500);
+            } else {
+                // 错误匹配
+                console.log('匹配失败');
+                gameWrongStreak++;
+                if (gameWrongStreak >= 3) {
+                    currentGameScore = Math.max(0, currentGameScore - 10);
+                    const book = gameBookSelectorElement ? gameBookSelectorElement.value : currentBook;
+                    saveGameScore(book, currentGameScore);
+                    if (gameScoreElement) gameScoreElement.textContent = currentGameScore;
+                    gameWrongStreak = 0;
+                    if (gameStatusElement) gameStatusElement.textContent = '连续三次匹配错误，扣除10分';
+                } else {
+                    if (gameStatusElement) gameStatusElement.textContent = `匹配错误（连续 ${gameWrongStreak} 次）`;
+                }
+
+                setTimeout(() => {
+                    // 修复：确保所有卡片的selected状态都被移除
+                    const allTiles = document.querySelectorAll('.game-tile');
+                    allTiles.forEach(tile => {
+                        tile.classList.remove('selected');
+                    });
+                    
+                    firstTile = null;
+                    secondTile = null;
+                }, 1000);
+            }
+        }
+
+        function speakWordText(text) {
+            if (!text) return;
+            const u = new SpeechSynthesisUtterance(text);
+            u.lang = 'en-US';
+            const rateEl = document.getElementById('speechRateSlider');
+            const pitchEl = document.getElementById('speechPitchSlider');
+            if (rateEl) u.rate = parseFloat(rateEl.value) || 1.0;
+            if (pitchEl) u.pitch = parseFloat(pitchEl.value) || 1.0;
+            speechSynthesis.cancel();
+            speechSynthesis.speak(u);
+        }
+
+        function startGameTimer() {
+            gameTimer = setInterval(() => {
+                gameTime++;
+                const minutes = Math.floor(gameTime / 60).toString().padStart(2, '0');
+                const seconds = (gameTime % 60).toString().padStart(2, '0');
+                if (gameTimeElement) gameTimeElement.textContent = `${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        function stopGameTimer() {
+            if (gameTimer) {
+                clearInterval(gameTimer);
+                gameTimer = null;
+            }
+        }
+
+        function togglePauseGame() {
+            if (!gameActive && pauseGameBtnElement.innerHTML.includes('继续游戏')) {
+                // 恢复游戏
+                gameActive = true;
+                startGameTimer();
+                if (gameStatusElement) gameStatusElement.textContent = '游戏继续';
+                pauseGameBtnElement.innerHTML = '<i class="fas fa-pause"></i><span>暂停游戏</span>';
+                return;
+            }
+
+            if (!gameActive) return;
+
+            gameActive = !gameActive;
+            if (gameActive) {
+                startGameTimer();
+                if (gameStatusElement) gameStatusElement.textContent = '游戏继续';
+                pauseGameBtnElement.innerHTML = '<i class="fas fa-pause"></i><span>暂停游戏</span>';
+            } else {
+                stopGameTimer();
+                if (gameStatusElement) gameStatusElement.textContent = '游戏暂停';
+                pauseGameBtnElement.innerHTML = '<i class="fas fa-play"></i><span>继续游戏</span>';
+            }
+        }
+
+        function restartGame() {
+            gameActive = false;
+            stopGameTimer();
+            matchedCount = 0;
+            firstTile = null;
+            secondTile = null;
+            gameWrongStreak = 0;
+            gameTime = 0;
+            gameLives = 3;
+            currentLevel = 1;
+
+            currentGameScore = 0;
+            const book = gameBookSelectorElement ? gameBookSelectorElement.value : currentBook;
+            saveGameScore(book, currentGameScore);
+
+            if (gameScoreElement) gameScoreElement.textContent = currentGameScore;
+            if (gameTimeElement) gameTimeElement.textContent = '00:00';
+            if (gameLivesElement) gameLivesElement.textContent = gameLives.toString();
+            if (currentLevelElement) currentLevelElement.textContent = currentLevel.toString();
+            if (gameStatusElement) gameStatusElement.textContent = '游戏已重置';
+
+            startGameBtnElement.disabled = false;
+            pauseGameBtnElement.disabled = true;
+            restartGameBtnElement.disabled = true;
+
+            renderGamePlaceholder();
+        }
+
+        function handleGameBookChange() {
+            const book = gameBookSelectorElement.value;
+            currentGameScore = loadGameScore(book);
+            if (gameScoreElement) gameScoreElement.textContent = currentGameScore;
+            if (gameStatusElement) gameStatusElement.textContent = '已切换单词本';
+        }
+
         // 初始化应用
-        window.addEventListener('DOMContentLoaded', function() {
+        window.addEventListener('DOMContentLoaded', function () {
             init();
         });
 
