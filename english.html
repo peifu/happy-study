@@ -1003,6 +1003,35 @@
             }
         }
 
+        /* 添加闪电连接效果样式 */
+        .lightning-effect {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
+        .lightning-bolt {
+            stroke: #00f7ff;
+            stroke-width: 3;
+            filter: drop-shadow(0 0 8px #00f7ff);
+            animation: lightningPulse 0.5s ease-out;
+        }
+        
+        @keyframes lightningPulse {
+            0% {
+                opacity: 1;
+                filter: drop-shadow(0 0 8px #00f7ff);
+            }
+            50% {
+                opacity: 0.8;
+                filter: drop-shadow(0 0 15px #00f7ff);
+            }
+            100% {
+                opacity: 0;
+                filter: drop-shadow(0 0 5px #00f7ff);
+            }
+        }
+        
         .game-tile::before {
             content: '';
             position: absolute;
@@ -2351,6 +2380,10 @@
             if (firstTile.data.id === secondTile.data.id && firstTile.data.type !== secondTile.data.type) {
                 // 正确匹配
                 console.log('匹配成功!');
+                
+                // 创建闪电连接效果
+                createLightningEffect(firstTile.el, secondTile.el);
+                
                 setTimeout(() => {
                     firstTile.el.classList.add('matched');
                     secondTile.el.classList.add('matched');
@@ -2426,6 +2459,87 @@
                     secondTile = null;
                 }, 1000);
             }
+        }
+
+        // 实现闪电连接效果函数
+        function createLightningEffect(element1, element2) {
+            // 获取两个元素的位置
+            const rect1 = element1.getBoundingClientRect();
+            const rect2 = element2.getBoundingClientRect();
+            
+            // 计算页面的滚动偏移
+            const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+            
+            // 计算元素中心点坐标
+            const x1 = rect1.left + rect1.width / 2 + scrollX;
+            const y1 = rect1.top + rect1.height / 2 + scrollY;
+            const x2 = rect2.left + rect2.width / 2 + scrollX;
+            const y2 = rect2.top + rect2.height / 2 + scrollY;
+            
+            // 创建SVG元素
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.classList.add('lightning-effect');
+            
+            // 设置SVG尺寸和位置
+            const minX = Math.min(x1, x2);
+            const minY = Math.min(y1, y2);
+            const maxX = Math.max(x1, x2);
+            const maxY = Math.max(y1, y2);
+            const padding = 20;
+            
+            svg.style.position = 'absolute';
+            svg.style.left = (minX - padding) + 'px';
+            svg.style.top = (minY - padding) + 'px';
+            svg.style.width = (maxX - minX + padding * 2) + 'px';
+            svg.style.height = (maxY - minY + padding * 2) + 'px';
+            svg.style.pointerEvents = 'none';
+            svg.style.zIndex = '1000';
+            
+            // 创建闪电路径
+            const line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            line.classList.add('lightning-bolt');
+            
+            // 生成闪电路径数据
+            const distance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+            const segments = Math.max(5, Math.floor(distance / 50));
+            let pathData = `M ${x1 - minX + padding} ${y1 - minY + padding}`;
+            
+            // 生成中间的闪电折点
+            for (let i = 1; i < segments; i++) {
+                const ratio = i / segments;
+                const cx = x1 + (x2 - x1) * ratio;
+                const cy = y1 + (y2 - y1) * ratio;
+                
+                // 添加随机偏移创造闪电效果
+                const offset = (Math.random() - 0.5) * 30;
+                const angle = Math.atan2(y2 - y1, x2 - x1) + Math.PI / 2;
+                const offsetX = Math.cos(angle) * offset;
+                const offsetY = Math.sin(angle) * offset;
+                
+                pathData += ` L ${cx - minX + padding + offsetX} ${cy - minY + padding + offsetY}`;
+            }
+            
+            pathData += ` L ${x2 - minX + padding} ${y2 - minY + padding}`;
+            
+            line.setAttribute('d', pathData);
+            line.setAttribute('stroke', '#00f7ff');
+            line.setAttribute('stroke-width', '3');
+            line.setAttribute('fill', 'none');
+            line.style.filter = 'drop-shadow(0 0 8px #00f7ff)';
+            
+            svg.appendChild(line);
+            document.body.appendChild(svg);
+            
+            // 添加动画效果
+            line.style.animation = 'lightningPulse 0.5s ease-out';
+            
+            // 500ms后移除SVG元素
+            setTimeout(() => {
+                if (svg.parentNode) {
+                    svg.parentNode.removeChild(svg);
+                }
+            }, 500);
         }
 
         function speakWordText(text) {
@@ -2590,7 +2704,6 @@
         }
 
     </script>
-
 </body>
 
 </html>
