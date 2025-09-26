@@ -901,6 +901,13 @@
         </footer>
     </div>
 
+    <!-- 全局学习助手组件 -->
+    <div class="learning-assistant" id="learningAssistant">
+        <img src="assets/logo/bear.png" alt="学习助手" class="assistant-image">
+    </div>
+    
+    <div class="assistant-speech-bubble" id="assistantSpeechBubble">加油，你是最棒的！</div>
+
     <script>
         // 默认诗词数据（当JSON加载失败时使用）
         const defaultPoemsData = {
@@ -992,6 +999,8 @@
             
             // 设置事件监听
             setupEventListeners();
+            
+            initLearningAssistant();
         }
 
         function syncThemeFromIndex() {
@@ -1606,6 +1615,16 @@
             }
         }
 
+        function initLearningAssistant() {
+            const assistantEnabled = localStorage.getItem('assistantEnabled') === 'true';
+            if (typeof LearningAssistant !== 'undefined' && assistantEnabled) {
+                window.learningAssistant = new LearningAssistant({
+                    element: document.getElementById('learningAssistant'),
+                    bubble: document.getElementById('assistantSpeechBubble')
+                });
+                window.learningAssistant.init();
+            }
+        }
         // 初始化应用
         window.addEventListener('DOMContentLoaded', init);
 
@@ -1615,11 +1634,6 @@
         }
     </script>
 
-    <!-- 全局学习助手组件 -->
-    <div class="learning-assistant" id="learningAssistant">
-        <img src="assets/logo/bear.png" alt="学习助手" class="assistant-image">
-    </div>
-    
-    <div class="assistant-speech-bubble" id="assistantSpeechBubble">加油，你是最棒的！</div>
+
 </body>
 </html>
