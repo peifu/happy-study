@@ -2355,9 +2355,18 @@
                 return;
             }
 
-            // 如果已经选中，不能再点击
+            // 如果已经选中，且再次点击，则取消选中
             if (tileEl.classList.contains('selected')) {
-                console.log('卡片已选中');
+                tileEl.classList.remove('selected');
+                // 如果这是第一个选中的卡片，则清除firstTile
+                if (firstTile && firstTile.el === tileEl) {
+                    firstTile = null;
+                }
+                // 如果这是第二个选中的卡片，则清除secondTile
+                if (secondTile && secondTile.el === tileEl) {
+                    secondTile = null;
+                }
+                console.log('取消选中卡片:', tileData);
                 return;
             }
 
@@ -2486,7 +2495,7 @@
             const minY = Math.min(y1, y2);
             const maxX = Math.max(x1, x2);
             const maxY = Math.max(y1, y2);
-            const padding = 20;
+            const padding = 30;
             
             svg.style.position = 'absolute';
             svg.style.left = (minX - padding) + 'px';
@@ -2496,9 +2505,14 @@
             svg.style.pointerEvents = 'none';
             svg.style.zIndex = '1000';
             
-            // 创建闪电路径
-            const line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-            line.classList.add('lightning-bolt');
+            // 创建多层闪电效果
+            // 内层 - 红色核心
+            const innerLine = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            innerLine.classList.add('lightning-bolt-inner');
+            
+            // 外层 - 白色闪烁
+            const outerLine = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            outerLine.classList.add('lightning-bolt-outer');
             
             // 生成闪电路径数据
             const distance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
@@ -2512,7 +2526,7 @@
                 const cy = y1 + (y2 - y1) * ratio;
                 
                 // 添加随机偏移创造闪电效果
-                const offset = (Math.random() - 0.5) * 30;
+                const offset = (Math.random() - 0.5) * 40;
                 const angle = Math.atan2(y2 - y1, x2 - x1) + Math.PI / 2;
                 const offsetX = Math.cos(angle) * offset;
                 const offsetY = Math.sin(angle) * offset;
@@ -2522,24 +2536,32 @@
             
             pathData += ` L ${x2 - minX + padding} ${y2 - minY + padding}`;
             
-            line.setAttribute('d', pathData);
-            line.setAttribute('stroke', '#00f7ff');
-            line.setAttribute('stroke-width', '3');
-            line.setAttribute('fill', 'none');
-            line.style.filter = 'drop-shadow(0 0 8px #00f7ff)';
+            innerLine.setAttribute('d', pathData);
+            innerLine.setAttribute('stroke', '#ff0000');
+            innerLine.setAttribute('stroke-width', '4');
+            innerLine.setAttribute('fill', 'none');
+            innerLine.style.filter = 'drop-shadow(0 0 10px #ff0000)';
             
-            svg.appendChild(line);
+            outerLine.setAttribute('d', pathData);
+            outerLine.setAttribute('stroke', '#ffffff');
+            outerLine.setAttribute('stroke-width', '8');
+            outerLine.setAttribute('fill', 'none');
+            outerLine.style.filter = 'drop-shadow(0 0 15px #ffffff)';
+            
+            svg.appendChild(outerLine);
+            svg.appendChild(innerLine);
             document.body.appendChild(svg);
             
-            // 添加动画效果
-            line.style.animation = 'lightningPulse 0.5s ease-out';
+            // 添加更强烈的动画效果
+            innerLine.style.animation = 'lightningPulse 0.3s ease-out';
+            outerLine.style.animation = 'lightningFlash 0.3s ease-out';
             
-            // 500ms后移除SVG元素
+            // 300ms后移除SVG元素
             setTimeout(() => {
                 if (svg.parentNode) {
                     svg.parentNode.removeChild(svg);
                 }
-            }, 500);
+            }, 300);
         }
 
         function speakWordText(text) {
