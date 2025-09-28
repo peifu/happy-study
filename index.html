@@ -78,6 +78,9 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            min-height: calc(100vh - 160px);
+            display: flex;
+            flex-direction: column;
         }
         
         /* 导航样式 */
@@ -85,16 +88,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
+            padding: 15px 0;
             border-bottom: 1px solid rgba(0, 247, 255, 0.3);
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
         
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 28px;
+            gap: 8px;
+            font-size: 24px;
             font-weight: 700;
             background: linear-gradient(90deg, var(--primary), var(--secondary));
             background-clip: text;
@@ -105,16 +108,17 @@
         
         .nav-links {
             display: flex;
-            gap: 25px;
+            gap: 15px;
         }
         
         .nav-link {
-            padding: 10px 20px;
+            padding: 8px 16px;
             border-radius: 8px;
             cursor: pointer;
             transition: var(--transition);
             position: relative;
             overflow: hidden;
+            font-size: 14px;
         }
         
         .nav-link::before {
@@ -143,8 +147,8 @@
         /* 主页标题 */
         .main-title {
             text-align: center;
-            margin-bottom: 40px;
-            font-size: 36px;
+            margin-bottom: 30px;
+            font-size: 32px;
             font-weight: 700;
             background: linear-gradient(90deg, var(--primary), var(--secondary));
             background-clip: text;
@@ -154,30 +158,32 @@
         
         .subtitle {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 30px;
             color: var(--text-secondary);
-            font-size: 18px;
-            max-width: 600px;
+            font-size: 16px;
+            max-width: 500px;
             margin-left: auto;
             margin-right: auto;
+            line-height: 1.5;
         }
         
-        /* 科目卡片网格 */
+        /* 科目卡片网格 - 优化响应式布局 */
         .subjects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
             margin-top: 20px;
+            flex: 1;
         }
         
         .subject-card {
             background: var(--card-bg-color);
             border-radius: 16px;
-            padding: 30px;
+            padding: 25px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             position: relative;
             overflow: hidden;
-            min-height: 280px;
+            min-height: 240px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -205,12 +211,12 @@
         }
         
         .subject-icon {
-            font-size: 60px;
-            margin-bottom: 20px;
+            font-size: 50px;
+            margin-bottom: 15px;
             position: relative;
             z-index: 1;
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -273,9 +279,9 @@
         }
         
         .subject-name {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 700;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             position: relative;
             z-index: 1;
         }
@@ -309,7 +315,9 @@
             color: var(--text-secondary);
             position: relative;
             z-index: 1;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            line-height: 1.4;
         }
         
         .subject-stats {
@@ -326,7 +334,7 @@
         }
         
         .stat-value {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
             margin-bottom: 5px;
         }
@@ -356,7 +364,7 @@
         }
         
         .stat-label {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-secondary);
         }
         
@@ -571,45 +579,166 @@
         /* 页脚样式 */
         footer {
             text-align: center;
-            margin-top: 80px;
-            padding: 30px;
+            margin-top: 40px;
+            padding: 20px;
             color: var(--text-secondary);
-            font-size: 14px;
+            font-size: 12px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        /* 响应式设计 */
-        @media (max-width: 900px) {
-            .subjects-grid {
-                grid-template-columns: repeat(2, 1fr);
+        /* 响应式设计 - 优化多设备适配 */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 15px;
             }
             
+            .subjects-grid {
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+                gap: 15px;
+            }
+        }
+        
+        @media (max-width: 1000px) {
+            .subjects-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            
+            .subject-card {
+                min-height: 220px;
+                padding: 20px;
+            }
+            
+            .subject-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 40px;
+            }
+            
+            .subject-name {
+                font-size: 22px;
+            }
+            
+            .main-title {
+                font-size: 28px;
+                margin-bottom: 20px;
+            }
+            
+            .subtitle {
+                font-size: 15px;
+                margin-bottom: 25px;
+            }
+        }
+        
+        @media (max-width: 800px) {
             .nav-container {
                 flex-direction: column;
-                gap: 20px;
+                gap: 15px;
+                padding: 10px 0;
+                margin-bottom: 20px;
+            }
+            
+            .nav-links {
+                gap: 10px;
+            }
+            
+            .nav-link {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+            
+            .logo {
+                font-size: 22px;
+            }
+            
+            .subjects-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            
+            .subject-card {
+                min-height: 200px;
+                padding: 15px;
+            }
+            
+            .subject-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 35px;
+                margin-bottom: 10px;
+            }
+            
+            .subject-name {
+                font-size: 20px;
+                margin-bottom: 8px;
+            }
+            
+            .subject-desc {
+                font-size: 13px;
+                margin-bottom: 12px;
+            }
+            
+            .stat-value {
+                font-size: 18px;
+            }
+            
+            .stat-label {
+                font-size: 10px;
             }
         }
         
         @media (max-width: 600px) {
             .subjects-grid {
                 grid-template-columns: 1fr;
-            }
-            
-            .nav-links {
-                flex-direction: column;
                 gap: 10px;
             }
             
+            .subject-card {
+                min-height: 180px;
+                padding: 15px;
+            }
+            
             .main-title {
-                font-size: 28px;
+                font-size: 24px;
+                margin-bottom: 15px;
             }
             
             .subtitle {
-                font-size: 16px;
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+            
+            .container {
+                padding: 10px;
             }
             
             .settings-grid {
                 grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .subject-card {
+                min-height: 160px;
+                padding: 12px;
+            }
+            
+            .subject-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 30px;
+            }
+            
+            .subject-name {
+                font-size: 18px;
+            }
+            
+            .subject-desc {
+                font-size: 12px;
+            }
+            
+            .stat-value {
+                font-size: 16px;
             }
         }
         
@@ -673,7 +802,6 @@
         <!-- 主页内容 -->
         <div class="page active" id="homePage">
 		<h1 class="main-title">好好学习 天天向上</h1>
-		<p class="subtitle">选择科目开始学习，全面提升知识水平</p>
 		
 		<div class="subjects-grid">
 		    <!-- 英语卡片 -->

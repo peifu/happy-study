@@ -68,6 +68,9 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            min-height: calc(100vh - 160px);
+            display: flex;
+            flex-direction: column;
         }
 
         /* 导航样式 */
@@ -75,16 +78,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
+            padding: 15px 0;
             border-bottom: 1px solid rgba(0, 247, 255, 0.3);
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 28px;
+            gap: 8px;
+            font-size: 24px;
             font-weight: 700;
             background: linear-gradient(90deg, var(--primary), var(--secondary));
             background-clip: text;
@@ -95,16 +98,17 @@
 
         .nav-links {
             display: flex;
-            gap: 25px;
+            gap: 15px;
         }
 
         .nav-link {
-            padding: 10px 20px;
+            padding: 8px 16px;
             border-radius: 8px;
             cursor: pointer;
             transition: var(--transition);
             position: relative;
             overflow: hidden;
+            font-size: 14px;
         }
 
         .nav-link::before {
@@ -203,7 +207,7 @@
         }
 
         .word {
-            font-size: 42px;
+            font-size: 36px;
             font-weight: 700;
             color: var(--primary);
             text-shadow: 0 0 10px rgba(0, 247, 255, 0.3);
@@ -234,16 +238,16 @@
         }
 
         .phonetic {
-            font-size: 18px;
+            font-size: 16px;
             color: var(--text-secondary);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             position: relative;
             z-index: 1;
         }
 
         .meaning {
-            font-size: 24px;
-            margin-bottom: 30px;
+            font-size: 20px;
+            margin-bottom: 25px;
             text-align: center;
             position: relative;
             z-index: 1;
@@ -357,14 +361,14 @@
         }
 
         .stat-value {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 700;
             color: var(--secondary);
             margin-bottom: 5px;
         }
 
         .stat-label {
-            font-size: 14px;
+            font-size: 12px;
             color: var(--text-secondary);
         }
 
@@ -686,24 +690,24 @@
         }
 
         .word-item-word {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
             color: var(--primary);
         }
 
         .word-item-phonetic {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-secondary);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .word-item-meaning {
-            font-size: 16px;
-            margin-bottom: 15px;
+            font-size: 14px;
+            margin-bottom: 12px;
         }
 
         .word-item-example {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-secondary);
             font-style: italic;
             border-left: 2px solid var(--secondary);
@@ -745,62 +749,236 @@
             }
         }
 
-        /* 响应式设计 */
-        @media (max-width: 900px) {
+        /* 响应式设计 - 优化多设备适配 */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .main-content {
+                gap: 20px;
+            }
+            
+            .word-card {
+                min-height: 350px;
+                padding: 25px;
+            }
+            
+            .progress-container {
+                padding: 20px;
+            }
+        }
+        
+        @media (max-width: 1000px) {
             .main-content {
                 grid-template-columns: 1fr;
             }
-
-            .nav-container {
-                flex-direction: column;
-                gap: 20px;
+            
+            .word-card {
+                min-height: 320px;
+                padding: 20px;
             }
-
-            .words-header {
-                flex-direction: column;
-                gap: 15px;
-                align-items: flex-start;
+            
+            .word {
+                font-size: 32px;
             }
-
-            .search-box {
-                width: 100%;
+            
+            .meaning {
+                font-size: 18px;
             }
-
-            .card-controls {
-                flex-wrap: wrap;
+            
+            .phonetic {
+                font-size: 15px;
             }
-
+            
             .stats {
                 grid-template-columns: 1fr 1fr;
             }
-
-            .word-header {
-                flex-direction: column;
-                gap: 10px;
+            
+            .stat-value {
+                font-size: 22px;
             }
-
-            .btn {
-                min-width: 80px;
-                padding: 10px 15px;
+            
+            .stat-label {
+                font-size: 11px;
             }
         }
-
+        
+        @media (max-width: 800px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+                padding: 10px 0;
+                margin-bottom: 20px;
+            }
+            
+            .nav-links {
+                gap: 10px;
+            }
+            
+            .nav-link {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+            
+            .logo {
+                font-size: 22px;
+            }
+            
+            .word-card {
+                min-height: 300px;
+                padding: 18px;
+            }
+            
+            .word {
+                font-size: 28px;
+            }
+            
+            .meaning {
+                font-size: 16px;
+                margin-bottom: 20px;
+            }
+            
+            .phonetic {
+                font-size: 14px;
+                margin-bottom: 12px;
+            }
+            
+            .example {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+            
+            .stat-value {
+                font-size: 20px;
+            }
+            
+            .stat-label {
+                font-size: 10px;
+            }
+            
+            .words-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                gap: 15px;
+            }
+            
+            .word-item {
+                padding: 15px;
+            }
+            
+            .word-item-word {
+                font-size: 16px;
+            }
+            
+            .word-item-meaning {
+                font-size: 13px;
+            }
+            
+            .word-item-example {
+                font-size: 12px;
+            }
+        }
+        
         @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            
             .stats {
                 grid-template-columns: 1fr;
             }
-
+            
             .nav-links {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .card-controls {
                 flex-direction: column;
                 gap: 10px;
             }
-
-            .card-controls {
-                flex-direction: column;
-            }
-
+            
             .btn {
                 width: 100%;
+                padding: 10px;
+            }
+            
+            .words-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .word-card {
+                min-height: 280px;
+                padding: 15px;
+            }
+            
+            .word {
+                font-size: 24px;
+            }
+            
+            .meaning {
+                font-size: 15px;
+            }
+            
+            .phonetic {
+                font-size: 13px;
+            }
+            
+            .example {
+                font-size: 13px;
+            }
+            
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .word-card {
+                min-height: 250px;
+                padding: 12px;
+            }
+            
+            .word {
+                font-size: 22px;
+            }
+            
+            .meaning {
+                font-size: 14px;
+            }
+            
+            .phonetic {
+                font-size: 12px;
+            }
+            
+            .example {
+                font-size: 12px;
+            }
+            
+            .stat-value {
+                font-size: 18px;
+            }
+            
+            .word-item {
+                padding: 12px;
+            }
+            
+            .word-item-word {
+                font-size: 15px;
+            }
+            
+            .word-item-meaning {
+                font-size: 12px;
+            }
+            
+            .word-item-example {
+                font-size: 11px;
             }
         }
 
@@ -825,10 +1003,10 @@
 
         footer {
             text-align: center;
-            margin-top: 50px;
+            margin-top: 40px;
             padding: 20px;
             color: var(--text-secondary);
-            font-size: 14px;
+            font-size: 12px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 

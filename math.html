@@ -64,6 +64,9 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            min-height: calc(100vh - 160px);
+            display: flex;
+            flex-direction: column;
         }
         
         /* 导航样式 */
@@ -71,16 +74,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
+            padding: 15px 0;
             border-bottom: 1px solid rgba(66, 133, 244, 0.3);
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
-        
+
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 28px;
+            gap: 8px;
+            font-size: 24px;
             font-weight: 700;
             background: linear-gradient(90deg, var(--primary), var(--secondary));
             background-clip: text;
@@ -88,19 +91,20 @@
             text-shadow: 0 0 10px rgba(66, 133, 244, 0.5);
             cursor: pointer;
         }
-        
+
         .nav-links {
             display: flex;
-            gap: 25px;
+            gap: 15px;
         }
-        
+
         .nav-link {
-            padding: 10px 20px;
+            padding: 8px 16px;
             border-radius: 8px;
             cursor: pointer;
             transition: var(--transition);
             position: relative;
             overflow: hidden;
+            font-size: 14px;
         }
         
         .nav-link::before {
@@ -193,7 +197,7 @@
         }
         
         .math-title {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 700;
             color: var(--primary);
             text-shadow: 0 0 10px rgba(66, 133, 244, 0.3);
@@ -219,18 +223,18 @@
         }
         
         .math-category {
-            font-size: 18px;
+            font-size: 16px;
             color: var(--text-secondary);
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             position: relative;
             z-index: 1;
             font-style: italic;
         }
         
         .math-content {
-            font-size: 24px;
+            font-size: 20px;
             line-height: 1.8;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             position: relative;
             z-index: 1;
         }
@@ -244,12 +248,12 @@
             font-style: italic;
             color: var(--text-secondary);
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             position: relative;
             z-index: 1;
             border-left: 3px solid var(--secondary);
             padding-left: 15px;
-            font-size: 18px;
+            font-size: 16px;
         }
         
         .card-controls {
@@ -348,14 +352,14 @@
         }
         
         .stat-value {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 700;
             color: var(--secondary);
             margin-bottom: 5px;
         }
         
         .stat-label {
-            font-size: 14px;
+            font-size: 12px;
             color: var(--text-secondary);
         }
         
@@ -523,19 +527,124 @@
             color: white;
         }
         
-        /* 响应式设计 */
-        @media (max-width: 900px) {
+        /* 响应式设计 - 优化多设备适配 */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .main-content {
+                gap: 20px;
+            }
+            
+            .math-card {
+                min-height: 350px;
+                padding: 25px;
+            }
+            
+            .progress-container {
+                padding: 20px;
+            }
+        }
+        
+        @media (max-width: 1000px) {
             .main-content {
                 grid-template-columns: 1fr;
             }
             
-            .nav-container {
-                flex-direction: column;
-                gap: 20px;
+            .math-card {
+                min-height: 320px;
+                padding: 20px;
+            }
+            
+            .math-title {
+                font-size: 26px;
+            }
+            
+            .math-content {
+                font-size: 18px;
+            }
+            
+            .math-explanation {
+                font-size: 15px;
             }
             
             .stats {
                 grid-template-columns: 1fr 1fr;
+            }
+            
+            .stat-value {
+                font-size: 22px;
+            }
+            
+            .stat-label {
+                font-size: 11px;
+            }
+            
+            .exercise-options {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        @media (max-width: 800px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+                padding: 10px 0;
+                margin-bottom: 20px;
+            }
+            
+            .nav-links {
+                gap: 10px;
+            }
+            
+            .nav-link {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+            
+            .logo {
+                font-size: 22px;
+            }
+            
+            .math-card {
+                min-height: 300px;
+                padding: 18px;
+            }
+            
+            .math-title {
+                font-size: 24px;
+            }
+            
+            .math-content {
+                font-size: 17px;
+                margin-bottom: 20px;
+            }
+            
+            .math-explanation {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+            
+            .stat-value {
+                font-size: 20px;
+            }
+            
+            .stat-label {
+                font-size: 10px;
+            }
+            
+            .concept-list {
+                max-height: 250px;
+            }
+            
+            .concept-item {
+                padding: 10px 12px;
             }
             
             .exercise-options {
@@ -544,34 +653,76 @@
         }
         
         @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            
             .stats {
                 grid-template-columns: 1fr;
             }
             
             .nav-links {
                 flex-direction: column;
-                gap: 10px;
+                gap: 8px;
             }
             
             .card-controls {
                 flex-direction: column;
+                gap: 10px;
             }
             
             .btn {
                 width: 100%;
+                padding: 10px;
             }
             
-            .math-content {
-                font-size: 20px;
+            .math-card {
+                min-height: 280px;
+                padding: 15px;
             }
             
             .math-title {
-                font-size: 26px;
+                font-size: 22px;
+            }
+            
+            .math-content {
+                font-size: 16px;
+            }
+            
+            .math-explanation {
+                font-size: 13px;
             }
             
             .title-container {
                 flex-direction: column;
                 gap: 10px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .math-card {
+                min-height: 250px;
+                padding: 12px;
+            }
+            
+            .math-title {
+                font-size: 20px;
+            }
+            
+            .math-content {
+                font-size: 15px;
+            }
+            
+            .math-explanation {
+                font-size: 12px;
+            }
+            
+            .stat-value {
+                font-size: 18px;
+            }
+            
+            .concept-item {
+                padding: 8px 10px;
             }
         }
         
@@ -588,10 +739,10 @@
         
         footer {
             text-align: center;
-            margin-top: 50px;
+            margin-top: 40px;
             padding: 20px;
             color: var(--text-secondary);
-            font-size: 14px;
+            font-size: 12px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
         
