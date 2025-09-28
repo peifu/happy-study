@@ -3,6 +3,7 @@ class LearningAssistant {
     constructor() {
         this.assistant = document.getElementById('learningAssistant');
         this.speechBubble = document.getElementById('assistantSpeechBubble');
+        this.assistantName = document.getElementById('assistantName');
         this.encouragements = [
             '加油，努力，学习要用力！',
             '好好学习，天天向上！',
@@ -37,6 +38,11 @@ class LearningAssistant {
                 this.assistant.style.animation = 'float 3s ease-in-out infinite';
             } else {
                 this.assistant.style.animation = 'none';
+            }
+            
+            // 更新助手昵称
+            if (this.assistantName) {
+                this.assistantName.textContent = settings.name || '学习助手';
             }
             
             this.updateAssistantImage(settings.animal || 'bear');
@@ -230,6 +236,9 @@ class LearningAssistant {
         document.getElementById('opacitySlider').value = settings.opacity || 100;
         document.getElementById('encouragementFrequencySlider').value = settings.frequency || 3;
         
+        document.getElementById('assistantNameInput').value = settings.name || '学习助手';
+        document.getElementById('assistantName').value = settings.name || '学习助手';
+
         // 更新显示值
         document.getElementById('assistantSizeValue').textContent = `${settings.size || 100}px`;
         document.getElementById('opacityValue').textContent = `${settings.opacity || 100}%`;
@@ -291,6 +300,19 @@ class LearningAssistant {
                 });
             }
         });
+        
+        // 助手昵称输入事件
+        const nameInput = document.getElementById('assistantNameInput');
+        if (nameInput) {
+            nameInput.addEventListener('input', () => {
+                this.saveCurrentSettings();
+                
+                // 实时更新显示
+                if (this.assistantName) {
+                    this.assistantName.textContent = nameInput.value || '学习助手';
+                }
+            });
+        }
     }
 
     // 保存当前设置
@@ -304,10 +326,12 @@ class LearningAssistant {
             clickInteraction: document.getElementById('clickInteractionToggle').checked,
             voiceEncouragement: document.getElementById('voiceEncouragementToggle').checked,
             alwaysShow: document.getElementById('alwaysShowToggle').checked,
-            floatAnimation: document.getElementById('floatAnimationToggle').checked
+            floatAnimation: document.getElementById('floatAnimationToggle').checked,
+            name: document.getElementById('assistantNameInput')?.value || '学习助手' // 保存昵称
         };
         
         this.saveSettings(settings);
+        this.updateAssistantUI();
     }
 }
 

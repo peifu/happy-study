@@ -641,6 +641,7 @@
             height: 100%;
             width: 100%;
         }
+
     </style>
     <script src="common.js"></script>
     <script src="assets/js/learning-assistant.js"></script>
@@ -894,7 +895,7 @@
                     
                     <div class="form-group">
                         <label class="control-label">
-                            <span>启用学习助手</span>
+                            <span>启用助手</span>
                             <label class="switch">
                                 <input type="checkbox" id="assistantToggle">
                                 <span class="slider-round"></span>
@@ -902,10 +903,14 @@
                         </label>
                     </div>
 
-
+                    <!-- 添加助手昵称设置 -->
+                    <div class="form-group">
+                        <label class="form-label">设置昵称</label>
+                        <input type="text" class="form-control" id="assistantNameInput" placeholder="请输入助手昵称" maxlength="20">
+                    </div>
                     
                     <div class="form-group">
-                        <label class="form-label">选择助手形象</label>
+                        <label class="form-label">选择形象</label>
                         <div class="animal-selection" id="animalSelection">
                             <div class="animal-option" data-animal="bear">
                                 <img src="assets/logo/bear.png" alt="仔仔熊" class="animal-icon">
@@ -934,11 +939,7 @@
                         </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label class="form-label">助手大小</label>
-                        <input type="range" min="80" max="150" value="100" class="range-slider" id="assistantSizeSlider">
-                        <div class="slider-value" id="assistantSizeValue">100px</div>
-                    </div>
+
                 </div>
                 
                 <div class="settings-card">
@@ -999,7 +1000,11 @@
                             </label>
                         </label>
                     </div>
-                    
+                    <div class="form-group">
+                        <label class="form-label">显示大小</label>
+                        <input type="range" min="80" max="150" value="100" class="range-slider" id="assistantSizeSlider">
+                        <div class="slider-value" id="assistantSizeValue">100px</div>
+                    </div>
                     <div class="form-group">
                         <label class="form-label">透明度</label>
                         <input type="range" min="30" max="100" value="100" class="range-slider" id="opacitySlider">
@@ -1017,9 +1022,10 @@
     <!-- 全局学习助手组件 -->
     <div class="learning-assistant" id="learningAssistant">
         <img src="assets/logo/bear.png" alt="学习助手" class="assistant-image">
+        <div class="assistant-name" id="assistantName">学习助手</div>
     </div>
     
-    <div class="assistant-speech-bubble" id="assistantSpeechBubble">加油，你是最棒的！</div>    
+    <div class="assistant-speech-bubble" id="assistantSpeechBubble">加油，你是最棒的！</div>
 
     <script>
         // 初始化函数
@@ -1205,6 +1211,14 @@
                 });
             });
 
+            // 助手昵称输入事件
+            const assistantNameInput = document.getElementById('assistantNameInput');
+            assistantNameInput.addEventListener('input', function() {
+                const name = this.value || '学习助手';
+                document.getElementById('assistantName').textContent = name;
+                localStorage.setItem('assistantName', name);
+            });
+
             // 其他开关设置
             const clickInteractionToggle = document.getElementById('clickInteractionToggle');
             const voiceEncouragementToggle = document.getElementById('voiceEncouragementToggle');
@@ -1256,6 +1270,11 @@
             const assistantEnabled = localStorage.getItem('assistantEnabled') === 'true';
             document.getElementById('assistantToggle').checked = assistantEnabled;
             toggleAssistant(assistantEnabled);
+
+            // 助手昵称
+            const savedName = localStorage.getItem('assistantName') || '学习助手';
+            document.getElementById('assistantName').textContent = savedName;
+            document.getElementById('assistantNameInput').value = savedName;
 
             // 助手形象
             const savedAnimal = localStorage.getItem('assistantAnimal') || 'bear';
