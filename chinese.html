@@ -1031,7 +1031,7 @@
         // 加载诗词数据
         function loadPoemsData() {
             // 模拟从JSON文件加载数据
-            fetch('chinese-poems.json')
+            fetch('data/chinese/chinese-poems.json')
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('网络响应不正常');
@@ -1561,7 +1561,7 @@
 
         // 加载日积月累数据
         function loadDailyData() {
-            fetch('daily-accumulation.json')
+            fetch('data/chinese/daily-accumulation.json')
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('网络响应不正常');
