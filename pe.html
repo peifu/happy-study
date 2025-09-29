@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>快乐学习 - 小学体育</title>
+    <link rel="stylesheet" href="assets/css/common.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
+        <style>
         :root {
             --primary: #0f9d58;
             --secondary: #f4b400;
@@ -801,6 +802,10 @@
                     <i class="fas fa-running"></i>
                     <span>体育健康</span>
                 </div>
+                <div class="nav-link" data-page="jumpRope">
+                    <i class="fas fa-forward"></i>
+                    <span>跳绳训练</span>
+                </div>
                 <div class="nav-link" data-page="standards">
                     <i class="fas fa-award"></i>
                     <span>达标标准</span>
@@ -952,6 +957,91 @@
                             <div class="sports-item-status">
                                 <div class="status-badge">未测试</div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 跳绳训练页面 -->
+        <div class="page" id="jumpRopePage">
+            <div class="main-content">
+                <div class="sports-card">
+                    <div class="title-container">
+                        <h2 class="sports-title">跳绳动作要点</h2>
+                    </div>
+                    <div class="sports-category">【跳绳技巧与注意事项】</div>
+
+                    <div class="sports-content">
+                        <div class="requirement-item">
+                            <span class="sports-icon"><i class="fas fa-user"></i></span>
+                            <span class="requirement-label">身体姿态：</span>
+                            <span class="requirement-value">保持身体直立，眼睛平视前方，肩膀放松</span>
+                        </div>
+                        <div class="requirement-item">
+                            <span class="sports-icon"><i class="fas fa-hands"></i></span>
+                            <span class="requirement-label">手臂动作：</span>
+                            <span class="requirement-value">大臂贴近身体，小臂自然下垂，手腕灵活转动</span>
+                        </div>
+                        <div class="requirement-item">
+                            <span class="sports-icon"><i class="fas fa-sync-alt"></i></span>
+                            <span class="requirement-label">摇绳技巧：</span>
+                            <span class="requirement-value">用手腕发力摇绳，幅度适中，保持节奏稳定</span>
+                        </div>
+                        <div class="requirement-item">
+                            <span class="sports-icon"><i class="fas fa-shoe-prints"></i></span>
+                            <span class="requirement-label">跳跃要点：</span>
+                            <span class="requirement-value">前脚掌起跳和落地，膝盖微屈缓冲，跳起高度适中</span>
+                        </div>
+                        <div class="requirement-item">
+                            <span class="sports-icon"><i class="fas fa-heartbeat"></i></span>
+                            <span class="requirement-label">呼吸节奏：</span>
+                            <span class="requirement-value">自然呼吸，与跳绳节奏协调一致</span>
+                        </div>
+                    </div>
+
+                    <div class="sports-explanation">
+                        掌握正确的跳绳技巧不仅能提高效率，还能有效避免运动损伤。建议从慢速开始练习，逐步提高速度和耐力。
+                    </div>
+                </div>
+
+                <div class="progress-container">
+                    <div class="progress-title">
+                        <i class="fas fa-music"></i>
+                        <span>节奏音乐</span>
+                    </div>
+
+                    <div class="sports-content">
+                        <p>选择适合的节奏音乐有助于保持稳定的跳绳频率</p>
+                        
+                        <!-- 跳绳节奏选择框 -->
+                        <div style="margin: 15px 0;">
+                            <label for="rhythmSelector" style="display: block; margin-bottom: 8px; color: var(--text-secondary);">
+                                <i class="fas fa-tachometer-alt"></i> 选择跳绳节奏：
+                            </label>
+                            <select class="form-control" id="rhythmSelector">
+                                <option value="data/pe/1分钟180次.mp3">1分钟180次 - 慢速节奏</option>
+                                <option value="data/pe/1分钟200次.mp3">1分钟200次 - 中速节奏</option>
+                                <option value="data/pe/1分钟220次.mp3">1分钟220次 - 快速节奏</option>
+                            </select>
+                        </div>
+                        
+                        <div style="margin: 20px 0;">
+                            <audio id="jumpRopeAudio" controls style="width: 100%;">
+                                <source src="data/pe/1分钟180次.mp3" type="audio/mpeg">
+                                您的浏览器不支持音频播放。
+                            </audio>
+                        </div>
+                        
+                        <div class="card-controls">
+                            <button class="btn btn-primary" id="playMusicBtn">
+                                <i class="fas fa-play"></i>
+                                <span>播放音乐</span>
+                            </button>
+                            <button class="btn btn-secondary" id="pauseMusicBtn">
+                                <i class="fas fa-pause"></i>
+                                <span>暂停音乐</span>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -1433,6 +1523,38 @@
                 window.location.href = 'index.html';
             });
 
+            // 新增:跳绳音乐控制
+            const audioElement = document.getElementById('jumpRopeAudio');
+            const playMusicBtn = document.getElementById('playMusicBtn');
+            const pauseMusicBtn = document.getElementById('pauseMusicBtn');
+            const rhythmSelector = document.getElementById('rhythmSelector');
+            
+            if (playMusicBtn) {
+                playMusicBtn.addEventListener('click', () => {
+                    audioElement.play();
+                });
+            }
+            
+            if (pauseMusicBtn) {
+                pauseMusicBtn.addEventListener('click', () => {
+                    audioElement.pause();
+                });
+            }
+            
+            // 节奏选择器事件处理
+            if (rhythmSelector) {
+                rhythmSelector.addEventListener('change', function() {
+                    const selectedAudio = this.value;
+                    audioElement.src = selectedAudio;
+                    audioElement.load(); // 重新加载音频
+                    
+                    // 如果音频正在播放，重新播放
+                    if (!audioElement.paused) {
+                        audioElement.play();
+                    }
+                });
+            }
+
         }
 
         // 切换页面
@@ -1441,6 +1563,21 @@
                 window.location.href = 'index.html';
                 return;
             }
+            
+            // 特殊处理跳绳页面
+            if (pageId === 'jumpRope') {
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+                document.getElementById('jumpRopePage').classList.add('active');
+                
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                document.querySelector('[data-page="jumpRope"]').classList.add('active');
+                return;
+            }
+            
             switchPageCommon(pageId, navLinks, pages);
         }
 
