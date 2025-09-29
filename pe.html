@@ -806,6 +806,10 @@
                     <i class="fas fa-forward"></i>
                     <span>跳绳训练</span>
                 </div>
+                <div class="nav-link" data-page="running">
+                    <i class="fas fa-running"></i>
+                    <span>跑步训练</span>
+                </div>
                 <div class="nav-link" data-page="standards">
                     <i class="fas fa-award"></i>
                     <span>达标标准</span>
@@ -1039,6 +1043,103 @@
                                 <span>播放音乐</span>
                             </button>
                             <button class="btn btn-secondary" id="pauseMusicBtn">
+                                <i class="fas fa-pause"></i>
+                                <span>暂停音乐</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 跑步训练页面 -->
+        <div class="page" id="runningPage">
+            <div class="main-content">
+                <div class="sports-card">
+                    <div class="title-container">
+                        <h2 class="sports-title">50米短跑动作要领</h2>
+                    </div>
+                    <div class="sports-category">【短跑技巧与注意事项】</div>
+
+                    <div class="sports-content">
+                        <div class="requirement-item">
+                            <span class="sports-icon"><i class="fas fa-user"></i></span>
+                            <span class="requirement-label">起跑姿势：</span>
+                            <span class="requirement-value">采用蹲踞式起跑，双手撑地，重心前移，准备发力</span>
+                        </div>
+                        <div class="requirement-item">
+                            <span class="sports-icon"><i class="fas fa-bolt"></i></span>
+                            <span class="requirement-label">起跑动作：</span>
+                            <span class="requirement-value">听到发令后迅速蹬地，身体前倾，快速摆臂</span>
+                        </div>
+                        <div class="requirement-item">
+                            <span class="sports-icon"><i class="fas fa-running"></i></span>
+                            <span class="requirement-label">途中跑：</span>
+                            <span class="requirement-value">保持身体前倾，大腿高抬，小腿快速前摆，前脚掌着地</span>
+                        </div>
+                        <div class="requirement-item">
+                            <span class="sports-icon"><i class="fas fa-arrows-alt-h"></i></span>
+                            <span class="requirement-label">摆臂技巧：</span>
+                            <span class="requirement-value">手臂前后摆动，肘关节约90度，与腿部动作协调</span>
+                        </div>
+                        <div class="requirement-item">
+                            <span class="sports-icon"><i class="fas fa-flag-checkered"></i></span>
+                            <span class="requirement-label">冲刺阶段：</span>
+                            <span class="requirement-value">最后10米保持速度，身体前倾冲过终点线</span>
+                        </div>
+                        <div class="requirement-item">
+                            <span class="sports-icon"><i class="fas fa-heartbeat"></i></span>
+                            <span class="requirement-label">呼吸节奏：</span>
+                            <span class="requirement-value">起跑时憋气，途中自然呼吸，冲刺时深呼吸</span>
+                        </div>
+                    </div>
+
+                    <div class="sports-explanation">
+                        50米短跑是测试爆发力和速度的重要项目。正确的技术动作能够有效提高成绩，同时避免运动损伤。建议从基础动作开始练习，逐步提高速度和力量。
+                    </div>
+                </div>
+
+                <div class="progress-container">
+                    <div class="progress-title">
+                        <i class="fas fa-music"></i>
+                        <span>跑步音乐</span>
+                    </div>
+
+                    <div class="sports-content">
+                        <p>选择适合的跑步音乐有助于保持节奏和提升训练效果</p>
+                        
+                        <!-- 跑步音乐选择框 -->
+                        <div style="margin: 15px 0;">
+                            <label for="runningMusicSelector" style="display: block; margin-bottom: 8px; color: var(--text-secondary);">
+                                <i class="fas fa-headphones"></i> 选择跑步音乐：
+                            </label>
+                            <select class="form-control" id="runningMusicSelector">
+                                <option value="assets/audio/nezha-1.mp3">哪吒之魔童降世 - 主题曲</option>
+                                <option value="assets/audio/nezha-2.mp3">哪吒之魔童降世 - 插曲1</option>
+                                <option value="assets/audio/nezha-3.mp3">哪吒之魔童降世 - 插曲2</option>
+                                <option value="assets/audio/nezha-4.mp3">哪吒之魔童降世 - 插曲3</option>
+                                <option value="assets/audio/nezha-5.mp3">哪吒之魔童降世 - 插曲4</option>
+                                <option value="assets/audio/peppa-1.mp3">小猪佩奇 - 主题曲</option>
+                                <option value="assets/audio/peppa-2.mp3">小猪佩奇 - 插曲1</option>
+                                <option value="assets/audio/peppa-3.mp3">小猪佩奇 - 插曲2</option>
+                                <option value="assets/audio/peppa-4.mp3">小猪佩奇 - 插曲3</option>
+                                <option value="assets/audio/peppa-5.mp3">小猪佩奇 - 插曲4</option>
+                            </select>
+                        </div>
+                        
+                        <div style="margin: 20px 0;">
+                            <audio id="runningAudio" controls style="width: 100%;">
+                                <source src="assets/audio/nezha-1.mp3" type="audio/mpeg">
+                                您的浏览器不支持音频播放。
+                            </audio>
+                        </div>
+                        
+                        <div class="card-controls">
+                            <button class="btn btn-primary" id="playRunningMusicBtn">
+                                <i class="fas fa-play"></i>
+                                <span>播放音乐</span>
+                            </button>
+                            <button class="btn btn-secondary" id="pauseRunningMusicBtn">
                                 <i class="fas fa-pause"></i>
                                 <span>暂停音乐</span>
                             </button>
@@ -1551,6 +1652,38 @@
                     // 如果音频正在播放，重新播放
                     if (!audioElement.paused) {
                         audioElement.play();
+                    }
+                });
+            }
+
+            // 新增:跑步音乐控制
+            const runningAudioElement = document.getElementById('runningAudio');
+            const playRunningMusicBtn = document.getElementById('playRunningMusicBtn');
+            const pauseRunningMusicBtn = document.getElementById('pauseRunningMusicBtn');
+            const runningMusicSelector = document.getElementById('runningMusicSelector');
+            
+            if (playRunningMusicBtn) {
+                playRunningMusicBtn.addEventListener('click', () => {
+                    runningAudioElement.play();
+                });
+            }
+            
+            if (pauseRunningMusicBtn) {
+                pauseRunningMusicBtn.addEventListener('click', () => {
+                    runningAudioElement.pause();
+                });
+            }
+            
+            // 跑步音乐选择器事件处理
+            if (runningMusicSelector) {
+                runningMusicSelector.addEventListener('change', function() {
+                    const selectedAudio = this.value;
+                    runningAudioElement.src = selectedAudio;
+                    runningAudioElement.load(); // 重新加载音频
+                    
+                    // 如果音频正在播放，重新播放
+                    if (!runningAudioElement.paused) {
+                        runningAudioElement.play();
                     }
                 });
             }
