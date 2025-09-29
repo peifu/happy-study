@@ -183,16 +183,35 @@ class LearningAssistant {
         
         const utterance = new SpeechSynthesisUtterance(this.speechBubble.textContent);
         utterance.lang = 'zh-CN';
-        utterance.rate = 1.0;
-        utterance.pitch = 1.2;
         
+        // 使用index.html中保存的发音设置
+        const savedRate = localStorage.getItem('speechRateZh');
+        const savedPitch = localStorage.getItem('speechPitchZh');
+        const savedVoiceName = localStorage.getItem('selectedVoiceZh');
+        
+        // 设置发音速度，默认为1.0
+        utterance.rate = savedRate ? parseFloat(savedRate) : 1.0;
+        
+        // 设置发音音调，默认为1.0
+        utterance.pitch = savedPitch ? parseFloat(savedPitch) : 1.0;
+        
+        // 设置发音人
         const voices = speechSynthesis.getVoices();
-        const chineseVoice = voices.find(voice =>
-            voice.lang.includes('zh') || voice.lang.includes('CN') || voice.lang.includes('zh-CN')
-        );
+        if (savedVoiceName) {
+            const selectedVoice = voices.find(voice => voice.name === savedVoiceName);
+            if (selectedVoice) {
+                utterance.voice = selectedVoice;
+            }
+        }
         
-        if (chineseVoice) {
-            utterance.voice = chineseVoice;
+        // 如果没有选择发音人，使用中文发音人
+        if (!utterance.voice) {
+            const chineseVoice = voices.find(voice =>
+                voice.lang.includes('zh') || voice.lang.includes('CN') || voice.lang.includes('zh-CN')
+            );
+            if (chineseVoice) {
+                utterance.voice = chineseVoice;
+            }
         }
         
         speechSynthesis.speak(utterance);
