@@ -197,29 +197,139 @@
             }
         }
 
+        @media (max-width: 1200px) {
+            /* Tablet optimization */
+            .main-content {
+                grid-template-columns: 1fr 300px;
+                gap: 20px;
+            }
+            .timer-display { max-width: 500px; }
+            .time { font-size: 5rem; }
+            .presets { grid-template-columns: repeat(2, 1fr); }
+        }
+
         @media (max-width: 992px) {
             /* stack columns on narrower screens */
             .main-content {
                 grid-template-columns: 1fr;
+                gap: 15px;
             }
-            .timer-display { max-width: 420px; }
+            .timer-section {
+                padding: 20px;
+                min-height: 300px;
+            }
+            .timer-display {
+                max-width: 400px;
+                aspect-ratio: 4/3;
+            }
             .time { font-size: 4rem; }
             .controls-section { width: 100%; }
+            .progress-container {
+                padding: 20px;
+            }
         }
 
         @media (max-width: 768px) {
-            .timer-display { max-width: 320px; }
-            .time { font-size: 3rem; }
-            .presets { grid-template-columns: repeat(2, 1fr); }
-            .session-info { flex-direction: column; align-items: center; gap: 10px; }
+            /* Mobile optimization */
+            .timer-display {
+                max-width: 300px;
+                aspect-ratio: 1/1;
+            }
+            .time { font-size: 3.5rem; }
+            .presets {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
+            .preset-btn {
+                padding: 15px 8px;
+            }
+            .preset-time {
+                font-size: 1.25rem;
+            }
+            .preset-label {
+                font-size: 0.75rem;
+            }
+            .session-info {
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+            }
+            .session-card {
+                padding: 12px 20px;
+            }
+            .session-value {
+                font-size: 2rem;
+            }
+            .controls {
+                gap: 10px;
+                margin: 15px 0;
+            }
+            .btn {
+                padding: 10px 16px;
+                font-size: 0.875rem;
+            }
         }
 
         @media (max-width: 480px) {
-            .timer-display { max-width: 240px; }
-            .time { font-size: 2.25rem; }
-            .presets { grid-template-columns: 1fr; }
-            .controls { flex-direction: column; width: 100%; }
-            .btn { width: 100%; justify-content: center; }
+            /* Small mobile optimization */
+            .timer-display {
+                max-width: 250px;
+                aspect-ratio: 1/1;
+            }
+            .time { font-size: 3rem; }
+            .presets {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 6px;
+            }
+            .preset-btn {
+                padding: 12px 6px;
+            }
+            .preset-time {
+                font-size: 1.125rem;
+            }
+            .controls {
+                flex-direction: column;
+                width: 100%;
+            }
+            .btn {
+                width: 100%;
+                justify-content: center;
+                padding: 12px;
+            }
+            .timer-section {
+                padding: 15px;
+                min-height: 250px;
+            }
+            .progress-container {
+                padding: 15px;
+            }
+            .section-title {
+                font-size: 1.25rem;
+                margin: 8px 0;
+            }
+        }
+
+        @media (max-width: 360px) {
+            /* Extra small screens */
+            .timer-display {
+                max-width: 200px;
+            }
+            .time { font-size: 2.5rem; }
+            .presets {
+                grid-template-columns: 1fr;
+            }
+            .preset-btn {
+                padding: 10px 4px;
+            }
+            .preset-time {
+                font-size: 1rem;
+            }
+            .session-card {
+                padding: 10px 15px;
+            }
+            .session-value {
+                font-size: 1.75rem;
+            }
         }
 
         footer {
@@ -263,7 +373,20 @@
                   </div>
             </div>
             <div class="progress-container">
-
+                <div class="controls">
+                     <button class="btn btn-primary" id="startBtn">
+                         <i class="fas fa-play"></i>
+                         <span>开始</span>
+                     </button>
+                     <button class="btn btn-warning" id="pauseBtn" disabled>
+                         <i class="fas fa-pause"></i>
+                         <span>暂停</span>
+                     </button>
+                     <button class="btn btn-success" id="resetBtn">
+                         <i class="fas fa-redo"></i>
+                         <span>重置</span>
+                     </button>
+                 </div>
                  <div class="progress-container">
                     <div class="progress-info">
                         <span>进度</span>
@@ -312,20 +435,7 @@
                         <span class="preset-label">分钟</span>
                     </div>
                 </div>
-                <div class="controls">
-                     <button class="btn btn-primary" id="startBtn">
-                         <i class="fas fa-play"></i>
-                         <span>开始</span>
-                     </button>
-                     <button class="btn btn-warning" id="pauseBtn" disabled>
-                         <i class="fas fa-pause"></i>
-                         <span>暂停</span>
-                     </button>
-                     <button class="btn btn-success" id="resetBtn">
-                         <i class="fas fa-redo"></i>
-                         <span>重置</span>
-                     </button>
-                 </div>
+
             </div>
 
         </div>
