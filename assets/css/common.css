@@ -135,6 +135,12 @@ body {
     width: 100%;
 }
 
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 30px;
+}
+
 /* 主页标题 */
 .main-title {
     text-align: center;

@@ -333,6 +333,10 @@
                     <i class="fas fa-robot"></i>
                     <span>学习助手</span>
                 </div>
+                <div class="nav-link" data-page="pomodoro" id="pomodoroPage">
+                    <i class="fas fa-clock"></i>
+                    <span>番茄时钟</span>
+                </div>
                 <div class="nav-link" data-page="settings">
                     <i class="fas fa-cog"></i>
                     <span>设置</span>
@@ -764,6 +768,10 @@
             // 主页链接点击事件
             setupHomeLink('homeLink', 'index.html');
 
+            document.getElementById('pomodoroPage').addEventListener('click', function() {
+                switchPage('pomodoro');
+            });
+
             // 卡片点击事件
             document.getElementById('englishCard').addEventListener('click', function() {
                 switchPage('englishCard');
@@ -968,6 +976,9 @@
                 document.getElementById('homePage').classList.add('active');
             } else if (pageId === 'musicCard') {
                 window.location.href = 'music.html';
+                document.getElementById('homePage').classList.add('active');
+            } else if (pageId === 'pomodoro') {
+                window.location.href = 'pomodoro.html';
                 document.getElementById('homePage').classList.add('active');
             }
         }
@@ -1175,7 +1186,7 @@
         window.addEventListener('DOMContentLoaded', function() {
             init();
         });
-        
+
         if (speechSynthesis.onvoiceschanged !== undefined) {
             speechSynthesis.onvoiceschanged = populateVoiceList;
         }

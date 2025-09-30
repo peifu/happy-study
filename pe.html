@@ -7,7 +7,7 @@
     <title>快乐学习 - 小学体育</title>
     <link rel="stylesheet" href="assets/css/common.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <style>
+    <style>
         :root {
             --primary: #0f9d58;
             --secondary: #f4b400;
@@ -42,34 +42,6 @@
             --text-secondary: #6b7280;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', 'Microsoft YaHei', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, var(--darker), var(--dark));
-            color: var(--text);
-            min-height: 100vh;
-            line-height: 1.6;
-            overflow-x: hidden;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-size: var(--font-size);
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            min-height: calc(100vh - 160px);
-            display: flex;
-            flex-direction: column;
-        }
-
         /* 导航样式 */
         .nav-container {
             display: flex;
@@ -93,42 +65,10 @@
             cursor: pointer;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 15px;
-        }
-
-        .nav-link {
-            padding: 8px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-            font-size: 14px;
-        }
-
-        .nav-link::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            transition: var(--transition);
-        }
-
-        .nav-link:hover::before {
-            width: 100%;
-        }
-
-        .nav-link.active {
-            background: rgba(15, 157, 88, 0.1);
-        }
-
-        .nav-link.active::before {
-            width: 100%;
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
         }
 
         /* 页面内容 */
@@ -151,13 +91,6 @@
                 opacity: 1;
                 transform: translateY(0);
             }
-        }
-
-        /* 主页样式 */
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr 350px;
-            gap: 30px;
         }
 
         .sports-card {
@@ -512,56 +445,56 @@
             .container {
                 padding: 15px;
             }
-            
+
             .main-content {
                 gap: 20px;
             }
-            
+
             .sports-card {
                 min-height: 350px;
                 padding: 25px;
             }
-            
+
             .progress-container {
                 padding: 20px;
             }
         }
-        
+
         @media (max-width: 1000px) {
             .main-content {
                 grid-template-columns: 1fr;
             }
-            
+
             .sports-card {
                 min-height: 320px;
                 padding: 20px;
             }
-            
+
             .sports-title {
                 font-size: 26px;
             }
-            
+
             .sports-content {
                 font-size: 18px;
             }
-            
+
             .sports-explanation {
                 font-size: 15px;
             }
-            
+
             .stats {
                 grid-template-columns: 1fr 1fr;
             }
-            
+
             .stat-value {
                 font-size: 22px;
             }
-            
+
             .stat-label {
                 font-size: 11px;
             }
         }
-        
+
         @media (max-width: 800px) {
             .nav-container {
                 flex-direction: column;
@@ -569,156 +502,156 @@
                 padding: 10px 0;
                 margin-bottom: 20px;
             }
-            
+
             .nav-links {
                 gap: 10px;
             }
-            
+
             .nav-link {
                 padding: 6px 12px;
                 font-size: 13px;
             }
-            
+
             .logo {
                 font-size: 22px;
             }
-            
+
             .sports-card {
                 min-height: 300px;
                 padding: 18px;
             }
-            
+
             .sports-title {
                 font-size: 24px;
             }
-            
+
             .sports-content {
                 font-size: 17px;
                 margin-bottom: 20px;
             }
-            
+
             .sports-explanation {
                 font-size: 14px;
                 margin-bottom: 20px;
             }
-            
+
             .stats {
                 grid-template-columns: 1fr 1fr;
                 gap: 12px;
             }
-            
+
             .stat-value {
                 font-size: 20px;
             }
-            
+
             .stat-label {
                 font-size: 10px;
             }
-            
+
             .sports-list {
                 max-height: 250px;
             }
-            
+
             .sports-item {
                 padding: 10px 12px;
             }
-            
+
             .standards-table {
                 font-size: 14px;
             }
-            
+
             .standards-table th,
             .standards-table td {
                 padding: 8px 5px;
             }
         }
-        
+
         @media (max-width: 600px) {
             .container {
                 padding: 10px;
             }
-            
+
             .stats {
                 grid-template-columns: 1fr;
             }
-            
+
             .nav-links {
                 flex-direction: column;
                 gap: 8px;
             }
-            
+
             .card-controls {
                 flex-direction: column;
                 gap: 10px;
             }
-            
+
             .btn {
                 width: 100%;
                 padding: 10px;
             }
-            
+
             .sports-card {
                 min-height: 280px;
                 padding: 15px;
             }
-            
+
             .sports-title {
                 font-size: 22px;
             }
-            
+
             .sports-content {
                 font-size: 16px;
             }
-            
+
             .sports-explanation {
                 font-size: 13px;
             }
-            
+
             .title-container {
                 flex-direction: column;
                 gap: 10px;
             }
-            
+
             .standards-table {
                 font-size: 13px;
             }
-            
+
             .standards-table th,
             .standards-table td {
                 padding: 6px 4px;
             }
         }
-        
+
         @media (max-width: 400px) {
             .sports-card {
                 min-height: 250px;
                 padding: 12px;
             }
-            
+
             .sports-title {
                 font-size: 20px;
             }
-            
+
             .sports-content {
                 font-size: 15px;
             }
-            
+
             .sports-explanation {
                 font-size: 12px;
             }
-            
+
             .stat-value {
                 font-size: 18px;
             }
-            
+
             .sports-item {
                 padding: 8px 10px;
             }
-            
+
             .standards-table {
                 font-size: 12px;
             }
-            
+
             .standards-table th,
             .standards-table td {
                 padding: 5px 3px;
@@ -1017,10 +950,11 @@
 
                     <div class="sports-content">
                         <p>选择适合的节奏音乐有助于保持稳定的跳绳频率</p>
-                        
+
                         <!-- 跳绳节奏选择框 -->
                         <div style="margin: 15px 0;">
-                            <label for="rhythmSelector" style="display: block; margin-bottom: 8px; color: var(--text-secondary);">
+                            <label for="rhythmSelector"
+                                style="display: block; margin-bottom: 8px; color: var(--text-secondary);">
                                 <i class="fas fa-tachometer-alt"></i> 选择跳绳节奏：
                             </label>
                             <select class="form-control" id="rhythmSelector">
@@ -1029,14 +963,14 @@
                                 <option value="data/pe/1分钟220次.mp3">1分钟220次 - 快速节奏</option>
                             </select>
                         </div>
-                        
+
                         <div style="margin: 20px 0;">
                             <audio id="jumpRopeAudio" controls style="width: 100%;">
                                 <source src="data/pe/1分钟180次.mp3" type="audio/mpeg">
                                 您的浏览器不支持音频播放。
                             </audio>
                         </div>
-                        
+
                         <div class="card-controls">
                             <button class="btn btn-primary" id="playMusicBtn">
                                 <i class="fas fa-play"></i>
@@ -1107,10 +1041,11 @@
 
                     <div class="sports-content">
                         <p>选择适合的跑步音乐有助于保持节奏和提升训练效果</p>
-                        
+
                         <!-- 跑步音乐选择框 -->
                         <div style="margin: 15px 0;">
-                            <label for="runningMusicSelector" style="display: block; margin-bottom: 8px; color: var(--text-secondary);">
+                            <label for="runningMusicSelector"
+                                style="display: block; margin-bottom: 8px; color: var(--text-secondary);">
                                 <i class="fas fa-headphones"></i> 选择跑步音乐：
                             </label>
                             <select class="form-control" id="runningMusicSelector">
@@ -1126,14 +1061,14 @@
                                 <option value="assets/audio/peppa-5.mp3">小猪佩奇 - 插曲4</option>
                             </select>
                         </div>
-                        
+
                         <div style="margin: 20px 0;">
                             <audio id="runningAudio" controls style="width: 100%;">
                                 <source src="assets/audio/nezha-1.mp3" type="audio/mpeg">
                                 您的浏览器不支持音频播放。
                             </audio>
                         </div>
-                        
+
                         <div class="card-controls">
                             <button class="btn btn-primary" id="playRunningMusicBtn">
                                 <i class="fas fa-play"></i>
@@ -1629,26 +1564,26 @@
             const playMusicBtn = document.getElementById('playMusicBtn');
             const pauseMusicBtn = document.getElementById('pauseMusicBtn');
             const rhythmSelector = document.getElementById('rhythmSelector');
-            
+
             if (playMusicBtn) {
                 playMusicBtn.addEventListener('click', () => {
                     audioElement.play();
                 });
             }
-            
+
             if (pauseMusicBtn) {
                 pauseMusicBtn.addEventListener('click', () => {
                     audioElement.pause();
                 });
             }
-            
+
             // 节奏选择器事件处理
             if (rhythmSelector) {
-                rhythmSelector.addEventListener('change', function() {
+                rhythmSelector.addEventListener('change', function () {
                     const selectedAudio = this.value;
                     audioElement.src = selectedAudio;
                     audioElement.load(); // 重新加载音频
-                    
+
                     // 如果音频正在播放，重新播放
                     if (!audioElement.paused) {
                         audioElement.play();
@@ -1661,26 +1596,26 @@
             const playRunningMusicBtn = document.getElementById('playRunningMusicBtn');
             const pauseRunningMusicBtn = document.getElementById('pauseRunningMusicBtn');
             const runningMusicSelector = document.getElementById('runningMusicSelector');
-            
+
             if (playRunningMusicBtn) {
                 playRunningMusicBtn.addEventListener('click', () => {
                     runningAudioElement.play();
                 });
             }
-            
+
             if (pauseRunningMusicBtn) {
                 pauseRunningMusicBtn.addEventListener('click', () => {
                     runningAudioElement.pause();
                 });
             }
-            
+
             // 跑步音乐选择器事件处理
             if (runningMusicSelector) {
-                runningMusicSelector.addEventListener('change', function() {
+                runningMusicSelector.addEventListener('change', function () {
                     const selectedAudio = this.value;
                     runningAudioElement.src = selectedAudio;
                     runningAudioElement.load(); // 重新加载音频
-                    
+
                     // 如果音频正在播放，重新播放
                     if (!runningAudioElement.paused) {
                         runningAudioElement.play();
@@ -1696,21 +1631,21 @@
                 window.location.href = 'index.html';
                 return;
             }
-            
+
             // 特殊处理跳绳页面
             if (pageId === 'jumpRope') {
                 document.querySelectorAll('.page').forEach(page => {
                     page.classList.remove('active');
                 });
                 document.getElementById('jumpRopePage').classList.add('active');
-                
+
                 document.querySelectorAll('.nav-link').forEach(link => {
                     link.classList.remove('active');
                 });
                 document.querySelector('[data-page="jumpRope"]').classList.add('active');
                 return;
             }
-            
+
             switchPageCommon(pageId, navLinks, pages);
         }
 
@@ -1858,16 +1793,16 @@
         }
 
         // 初始化应用
-        window.addEventListener('DOMContentLoaded', function() {
+        window.addEventListener('DOMContentLoaded', function () {
             init();
         });
     </script>
-    
+
     <!-- 全局学习助手组件 -->
     <div class="learning-assistant" id="learningAssistant">
         <img src="assets/logo/bear.png" alt="学习助手" class="assistant-image">
     </div>
-    
+
     <div class="assistant-speech-bubble" id="assistantSpeechBubble">加油，你是最棒的！</div>
 </body>
 
