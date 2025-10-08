@@ -48,7 +48,7 @@
             width: 100%;
             max-width: 720px;
             aspect-ratio: 4/3;
-            border-radius: 100px;
+            border-radius: 60px;
             background: var(--card-bg-color);
             display: flex;
             flex-direction: column;
@@ -219,7 +219,6 @@
                 min-height: 300px;
             }
             .timer-display {
-                max-width: 400px;
                 aspect-ratio: 4/3;
             }
             .time { font-size: 4rem; }
@@ -227,12 +226,14 @@
             .progress-container {
                 padding: 20px;
             }
+            .preset-btn {
+                padding: 12px 8px;
+            }
         }
 
         @media (max-width: 768px) {
             /* Mobile optimization */
             .timer-display {
-                max-width: 300px;
                 aspect-ratio: 1/1;
             }
             .time { font-size: 3.5rem; }
@@ -241,7 +242,7 @@
                 gap: 8px;
             }
             .preset-btn {
-                padding: 15px 8px;
+                padding: 12px 8px;
             }
             .preset-time {
                 font-size: 1.25rem;
@@ -272,20 +273,19 @@
 
         @media (max-width: 480px) {
             /* Small mobile optimization */
-            .timer-display {
-                max-width: 250px;
-                aspect-ratio: 1/1;
-            }
             .time { font-size: 3rem; }
             .presets {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 6px;
             }
             .preset-btn {
-                padding: 12px 6px;
+                padding: 10px 6px;
             }
             .preset-time {
-                font-size: 1.125rem;
+                font-size: 1rem;
+            }
+            .preset-label {
+                font-size: 0.5rem;
             }
             .controls {
                 flex-direction: column;
@@ -311,9 +311,6 @@
 
         @media (max-width: 360px) {
             /* Extra small screens */
-            .timer-display {
-                max-width: 200px;
-            }
             .time { font-size: 2.5rem; }
             .presets {
                 grid-template-columns: 1fr;
