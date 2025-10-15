@@ -337,6 +337,10 @@
                     <i class="fas fa-clock"></i>
                     <span>番茄时钟</span>
                 </div>
+                <div class="nav-link" data-page="game" id="gamePage">
+                    <i class="fas fa-game"></i>
+                    <span>闯关挑战</span>
+                </div>
                 <div class="nav-link" data-page="settings">
                     <i class="fas fa-cog"></i>
                     <span>设置</span>
@@ -772,6 +776,10 @@
                 switchPage('pomodoro');
             });
 
+            document.getElementById('gamePage').addEventListener('click', function() {
+                switchPage('game');
+            });
+
             // 卡片点击事件
             document.getElementById('englishCard').addEventListener('click', function() {
                 switchPage('englishCard');
@@ -979,6 +987,9 @@
                 document.getElementById('homePage').classList.add('active');
             } else if (pageId === 'pomodoro') {
                 window.location.href = 'pomodoro.html';
+                document.getElementById('homePage').classList.add('active');
+            } else if (pageId === 'game') {
+                window.location.href = 'car-game.html';
                 document.getElementById('homePage').classList.add('active');
             }
         }
