@@ -365,7 +365,7 @@
             <div class="timer-section">
                  <div class="timer-display work" id="timerDisplay">
                      <div class="progress-ring" id="progressRing"></div>
-                     <div class="time" id="time">25:00</div>
+                     <div class="time" id="time">01:00</div>
                      <div class="status" id="status">准备开始</div>
                   </div>
             </div>
@@ -407,7 +407,7 @@
 
                  <h2 class="section-title">选择时长</h2>
                  <div class="presets" id="presets">
-                    <div class="preset-btn" data-minutes="1">
+                    <div class="preset-btn active" data-minutes="1">
                         <span class="preset-time">1</span>
                         <span class="preset-label">分钟</span>
                     </div>
@@ -419,7 +419,7 @@
                         <span class="preset-time">10</span>
                         <span class="preset-label">分钟</span>
                     </div>
-                    <div class="preset-btn active" data-minutes="25">
+                    <div class="preset-btn" data-minutes="25">
                         <span class="preset-time">25</span>
                         <span class="preset-label">分钟</span>
                     </div>
@@ -445,13 +445,13 @@
     <script>
         class PomodoroTimer {
             constructor() {
-                this.totalTime = 25 * 60; // 默认25分钟
+                this.totalTime = 1 * 60; // 默认25分钟
                 this.currentTime = this.totalTime;
                 this.isRunning = false;
                 this.interval = null;
                 this.completedSessions = 0;
                 this.totalSessions = 0;
-                this.selectedMinutes = 25;
+                this.selectedMinutes = 1;
                 
                 this.initializeElements();
                 this.setupEventListeners();
