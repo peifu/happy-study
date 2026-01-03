@@ -341,6 +341,10 @@
                     <i class="fas fa-game"></i>
                     <span>闯关挑战</span>
                 </div>
+                <div class="nav-link" data-page="game2" id="gamePage2">
+                    <i class="fas fa-game"></i>
+                    <span>游戏世界</span>
+                </div>
                 <div class="nav-link" data-page="settings">
                     <i class="fas fa-cog"></i>
                     <span>设置</span>
@@ -779,6 +783,9 @@
             document.getElementById('gamePage').addEventListener('click', function() {
                 switchPage('game');
             });
+            document.getElementById('gamePage2').addEventListener('click', function() {
+                switchPage('game2');
+            });
 
             // 卡片点击事件
             document.getElementById('englishCard').addEventListener('click', function() {
@@ -990,6 +997,9 @@
                 document.getElementById('homePage').classList.add('active');
             } else if (pageId === 'game') {
                 window.location.href = 'car-game.html';
+                document.getElementById('homePage').classList.add('active');
+            } else if (pageId === 'game2') {
+                window.location.href = 'https://www.gamestolearnenglish.com/';
                 document.getElementById('homePage').classList.add('active');
             }
         }
