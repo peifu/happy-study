@@ -1,0 +1,86 @@
+[
+     {
+         "word": "awful",
+         "phonetic": "/ˈɔːfl/",
+         "meaning": "糟糕的；极坏的",
+         "example": "The weather was awful yesterday."
+     },
+     {
+         "word": "biscuit",
+         "phonetic": "/ˈbɪskɪt/",
+         "meaning": "饼干",
+         "example": "I'd like to have a biscuit with my tea."
+     },
+     {
+         "word": "cereal",
+         "phonetic": "/ˈsɪəriəl/",
+         "meaning": "谷物；麦片",
+         "example": "I eat cereal for breakfast every morning."
+     },
+     {
+         "word": "curry",
+         "phonetic": "/ˈkʌri/",
+         "meaning": "咖喱",
+         "example": "Indian curry is very popular around the world."
+     },
+     {
+         "word": "delicious",
+         "phonetic": "/dɪˈlɪʃəs/",
+         "meaning": "美味的；可口的",
+         "example": "This cake tastes delicious."
+     },
+     {
+         "word": "empty",
+         "phonetic": "/ˈempti/",
+         "meaning": "空的",
+         "example": "The fridge is almost empty."
+     },
+     {
+         "word": "meal",
+         "phonetic": "/miːl/",
+         "meaning": "一餐；饭",
+         "example": "We usually have three meals a day."
+     },
+     {
+         "word": "melon",
+         "phonetic": "/ˈmelən/",
+         "meaning": "甜瓜；瓜",
+         "example": "This melon is very sweet and juicy."
+     },
+     {
+         "word": "omelette",
+         "phonetic": "/ˈɒmlət/",
+         "meaning": "煎蛋卷；摊鸡蛋",
+         "example": "I ordered a cheese omelette for breakfast."
+     },
+     {
+         "word": "piece of cake",
+         "phonetic": "/piːs əv keɪk/",
+         "meaning": "一块蛋糕；小菜一碟",
+         "example": "The exam was a piece of cake."
+     },
+     {
+         "word": "steak",
+         "phonetic": "/steɪk/",
+         "meaning": "牛排",
+         "example": "I'd like my steak medium rare."
+     },
+     {
+         "word": "strawberry",
+         "phonetic": "/ˈstrɔːbəri/",
+         "meaning": "草莓",
+         "example": "Strawberries are my favorite fruit."
+     },
+     {
+         "word": "toast",
+         "phonetic": "/təʊst/",
+         "meaning": "吐司；烤面包片",
+         "example": "I had toast and butter for breakfast."
+     },
+     {
+         "word": "yoghurt",
+         "phonetic": "/ˈjɒɡət/",
+         "meaning": "酸奶",
+         "example": "This yoghurt has a creamy texture."
+     }
+]

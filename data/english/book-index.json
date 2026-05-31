@@ -1,0 +1,13 @@
+[
+  { "id": "xes312",  "title": "学而思312词汇",     "file": "data/english/xes312.json" },
+  { "id": "xes313",  "title": "学而思313词汇",     "file": "data/english/xes313.json" },
+  { "id": "grade3a", "title": "小学三年级词汇A",   "file": "data/english/english-wordlist-grade3a.json" },
+  { "id": "grade3b", "title": "小学三年级词汇B",   "file": "data/english/english-wordlist-grade3b.json" },
+  { "id": "grade4a", "title": "小学四年级词汇A",   "file": "data/english/english-wordlist-grade4a.json" },
+  { "id": "grade4b", "title": "小学四年级词汇B",   "file": "data/english/english-wordlist-grade4b.json" },
+  { "id": "grade5a", "title": "小学五年级词汇A",   "file": "data/english/english-wordlist-grade5a.json" },
+  { "id": "grade5b", "title": "小学五年级词汇B",   "file": "data/english/english-wordlist-grade5b.json" },
+  { "id": "grade6a", "title": "小学六年级词汇A",   "file": "data/english/english-wordlist-grade6a.json" },
+  { "id": "grade6b", "title": "小学六年级词汇B",   "file": "data/english/english-wordlist-grade6b.json" },
+  { "id": "ket",     "title": "KET单词表",         "file": "data/english/ket.json" }
+]

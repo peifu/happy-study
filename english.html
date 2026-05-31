@@ -1163,18 +1163,7 @@
                         <span>当前单词本</span>
                     </div>
 
-                    <select class="form-control" id="bookSelector">
-                        <option value="xes312">学而思312词汇</option>
-                        <option value="grade3a">小学三年级词汇A</option>
-                        <option value="grade3b">小学三年级词汇B</option>
-                        <option value="grade4a">小学四年级词汇A</option>
-                        <option value="grade4b">小学四年级词汇B</option>
-                        <option value="grade5a">小学五年级词汇A</option>
-                        <option value="grade5b">小学五年级词汇B</option>
-                        <option value="grade6a">小学六年级词汇A</option>
-                        <option value="grade6b">小学六年级词汇B</option>
-                        <option value="ket">KET单词表</option>
-                    </select>
+                    <select class="form-control" id="bookSelector"></select>
                     <div class="timer-setting-container">
                         <div class="control-group">
                             <div class="control-label">
@@ -1235,18 +1224,7 @@
 
                     <div class="form-group">
                         <label class="form-label">默认单词本</label>
-                        <select class="form-control" id="defaultBook">
-                            <option value="xes312">学而思312</option>
-                            <option value="grade3a">小学三年级词汇A</option>
-                            <option value="grade3b">小学三年级词汇B</option>
-                            <option value="grade4a">小学四年级词汇A</option>
-                            <option value="grade4b">小学四年级词汇B</option>
-                            <option value="grade5a">小学五年级词汇A</option>
-                            <option value="grade5b">小学五年级词汇B</option>
-                            <option value="grade6a">小学六年级词汇A</option>
-                            <option value="grade6b">小学六年级词汇B</option>
-                            <option value="ket">KET词汇</option>
-                        </select>
+                        <select class="form-control" id="defaultBook"></select>
                     </div>
 
                     <div class="form-group">
@@ -1377,17 +1355,7 @@
                             <i class="fas fa-book"></i>
                             <span>游戏词汇</span>
                         </div>
-                        <select class="form-control" id="gameBookSelector">
-                            <option value="grade3a">小学三年级词汇A</option>
-                            <option value="grade3b">小学三年级词汇B</option>
-                            <option value="grade4a">小学四年级词汇A</option>
-                            <option value="grade4b">小学四年级词汇B</option>
-                            <option value="grade5a">小学五年级词汇A</option>
-                            <option value="grade5b">小学五年级词汇B</option>
-                            <option value="grade6a">小学六年级词汇A</option>
-                            <option value="grade6b">小学六年级词汇B</option>
-                            <option value="ket">KET单词表</option>
-                        </select>
+                        <select class="form-control" id="gameBookSelector"></select>
 
                         <div class="progress-title">
                             <i class="fas fa-trophy"></i>
@@ -1417,6 +1385,7 @@
             // 只存储已加载的词表
             let wordLists = {};
             let currentBook = 'grade3a';
+            let bookIndex = null;
             let currentIndex = 0;
             let autoPlayInterval = 5; // 默认5秒
             let autoPlayTimer = null;
@@ -1480,13 +1449,42 @@
             const pauseGameBtnElement = document.getElementById('pauseGameBtn');
             const restartGameBtnElement = document.getElementById('restartGameBtn');
 
+            // 从book-index.json加载单词本元数据，填充所有选择器
+            async function loadBookIndex() {
+                try {
+                    const resp = await fetch('data/english/book-index.json');
+                    bookIndex = await resp.json();
+                } catch (e) {
+                    console.error('加载单词本索引失败:', e);
+                    return;
+                }
+                const selectors = {
+                    bookSelector: document.getElementById('bookSelector'),
+                    gameBookSelector: document.getElementById('gameBookSelector'),
+                    defaultBook: document.getElementById('defaultBook')
+                };
+                Object.values(selectors).forEach(function(sel) {
+                    if (!sel) return;
+                    sel.innerHTML = '';
+                    bookIndex.forEach(function(entry) {
+                        var opt = document.createElement('option');
+                        opt.value = entry.id;
+                        opt.textContent = entry.title;
+                        sel.appendChild(opt);
+                    });
+                });
+                if (selectors.bookSelector) selectors.bookSelector.value = currentBook;
+                if (selectors.gameBookSelector) selectors.gameBookSelector.value = currentBook;
+            }
+
             // 初始化
             async function init() {
                 navLinks = document.querySelectorAll('.nav-link');
                 pages = document.querySelectorAll('.page');
                 syncThemeFromIndex();
 
-                // 加载当前单词本
+                // 加载单词本索引，再加载当前单词本
+                await loadBookIndex();
                 await loadWordData(currentBook);
 
                 // 加载学习进度
@@ -1518,19 +1516,13 @@
                 // 若已加载则直接返回
                 if (wordLists[book]) return;
 
-                // 文件名映射
-                const fileMap = {
-                    xes312: 'data/english/xes312.json',
-                    grade3: 'data/english/english-wordlist-grade3a.json',
-                    grade3b: 'data/english/english-wordlist-grade3b.json',
-                    grade4a: 'data/english/english-wordlist-grade4a.json',
-                    grade4b: 'data/english/english-wordlist-grade4b.json',
-                    grade5a: 'data/english/english-wordlist-grade5a.json',
-                    grade5b: 'data/english/english-wordlist-grade5b.json',
-                    grade6a: 'data/english/english-wordlist-grade6a.json',
-                    grade6b: 'data/english/english-wordlist-grade6b.json',
-                    ket: 'data/english/ket.json'
-                };
+                // 从bookIndex构建文件映射
+                const fileMap = {};
+                if (bookIndex) {
+                    bookIndex.forEach(function(entry) {
+                        fileMap[entry.id] = entry.file;
+                    });
+                }
                 const file = fileMap[book];
 
                 try {
@@ -2109,7 +2101,6 @@
                 console.log('初始化游戏页面');
 
                 if (gameBookSelectorElement) {
-                    gameBookSelectorElement.innerHTML = bookSelectorElement.innerHTML;
                     gameBookSelectorElement.value = currentBook || 'grade3a';
                 }
 
