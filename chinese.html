@@ -8,42 +8,7 @@
     <link rel="stylesheet" href="assets/css/common.css">
     <link rel="stylesheet" href="assets/css/learning-assistant.css">
     <style>
-        :root {
-            --primary: #ea4335;
-            --secondary: #fbbc05;
-            --accent: #ff6b6b;
-            --success: #4caf50;
-            --warning: #ff9800;
-            --info: #4285f4;
-        }
-      
-        .light-theme {
-            --bg-color: #f0f2f5;
-            --text-color: #222;
-            --card-bg-color: rgba(255, 255, 255, 0.95);
-            --primary: #0078d4;
-            --secondary: #00bfae;
-            --accent: #ff6b6b;
-            --success: #43a047;
-            --warning: #ff9800;
-            --info: #1976d2;
-            --dark: #f5f7fa;
-            --darker: #e3e8ef;
-            --text-secondary: #6b7280;
-        }
-    
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* 主页样式 */
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr 350px;
-            gap: 30px;
-        }
-        
+        /* 诗词卡片 */
         .poem-card {
             background: var(--card-bg-color);
             border-radius: 16px;
@@ -60,12 +25,12 @@
             border: 1px solid rgba(234, 67, 53, 0.2);
             text-align: center;
         }
-        
+
         .poem-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         }
-        
+
         .poem-card::before {
             content: '';
             position: absolute;
@@ -77,7 +42,7 @@
             transform: rotate(30deg);
             z-index: 0;
         }
-        
+
         .title-container {
             display: flex;
             align-items: center;
@@ -87,14 +52,14 @@
             position: relative;
             z-index: 1;
         }
-        
+
         .poem-title {
             font-size: 28px;
             font-weight: 700;
             color: var(--primary);
             text-shadow: 0 0 10px rgba(234, 67, 53, 0.3);
         }
-        
+
         .read-btn {
             background: rgba(234, 67, 53, 0.2);
             border: none;
@@ -108,12 +73,12 @@
             transition: var(--transition);
             color: var(--primary);
         }
-        
+
         .read-btn:hover {
             background: rgba(234, 67, 53, 0.3);
             transform: scale(1.1);
         }
-        
+
         .poem-author {
             font-size: 16px;
             color: var(--text-secondary);
@@ -122,7 +87,7 @@
             z-index: 1;
             font-style: italic;
         }
-        
+
         .poem-content {
             font-size: 20px;
             line-height: 1.8;
@@ -130,12 +95,12 @@
             position: relative;
             z-index: 1;
         }
-        
+
         .poem-line {
             margin-bottom: 15px;
             display: block;
         }
-        
+
         .poem-translation {
             font-style: italic;
             color: var(--text-secondary);
@@ -147,20 +112,18 @@
             padding-left: 15px;
             font-size: 16px;
         }
-        
-        
-        
+
         /* 诗词选集 */
         .poem-selector {
             margin-top: 20px;
         }
-        
+
         .poem-list {
             max-height: 300px;
             overflow-y: auto;
             margin-top: 15px;
         }
-        
+
         .poem-item {
             padding: 12px 15px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -170,30 +133,30 @@
             cursor: pointer;
             transition: var(--transition);
         }
-        
+
         .poem-item:hover {
             background: rgba(234, 67, 53, 0.1);
         }
-        
+
         .poem-item.mastered {
             border-left: 4px solid var(--secondary);
         }
-        
+
         .poem-item .poem-name {
             font-weight: 600;
         }
-        
+
         .poem-item .poem-author {
             font-size: 14px;
             color: var(--text-secondary);
             margin: 0;
         }
-        
+
         .poem-item-status {
             display: flex;
             justify-content: flex-end;
         }
-        
+
         .status-badge {
             padding: 5px 10px;
             border-radius: 20px;
@@ -201,21 +164,12 @@
             background: rgba(251, 188, 5, 0.2);
             color: var(--secondary);
         }
-        
-        /* 设置页面样式 */
-        .settings-container {
-            background: var(--card-bg-color);
-            border-radius: 16px;
-            padding: 25px;
-            border: 1px solid rgba(234, 67, 53, 0.2);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
+
+        /* 设置页面特有样式 */
         .setting-group {
             margin-bottom: 25px;
         }
-        
+
         .setting-title {
             font-size: 20px;
             margin-bottom: 15px;
@@ -224,13 +178,13 @@
             align-items: center;
             gap: 10px;
         }
-        
+
         .setting-options {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             gap: 15px;
         }
-        
+
         .setting-option {
             padding: 12px;
             border-radius: 8px;
@@ -240,344 +194,22 @@
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
+
         .setting-option:hover {
             background: rgba(234, 67, 53, 0.1);
         }
-        
+
         .setting-option.active {
             background: rgba(234, 67, 53, 0.2);
             border-color: var(--primary);
         }
 
-        /* 设置页面样式 */
-        .settings-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 20px;
-        }
-
-        .settings-card {
-            background: var(--card-bg-color);
-            border-radius: 16px;
-            padding: 25px;
-            /* border-color 改为与页面主色协调的红色半透明 */
-            border: 1px solid rgba(234, 67, 53, 0.15);
-            transition: var(--transition);
-        }
-
-        .settings-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-
-        .settings-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-            color: var(--primary);
-            font-size: 22px;
-            font-weight: 600;
-        }
-
-        .settings-icon {
-            font-size: 24px;
-            width: 30px;
-            text-align: center;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--text-secondary);
-        }
-
-        .form-control {
-            width: 100%;
-            background: rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text-color);
-            padding: 12px 15px;
-            border-radius: 8px;
-            transition: var(--transition);
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 15px rgba(234, 67, 53, 0.25);
-        }
-
-
-        /* 下拉选项样式 - 提高可读性 */
-        .form-control option {
-            background: var(--card-bg-color);
-            color: var(--text-color);
-            padding: 8px 12px;
-        }
-
-        /* 下拉选项悬停效果 */
-        .form-control option:hover,
-        .form-control option:focus,
-        .form-control option:checked {
-            background: var(--primary);
-            color: white;
-        }
-
-        .range-slider {
-            width: 100%;
-            height: 8px;
-            border-radius: 4px;
-            background: var(--progress-bg);
-            outline: none;
-            margin: 10px 0;
-        }
-
-        .range-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--primary);
-            cursor: pointer;
-            /* 使用红色光晕代替之前的青色 */
-            box-shadow: 0 0 10px rgba(234, 67, 53, 0.3);
-        }
-
-        .slider-value {
-            text-align: center;
-            font-size: 18px;
-            color: var(--primary);
-            margin-top: 10px;
-        }
-
-        /* 响应式设计 - 优化多设备适配 */
-        @media (max-width: 1200px) {
-            .container {
-                padding: 15px;
-            }
-            
-            .main-content {
-                gap: 20px;
-            }
-            
-            .poem-card {
-                min-height: 350px;
-                padding: 25px;
-            }
-            
-            .progress-container {
-                padding: 20px;
-            }
-        }
-        
-        @media (max-width: 1000px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .poem-card {
-                min-height: 320px;
-                padding: 20px;
-            }
-            
-            .poem-title {
-                font-size: 26px;
-            }
-            
-            .poem-content {
-                font-size: 18px;
-            }
-            
-            .poem-translation {
-                font-size: 15px;
-            }
-            
-            .stats {
-                grid-template-columns: 1fr 1fr;
-            }
-            
-            .stat-value {
-                font-size: 22px;
-            }
-            
-            .stat-label {
-                font-size: 11px;
-            }
-        }
-        
-        @media (max-width: 800px) {
-            .nav-container {
-                flex-direction: column;
-                gap: 15px;
-                padding: 10px 0;
-                margin-bottom: 20px;
-            }
-            
-            .nav-links {
-                gap: 10px;
-            }
-            
-            .nav-link {
-                padding: 6px 12px;
-                font-size: 13px;
-            }
-            
-            .logo {
-                font-size: 22px;
-            }
-            
-            .poem-card {
-                min-height: 300px;
-                padding: 18px;
-            }
-            
-            .poem-title {
-                font-size: 24px;
-            }
-            
-            .poem-content {
-                font-size: 17px;
-                margin-bottom: 20px;
-            }
-            
-            .poem-translation {
-                font-size: 14px;
-                margin-bottom: 20px;
-            }
-            
-            .stats {
-                grid-template-columns: 1fr 1fr;
-                gap: 12px;
-            }
-            
-            .stat-value {
-                font-size: 20px;
-            }
-            
-            .stat-label {
-                font-size: 10px;
-            }
-            
-            .poem-list {
-                max-height: 250px;
-            }
-            
-            .poem-item {
-                padding: 10px 12px;
-            }
-        }
-        
-        @media (max-width: 600px) {
-            .container {
-                padding: 10px;
-            }
-            
-            .stats {
-                grid-template-columns: 1fr;
-            }
-            
-            .card-controls {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .btn {
-                width: 100%;
-                padding: 10px;
-            }
-            
-            .poem-card {
-                min-height: 280px;
-                padding: 15px;
-            }
-            
-            .poem-title {
-                font-size: 22px;
-            }
-            
-            .poem-content {
-                font-size: 16px;
-            }
-            
-            .poem-translation {
-                font-size: 13px;
-            }
-            
-            .settings-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .title-container {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .setting-options {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        @media (max-width: 400px) {
-            .poem-card {
-                min-height: 250px;
-                padding: 12px;
-            }
-            
-            .poem-title {
-                font-size: 20px;
-            }
-            
-            .poem-content {
-                font-size: 15px;
-            }
-            
-            .poem-translation {
-                font-size: 12px;
-            }
-            
-            .stat-value {
-                font-size: 18px;
-            }
-            
-            .poem-item {
-                padding: 8px 10px;
-            }
-        }
-        
-        /* 动画效果 */
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(234, 67, 53, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(234, 67, 53, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(234, 67, 53, 0); }
-        }
-        
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-        
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            color: var(--text-secondary);
-            font-size: 12px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
         .loading {
             text-align: center;
             padding: 20px;
             color: var(--text-secondary);
         }
-        
+
         .error-message {
             text-align: center;
             padding: 10px;
@@ -586,34 +218,102 @@
             border-radius: 8px;
             margin-top: 10px;
         }
+
+        /* 响应式 - 页面特有 */
+        @media (max-width: 1200px) {
+            .poem-card {
+                min-height: 350px;
+                padding: 25px;
+            }
+        }
+
+        @media (max-width: 1000px) {
+            .poem-card {
+                min-height: 320px;
+                padding: 20px;
+            }
+            .poem-title {
+                font-size: 26px;
+            }
+            .poem-content {
+                font-size: 18px;
+            }
+            .poem-translation {
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 800px) {
+            .poem-card {
+                min-height: 300px;
+                padding: 18px;
+            }
+            .poem-title {
+                font-size: 24px;
+            }
+            .poem-content {
+                font-size: 17px;
+                margin-bottom: 20px;
+            }
+            .poem-translation {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+            .poem-list {
+                max-height: 250px;
+            }
+            .poem-item {
+                padding: 10px 12px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .poem-card {
+                min-height: 280px;
+                padding: 15px;
+            }
+            .poem-title {
+                font-size: 22px;
+            }
+            .poem-content {
+                font-size: 16px;
+            }
+            .poem-translation {
+                font-size: 13px;
+            }
+            .title-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .setting-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .poem-card {
+                min-height: 250px;
+                padding: 12px;
+            }
+            .poem-title {
+                font-size: 20px;
+            }
+            .poem-content {
+                font-size: 15px;
+            }
+            .poem-translation {
+                font-size: 12px;
+            }
+            .poem-item {
+                padding: 8px 10px;
+            }
+        }
     </style>
-    <script src="common.js"></script>
+    <script src="assets/js/common.js"></script>
     <script src="assets/js/learning-assistant.js"></script>
 </head>
 <body>
     <div class="container">
-        <div class="nav-container">
-            <div class="logo" id="homeLink">
-                <i class="fas fa-brain"></i>
-                <span>快乐学习</span>
-            </div>
-            
-            <div class="nav-links">
-                <div class="nav-link active" data-page="chinese">
-                    <i class="fas fa-pen-fancy"></i>
-                    <span>语文诗词</span>
-                </div>
-                <div class="nav-link" data-page="daily">
-                    <i class="fas fa-calendar-day"></i>
-                    <span>日积月累</span>
-                </div>
-                <div class="nav-link" data-page="settings">
-                    <i class="fas fa-cog"></i>
-                    <span>设置</span>
-                </div>
-            </div>
-        </div>
-        
         <!-- 语文诗词页面 -->
         <div class="page active" id="chinesePage">
             <div class="main-content">
@@ -625,18 +325,18 @@
                         </button>
                     </div>
                     <div class="poem-author" id="poemAuthor">【唐】李白</div>
-                    
+
                     <div class="poem-content" id="poemContent">
                         <span class="poem-line">床前明月光，</span>
                         <span class="poem-line">疑是地上霜。</span>
                         <span class="poem-line">举头望明月，</span>
                         <span class="poem-line">低头思故乡。</span>
                     </div>
-                    
+
                     <div class="poem-translation" id="poemTranslation">
                         明亮的月光洒在窗户纸上，好像地上泛起了一层霜。我禁不住抬起头来，看那天窗外空中的一轮明月，不由得低头沉思，想起远方的家乡。
                     </div>
-                    
+
                     <div class="card-controls">
                         <button class="btn btn-primary" id="prevBtn">
                             <i class="fas fa-arrow-left"></i>
@@ -656,13 +356,13 @@
                         </button>
                     </div>
                 </div>
-                
+
                 <div class="progress-container">
                     <div class="progress-title">
                         <i class="fas fa-chart-line"></i>
                         <span>学习进度</span>
                     </div>
-                    
+
                     <div class="stats">
                         <div class="stat-card">
                             <div class="stat-value" id="totalCount">36</div>
@@ -677,7 +377,7 @@
                             <div class="stat-label">已背诵</div>
                         </div>
                     </div>
-                    
+
                     <div class="progress-bar-container">
                         <div class="progress-info">
                             <span>背诵进度</span>
@@ -687,12 +387,12 @@
                             <div class="progress-fill" id="progressFill" style="width: 33%"></div>
                         </div>
                     </div>
-                    
+
                     <div class="progress-title">
                         <i class="fas fa-book"></i>
                         <span>诗词选集</span>
                     </div>
-                    
+
                     <select class="form-control" id="bookSelector">
                         <option value="grade1">小学一年级</option>
                         <option value="grade2">小学二年级</option>
@@ -701,7 +401,7 @@
                         <option value="grade5">小学五年级</option>
                         <option value="grade6">小学六年级</option>
                     </select>
-                    
+
                     <div class="poem-list" id="poemList">
                         <div class="loading">
                             <i class="fas fa-spinner fa-spin"></i>
@@ -711,22 +411,22 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- 日积月累页面 -->
         <div class="page" id="dailyPage">
             <div class="poem-card">
                 <h2 class="poem-title">日积月累</h2>
                 <div class="poem-author">知识在于积累</div>
-                
+
                 <div class="poem-content" id="dailyContent">
                     <span class="poem-line">读书破万卷，下笔如有神。</span>
                     <span class="poem-line">——杜甫</span>
                 </div>
-                
+
                 <div class="poem-translation" id="dailyTranslation">
                     形容博览群书，把书读透，这样落实到笔下，运用起来就会得心应手。
                 </div>
-                
+
                 <div class="card-controls">
                     <button class="btn btn-primary" id="randomDailyBtn">
                         <i class="fas fa-random"></i>
@@ -735,7 +435,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- 设置页面 -->
         <div class="page" id="settingsPage">
             <h2>系统设置</h2>
@@ -765,7 +465,6 @@
                         <select class="form-control" id="voiceSelect">
                             <option value="">默认发音人</option>
                         </select>
-                        <!-- 新增：测试发音按钮 -->
                         <div style="margin-top:10px;">
                             <button id="voiceTestBtn" class="btn btn-primary" type="button" style="width: 100%; margin-bottom: 15px;">
                                 <i class="fas fa-microphone"></i>
@@ -800,20 +499,15 @@
                 </div>
             </div>
         </div>
-        
-        <footer>
-            <p>© 2025 快乐学习 - Sevenking Studio</p>
-        </footer>
     </div>
-
-    <!-- 全局学习助手组件 -->
-    <div class="learning-assistant" id="learningAssistant">
-        <img src="assets/logo/bear.png" alt="学习助手" class="assistant-image">
-    </div>
-    
-    <div class="assistant-speech-bubble" id="assistantSpeechBubble">加油，你是最棒的！</div>
 
     <script>
+        const NAV_CONFIG = [
+            { page: 'chinese',  icon: 'fa-pen-fancy',    label: '语文诗词', active: true },
+            { page: 'daily',    icon: 'fa-calendar-day', label: '日积月累', active: false },
+            { page: 'settings', icon: 'fa-cog',          label: '设置',     active: false },
+        ];
+
         // 默认诗词数据（当JSON加载失败时使用）
         const defaultPoemsData = {
             grade1: [
@@ -878,64 +572,39 @@
         const progressFillElement = document.getElementById('progressFill');
         const progressPercentageElement = document.getElementById('progressPercentage');
         const poemListElement = document.getElementById('poemList');
-        const navLinks = document.querySelectorAll('.nav-link');
-        const pages = document.querySelectorAll('.page');
+        let navLinks, pages;
         const saveSettingsBtn = document.getElementById('saveSettings');
         const resetSettingsBtn = document.getElementById('resetSettings');
-        const homeLink = document.getElementById('homeLink');
 
-        let dailyData = []; // 新增：存储日积月累数据
-        let currentDailyIndex = 0; // 新增：当前日积月累索引
+        let dailyData = [];
+        let currentDailyIndex = 0;
 
         // 初始化
         function init() {
             syncThemeFromIndex();
+            navLinks = document.querySelectorAll('.nav-link');
+            pages = document.querySelectorAll('.page');
+
             // 加载学习进度
             loadProgress();
-            
+
             // 加载设置
             loadSettings();
-            
+
             // 加载诗词数据
             loadPoemsData();
-            
+
             // 加载日积月累数据
-            loadDailyData(); // 新增：加载日积月累数据
-            
+            loadDailyData();
+
             // 设置事件监听
             setupEventListeners();
-            
-            initLearningAssistant();
-        }
 
-        function syncThemeFromIndex() {
-            function applyTheme(theme) {
-                if (theme === 'light') {
-                    document.body.classList.add('light-theme');
-                } else if (theme === 'dark') {
-                    document.body.classList.remove('light-theme');
-                } else if (theme === 'auto') {
-                    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                    if (prefersDark) {
-                        document.body.classList.remove('light-theme');
-                    } else {
-                        document.body.classList.add('light-theme');
-                    }
-                }
-            }
-            const theme = localStorage.getItem('theme') || 'dark';
-            applyTheme(theme);
-            // 监听系统主题变化
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-                if ((localStorage.getItem('theme') || 'dark') === 'auto') {
-                    applyTheme('auto');
-                }
-            });
+            initLearningAssistant();
         }
 
         // 加载诗词数据
         function loadPoemsData() {
-            // 模拟从JSON文件加载数据
             fetch('data/chinese/chinese-poems.json')
                 .then(response => {
                     if (!response.ok) {
@@ -962,8 +631,7 @@
             errorElement.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
             poemListElement.innerHTML = '';
             poemListElement.appendChild(errorElement);
-            
-            // 3秒后消失
+
             setTimeout(() => {
                 errorElement.style.opacity = '0';
                 setTimeout(() => {
@@ -985,31 +653,25 @@
 
         // 设置事件监听
         function setupEventListeners() {
-            // 使用公共导航事件绑定
             setupNavLinks(navLinks, pages);
 
-            // 诗词本选择
             bookSelectorElement.addEventListener('change', handleBookChange);
-            
-            // 控制按钮
+
             readBtnElement.addEventListener('click', readCurrentPoem);
             knowBtnElement.addEventListener('click', markAsMemorized);
             notKnowBtnElement.addEventListener('click', markAsNotMemorized);
             nextBtnElement.addEventListener('click', showNextPoem);
             prevBtnElement.addEventListener('click', showPrevPoem);
-            
-            // 日积月累按钮
+
             const randomDailyBtn = document.getElementById('randomDailyBtn');
             if (randomDailyBtn) {
                 randomDailyBtn.addEventListener('click', showRandomDaily);
             }
-            
-            // 设置选项
+
             document.querySelectorAll('.setting-option').forEach(option => {
                 option.addEventListener('click', handleSettingOptionClick);
             });
-            
-            // 保存和重置设置（有可能页面没有这些按钮，先判断）
+
             if (typeof saveSettingsBtn !== 'undefined' && saveSettingsBtn) {
                 saveSettingsBtn.addEventListener('click', saveSettings);
             }
@@ -1017,10 +679,8 @@
                 resetSettingsBtn.addEventListener('click', resetSettings);
             }
 
-            // 主页链接
             setupHomeLink('homeLink', 'index.html');
-        
-            // 绑定发音人选择保存与测试按钮（如存在）
+
             const voiceSelectEl = document.getElementById('voiceSelect');
             if (voiceSelectEl) {
                 voiceSelectEl.addEventListener('change', () => {
@@ -1032,11 +692,9 @@
                 voiceTestBtn.addEventListener('click', testVoice);
             }
 
-            // 语速 / 音调滑块：更新显示并立即保存
             const rateEl = document.getElementById('speechRateSlider');
             const rateVal = document.getElementById('speechRateValue');
             if (rateEl && rateVal) {
-                // initialize display
                 rateVal.textContent = rateEl.value;
                 rateEl.addEventListener('input', () => {
                     rateVal.textContent = rateEl.value;
@@ -1046,15 +704,12 @@
             const pitchEl = document.getElementById('speechPitchSlider');
             const pitchVal = document.getElementById('speechPitchValue');
             if (pitchEl && pitchVal) {
-                // initialize display
                 pitchVal.textContent = pitchEl.value;
                 pitchEl.addEventListener('input', () => {
                     pitchVal.textContent = pitchEl.value;
                     localStorage.setItem('speechPitchZh', pitchEl.value);
                 });
             }
-
-            // 绑定完毕后无需返回，其他绑定（如保存/重置）仍按存在与否工作
         }
 
         // 处理设置选项点击
@@ -1062,11 +717,10 @@
             const option = e.currentTarget;
             const group = option.parentElement;
             const options = group.querySelectorAll('.setting-option');
-            
+
             options.forEach(opt => opt.classList.remove('active'));
             option.classList.add('active');
-            
-            // 根据选项类型更新设置
+
             if (group.parentElement.querySelector('.setting-title').textContent.includes('语音')) {
                 voiceType = option.getAttribute('data-voice');
             } else if (group.parentElement.querySelector('.setting-title').textContent.includes('主题')) {
@@ -1082,7 +736,6 @@
             localStorage.setItem('theme', currentTheme);
             localStorage.setItem('fontSize', currentFontSize);
 
-            // persist speech sliders and selected voice
             const rateEl = document.getElementById('speechRateSlider');
             const pitchEl = document.getElementById('speechPitchSlider');
             const voiceSelect = document.getElementById('voiceSelect');
@@ -1093,7 +746,6 @@
             applyTheme();
             applyFontSize();
 
-            // 显示保存成功提示
             alert('设置已保存！');
         }
 
@@ -1102,11 +754,10 @@
             voiceType = '普通话';
             currentTheme = 'dark';
             currentFontSize = 'medium';
-            
-            // 更新UI
+
             document.querySelectorAll('.setting-option').forEach(option => {
                 option.classList.remove('active');
-                
+
                 if (option.getAttribute('data-voice') === voiceType) {
                     option.classList.add('active');
                 }
@@ -1117,11 +768,10 @@
                     option.classList.add('active');
                 }
             });
-            
+
             applyTheme();
             applyFontSize();
-            
-            // 显示重置成功提示
+
             alert('设置已重置为默认值！');
         }
 
@@ -1166,7 +816,6 @@
             if (savedTheme) currentTheme = savedTheme;
             if (savedFontSize) currentFontSize = savedFontSize;
 
-            // 如果保存了速率/音调，先恢复到控件（voices 可能尚未加载，但 sliders 独立）
             if (savedRate && document.getElementById('speechRateSlider')) {
                 document.getElementById('speechRateSlider').value = savedRate;
                 const rv = document.getElementById('speechRateValue');
@@ -1178,7 +827,6 @@
                 if (pv) pv.textContent = savedPitch;
             }
 
-            // 更新设置UI（保留原有视觉化选项）
             document.querySelectorAll('.setting-option').forEach(option => {
                 if (option.getAttribute('data-voice') === voiceType) {
                     option.classList.add('active');
@@ -1191,7 +839,6 @@
                 }
             });
 
-            // 填充发音人选项（populateVoiceList 会根据 localStorage.selectedVoiceZh 恢复选择）
             populateVoiceList();
         }
 
@@ -1200,14 +847,11 @@
             const voiceSelect = document.getElementById('voiceSelect');
             if (!voiceSelect) return;
 
-            // 清除现有选项（除了默认选项）
             while (voiceSelect.options.length > 1) {
                 voiceSelect.remove(1);
             }
 
             const voices = speechSynthesis.getVoices() || [];
-
-            // 只显示中文发音人
             const zhVoices = voices.filter(v => /zh/i.test(v.lang));
 
             zhVoices.forEach(voice => {
@@ -1217,7 +861,6 @@
                 voiceSelect.appendChild(option);
             });
 
-            // 恢复已保存的发音人（如果有）
             const saved = localStorage.getItem('selectedVoiceZh');
             if (saved) {
                 const found = Array.from(voiceSelect.options).find(o => o.value === saved);
@@ -1225,7 +868,7 @@
             }
         }
 
-        // 测试发音：按所选发音人、速率、音调播放示例（中文）
+        // 测试发音
         function testVoice() {
             const sample = "这是一次语音测试。";
             const ut = new SpeechSynthesisUtterance(sample);
@@ -1253,7 +896,7 @@
             speechSynthesis.speak(ut);
         }
 
-        // 朗读当前诗词（使用设置的发音人、速率、音调）
+        // 朗读当前诗词
         function readCurrentPoem() {
             if (!poemsData[currentBook] || !poemsData[currentBook][currentPoemIndex]) {
                 return;
@@ -1265,7 +908,6 @@
             const utterance = new SpeechSynthesisUtterance(poemText);
             utterance.lang = 'zh-CN';
 
-            // 读取并应用速率/音调（优先使用保存的值）
             const savedRate = localStorage.getItem('speechRateZh');
             const savedPitch = localStorage.getItem('speechPitchZh');
             const rateEl = document.getElementById('speechRateSlider');
@@ -1279,7 +921,6 @@
             else if (pitchEl) utterance.pitch = parseFloat(pitchEl.value) || 1.0;
             else utterance.pitch = 1.0;
 
-            // 选择发音人：优先使用已选择并保存的名字
             const savedName = localStorage.getItem('selectedVoiceZh');
             const voiceSelect = document.getElementById('voiceSelect');
             const voices = speechSynthesis.getVoices() || [];
@@ -1297,32 +938,25 @@
             speechSynthesis.speak(utterance);
         }
 
-        // 切换页面
-        function switchPage(pageId) {
-            switchPageCommon(pageId, navLinks, pages);
-        }
-
         // 显示当前诗词
         function showCurrentPoem() {
             if (!poemsData[currentBook] || !poemsData[currentBook][currentPoemIndex]) {
                 return;
             }
-            
+
             const poemData = poemsData[currentBook][currentPoemIndex];
             poemTitleElement.textContent = poemData.title;
             poemAuthorElement.textContent = poemData.author;
-            
-            // 清空原有内容
+
             poemContentElement.innerHTML = '';
-            
-            // 添加诗词内容
+
             poemData.content.forEach(line => {
                 const lineElement = document.createElement('span');
                 lineElement.className = 'poem-line';
                 lineElement.textContent = line;
                 poemContentElement.appendChild(lineElement);
             });
-            
+
             poemTranslationElement.textContent = poemData.translation;
         }
 
@@ -1331,7 +965,7 @@
             if (!poemsData[currentBook] || !poemsData[currentBook][currentPoemIndex]) {
                 return;
             }
-            
+
             const poemTitle = poemsData[currentBook][currentPoemIndex].title;
             masteredPoems[poemTitle] = true;
             learnedPoems[poemTitle] = true;
@@ -1346,7 +980,7 @@
             if (!poemsData[currentBook] || !poemsData[currentBook][currentPoemIndex]) {
                 return;
             }
-            
+
             const poemTitle = poemsData[currentBook][currentPoemIndex].title;
             masteredPoems[poemTitle] = false;
             learnedPoems[poemTitle] = true;
@@ -1361,7 +995,7 @@
             if (!poemsData[currentBook]) {
                 return;
             }
-            
+
             currentPoemIndex = (currentPoemIndex + 1) % poemsData[currentBook].length;
             showCurrentPoem();
         }
@@ -1371,7 +1005,7 @@
             if (!poemsData[currentBook]) {
                 return;
             }
-            
+
             currentPoemIndex = (currentPoemIndex - 1 + poemsData[currentBook].length) % poemsData[currentBook].length;
             showCurrentPoem();
         }
@@ -1390,19 +1024,19 @@
             if (!poemsData[currentBook]) {
                 return;
             }
-            
+
             const totalPoems = poemsData[currentBook].length;
-            const learned = Object.keys(learnedPoems).filter(title => 
+            const learned = Object.keys(learnedPoems).filter(title =>
                 poemsData[currentBook].some(p => p.title === title)
             ).length;
-            const mastered = Object.keys(masteredPoems).filter(title => 
+            const mastered = Object.keys(masteredPoems).filter(title =>
                 masteredPoems[title] && poemsData[currentBook].some(p => p.title === title)
             ).length;
-            
+
             totalCountElement.textContent = totalPoems;
             learnedCountElement.textContent = learned;
             masteredCountElement.textContent = mastered;
-            
+
             const progress = totalPoems > 0 ? (learned / totalPoems) * 100 : 0;
             progressFillElement.style.width = `${progress}%`;
             progressPercentageElement.textContent = `${Math.round(progress)}%`;
@@ -1414,17 +1048,17 @@
                 poemListElement.innerHTML = '<div class="error-message">暂无诗词数据</div>';
                 return;
             }
-            
+
             poemListElement.innerHTML = '';
-            
+
             poemsData[currentBook].forEach((poem, index) => {
                 const poemItem = document.createElement('div');
                 poemItem.className = 'poem-item';
-                
+
                 if (masteredPoems[poem.title]) {
                     poemItem.classList.add('mastered');
                 }
-                
+
                 poemItem.innerHTML = `
                     <div>
                         <div class="poem-name">${poem.title}</div>
@@ -1434,12 +1068,12 @@
                         <div class="status-badge">${masteredPoems[poem.title] ? '已背诵' : (learnedPoems[poem.title] ? '学习中' : '未学习')}</div>
                     </div>
                 `;
-                
+
                 poemItem.addEventListener('click', () => {
                     currentPoemIndex = index;
                     showCurrentPoem();
                 });
-                
+
                 poemListElement.appendChild(poemItem);
             });
         }
@@ -1454,11 +1088,11 @@
         function loadProgress() {
             const learned = localStorage.getItem('learnedPoems');
             const mastered = localStorage.getItem('masteredPoems');
-            
+
             if (learned) {
                 learnedPoems = JSON.parse(learned);
             }
-            
+
             if (mastered) {
                 masteredPoems = JSON.parse(mastered);
             }
@@ -1475,11 +1109,10 @@
                 })
                 .then(data => {
                     dailyData = data.collections;
-                    showRandomDaily(); // 显示第一条
+                    showRandomDaily();
                 })
                 .catch(error => {
                     console.error('加载日积月累数据失败:', error);
-                    // 使用默认数据
                     dailyData = [
                         {
                             content: "读书破万卷，下笔如有神。",
@@ -1494,8 +1127,7 @@
         // 显示随机的日积月累内容
         function showRandomDaily() {
             if (dailyData.length === 0) return;
-            
-            // 随机选择一条（避免重复选择同一条）
+
             let randomIndex;
             if (dailyData.length > 1) {
                 do {
@@ -1504,13 +1136,13 @@
             } else {
                 randomIndex = 0;
             }
-            
+
             currentDailyIndex = randomIndex;
             const dailyItem = dailyData[currentDailyIndex];
-            
+
             const dailyContentElement = document.getElementById('dailyContent');
             const dailyTranslationElement = document.getElementById('dailyTranslation');
-            
+
             if (dailyContentElement && dailyTranslationElement) {
                 dailyContentElement.innerHTML = `
                     <span class="poem-line">${dailyItem.content}</span>
@@ -1520,25 +1152,19 @@
             }
         }
 
-        function initLearningAssistant() {
-            const assistantEnabled = localStorage.getItem('assistantEnabled') === 'true';
-            if (typeof LearningAssistant !== 'undefined' && assistantEnabled) {
-                window.learningAssistant = new LearningAssistant({
-                    element: document.getElementById('learningAssistant'),
-                    bubble: document.getElementById('assistantSpeechBubble')
-                });
-                window.learningAssistant.init();
-            }
-        }
         // 初始化应用
-        window.addEventListener('DOMContentLoaded', init);
+        (function () {
+            injectNav(NAV_CONFIG);
+            injectFooter();
+            injectAssistant();
+            init();
+        })();
 
-        // 确保 voiceschanged 时也填充中文发音列表（voices 可能异步加载）
-        if (speechSynthesis.onvoiceschanged !== undefined) {
+        // 确保 voiceschanged 时也填充中文发音列表
+        if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !== undefined) {
             speechSynthesis.onvoiceschanged = populateVoiceList;
         }
     </script>
-
 
 </body>
 </html>

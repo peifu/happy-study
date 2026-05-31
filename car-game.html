@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 
@@ -18,7 +19,6 @@
     <style>
         body {
             font-family: 'Noto Sans SC', sans-serif;
-
             min-height: 100vh;
             margin: 0;
             overflow-x: hidden;
@@ -188,7 +188,6 @@
             justify-content: center;
             align-items: center;
             z-index: 100;
-            /* 提高z-index确保在最上层 */
         }
 
         .start-btn,
@@ -205,7 +204,6 @@
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
             margin-top: 20px;
             z-index: 101;
-            /* 确保按钮在最上层 */
             position: relative;
         }
 
@@ -234,16 +232,13 @@
         }
 
         @keyframes shake {
-
             0%,
             100% {
                 transform: translateX(0);
             }
-
             25% {
                 transform: translateX(-10px);
             }
-
             75% {
                 transform: translateX(10px);
             }
@@ -258,12 +253,10 @@
                 transform: scale(1) rotate(0deg);
                 opacity: 1;
             }
-
             50% {
                 transform: scale(1.5) rotate(180deg);
                 opacity: 0.8;
             }
-
             100% {
                 transform: scale(0) rotate(360deg);
                 opacity: 0;
@@ -286,7 +279,6 @@
                 transform: translateY(0) scale(1);
                 opacity: 1;
             }
-
             100% {
                 transform: translateY(-50px) scale(1.2);
                 opacity: 0;
@@ -301,28 +293,6 @@
 
 <body>
     <div class="container">
-        <div class="nav-container">
-            <div class="logo" id="homeLink">
-                <i class="fas fa-brain"></i>
-                <span>快乐学习</span>
-            </div>
-
-            <div class="nav-links">
-                <div class="nav-link" data-page="home">
-                    <i class="fas fa-home"></i>
-                    <span>学习主页</span>
-                </div>
-                <div class="nav-link active" data-page="car-game">
-                    <i class="fas fa-robot"></i>
-                    <span>单词汽车</span>
-                </div>
-                <div class="nav-link" data-page="game">
-                    <i class="fas fa-clock"></i>
-                    <span>单词消消乐</span>
-                </div>
-            </div>
-        </div>
-
         <!-- 主页内容 -->
         <div class="page active" id="homePage">
 
@@ -390,99 +360,80 @@
                     <button class="restart-btn" id="restartBtn">重新开始</button>
                 </div>
             </div>
-
-            <footer>
-                <p>© 2025 快乐学习 - Sevenking Studio</p>
-            </footer>
         </div>
+    </div>
 
-        <!-- 全局学习助手组件 -->
-        <div class="learning-assistant" id="learningAssistant">
-            <img src="assets/logo/bear.png" alt="学习助手" class="assistant-image">
-            <div class="assistant-name" id="assistantName">学习助手</div>
-        </div>
-        <div class="assistant-speech-bubble" id="assistantSpeechBubble">加油，你是最棒的！</div>
+    <script>
+        // 导航配置
+        const NAV_CONFIG = [
+            { page: 'game',    icon: 'fa-gamepad',  label: '单词赛车', active: true },
+            { page: 'english', icon: 'fa-language', label: '单词学习', active: false },
+        ];
 
+        let navLinks, pages;
 
-
-        <script>
-            const navLinks = document.querySelectorAll('.nav-link');
-            const pages = document.querySelectorAll('.page');
-            async function init() {
-                setupEventListeners();
-
-                initLearningAssistant();
-            }
-
-            function setupEventListeners() {
-
-                // 主页链接点击事件
-                setupHomeLink('homeLink', 'index.html');
-            }
-
-            // 添加错误处理
-            window.addEventListener('error', function (e) {
-                console.error('JavaScript错误:', e.error);
+        async function init() {
+            navLinks = document.querySelectorAll('.nav-link');
+            pages = document.querySelectorAll('.page');
+            setupNavLinks(navLinks, pages, function(pageId) {
+                if (pageId === 'english') window.location.href = 'english.html';
             });
+            initLearningAssistant();
+        }
 
-            // 后备的点击处理机制
-            function handleStartButtonClick() {
-                console.log('后备开始按钮点击处理');
-                const startScreen = document.getElementById('startScreen');
-                if (startScreen) {
-                    startScreen.style.display = 'none';
-                    console.log('开始屏幕已隐藏');
-                }
+        // 添加错误处理
+        window.addEventListener('error', function (e) {
+            console.error('JavaScript错误:', e.error);
+        });
+
+        // 后备的点击处理机制
+        function handleStartButtonClick() {
+            console.log('后备开始按钮点击处理');
+            const startScreen = document.getElementById('startScreen');
+            if (startScreen) {
+                startScreen.style.display = 'none';
+                console.log('开始屏幕已隐藏');
             }
+        }
 
-            // 确保DOM加载完成后再初始化游戏
-            document.addEventListener('DOMContentLoaded', function () {
-                console.log('DOM加载完成');
-                try {
-                    // 检查必要的元素是否存在
-                    const requiredElements = ['gameContainer', 'playerCar', 'startBtn', 'scoreDisplay'];
-                    let allElementsExist = true;
+        // 确保DOM加载完成后再初始化游戏
+        (function () {
+            console.log('DOM加载完成');
+            try {
+                const requiredElements = ['gameContainer', 'playerCar', 'startBtn', 'scoreDisplay'];
+                let allElementsExist = true;
 
-                    requiredElements.forEach(id => {
-                        const element = document.getElementById(id);
-                        if (!element) {
-                            console.error('缺少必要元素:', id);
-                            allElementsExist = false;
-                        }
-                    });
-
-                    if (allElementsExist) {
-                        console.log('所有必要元素都存在');
-
-                        // 添加后备点击事件
-                        const startBtn = document.getElementById('startBtn');
-                        if (startBtn) {
-                            startBtn.addEventListener('click', handleStartButtonClick);
-                        }
-                    } else {
-                        console.error('缺少必要元素，游戏可能无法正常运行');
+                requiredElements.forEach(id => {
+                    const element = document.getElementById(id);
+                    if (!element) {
+                        console.error('缺少必要元素:', id);
+                        allElementsExist = false;
                     }
-                } catch (error) {
-                    console.error('检查元素时出错:', error);
-                }
-            });
+                });
 
+                if (allElementsExist) {
+                    console.log('所有必要元素都存在');
 
-            function initLearningAssistant() {
-                const assistantEnabled = localStorage.getItem('assistantEnabled') === 'true';
-                if (typeof LearningAssistant !== 'undefined' && assistantEnabled) {
-                    window.learningAssistant = new LearningAssistant({
-                        element: document.getElementById('learningAssistant'),
-                        bubble: document.getElementById('assistantSpeechBubble')
-                    });
-                    window.learningAssistant.init();
+                    const startBtn = document.getElementById('startBtn');
+                    if (startBtn) {
+                        startBtn.addEventListener('click', handleStartButtonClick);
+                    }
+                } else {
+                    console.error('缺少必要元素，游戏可能无法正常运行');
                 }
+            } catch (error) {
+                console.error('检查元素时出错:', error);
             }
+        })();
 
-            window.addEventListener('DOMContentLoaded', function () {
-                init();
-            });
-        </script>
+        (function () {
+            injectNav(NAV_CONFIG);
+            injectFooter();
+            injectAssistant();
+            setupHomeLink('homeLink', 'index.html');
+            init();
+        })();
+    </script>
 </body>
 
 </html>

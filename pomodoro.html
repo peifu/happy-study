@@ -8,11 +8,8 @@
     <link rel="stylesheet" href="assets/css/common.css">
     <style>
 
-        /* Use same two-column layout as english page: large left, compact right */
+        /* Extend common .main-content with additional properties */
         .main-content {
-            display: grid;
-            grid-template-columns: 1fr 350px; /* left large, right compact */
-            gap: 30px;
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
@@ -185,18 +182,6 @@
             text-align: center;
         }
 
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.5);
-            }
-            70% {
-                box-shadow: 0 0 0 10px rgba(76, 175, 80, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
-            }
-        }
-
         @media (max-width: 1200px) {
             /* Tablet optimization */
             .main-content {
@@ -329,36 +314,11 @@
             }
         }
 
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            color: var(--text-secondary);
-            font-size: 12px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
     </style>
     <script src="assets/js/common.js"></script>
 </head>
 <body>
     <div class="container">
-        <div class="nav-container">
-            <div class="logo" id="homeLink">
-                <i class="fas fa-brain"></i>
-                <span>快乐学习</span>
-            </div>
-
-            <div class="nav-links">
-                <div class="nav-link" data-page="home">
-                    <i class="fas fa-home"></i>
-                    <span>学习主页</span>
-                </div>
-                <div class="nav-link active" data-page="pomodoro">
-                    <i class="fas fa-clock"></i>
-                    <span>番茄时钟</span>
-                </div>
-            </div>
-        </div>
 
         <!-- use same two-column main-content layout as other pages -->
         <div class="main-content">
@@ -437,12 +397,11 @@
 
         </div>
 
-        <footer>
-            <p>© 2025 快乐学习 - Sevenking Studio</p>
-        </footer>
     </div>
 
     <script>
+        let navLinks, pages;
+
         class PomodoroTimer {
             constructor() {
                 this.totalTime = 1 * 60; // 默认25分钟
@@ -452,12 +411,12 @@
                 this.completedSessions = 0;
                 this.totalSessions = 0;
                 this.selectedMinutes = 1;
-                
+
                 this.initializeElements();
                 this.setupEventListeners();
                 this.updateDisplay();
                 this.loadStats();
-                this.syncThemeFromIndex();
+                syncThemeFromIndex();
             }
             
             initializeElements() {
@@ -651,22 +610,24 @@
                 this.updateStats();
             }
             
-            syncThemeFromIndex() {
-                const savedTheme = localStorage.getItem('theme');
-                if (savedTheme === 'light') {
-                    document.body.classList.add('light-theme');
-                } else if (savedTheme === 'auto') {
-                    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-                        document.body.classList.add('light-theme');
-                    }
-                }
-            }
         }
-        
+
         // 初始化应用
-        document.addEventListener('DOMContentLoaded', () => {
+        (function () {
+            const NAV_CONFIG = [
+                { page: 'home',     icon: 'fa-home',  label: '学习主页', active: false },
+                { page: 'pomodoro', icon: 'fa-clock', label: '番茄时钟', active: true },
+            ];
+            injectNav(NAV_CONFIG);
+            injectFooter();
+            navLinks = document.querySelectorAll('.nav-link');
+            pages = document.querySelectorAll('.page');
+            setupNavLinks(navLinks, pages, function(pageId) {
+                if (pageId === 'home') window.location.href = 'index.html';
+            });
+            setupHomeLink('homeLink', 'index.html');
             window.pomodoroTimer = new PomodoroTimer();
-        });
+        })();
     </script>
 </body>
 </html>

@@ -8,135 +8,6 @@
     <link rel="stylesheet" href="assets/css/common.css">
     <link rel="stylesheet" href="assets/css/learning-assistant.css">
     <style>
-        :root {
-            --primary: #f4b400;
-            --secondary: #ff9900;
-            --accent: #ea4335;
-            --success: #ff6b00;
-            --warning: #ea4335;
-            --info: #4285f4;
-        }
-        
-        .light-theme {
-            --bg-color: #f0f2f5;
-            --text-color: #222;
-            --card-bg-color: rgba(255, 255, 255, 0.95);
-            --primary: #0078d4;
-            --secondary: #00bfae;
-            --accent: #ff6b6b;
-            --success: #43a047;
-            --warning: #ff9800;
-            --info: #1976d2;
-            --dark: #f5f7fa;
-            --darker: #e3e8ef;
-            --text-secondary: #6b7280;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', 'Microsoft YaHei', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, var(--darker), var(--dark));
-            color: var(--text);
-            min-height: 100vh;
-            line-height: 1.6;
-            overflow-x: hidden;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-size: var(--font-size);
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            min-height: calc(100vh - 160px);
-            display: flex;
-            flex-direction: column;
-        }
-        
-        /* 导航样式 */
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid rgba(66, 133, 244, 0.3);
-            margin-bottom: 25px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 24px;
-            font-weight: 700;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 10px rgba(66, 133, 244, 0.5);
-            cursor: pointer;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 15px;
-        }
-
-        .nav-link {
-            padding: 8px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-            font-size: 14px;
-        }
-        
-        .nav-link::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            transition: var(--transition);
-        }
-        
-        .nav-link:hover::before {
-            width: 100%;
-        }
-        
-        .nav-link.active {
-            background: rgba(66, 133, 244, 0.1);
-        }
-        
-        .nav-link.active::before {
-            width: 100%;
-        }
-        
-        /* 页面内容 */
-        .page {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        .page.active {
-            display: block;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    
-        
         .math-card {
             background: var(--card-bg-color);
             border-radius: 16px;
@@ -152,12 +23,12 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             border: 1px solid rgba(66, 133, 244, 0.2);
         }
-        
+
         .math-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         }
-        
+
         .math-card::before {
             content: '';
             position: absolute;
@@ -169,7 +40,7 @@
             transform: rotate(30deg);
             z-index: 0;
         }
-        
+
         .title-container {
             display: flex;
             align-items: center;
@@ -179,14 +50,14 @@
             position: relative;
             z-index: 1;
         }
-        
+
         .math-title {
             font-size: 28px;
             font-weight: 700;
             color: var(--primary);
             text-shadow: 0 0 10px rgba(66, 133, 244, 0.3);
         }
-        
+
         .example-btn {
             background: rgba(66, 133, 244, 0.2);
             border: none;
@@ -200,12 +71,12 @@
             transition: var(--transition);
             color: var(--primary);
         }
-        
+
         .example-btn:hover {
             background: rgba(66, 133, 244, 0.3);
             transform: scale(1.1);
         }
-        
+
         .math-category {
             font-size: 16px;
             color: var(--text-secondary);
@@ -214,7 +85,7 @@
             z-index: 1;
             font-style: italic;
         }
-        
+
         .math-content {
             font-size: 20px;
             line-height: 1.8;
@@ -222,12 +93,12 @@
             position: relative;
             z-index: 1;
         }
-        
+
         .math-line {
             margin-bottom: 15px;
             display: block;
         }
-        
+
         .math-explanation {
             font-style: italic;
             color: var(--text-secondary);
@@ -239,153 +110,18 @@
             padding-left: 15px;
             font-size: 16px;
         }
-        
-        .card-controls {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-            position: relative;
-            z-index: 1;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        
-        .btn {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(90deg, var(--primary), var(--info));
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            box-shadow: 0 0 15px rgba(66, 133, 244, 0.5);
-            transform: translateY(-2px);
-        }
-        
-        .btn-success {
-            background: linear-gradient(90deg, var(--success), var(--secondary));
-            color: white;
-        }
-        
-        .btn-success:hover {
-            box-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
-            transform: translateY(-2px);
-        }
-        
-        .btn-warning {
-            background: linear-gradient(90deg, var(--warning), var(--accent));
-            color: white;
-        }
-        
-        .btn-warning:hover {
-            box-shadow: 0 0 15px rgba(251, 188, 5, 0.5);
-            transform: translateY(-2px);
-        }
-        
-        .btn-secondary {
-            background: transparent;
-            color: var(--text-color);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-        
-        .btn-secondary:hover {
-            border-color: var(--primary);
-            box-shadow: 0 0 15px rgba(66, 133, 244, 0.3);
-        }
-        
-        /* 进度容器 */
-        .progress-container {
-            background: var(--card-bg-color);
-            border-radius: 16px;
-            padding: 25px;
-            border: 1px solid rgba(66, 133, 244, 0.2);
-        }
-        
-        .progress-title {
-            font-size: 20px;
-            margin-bottom: 20px;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-        
-        .stat-card {
-            background: rgba(0, 0, 0, 0.1);
-            border-radius: 12px;
-            padding: 15px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .stat-value {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--secondary);
-            margin-bottom: 5px;
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
-        
-        .progress-bar-container {
-            margin: 20px 0;
-        }
-        
-        .progress-info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            color: var(--text-secondary);
-            font-size: 14px;
-        }
-        
-        .progress-bar {
-            height: 12px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            border-radius: 10px;
-            width: 0%;
-            box-shadow: 0 0 10px rgba(66, 133, 244, 0.3);
-            transition: width 0.5s ease;
-        }
-        
+
         /* 数学概念选集 */
         .concept-selector {
             margin-top: 20px;
         }
-        
+
         .concept-list {
             max-height: 300px;
             overflow-y: auto;
             margin-top: 15px;
         }
-        
+
         .concept-item {
             padding: 12px 15px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -395,30 +131,30 @@
             cursor: pointer;
             transition: var(--transition);
         }
-        
+
         .concept-item:hover {
             background: rgba(66, 133, 244, 0.1);
         }
-        
+
         .concept-item.mastered {
             border-left: 4px solid var(--secondary);
         }
-        
+
         .concept-item .concept-name {
             font-weight: 600;
         }
-        
+
         .concept-item .concept-category {
             font-size: 14px;
             color: var(--text-secondary);
             margin: 0;
         }
-        
+
         .concept-item-status {
             display: flex;
             justify-content: flex-end;
         }
-        
+
         .status-badge {
             padding: 5px 10px;
             border-radius: 20px;
@@ -426,7 +162,7 @@
             background: rgba(52, 168, 83, 0.2);
             color: var(--secondary);
         }
-        
+
         /* 练习题样式 */
         .exercise-container {
             background: var(--card-bg-color);
@@ -435,25 +171,25 @@
             margin-top: 20px;
             border: 1px solid rgba(66, 133, 244, 0.2);
         }
-        
+
         .exercise-title {
             font-size: 20px;
             margin-bottom: 15px;
             color: var(--primary);
         }
-        
+
         .exercise-question {
             font-size: 18px;
             margin-bottom: 15px;
         }
-        
+
         .exercise-options {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
             margin-bottom: 15px;
         }
-        
+
         .exercise-option {
             padding: 10px;
             border-radius: 8px;
@@ -462,19 +198,19 @@
             transition: var(--transition);
             text-align: center;
         }
-        
+
         .exercise-option:hover {
             background: rgba(66, 133, 244, 0.1);
         }
-        
+
         .exercise-option.correct {
             background: rgba(52, 168, 83, 0.3);
         }
-        
+
         .exercise-option.incorrect {
             background: rgba(234, 67, 53, 0.3);
         }
-        
+
         .exercise-result {
             text-align: center;
             font-weight: bold;
@@ -482,255 +218,12 @@
             min-height: 24px;
         }
 
-        .form-control {
-            width: 100%;
-            background: rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text-color);
-            padding: 12px 15px;
-            border-radius: 8px;
-            transition: var(--transition);
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 15px rgba(234, 67, 53, 0.25);
-        }
-
-        .form-control option {
-            background: var(--card-bg-color);
-            color: var(--text-color);
-            padding: 8px 12px;
-        }
-
-        .form-control option:hover,
-        .form-control option:focus,
-        .form-control option:checked {
-            background: var(--primary);
-            color: white;
-        }
-        
-        /* 响应式设计 - 优化多设备适配 */
-        @media (max-width: 1200px) {
-            .container {
-                padding: 15px;
-            }
-            
-            .main-content {
-                gap: 20px;
-            }
-            
-            .math-card {
-                min-height: 350px;
-                padding: 25px;
-            }
-            
-            .progress-container {
-                padding: 20px;
-            }
-        }
-        
-        @media (max-width: 1000px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .math-card {
-                min-height: 320px;
-                padding: 20px;
-            }
-            
-            .math-title {
-                font-size: 26px;
-            }
-            
-            .math-content {
-                font-size: 18px;
-            }
-            
-            .math-explanation {
-                font-size: 15px;
-            }
-            
-            .stats {
-                grid-template-columns: 1fr 1fr;
-            }
-            
-            .stat-value {
-                font-size: 22px;
-            }
-            
-            .stat-label {
-                font-size: 11px;
-            }
-            
-            .exercise-options {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-        
-        @media (max-width: 800px) {
-            .nav-container {
-                flex-direction: column;
-                gap: 15px;
-                padding: 10px 0;
-                margin-bottom: 20px;
-            }
-            
-            .nav-links {
-                gap: 10px;
-            }
-            
-            .nav-link {
-                padding: 6px 12px;
-                font-size: 13px;
-            }
-            
-            .logo {
-                font-size: 22px;
-            }
-            
-            .math-card {
-                min-height: 300px;
-                padding: 18px;
-            }
-            
-            .math-title {
-                font-size: 24px;
-            }
-            
-            .math-content {
-                font-size: 17px;
-                margin-bottom: 20px;
-            }
-            
-            .math-explanation {
-                font-size: 14px;
-                margin-bottom: 20px;
-            }
-            
-            .stats {
-                grid-template-columns: 1fr 1fr;
-                gap: 12px;
-            }
-            
-            .stat-value {
-                font-size: 20px;
-            }
-            
-            .stat-label {
-                font-size: 10px;
-            }
-            
-            .concept-list {
-                max-height: 250px;
-            }
-            
-            .concept-item {
-                padding: 10px 12px;
-            }
-            
-            .exercise-options {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        @media (max-width: 600px) {
-            .container {
-                padding: 10px;
-            }
-            
-            .stats {
-                grid-template-columns: 1fr;
-            }
-            
-            .card-controls {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .btn {
-                width: 100%;
-                padding: 10px;
-            }
-            
-            .math-card {
-                min-height: 280px;
-                padding: 15px;
-            }
-            
-            .math-title {
-                font-size: 22px;
-            }
-            
-            .math-content {
-                font-size: 16px;
-            }
-            
-            .math-explanation {
-                font-size: 13px;
-            }
-            
-            .title-container {
-                flex-direction: column;
-                gap: 10px;
-            }
-        }
-        
-        @media (max-width: 400px) {
-            .math-card {
-                min-height: 250px;
-                padding: 12px;
-            }
-            
-            .math-title {
-                font-size: 20px;
-            }
-            
-            .math-content {
-                font-size: 15px;
-            }
-            
-            .math-explanation {
-                font-size: 12px;
-            }
-            
-            .stat-value {
-                font-size: 18px;
-            }
-            
-            .concept-item {
-                padding: 8px 10px;
-            }
-        }
-        
-        /* 动画效果 */
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(66, 133, 244, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(66, 133, 244, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(66, 133, 244, 0); }
-        }
-        
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-        
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            color: var(--text-secondary);
-            font-size: 12px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
         .loading {
             text-align: center;
             padding: 20px;
             color: var(--text-secondary);
         }
-        
+
         .error-message {
             text-align: center;
             padding: 10px;
@@ -739,7 +232,7 @@
             border-radius: 8px;
             margin-top: 10px;
         }
-        
+
         .formula {
             font-family: 'Courier New', monospace;
             background: rgba(0, 0, 0, 0.2);
@@ -747,30 +240,105 @@
             border-radius: 5px;
             margin: 0 3px;
         }
+
+        /* 响应式 - 页面特有 */
+        @media (max-width: 1200px) {
+            .math-card {
+                min-height: 350px;
+                padding: 25px;
+            }
+        }
+
+        @media (max-width: 1000px) {
+            .math-card {
+                min-height: 320px;
+                padding: 20px;
+            }
+            .math-title {
+                font-size: 26px;
+            }
+            .math-content {
+                font-size: 18px;
+            }
+            .math-explanation {
+                font-size: 15px;
+            }
+            .exercise-options {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 800px) {
+            .math-card {
+                min-height: 300px;
+                padding: 18px;
+            }
+            .math-title {
+                font-size: 24px;
+            }
+            .math-content {
+                font-size: 17px;
+                margin-bottom: 20px;
+            }
+            .math-explanation {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+            .concept-list {
+                max-height: 250px;
+            }
+            .concept-item {
+                padding: 10px 12px;
+            }
+            .exercise-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .math-card {
+                min-height: 280px;
+                padding: 15px;
+            }
+            .math-title {
+                font-size: 22px;
+            }
+            .math-content {
+                font-size: 16px;
+            }
+            .math-explanation {
+                font-size: 13px;
+            }
+            .title-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .math-card {
+                min-height: 250px;
+                padding: 12px;
+            }
+            .math-title {
+                font-size: 20px;
+            }
+            .math-content {
+                font-size: 15px;
+            }
+            .math-explanation {
+                font-size: 12px;
+            }
+            .concept-item {
+                padding: 8px 10px;
+            }
+        }
     </style>
     <script src="assets/js/learning-assistant.js"></script>
-    <script src="common.js"></script>
+    <script src="assets/js/common.js"></script>
 </head>
 <body>
     <div class="container">
-        <div class="nav-container">
-            <div class="logo" id="homeLink">
-                <i class="fas fa-brain"></i>
-                <span>快乐学习</span>
-            </div>
-            
-            <div class="nav-links">
-                <div class="nav-link active" data-page="math">
-                    <i class="fas fa-calculator"></i>
-                    <span>数学学习</span>
-                </div>
-                <div class="nav-link" data-page="settings">
-                    <i class="fas fa-cog"></i>
-                    <span>设置</span>
-                </div>
-            </div>
-        </div>
-        
         <!-- 数学学习页面 -->
         <div class="page active" id="mathPage">
             <div class="main-content">
@@ -782,17 +350,17 @@
                         </button>
                     </div>
                     <div class="math-category" id="mathCategory">【一年级上册】</div>
-                    
+
                     <div class="math-content" id="mathContent">
                         <span class="math-line">加法是将两个或多个数合并成一个数的运算。</span>
                         <span class="math-line">符号："+" 读作"加"或"加上"</span>
                         <span class="math-line">例如：<span class="formula">3 + 2 = 5</span></span>
                     </div>
-                    
+
                     <div class="math-explanation" id="mathExplanation">
                         加法是数学中最基本的运算之一。当我们把两个数量合并在一起时，就是在做加法运算。
                     </div>
-                    
+
                     <div class="card-controls">
                         <button class="btn btn-primary" id="prevBtn">
                             <i class="fas fa-arrow-left"></i>
@@ -811,7 +379,7 @@
                             <i class="fas fa-arrow-right"></i>
                         </button>
                     </div>
-                    
+
                     <div class="exercise-container" id="exerciseContainer">
                         <div class="exercise-title">
                             <i class="fas fa-pencil-alt"></i>
@@ -827,13 +395,13 @@
                         <div class="exercise-result" id="exerciseResult"></div>
                     </div>
                 </div>
-                
+
                 <div class="progress-container">
                     <div class="progress-title">
                         <i class="fas fa-chart-line"></i>
                         <span>学习进度</span>
                     </div>
-                    
+
                     <div class="stats">
                         <div class="stat-card">
                             <div class="stat-value" id="totalCount">25</div>
@@ -848,7 +416,7 @@
                             <div class="stat-label">已掌握</div>
                         </div>
                     </div>
-                    
+
                     <div class="progress-bar-container">
                         <div class="progress-info">
                             <span>掌握进度</span>
@@ -858,12 +426,12 @@
                             <div class="progress-fill" id="progressFill" style="width: 32%"></div>
                         </div>
                     </div>
-                    
+
                     <div class="progress-title">
                         <i class="fas fa-book"></i>
                         <span>数学概念</span>
                     </div>
-                    
+
                     <select class="form-control" id="gradeSelector">
                         <option value="grade1">小学一年级</option>
                         <option value="grade2">小学二年级</option>
@@ -872,7 +440,7 @@
                         <option value="grade5">小学五年级</option>
                         <option value="grade6">小学六年级</option>
                     </select>
-                    
+
                     <div class="concept-list" id="conceptList">
                         <div class="loading">
                             <i class="fas fa-spinner fa-spin"></i>
@@ -882,19 +450,15 @@
                 </div>
             </div>
         </div>
-        
-        <footer>
-            <p>© 2025 快乐学习 - Sevenking Studio</p>
-        </footer>
     </div>
-
-    <!-- 全局学习助手组件 -->
-    <div class="learning-assistant" id="learningAssistant">
-        <img src="assets/logo/bear.png" alt="学习助手" class="assistant-image">
-    </div>
-    <div class="assistant-speech-bubble" id="assistantSpeechBubble">加油，你是最棒的！</div>
 
     <script>
+        const NAV_CONFIG = [
+            { page: 'math',     icon: 'fa-calculator', label: '数学概念', active: true },
+            { page: 'exercise', icon: 'fa-pencil-alt', label: '练习题',   active: false },
+            { page: 'settings', icon: 'fa-cog',        label: '设置',     active: false },
+        ];
+
         // 数学概念数据
         const mathData = {
             grade1: [
@@ -1007,76 +571,46 @@
         const exerciseQuestionElement = document.getElementById('exerciseQuestion');
         const exerciseOptionsElement = document.getElementById('exerciseOptions');
         const exerciseResultElement = document.getElementById('exerciseResult');
-        const navLinks = document.querySelectorAll('.nav-link');
-        const pages = document.querySelectorAll('.page');
-        const homeLink = document.getElementById('homeLink');
+        let navLinks, pages;
 
         // 初始化
         function init() {
             syncThemeFromIndex();
-            
+            navLinks = document.querySelectorAll('.nav-link');
+            pages = document.querySelectorAll('.page');
+
             // 加载学习进度
             loadProgress();
-            
+
             // 初始化UI
             showCurrentConcept();
             updateProgress();
             updateConceptList();
             setupExercise();
-            
+
             // 设置事件监听
             setupEventListeners();
 
             initLearningAssistant();
         }
 
-        function syncThemeFromIndex() {
-            function applyTheme(theme) {
-                if (theme === 'light') {
-                    document.body.classList.add('light-theme');
-                } else if (theme === 'dark') {
-                    document.body.classList.remove('light-theme');
-                } else if (theme === 'auto') {
-                    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                    if (prefersDark) {
-                        document.body.classList.remove('light-theme');
-                    } else {
-                        document.body.classList.add('light-theme');
-                    }
-                }
-            }
-            const theme = localStorage.getItem('theme') || 'dark';
-            applyTheme(theme);
-            // 监听系统主题变化
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-                if ((localStorage.getItem('theme') || 'dark') === 'auto') {
-                    applyTheme('auto');
-                }
-            });
-        }
-
         // 设置事件监听
         function setupEventListeners() {
             // 年级选择
             gradeSelectorElement.addEventListener('change', handleGradeChange);
-            
+
             // 控制按钮
             exampleBtnElement.addEventListener('click', showExample);
             knowBtnElement.addEventListener('click', markAsMastered);
             notKnowBtnElement.addEventListener('click', markAsNotMastered);
             nextBtnElement.addEventListener('click', showNextConcept);
             prevBtnElement.addEventListener('click', showPrevConcept);
-            
+
             // 导航链接
             setupNavLinks(navLinks, pages);
-            
+
             // 主页链接
             setupHomeLink('homeLink', 'index.html');
-        }
-
-        // 切换页面
-        function switchPage(pageId) {
-            switchPageCommon(pageId, navLinks, pages);
         }
 
         // 显示当前概念
@@ -1084,10 +618,10 @@
             const conceptData = mathData[currentGrade][currentConceptIndex];
             mathTitleElement.textContent = conceptData.title;
             mathCategoryElement.textContent = conceptData.category;
-            
+
             // 清空原有内容
             mathContentElement.innerHTML = '';
-            
+
             // 添加概念内容
             conceptData.content.forEach(line => {
                 const lineElement = document.createElement('span');
@@ -1095,9 +629,9 @@
                 lineElement.innerHTML = line;
                 mathContentElement.appendChild(lineElement);
             });
-            
+
             mathExplanationElement.textContent = conceptData.explanation;
-            
+
             // 更新练习题
             setupExercise();
         }
@@ -1112,10 +646,10 @@
         function setupExercise() {
             const conceptData = mathData[currentGrade][currentConceptIndex];
             exerciseQuestionElement.textContent = conceptData.exercise.question;
-            
+
             // 清空原有选项
             exerciseOptionsElement.innerHTML = '';
-            
+
             // 添加选项
             conceptData.exercise.options.forEach(option => {
                 const optionElement = document.createElement('div');
@@ -1125,7 +659,7 @@
                 optionElement.addEventListener('click', checkAnswer);
                 exerciseOptionsElement.appendChild(optionElement);
             });
-            
+
             exerciseResultElement.textContent = '';
         }
 
@@ -1135,16 +669,16 @@
             const conceptData = mathData[currentGrade][currentConceptIndex];
             const correctAnswer = conceptData.exercise.answer;
             const selectedAnswer = selectedOption.getAttribute('data-value');
-            
+
             // 清除所有选项的样式
             document.querySelectorAll('.exercise-option').forEach(option => {
                 option.classList.remove('correct', 'incorrect');
             });
-            
+
             // 标记正确答案和错误答案
             if (selectedAnswer === correctAnswer) {
                 selectedOption.classList.add('correct');
-                exerciseResultElement.textContent = '回答正确！👍';
+                exerciseResultElement.textContent = '回答正确！';
                 exerciseResultElement.style.color = 'var(--success)';
             } else {
                 selectedOption.classList.add('incorrect');
@@ -1204,17 +738,17 @@
         // 更新进度显示
         function updateProgress() {
             const totalConcepts = mathData[currentGrade].length;
-            const learned = Object.keys(learnedConcepts).filter(title => 
+            const learned = Object.keys(learnedConcepts).filter(title =>
                 mathData[currentGrade].some(c => c.title === title)
             ).length;
-            const mastered = Object.keys(masteredConcepts).filter(title => 
+            const mastered = Object.keys(masteredConcepts).filter(title =>
                 masteredConcepts[title] && mathData[currentGrade].some(c => c.title === title)
             ).length;
-            
+
             totalCountElement.textContent = totalConcepts;
             learnedCountElement.textContent = learned;
             masteredCountElement.textContent = mastered;
-            
+
             const progress = totalConcepts > 0 ? (learned / totalConcepts) * 100 : 0;
             progressFillElement.style.width = `${progress}%`;
             progressPercentageElement.textContent = `${Math.round(progress)}%`;
@@ -1223,15 +757,15 @@
         // 更新概念列表显示
         function updateConceptList() {
             conceptListElement.innerHTML = '';
-            
+
             mathData[currentGrade].forEach((concept, index) => {
                 const conceptItem = document.createElement('div');
                 conceptItem.className = 'concept-item';
-                
+
                 if (masteredConcepts[concept.title]) {
                     conceptItem.classList.add('mastered');
                 }
-                
+
                 conceptItem.innerHTML = `
                     <div>
                         <div class="concept-name">${concept.title}</div>
@@ -1241,12 +775,12 @@
                         <div class="status-badge">${masteredConcepts[concept.title] ? '已掌握' : (learnedConcepts[concept.title] ? '学习中' : '未学习')}</div>
                     </div>
                 `;
-                
+
                 conceptItem.addEventListener('click', () => {
                     currentConceptIndex = index;
                     showCurrentConcept();
                 });
-                
+
                 conceptListElement.appendChild(conceptItem);
             });
         }
@@ -1261,33 +795,24 @@
         function loadProgress() {
             const learned = localStorage.getItem('learnedConcepts');
             const mastered = localStorage.getItem('masteredConcepts');
-            
+
             if (learned) {
                 learnedConcepts = JSON.parse(learned);
             }
-            
+
             if (mastered) {
                 masteredConcepts = JSON.parse(mastered);
             }
         }
 
-        function initLearningAssistant() {
-            const assistantEnabled = localStorage.getItem('assistantEnabled') === 'true';
-            if (typeof LearningAssistant !== 'undefined' && assistantEnabled) {
-                window.learningAssistant = new LearningAssistant({
-                    element: document.getElementById('learningAssistant'),
-                    bubble: document.getElementById('assistantSpeechBubble')
-                });
-                window.learningAssistant.init();
-            }
-        }
-
         // 初始化应用
-        window.addEventListener('DOMContentLoaded', function() {
+        (function () {
+            injectNav(NAV_CONFIG);
+            injectFooter();
+            injectAssistant();
             init();
-        });
+        })();
     </script>
-    
 
 </body>
 </html>

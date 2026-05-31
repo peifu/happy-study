@@ -318,40 +318,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="nav-container">
-            <div class="logo" id="homeLink">
-                <i class="fas fa-brain"></i>
-                <span>快乐学习</span>
-            </div>
-            
-            <div class="nav-links">
-                <div class="nav-link active" data-page="home">
-                    <i class="fas fa-home"></i>
-                    <span>学习主页</span>
-                </div>
-                <div class="nav-link" data-page="assistant">
-                    <i class="fas fa-robot"></i>
-                    <span>学习助手</span>
-                </div>
-                <div class="nav-link" data-page="pomodoro" id="pomodoroPage">
-                    <i class="fas fa-clock"></i>
-                    <span>番茄时钟</span>
-                </div>
-                <div class="nav-link" data-page="game" id="gamePage">
-                    <i class="fas fa-game"></i>
-                    <span>闯关挑战</span>
-                </div>
-                <div class="nav-link" data-page="game2" id="gamePage2">
-                    <i class="fas fa-game"></i>
-                    <span>游戏世界</span>
-                </div>
-                <div class="nav-link" data-page="settings">
-                    <i class="fas fa-cog"></i>
-                    <span>设置</span>
-                </div>
-            </div>
-        </div>
-        
+
         <!-- 主页内容 -->
         <div class="page active" id="homePage">
 		<h1 class="main-title">好好学习 天天向上</h1>
@@ -700,22 +667,15 @@
             </div>
         </div>
         
-        <footer>
-            <p>© 2025 快乐学习 - Sevenking Studio</p>
-        </footer>
     </div>
-
-    <!-- 全局学习助手组件 -->
-    <div class="learning-assistant" id="learningAssistant">
-        <img src="assets/logo/bear.png" alt="学习助手" class="assistant-image">
-        <div class="assistant-name" id="assistantName">学习助手</div>
-    </div>
-    
-    <div class="assistant-speech-bubble" id="assistantSpeechBubble">加油，你是最棒的！</div>
 
     <script>
+        let navLinks, pages;
+
         // 初始化函数
         function init() {
+            navLinks = document.querySelectorAll('.nav-link');
+            pages = document.querySelectorAll('.page');
             syncThemeFromIndex();
             populateVoiceList();
             setupEventListeners();
@@ -723,32 +683,7 @@
             setupThemeSelect();
             // 初始化学习助手
             initLearningAssistant();
-        }
-
-        // 主题切换
-        function applyTheme(theme) {
-            document.body.classList.remove('light-theme');
-            if (theme === 'light') {
-                document.body.classList.add('light-theme');
-            } else if (theme === 'auto') {
-                // 跟随系统
-                if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-                    document.body.classList.add('light-theme');
-                }
-            }
-            // 保存主题
-            localStorage.setItem('theme', theme);
-            // 设置按钮选中状态
-            document.querySelectorAll('.theme-button').forEach(button => {
-                button.classList.remove('active');
-                if (button.dataset.theme === theme) {
-                    button.classList.add('active');
-                }
-            });
-        }
-
-        function getSavedTheme() {
-            return localStorage.getItem('theme');
+            if (typeof applyAssistantSettings === 'function') applyAssistantSettings();
         }
 
         function setupThemeSelect() {
@@ -758,9 +693,12 @@
                 button.addEventListener('click', function() {
                     const theme = this.dataset.theme;
                     applyTheme(theme);
+                    // Update button active states
+                    themeButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
                 });
             });
-            
+
             // 响应系统主题变化
             window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', e => {
                 if (getSavedTheme() === 'auto') {
@@ -771,19 +709,22 @@
         // 设置事件监听
         function setupEventListeners() {
             // 使用公共导航事件绑定
-            setupNavLinks(document.querySelectorAll('.nav-link'), document.querySelectorAll('.page'));
+            setupNavLinks(navLinks, pages);
 
             // 主页链接点击事件
             setupHomeLink('homeLink', 'index.html');
 
-            document.getElementById('pomodoroPage').addEventListener('click', function() {
+            const pomodoroLink = document.querySelector('[data-page="pomodoro"]');
+            if (pomodoroLink) pomodoroLink.addEventListener('click', function() {
                 switchPage('pomodoro');
             });
 
-            document.getElementById('gamePage').addEventListener('click', function() {
+            const gameLink = document.querySelector('[data-page="game"]');
+            if (gameLink) gameLink.addEventListener('click', function() {
                 switchPage('game');
             });
-            document.getElementById('gamePage2').addEventListener('click', function() {
+            const game2Link = document.querySelector('[data-page="game2"]');
+            if (game2Link) game2Link.addEventListener('click', function() {
                 switchPage('game2');
             });
 
@@ -971,37 +912,26 @@
             });
         }
 
+        // 外部页面URL映射
+        const EXTERNAL_PAGES = {
+            'englishCard': 'english.html',
+            'chineseCard': 'chinese.html',
+            'mathCard': 'math.html',
+            'peCard': 'pe.html',
+            'scienceCard': 'science.html',
+            'musicCard': 'music.html',
+            'pomodoro': 'pomodoro.html',
+            'game': 'car-game.html',
+            'game2': 'https://www.gamestolearnenglish.com/',
+        };
+
         // 切换页面
         function switchPage(pageId) {
-            switchPageCommon(pageId, document.querySelectorAll('.nav-link'), document.querySelectorAll('.page'));
-            if (pageId === 'englishCard') {
-                window.location.href = 'english.html';
-                document.getElementById('homePage').classList.add('active');
-            } else if (pageId === 'chineseCard') {
-                window.location.href = 'chinese.html';
-                document.getElementById('homePage').classList.add('active');
-            } else if (pageId === 'mathCard') {
-                window.location.href = 'math.html';
-                document.getElementById('homePage').classList.add('active');
-            } else if (pageId === 'peCard') {
-                window.location.href = 'pe.html';
-                document.getElementById('homePage').classList.add('active');
-            } else if (pageId === 'scienceCard') {
-                window.location.href = 'science.html';
-                document.getElementById('homePage').classList.add('active');
-            } else if (pageId === 'musicCard') {
-                window.location.href = 'music.html';
-                document.getElementById('homePage').classList.add('active');
-            } else if (pageId === 'pomodoro') {
-                window.location.href = 'pomodoro.html';
-                document.getElementById('homePage').classList.add('active');
-            } else if (pageId === 'game') {
-                window.location.href = 'car-game.html';
-                document.getElementById('homePage').classList.add('active');
-            } else if (pageId === 'game2') {
-                window.location.href = 'https://www.gamestolearnenglish.com/';
-                document.getElementById('homePage').classList.add('active');
+            if (EXTERNAL_PAGES[pageId]) {
+                window.location.href = EXTERNAL_PAGES[pageId];
+                return;
             }
+            switchPageCommon(pageId, navLinks, pages);
         }
 
         // 学习助手设置
@@ -1192,23 +1122,23 @@
             }
         }
 
-        function initLearningAssistant() {
-            const assistantEnabled = localStorage.getItem('assistantEnabled') === 'true';
-            if (typeof LearningAssistant !== 'undefined' && assistantEnabled) {
-                window.learningAssistant = new LearningAssistant({
-                    element: document.getElementById('learningAssistant'),
-                    bubble: document.getElementById('assistantSpeechBubble')
-                });
-                window.learningAssistant.init();
-                applyAssistantSettings();
-            }
-        }
-        // 初始化应用
-        window.addEventListener('DOMContentLoaded', function() {
+        // 初始化应用 — 脚本在 body 末尾，DOM 已就绪，直接执行
+        (function() {
+            var NAV_CONFIG = [
+                { page: 'home',     icon: 'fa-home',  label: '学习主页', active: true },
+                { page: 'assistant',icon: 'fa-robot', label: '学习助手', active: false },
+                { page: 'pomodoro', icon: 'fa-clock', label: '番茄时钟', active: false },
+                { page: 'game',     icon: 'fa-game',  label: '闯关挑战', active: false },
+                { page: 'game2',    icon: 'fa-game',  label: '游戏世界', active: false },
+                { page: 'settings', icon: 'fa-cog',   label: '设置',     active: false },
+            ];
+            injectNav(NAV_CONFIG);
+            injectFooter();
+            injectAssistant();
             init();
-        });
+        })();
 
-        if (speechSynthesis.onvoiceschanged !== undefined) {
+        if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !== undefined) {
             speechSynthesis.onvoiceschanged = populateVoiceList;
         }
     </script>

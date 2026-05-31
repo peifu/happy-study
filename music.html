@@ -7,154 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>快乐学习 - 音乐学习</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/common.css">
     <style>
-        :root {
-            --primary: #ff69b4;
-            --secondary: #ff1493;
-            --accent: #ff6b9d;
-            --success: #4caf50;
-            --warning: #ff69b4;
-            --info: #2196f3;
-            --dark: #0a1929;
-            --darker: #051321;
-            --card-bg: rgba(15, 35, 55, 0.7);
-            --text: #ffffff;
-            --text-secondary: #a0aec0;
-            --transition: all 0.3s ease;
-            --bg-color: #0a1929;
-            --text-color: #ffffff;
-            --card-bg-color: rgba(15, 35, 55, 0.7);
-            --progress-bg: rgba(255, 255, 255, 0.1);
-            --progress-fill: linear-gradient(90deg, var(--primary), var(--secondary));
-        }
-
-        body.light-theme {
-            --bg-color: #f5f7fa;
-            --text-color: #2d3748;
-            --card-bg-color: rgba(255, 255, 255, 0.95);
-            --text-secondary: #718096;
-            --darker: #e2e8f0;
-            --dark: #edf2f7;
-            --primary: #ff85c1;
-            --secondary: #ff4da6;
-            --accent: #ff7eb3;
-            --success: #38a169;
-            --warning: #ff85c1;
-            --info: #3182ce;
-            --progress-bg: rgba(0, 0, 0, 0.1);
-            --progress-fill: linear-gradient(90deg, #ff85c1, #ff4da6);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, var(--darker), var(--dark));
-            color: var(--text);
-            min-height: 100vh;
-            line-height: 1.6;
-            overflow-x: hidden;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-size: 16px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            min-height: calc(100vh - 160px);
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* 导航样式 */
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid rgba(255, 105, 180, 0.3);
-            margin-bottom: 25px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 24px;
-            font-weight: 700;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
-            cursor: pointer;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 15px;
-        }
-
-        .nav-link {
-            padding: 8px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-            font-size: 14px;
-        }
-
-        .nav-link::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            transition: var(--transition);
-        }
-
-        .nav-link:hover::before {
-            width: 100%;
-        }
-
-        .nav-link.active {
-            background: rgba(255, 105, 180, 0.1);
-        }
-
-        .nav-link.active::before {
-            width: 100%;
-        }
-
-        /* 页面内容 */
-        .page {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
         /* 音乐播放器容器布局 */
         .player-layout {
             display: grid;
@@ -249,10 +103,15 @@
             font-size: 28px;
         }
 
+        /* Audio progress bar overrides */
         .progress-container {
             position: relative;
             z-index: 1;
             margin: 20px 0;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            padding: 0;
         }
 
         .progress-bar {
@@ -265,10 +124,11 @@
 
         .progress-fill {
             height: 100%;
-            background: var(--progress-fill);
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
             border-radius: 4px;
             width: 0%;
             transition: width 0.1s ease;
+            box-shadow: none;
         }
 
         .time-display {
@@ -287,13 +147,13 @@
             border: 1px solid rgba(255, 105, 180, 0.2);
             max-height: 400px;
             overflow-y: auto;
-            overflow-x: hidden; /* 默认隐藏水平滚动条 */
+            overflow-x: hidden;
             position: relative;
-            order: 1; /* 歌词在左边 */
+            order: 1;
         }
 
         .lyrics-container.scroll-x {
-            overflow-x: auto; /* 当需要水平滚动时显示滚动条 */
+            overflow-x: auto;
         }
 
         .lyrics-container::before {
@@ -417,282 +277,175 @@
             z-index: 1;
         }
 
-        /* 响应式设计 - 优化多设备适配 */
+        /* Responsive - page-specific elements only */
         @media (max-width: 1200px) {
-            .container {
-                padding: 15px;
-            }
-            
             .player-layout {
                 gap: 20px;
             }
-            
             .music-player {
                 padding: 25px;
             }
-            
             .lyrics-container {
                 padding: 20px;
             }
         }
-        
+
         @media (max-width: 1000px) {
             .player-layout {
                 grid-template-columns: 1fr;
             }
-            
             .music-player {
                 padding: 20px;
             }
-            
             .song-title {
                 font-size: 26px;
             }
-            
             .song-artist {
                 font-size: 15px;
             }
-            
             .lyrics-title {
                 font-size: 17px;
             }
-            
             .lyric-line {
                 font-size: 13px;
             }
-            
             .songs-grid {
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             }
         }
-        
+
         @media (max-width: 800px) {
-            .nav-container {
-                flex-direction: column;
-                gap: 15px;
-                padding: 10px 0;
-                margin-bottom: 20px;
-            }
-            
-            .nav-links {
-                gap: 10px;
-            }
-            
-            .nav-link {
-                padding: 6px 12px;
-                font-size: 13px;
-            }
-            
-            .logo {
-                font-size: 22px;
-            }
-            
             .music-player {
                 padding: 18px;
             }
-            
             .song-title {
                 font-size: 24px;
             }
-            
             .song-artist {
                 font-size: 14px;
             }
-            
             .lyrics-container {
                 padding: 15px;
                 max-height: 300px;
             }
-            
             .lyrics-title {
                 font-size: 16px;
                 margin-bottom: 12px;
             }
-            
             .lyric-line {
                 font-size: 12px;
                 padding: 5px 10px;
             }
-            
             .player-controls {
                 gap: 15px;
             }
-            
             .control-btn {
                 width: 50px;
                 height: 50px;
             }
-            
             .control-btn i {
                 font-size: 20px;
             }
-            
             .play-btn {
                 width: 60px;
                 height: 60px;
             }
-            
             .play-btn i {
                 font-size: 24px;
             }
-            
             .songs-grid {
                 grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
                 gap: 15px;
             }
-            
             .song-item {
                 padding: 15px;
             }
-            
             .song-item-title {
                 font-size: 15px;
             }
-            
             .song-item-artist {
                 font-size: 12px;
             }
-            
             .song-item-duration {
                 font-size: 11px;
             }
         }
-        
+
         @media (max-width: 600px) {
-            .container {
-                padding: 10px;
-            }
-            
             .player-controls {
-                flex-direction: column;
                 gap: 12px;
             }
-            
             .control-btn {
                 width: 45px;
                 height: 45px;
             }
-            
             .control-btn i {
                 font-size: 18px;
             }
-            
             .play-btn {
                 width: 55px;
                 height: 55px;
             }
-            
             .play-btn i {
                 font-size: 22px;
             }
-            
             .songs-grid {
                 grid-template-columns: 1fr;
                 gap: 12px;
             }
-            
             .song-item {
                 padding: 12px;
             }
-            
             .song-item-title {
                 font-size: 14px;
             }
-            
             .song-item-artist {
                 font-size: 11px;
             }
-            
             .song-item-duration {
                 font-size: 10px;
             }
         }
-        
+
         @media (max-width: 400px) {
             .music-player {
                 padding: 15px;
             }
-            
             .song-title {
                 font-size: 22px;
             }
-            
             .song-artist {
                 font-size: 13px;
             }
-            
             .lyrics-container {
                 padding: 12px;
                 max-height: 250px;
             }
-            
             .lyrics-title {
                 font-size: 15px;
             }
-            
             .lyric-line {
                 font-size: 11px;
                 padding: 4px 8px;
             }
-            
             .song-item {
                 padding: 10px;
             }
-            
             .song-item-title {
                 font-size: 13px;
             }
-            
             .song-item-artist {
                 font-size: 10px;
             }
         }
-
-        /* 动画效果 */
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255, 105, 180, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(255, 105, 180, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 105, 180, 0); }
-        }
-
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            color: var(--text-secondary);
-            font-size: 12px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
     </style>
     <link rel="stylesheet" href="assets/css/learning-assistant.css">
     <script src="assets/js/learning-assistant.js"></script>
-    <script src="common.js"></script>
+    <script src="assets/js/common.js"></script>
 </head>
 
 <body>
     <div class="container">
-        <div class="nav-container">
-            <div class="logo" id="homeLink">
-                <i class="fas fa-brain"></i>
-                <span>快乐学习</span>
-            </div>
-
-            <div class="nav-links">
-                <div class="nav-link active" data-page="player">
-                    <i class="fas fa-music"></i>
-                    <span>音乐播放</span>
-                </div>
-                <div class="nav-link" data-page="songs">
-                    <i class="fas fa-list"></i>
-                    <span>歌曲列表</span>
-                </div>
-            </div>
-        </div>
-
         <!-- 音乐播放页面 -->
         <div class="page active" id="playerPage">
             <div class="player-layout">
@@ -741,16 +494,18 @@
                 <!-- 歌曲列表将通过JavaScript动态生成 -->
             </div>
         </div>
-
-        <footer>
-            <p>© 2025 快乐学习 - Sevenking Studio</p>
-        </footer>
     </div>
 
     <!-- 音频元素 -->
     <audio id="audioPlayer"></audio>
 
     <script>
+        // 导航配置
+        const NAV_CONFIG = [
+            { page: 'player', icon: 'fa-music', label: '音乐播放', active: true },
+            { page: 'songs',  icon: 'fa-list',  label: '歌曲列表', active: false },
+        ];
+
         // 音乐文件数据
         const songs = [
             {
@@ -865,11 +620,12 @@
         const totalTime = document.getElementById('totalTime');
         const lyricsContent = document.getElementById('lyricsContent');
         const songsGrid = document.getElementById('songsGrid');
-        const navLinks = document.querySelectorAll('.nav-link');
-        const pages = document.querySelectorAll('.page');
+        let navLinks, pages;
 
         // 初始化
         function init() {
+            navLinks = document.querySelectorAll('.nav-link');
+            pages = document.querySelectorAll('.page');
             syncThemeFromIndex();
             renderSongsList();
             loadSong(0);
@@ -880,9 +636,6 @@
         function setupEventListeners() {
             // 导航链接
             setupNavLinks(navLinks, pages);
-            
-            // 主页链接点击事件
-            setupHomeLink('homeLink', 'index.html');
 
             // 播放控制
             playBtn.addEventListener('click', togglePlay);
@@ -901,21 +654,17 @@
         // 加载歌曲
         function loadSong(index) {
             if (index < 0 || index >= songs.length) return;
-            
+
             currentSongIndex = index;
             const song = songs[currentSongIndex];
-            
-            // 更新UI
+
             currentSongTitle.textContent = song.title;
             currentSongArtist.textContent = song.artist;
-            
-            // 设置音频源
+
             audioPlayer.src = song.audioUrl;
-            
-            // 加载歌词
+
             renderLyrics(song.lyrics);
-            
-            // 预加载下一首
+
             if (currentSongIndex < songs.length - 1) {
                 const nextSong = songs[currentSongIndex + 1];
                 const preloadAudio = new Audio();
@@ -942,7 +691,6 @@
                 })
                 .catch(error => {
                     console.error('播放失败:', error);
-                    // 模拟播放用于演示
                     simulatePlayback();
                 });
         }
@@ -977,11 +725,9 @@
         function updateProgress() {
             const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
             progressFill.style.width = progress + '%';
-            
-            // 更新时间显示
+
             currentTime.textContent = formatTime(audioPlayer.currentTime);
-            
-            // 同步歌词
+
             syncLyrics(audioPlayer.currentTime);
         }
 
@@ -995,7 +741,7 @@
             const progressBarWidth = progressBar.offsetWidth;
             const clickPosition = event.offsetX;
             const seekTime = (clickPosition / progressBarWidth) * audioPlayer.duration;
-            
+
             audioPlayer.currentTime = seekTime;
         }
 
@@ -1016,8 +762,7 @@
                 lyricLine.dataset.time = line.time;
                 lyricsContent.appendChild(lyricLine);
             });
-            
-            // 检测是否需要水平滚动条
+
             checkLyricsScroll();
         }
 
@@ -1025,15 +770,13 @@
         function checkLyricsScroll() {
             const lyricsContainer = document.querySelector('.lyrics-container');
             const lyricsContent = document.getElementById('lyricsContent');
-            
-            // 移除之前的滚动类
+
             lyricsContainer.classList.remove('scroll-x');
-            
-            // 给浏览器一点时间渲染
+
             setTimeout(() => {
                 const contentWidth = lyricsContent.scrollWidth;
-                const containerWidth = lyricsContainer.clientWidth - 50; // 减去padding
-                
+                const containerWidth = lyricsContainer.clientWidth - 50;
+
                 if (contentWidth > containerWidth) {
                     lyricsContainer.classList.add('scroll-x');
                 }
@@ -1060,8 +803,7 @@
         function syncLyrics(currentTime) {
             const lyricLines = lyricsContent.querySelectorAll('.lyric-line');
             let activeLineIndex = -1;
-            
-            // 找到当前应该高亮的歌词行
+
             for (let i = lyricLines.length - 1; i >= 0; i--) {
                 const lineTime = parseFloat(lyricLines[i].dataset.time);
                 if (currentTime >= lineTime) {
@@ -1069,12 +811,10 @@
                     break;
                 }
             }
-            
-            // 更新高亮状态
+
             lyricLines.forEach((line, index) => {
                 if (index === activeLineIndex) {
                     line.classList.add('active');
-                    // 确保当前歌词在可视区域内
                     line.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 } else {
                     line.classList.remove('active');
@@ -1100,13 +840,13 @@
                     </div>
                     <div class="song-item-duration">${song.duration}</div>
                 `;
-                
+
                 songItem.addEventListener('click', () => {
                     loadSong(index);
                     switchPage('player');
                     playSong();
                 });
-                
+
                 songsGrid.appendChild(songItem);
             });
         }
@@ -1115,7 +855,7 @@
         function simulatePlayback() {
             isPlaying = true;
             playIcon.className = 'fas fa-pause';
-            
+
             let simulatedTime = 0;
             const simulateInterval = setInterval(() => {
                 simulatedTime += 0.1;
@@ -1124,32 +864,27 @@
                     playNextSong();
                     return;
                 }
-                
-                // 更新进度显示
+
                 const progress = (simulatedTime / 15) * 100;
                 progressFill.style.width = progress + '%';
                 currentTime.textContent = formatTime(simulatedTime);
                 totalTime.textContent = '2:30';
-                
-                // 同步歌词
+
                 syncLyrics(simulatedTime);
             }, 100);
-            
-            // 存储interval以便清除
+
             window.simulateInterval = simulateInterval;
         }
 
         // 初始化应用
-        window.addEventListener('DOMContentLoaded', function() {
+        (function() {
+            injectNav(NAV_CONFIG);
+            injectFooter();
+            injectAssistant();
+            setupHomeLink('homeLink', 'index.html');
+            initLearningAssistant();
             init();
-        });
+        })();
     </script>
-    
-    <!-- 全局学习助手组件 -->
-    <div class="learning-assistant" id="learningAssistant">
-        <img src="assets/logo/bear.png" alt="学习助手" class="assistant-image">
-    </div>
-    
-    <div class="assistant-speech-bubble" id="assistantSpeechBubble">加油，你是最棒的！</div>
 </body>
 </html>

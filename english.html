@@ -6,45 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>快乐学习 - 智能单词学习系统</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/common.css">
     <link rel="stylesheet" href="assets/css/learning-assistant.css">
     <style>
+        /* Page-specific overrides and extra variables */
         :root {
-            --primary: #00a2ff;
-            --secondary: #00d9a6;
-            --accent: #ff6b6b;
-            --success: #4caf50;
-            --warning: #ff9800;
-            --info: #2196f3;
-            --dark: #0a1929;
-            --darker: #051321;
-            --card-bg: rgba(15, 35, 55, 0.7);
-            --text: #ffffff;
-            --text-secondary: #a0aec0;
-            --transition: all 0.3s ease;
-            --bg-color: #0a1929;
-            --text-color: #ffffff;
-            --card-bg-color: rgba(15, 35, 55, 0.7);
             --progress-bg: rgba(255, 255, 255, 0.1);
             --progress-fill: linear-gradient(90deg, var(--primary), var(--secondary));
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, var(--darker), var(--dark));
-            color: var(--text);
-            min-height: 100vh;
-            line-height: 1.6;
-            overflow-x: hidden;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-size: 16px;
-            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         body.light-theme {
@@ -62,105 +30,6 @@
             --info: #3182ce;
             --progress-bg: rgba(0, 0, 0, 0.1);
             --progress-fill: linear-gradient(90deg, #3182ce, #38a169);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            min-height: calc(100vh - 160px);
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* 导航样式 */
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid rgba(0, 247, 255, 0.3);
-            margin-bottom: 25px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 24px;
-            font-weight: 700;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 10px rgba(0, 247, 255, 0.5);
-            cursor: pointer;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 15px;
-        }
-
-        .nav-link {
-            padding: 8px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-            font-size: 14px;
-        }
-
-        .nav-link::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            transition: var(--transition);
-        }
-
-        .nav-link:hover::before {
-            width: 100%;
-        }
-
-        .nav-link.active {
-            background: rgba(0, 247, 255, 0.1);
-        }
-
-        .nav-link.active::before {
-            width: 100%;
-        }
-
-        /* 页面内容 */
-        .page {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* 主页样式 */
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr 350px;
-            gap: 30px;
         }
 
         .word-card {
@@ -275,59 +144,6 @@
             flex-wrap: nowrap;
         }
 
-        .btn {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(90deg, var(--primary), var(--info));
-            color: white;
-        }
-
-        .btn-primary:hover {
-            box-shadow: 0 0 15px rgba(0, 247, 255, 0.5);
-            transform: translateY(-2px);
-        }
-
-        .btn-success {
-            background: linear-gradient(90deg, var(--success), var(--secondary));
-            color: white;
-        }
-
-        .btn-success:hover {
-            box-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
-            transform: translateY(-2px);
-        }
-
-        .btn-warning {
-            background: linear-gradient(90deg, var(--warning), var(--accent));
-            color: white;
-        }
-
-        .btn-warning:hover {
-            box-shadow: 0 0 15px rgba(255, 152, 0, 0.5);
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--text-color);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--primary);
-            box-shadow: 0 0 15px rgba(0, 247, 255, 0.3);
-        }
-
         /* 进度容器 */
         .progress-container {
             background: var(--card-bg-color);
@@ -398,53 +214,6 @@
             width: 0%;
             box-shadow: 0 0 10px rgba(0, 247, 255, 0.3);
             transition: width 0.5s ease;
-        }
-
-        /* 开关样式 */
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 50px;
-            height: 24px;
-            margin-left: 10px;
-        }
-
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider-round {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 24px;
-        }
-
-        .slider-round:before {
-            position: absolute;
-            content: "";
-            height: 18px;
-            width: 18px;
-            left: 3px;
-            bottom: 3px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-
-        input:checked+.slider-round {
-            background-color: var(--primary);
-        }
-
-        input:checked+.slider-round:before {
-            transform: translateX(26px);
         }
 
         /* 设置页面样式 */
@@ -1003,29 +772,9 @@
             }
         }
 
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            color: var(--text-secondary);
-            font-size: 12px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
         /* 控件组样式 */
         .control-group {
             margin-bottom: 25px;
-        }
-
-        .control-label {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-            color: var(--text-secondary);
         }
 
         .timer-controls {
@@ -1337,37 +1086,12 @@
 
         /* 全局学习助手样式 - 已移动到外部文件 assets/css/learning-assistant.css */
     </style>
-    <script src="common.js"></script>
+    <script src="assets/js/common.js"></script>
     <script src="assets/js/learning-assistant.js"></script>
 </head>
 
 <body>
     <div class="container">
-        <div class="nav-container">
-            <div class="logo" id="homeLink">
-                <i class="fas fa-brain"></i>
-                <span>快乐学习</span>
-            </div>
-
-            <div class="nav-links">
-                <div class="nav-link active" data-page="wordcard">
-                    <i class="fas fa-home"></i>
-                    <span>单词记忆</span>
-                </div>
-                <div class="nav-link" data-page="wordlist">
-                    <i class="fas fa-list"></i>
-                    <span>单词列表</span>
-                </div>
-                <div class="nav-link" data-page="game">
-                    <i class="fas fa-gamepad"></i>
-                    <span>游戏闯关</span>
-                </div>
-                <div class="nav-link" data-page="settings">
-                    <i class="fas fa-cog"></i>
-                    <span>设置</span>
-                </div>
-            </div>
-        </div>
 
         <!-- 单词卡片页面 -->
         <div class="page active" id="wordcardPage">
@@ -1687,18 +1411,7 @@
                 </div>
             </div>
 
-            <footer>
-                <p>© 2025 快乐学习 - Sevenking Studio</p>
-            </footer>
         </div>
-
-        <!-- 全局学习助手组件 -->
-        <div class="learning-assistant" id="learningAssistant">
-            <img src="assets/logo/bear.png" alt="学习助手" class="assistant-image">
-            <div class="assistant-name" id="assistantName"></div>
-        </div>
-
-        <div class="assistant-speech-bubble" id="assistantSpeechBubble">加油，你是最棒的！</div>
 
         <script>
             // 只存储已加载的词表
@@ -1750,8 +1463,7 @@
             const wordsGridElement = document.getElementById('wordsGrid');
             const wordSearchElement = document.getElementById('wordSearch');
             const filterButtons = document.querySelectorAll('.filter-btn');
-            const navLinks = document.querySelectorAll('.nav-link');
-            const pages = document.querySelectorAll('.page');
+            let navLinks, pages;
             const themeSelectElement = document.getElementById('themeSelect');
             const fontSizeSliderElement = document.getElementById('fontSizeSlider');
 
@@ -1770,6 +1482,8 @@
 
             // 初始化
             async function init() {
+                navLinks = document.querySelectorAll('.nav-link');
+                pages = document.querySelectorAll('.page');
                 syncThemeFromIndex();
 
                 // 加载当前单词本
@@ -2842,12 +2556,21 @@
             }
 
             // 初始化应用
-            window.addEventListener('DOMContentLoaded', function () {
+            (function () {
+                var NAV_CONFIG = [
+                    { page: 'wordcard', icon: 'fa-home',    label: '单词记忆', active: true },
+                    { page: 'wordlist', icon: 'fa-list',    label: '单词列表', active: false },
+                    { page: 'game',     icon: 'fa-gamepad', label: '游戏闯关', active: false },
+                    { page: 'settings', icon: 'fa-cog',     label: '设置',     active: false },
+                ];
+                injectNav(NAV_CONFIG);
+                injectFooter();
+                injectAssistant();
                 init();
-            });
+            })();
 
             // 语音合成API加载
-            if (speechSynthesis.onvoiceschanged !== undefined) {
+            if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !== undefined) {
                 speechSynthesis.onvoiceschanged = populateVoiceList;
             }
 
@@ -2902,17 +2625,6 @@
                 document.getElementById('cancelBtn').onclick = () => {
                     document.body.removeChild(mask);
                 };
-            }
-
-            function initLearningAssistant() {
-                const assistantEnabled = localStorage.getItem('assistantEnabled') === 'true';
-                if (typeof LearningAssistant !== 'undefined' && assistantEnabled) {
-                    window.learningAssistant = new LearningAssistant({
-                        element: document.getElementById('learningAssistant'),
-                        bubble: document.getElementById('assistantSpeechBubble')
-                    });
-                    window.learningAssistant.init();
-                }
             }
 
         </script>
