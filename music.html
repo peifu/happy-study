@@ -271,6 +271,22 @@
         .control-btn:active { transform: scale(0.94); }
         .control-btn i { font-size: 15px; }
 
+        /* Loop mode button */
+        .loop-btn { position: relative; }
+        .loop-btn.single i,
+        .loop-btn.list i,
+        .loop-btn.random i { color: var(--music-accent); }
+        .loop-btn.single::after {
+            content: '1';
+            position: absolute;
+            top: 2px;
+            right: 6px;
+            font-size: 9px;
+            font-weight: 700;
+            color: var(--music-accent);
+            font-family: 'Segoe UI', sans-serif;
+        }
+
         /* Play button — larger, blue gradient, vinyl-inspired */
         .play-btn {
             width: 56px;
@@ -681,6 +697,7 @@
                         <p class="song-artist" id="currentSongArtist">快乐学习</p>
                     </div>
                     <div class="player-controls">
+                        <button class="control-btn loop-btn" id="loopBtn" title="列表循环"><i class="fas fa-redo-alt"></i></button>
                         <button class="control-btn" id="prevBtn"><i class="fas fa-step-backward"></i></button>
                         <button class="control-btn play-btn" id="playBtn"><i class="fas fa-play" id="playIcon"></i></button>
                         <button class="control-btn" id="nextBtn"><i class="fas fa-step-forward"></i></button>
@@ -732,6 +749,21 @@
         let lyricsInterval = null;
         let pendingAutoPlay = false;
 
+        // 循环模式: 'list' | 'single' | 'random' | 'none'
+        let loopMode = 'list';
+        var LOOP_ICONS = {
+            'none':   'fa-redo-alt',
+            'list':   'fa-redo-alt',
+            'single': 'fa-redo-alt',
+            'random': 'fa-random'
+        };
+        var LOOP_TITLES = {
+            'none':   '关闭循环',
+            'list':   '列表循环',
+            'single': '单曲循环',
+            'random': '随机播放'
+        };
+
         // DOM元素
         const currentSongTitle = document.getElementById('currentSongTitle');
         const currentSongArtist = document.getElementById('currentSongArtist');
@@ -739,6 +771,7 @@
         const playIcon = document.getElementById('playIcon');
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
+        const loopBtn = document.getElementById('loopBtn');
         const progressBar = document.getElementById('progressBar');
         const progressFill = document.getElementById('progressFill');
         const currentTime = document.getElementById('currentTime');
@@ -845,6 +878,7 @@
             if (songs.length > 0) {
                 await loadSong(0);
             }
+            updateLoopButton();
             setupEventListeners();
         }
 
@@ -872,6 +906,7 @@
             playBtn.addEventListener('click', togglePlay);
             prevBtn.addEventListener('click', playPrevSong);
             nextBtn.addEventListener('click', playNextSong);
+            loopBtn.addEventListener('click', cycleLoopMode);
 
             progressBar.addEventListener('click', seekToPosition);
 
@@ -939,10 +974,41 @@
             stopLyricsSync();
         }
 
+        // 切换循环模式: list → single → random → none → list
+        function cycleLoopMode() {
+            var modes = ['list', 'single', 'random', 'none'];
+            var idx = modes.indexOf(loopMode);
+            loopMode = modes[(idx + 1) % modes.length];
+            updateLoopButton();
+        }
+
+        function updateLoopButton() {
+            loopBtn.className = 'control-btn loop-btn';
+            if (loopMode === 'single') loopBtn.classList.add('single');
+            if (loopMode === 'list') loopBtn.classList.add('list');
+            if (loopMode === 'random') loopBtn.classList.add('random');
+            loopBtn.innerHTML = '<i class="fas ' + LOOP_ICONS[loopMode] + '"></i>';
+            loopBtn.title = LOOP_TITLES[loopMode];
+        }
+
         function playNextSong() {
             var wasPlaying = isPlaying;
             if (isPlaying) pauseSong();
-            var nextIndex = (currentSongIndex + 1) % songs.length;
+            var nextIndex;
+            if (loopMode === 'single') {
+                nextIndex = currentSongIndex;
+            } else if (loopMode === 'random') {
+                nextIndex = Math.floor(Math.random() * songs.length);
+                if (songs.length > 1 && nextIndex === currentSongIndex) {
+                    nextIndex = (nextIndex + 1) % songs.length;
+                }
+            } else if (loopMode === 'list') {
+                nextIndex = (currentSongIndex + 1) % songs.length;
+            } else {
+                // 'none' — stop at end
+                if (currentSongIndex >= songs.length - 1) return;
+                nextIndex = currentSongIndex + 1;
+            }
             loadSong(nextIndex, wasPlaying);
         }
 
