@@ -22,6 +22,7 @@
     "id": 4,
     "title": "我们的时光",
     "artist": "赵雷",
-    "file": "data/music/赵雷 - 我们的时光.ogg"
+    "file": "data/music/赵雷-我们的时光.ogg",
+    "lyricFile": "data/music/lyrics/勇赵雷-我们的时光.lrc"
   }
 ]
