@@ -10,19 +10,19 @@
     "id": 2,
     "title": "成都",
     "artist": "赵雷",
-    "file": "data/music/赵雷 - 成都.ogg"
+    "file": "data/music/赵雷-成都.ogg"
   },
   {
     "id": 3,
     "title": "阿刁",
     "artist": "赵雷",
-    "file": "data/music/赵雷 - 阿刁.ogg"
+    "file": "data/music/赵雷-阿刁.ogg"
   },
   {
     "id": 4,
     "title": "我们的时光",
     "artist": "赵雷",
     "file": "data/music/赵雷-我们的时光.ogg",
-    "lyricFile": "data/music/lyrics/勇赵雷-我们的时光.lrc"
+    "lyricFile": "data/music/lyrics/赵雷-我们的时光.lrc"
   }
 ]
