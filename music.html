@@ -784,7 +784,7 @@
         // 加载所有歌单列表（从music-index.json读取）
         async function loadPlaylists() {
             try {
-                const resp = await fetch('data/music/music-index.json');
+                const resp = await fetch('data/music/playlist/music-index.json');
                 playlists = await resp.json();
 
                 playlists.forEach(playlist => {

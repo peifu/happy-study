@@ -1,0 +1,5 @@
+[
+  { "id": "sevenking", "title": "SevenKing 音乐列表", "file": "data/music/playlist/sevenking-music-list.json" },
+  { "id": "sevenbaby", "title": "SevenBaby 音乐列表", "file": "data/music/playlist/sevenbaby-music-list.json" },
+  { "id": "music", "title": "经典音乐列表", "file": "data/music/playlist/music-list.json" }
+]
