@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "title": "孤勇者",
+    "artist": "陈奕迅",
+    "file": "data/music/陈奕迅 - 孤勇者.mp3",
+    "lyricFile": "data/music/lyrics/陈奕迅 - 孤勇者.lrc"
+  },
+  {
+    "id": 2,
+    "title": "成都",
+    "artist": "赵雷",
+    "file": "data/music/赵雷 - 成都.ogg"
+  },
+  {
+    "id": 3,
+    "title": "阿刁",
+    "artist": "赵雷",
+    "file": "data/music/赵雷 - 阿刁.ogg"
+  },
+  {
+    "id": 4,
+    "title": "我们的时光",
+    "artist": "赵雷",
+    "file": "data/music/赵雷 - 我们的时光.ogg"
+  }
+]

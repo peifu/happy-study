@@ -1,9 +1,0 @@
-[
-  { "id": 1, "title": "Someone Like You",    "artist": "Adele",  "duration": "4:45", "file": "data/music/Adele - Someone Like You.mp3",                                 "lyricFile": "data/music/lyrics/someone-like-you.json" },
-  { "id": 2, "title": "天国的女儿",          "artist": "段玫梅", "duration": "3:30", "file": "data/music/段玫梅 - 天国的女儿.mp3",                                "lyricFile": "data/music/lyrics/tian-guo-de-nv-er.json" },
-  { "id": 3, "title": "献给上帝的歌",        "artist": "班得瑞", "duration": "4:20", "file": "data/music/班得瑞2Bandari - 献给上帝的歌Song For The Lord.mp3",   "lyricFile": "data/music/lyrics/xian-gei-shang-di.json" },
-  { "id": 4, "title": "春野",                "artist": "班得瑞", "duration": "3:50", "file": "data/music/班得瑞3Bandari - 春野One day in spring.mp3",            "lyricFile": "data/music/lyrics/chun-ye.json" },
-  { "id": 5, "title": "无垠地平线",          "artist": "班得瑞", "duration": "4:10", "file": "data/music/班得瑞4Bandari - 无垠地平线Endless Horizon.mp3",        "lyricFile": "data/music/lyrics/wu-yin-di-ping-xian.json" },
-  { "id": 6, "title": "初雪",                "artist": "班得瑞", "duration": "3:25", "file": "data/music/班得瑞5Bandari - 初雪The First Snowflakes.mp3",         "lyricFile": "data/music/lyrics/chu-xue.json" },
-  { "id": 7, "title": "敲击",                "artist": "班得瑞", "duration": "3:40", "file": "data/music/班得瑞Bandari - 敲击Beatrix.mp3",                       "lyricFile": "data/music/lyrics/qiao-ji.json" }
-]
