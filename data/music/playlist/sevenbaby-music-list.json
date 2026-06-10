@@ -26,5 +26,12 @@
     "artist": "赵雷",
     "file": "data/music/赵雷-我们的时光.ogg",
     "lyricFile": "data/music/lyrics/赵雷-我们的时光.lrc"
+  },
+  {
+    "id": 5,
+    "title": "可能",
+    "artist": "程响",
+    "file": "data/music/程响-可能.mp3",
+    "lyricFile": "data/music/lyrics/程响-可能.lrc"
   }
 ]
