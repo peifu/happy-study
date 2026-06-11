@@ -1,7 +1,7 @@
 [
-  { "id": 1, "title": "孤勇者", "artist": "陈奕迅" },
-  { "id": 2, "title": "成都", "artist": "赵雷" },
-  { "id": 3, "title": "阿刁", "artist": "赵雷" },
-  { "id": 4, "title": "我们的时光", "artist": "赵雷" },
-  { "id": 5, "title": "可能", "artist": "程响" }
+  { "title": "孤勇者", "artist": "陈奕迅" },
+  { "title": "成都", "artist": "赵雷" },
+  { "title": "阿刁", "artist": "赵雷" },
+  { "title": "我们的时光", "artist": "赵雷" },
+  { "title": "可能", "artist": "程响" }
 ]

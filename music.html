@@ -1285,8 +1285,8 @@
                         store.playlists.push({
                             id: plInfo.id,
                             title: plInfo.title,
-                            songs: songsData.map(function(s) {
-                                return { id: s.id, title: s.title, artist: s.artist };
+                            songs: songsData.map(function(s, idx) {
+                                return { id: idx + 1, title: s.title, artist: s.artist };
                             })
                         });
                     } catch(e) {
