@@ -671,6 +671,464 @@
             .play-btn { width: 48px; height: 48px; }
             .control-btn { width: 36px; height: 36px; }
         }
+
+        /* ============================================================
+           PLAYLIST MANAGER — 播放列表管理页面
+           Same proportions as player: lyrics (1fr) | controls (380px)
+           ============================================================ */
+        .playlist-manager {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 20px;
+            min-height: calc(100vh - 240px);
+        }
+
+        /* Left panel — matches lyrics-container sizing */
+        .all-songs-panel {
+            background: var(--music-surface);
+            border-radius: var(--music-radius-lg);
+            padding: 32px 36px;
+            border: 1px solid var(--music-border);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+            display: flex;
+            flex-direction: column;
+            max-height: calc(100vh - 210px);
+            position: relative;
+        }
+        .all-songs-panel::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: var(--music-radius-lg);
+            background: radial-gradient(ellipse at 50% 0%, var(--music-accent-glow) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .all-songs-panel > * { position: relative; z-index: 1; }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            flex-shrink: 0;
+        }
+        .panel-title {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--music-accent);
+            font-weight: 600;
+            margin: 0;
+            text-align: center;
+        }
+        .panel-title::after {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--music-accent), transparent);
+            margin: 10px auto 0;
+        }
+        .song-search {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--music-border);
+            border-radius: var(--music-radius-sm);
+            padding: 9px 14px;
+            color: var(--music-text-mid);
+            font-size: 13px;
+            outline: none;
+            transition: all 0.25s ease;
+            margin-bottom: 16px;
+            flex-shrink: 0;
+        }
+        .song-search::placeholder { color: var(--music-text-dim); }
+        .song-search:focus {
+            border-color: var(--music-accent);
+            box-shadow: 0 0 18px rgba(59, 130, 246, 0.15);
+        }
+
+        /* All songs — card grid */
+        .all-songs-list {
+            flex: 1;
+            overflow-y: auto;
+            min-height: 0;
+            padding-right: 4px;
+        }
+        .all-songs-list::-webkit-scrollbar { width: 6px; }
+        .all-songs-list::-webkit-scrollbar-track { background: transparent; }
+        .all-songs-list::-webkit-scrollbar-thumb {
+            background: rgba(59, 130, 246, 0.25);
+            border-radius: 3px;
+        }
+        .all-songs-list::-webkit-scrollbar-thumb:hover {
+            background: rgba(59, 130, 246, 0.45);
+        }
+        .song-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 10px;
+        }
+
+        /* Song card */
+        .song-card {
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid transparent;
+            border-radius: var(--music-radius-md);
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        .song-card:hover {
+            border-color: rgba(59, 130, 246, 0.3);
+            background: rgba(59, 130, 246, 0.06);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.1);
+        }
+        .song-card.selected {
+            border-color: var(--music-accent);
+            background: linear-gradient(135deg, var(--music-accent-glow), rgba(99, 102, 241, 0.08));
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.15);
+        }
+        .song-card.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            color: var(--music-accent);
+            font-size: 14px;
+            font-weight: 700;
+        }
+        .song-card-icon {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(99, 102, 241, 0.2));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--music-accent);
+            font-size: 14px;
+            margin-bottom: 10px;
+            transition: all 0.25s ease;
+        }
+        .song-card.selected .song-card-icon {
+            background: linear-gradient(135deg, var(--music-accent), #2563eb);
+            color: #fff;
+            box-shadow: 0 0 16px rgba(59, 130, 246, 0.4);
+        }
+        .song-card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--music-text-mid);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            letter-spacing: 0.02em;
+            margin-bottom: 4px;
+        }
+        .song-card.selected .song-card-title { color: var(--music-accent); }
+        .song-card-artist {
+            font-size: 12px;
+            color: var(--music-text-dim);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Right panel — matches music-player sizing, fully scrollable */
+        .playlist-editor-panel {
+            background: var(--music-surface);
+            border-radius: var(--music-radius-lg);
+            padding: 24px 28px;
+            border: 1px solid var(--music-border);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+            display: flex;
+            flex-direction: column;
+            max-height: calc(100vh - 210px);
+            position: relative;
+            overflow: hidden;
+        }
+        .playlist-editor-panel::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 30% 20%, var(--music-accent2-glow) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .playlist-editor-panel > * { position: relative; z-index: 1; }
+
+        /* Playlist card */
+        .playlist-card {
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid transparent;
+            border-radius: var(--music-radius-sm);
+            padding: 10px 14px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            flex-shrink: 0;
+        }
+        .playlist-card:hover {
+            border-color: rgba(59, 130, 246, 0.25);
+            background: rgba(59, 130, 246, 0.05);
+        }
+        .playlist-card.selected {
+            border-color: var(--music-accent);
+            background: linear-gradient(90deg, var(--music-accent-glow), rgba(99, 102, 241, 0.06));
+        }
+        .playlist-card-info { flex: 1; min-width: 0; }
+        .playlist-card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--music-text-mid);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .playlist-card-count {
+            font-size: 11px;
+            color: var(--music-text-dim);
+            margin-top: 2px;
+        }
+        .playlist-card-delete {
+            color: var(--music-text-dim);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+        .playlist-card-delete:hover { color: #f87171; }
+
+        /* Selected playlist area — scrolls with the panel */
+        .selected-playlist-header {
+            margin-top: 16px;
+            padding-top: 14px;
+            border-top: 1px solid var(--music-border);
+            flex-shrink: 0;
+        }
+        .selected-playlist-header .panel-title::after { display: none; }
+        .selected-playlist-songs {
+            flex: 1;
+            overflow-y: auto;
+            min-height: 0;
+        }
+        .selected-playlist-songs::-webkit-scrollbar { width: 5px; }
+        .selected-playlist-songs::-webkit-scrollbar-track { background: transparent; }
+        .selected-playlist-songs::-webkit-scrollbar-thumb {
+            background: rgba(99, 102, 241, 0.2);
+            border-radius: 3px;
+        }
+        .playlist-song-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 7px 10px;
+            border-radius: var(--music-radius-sm);
+            transition: all 0.2s ease;
+            margin-bottom: 2px;
+        }
+        .playlist-song-item:hover { background: rgba(255, 255, 255, 0.03); }
+        .playlist-song-item .song-item-icon {
+            width: 28px;
+            height: 28px;
+            font-size: 11px;
+        }
+        .playlist-song-item .song-item-info { flex: 1; min-width: 0; }
+        .playlist-song-item .song-item-title { font-size: 13px; }
+        .playlist-song-item .song-item-artist { font-size: 11px; }
+
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--music-accent), #2563eb);
+            color: #fff;
+            border: none;
+            border-radius: var(--music-radius-sm);
+            padding: 9px 18px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            letter-spacing: 0.02em;
+            flex-shrink: 0;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 0 22px rgba(59, 130, 246, 0.35);
+            transform: translateY(-1px);
+        }
+        .btn-primary:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .btn-outline {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--music-text-mid);
+            border: 1px solid var(--music-border);
+            border-radius: var(--music-radius-sm);
+            padding: 6px 14px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            letter-spacing: 0.02em;
+        }
+        .btn-outline:hover {
+            border-color: var(--music-accent);
+            color: var(--music-accent);
+            background: rgba(59, 130, 246, 0.08);
+        }
+        .btn-danger {
+            background: none;
+            color: #f87171;
+            border: 1px solid transparent;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+            padding: 0;
+        }
+        .btn-danger:hover {
+            background: rgba(248, 113, 113, 0.12);
+            border-color: rgba(248, 113, 113, 0.3);
+        }
+
+        .empty-state {
+            text-align: center;
+            color: var(--music-text-dim);
+            padding: 30px 20px;
+            font-size: 13px;
+            letter-spacing: 0.03em;
+        }
+
+        .add-songs-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--music-border);
+            flex-shrink: 0;
+            margin-top: 8px;
+        }
+        .add-songs-bar .selected-count {
+            font-size: 12px;
+            color: var(--music-text-dim);
+            flex: 1;
+        }
+
+        /* Light theme overrides */
+        .light-theme .all-songs-panel,
+        body.light-theme .all-songs-panel {
+            box-shadow: 0 4px 24px rgba(100, 120, 190, 0.08), 0 1px 3px rgba(100, 120, 190, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+        }
+        .light-theme .all-songs-panel::after,
+        body.light-theme .all-songs-panel::after { display: none; }
+        .light-theme .all-songs-list::-webkit-scrollbar-thumb,
+        body.light-theme .all-songs-list::-webkit-scrollbar-thumb {
+            background: rgba(37, 99, 235, 0.22);
+        }
+        .light-theme .playlist-editor-panel,
+        body.light-theme .playlist-editor-panel {
+            box-shadow: 0 4px 24px rgba(100, 120, 190, 0.08), 0 1px 3px rgba(100, 120, 190, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+        }
+        .light-theme .playlist-editor-panel::after,
+        body.light-theme .playlist-editor-panel::after { display: none; }
+        .light-theme .song-search,
+        body.light-theme .song-search {
+            background: rgba(150, 165, 215, 0.08);
+        }
+        .light-theme .song-card,
+        body.light-theme .song-card {
+            background: rgba(150, 165, 215, 0.04);
+        }
+        .light-theme .song-card:hover,
+        body.light-theme .song-card:hover {
+            background: rgba(37, 99, 235, 0.06);
+        }
+        .light-theme .song-card.selected,
+        body.light-theme .song-card.selected {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.10), rgba(79, 70, 229, 0.05));
+        }
+        .light-theme .song-card-icon,
+        body.light-theme .song-card-icon {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.18), rgba(79, 70, 229, 0.14));
+        }
+        .light-theme .song-card.selected .song-card-icon,
+        body.light-theme .song-card.selected .song-card-icon {
+            background: linear-gradient(135deg, var(--music-accent), #2563eb);
+            color: #fff;
+        }
+        .light-theme .playlist-card,
+        body.light-theme .playlist-card {
+            background: rgba(150, 165, 215, 0.04);
+        }
+        .light-theme .playlist-card:hover,
+        body.light-theme .playlist-card:hover {
+            background: rgba(37, 99, 235, 0.06);
+        }
+        .light-theme .playlist-card.selected,
+        body.light-theme .playlist-card.selected {
+            background: linear-gradient(90deg, rgba(37, 99, 235, 0.10), rgba(79, 70, 229, 0.05));
+        }
+        .light-theme .btn-outline,
+        body.light-theme .btn-outline {
+            background: rgba(150, 165, 215, 0.08);
+        }
+        .light-theme .btn-outline:hover,
+        body.light-theme .btn-outline:hover {
+            background: rgba(37, 99, 235, 0.10);
+        }
+
+        /* Responsive */
+        @media (max-width: 1100px) {
+            .playlist-manager {
+                grid-template-columns: 1fr;
+                min-height: auto;
+                gap: 16px;
+            }
+            .all-songs-panel {
+                max-height: 400px;
+                padding: 24px 20px;
+            }
+            .playlist-editor-panel {
+                max-height: 500px;
+                padding: 20px 24px;
+            }
+        }
+        @media (max-width: 600px) {
+            .playlist-manager { gap: 10px; }
+            .all-songs-panel {
+                padding: 16px 14px;
+                max-height: 300px;
+            }
+            .song-cards-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 8px;
+            }
+            .song-card { padding: 12px; }
+            .song-card-title { font-size: 13px; }
+            .playlist-editor-panel { padding: 16px; max-height: 420px; }
+        }
     </style>
     <link rel="stylesheet" href="assets/css/learning-assistant.css">
     <script src="assets/js/learning-assistant.js"></script>
@@ -726,15 +1184,54 @@
                 </div>
             </div>
         </div>
+
+        <!-- 播放列表管理页面 -->
+        <div class="page" id="playlistPage">
+            <div class="playlist-manager">
+                <!-- 左列：所有歌曲 -->
+                <div class="all-songs-panel">
+                    <h3 class="panel-title">所有歌曲</h3>
+                    <input type="text" class="song-search" id="songSearch" placeholder="搜索歌曲...">
+                    <div class="all-songs-list" id="allSongsList">
+                        <div class="empty-state">加载中...</div>
+                    </div>
+                    <div class="add-songs-bar">
+                        <span class="selected-count" id="selectedCount">已选 0 首</span>
+                        <button class="btn-primary" id="addSongsBtn" disabled>添加到选中列表</button>
+                    </div>
+                </div>
+
+                <!-- 右列：播放列表编辑器 -->
+                <div class="playlist-editor-panel">
+                    <div class="panel-header">
+                        <h3 class="panel-title">播放列表</h3>
+                        <button class="btn-primary" id="createPlaylistBtn" style="padding:6px 14px;font-size:12px;">+ 新建</button>
+                    </div>
+                    <div id="playlistCardList">
+                        <div class="empty-state">加载中...</div>
+                    </div>
+                    <div class="selected-playlist-header" id="selectedPlaylistHeader" style="display:none;">
+                        <div class="panel-header">
+                            <span class="panel-title" id="selectedPlaylistName">歌曲列表</span>
+                            <button class="btn-outline" id="deletePlaylistBtn" style="display:none;">删除列表</button>
+                        </div>
+                    </div>
+                    <div class="selected-playlist-songs" id="selectedPlaylistSongs">
+                        <div class="empty-state">请选择一个播放列表</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- 音频元素 -->
     <audio id="audioPlayer"></audio>
 
     <script>
-        // 导航配置 — 单页布局，无需歌曲列表页签
+        // 导航配置
         const NAV_CONFIG = [
             { page: 'player', icon: 'fa-music', label: '音乐播放', active: true },
+            { page: 'playlist', icon: 'fa-list-ul', label: '播放列表', active: false },
         ];
 
         // 音乐数据（从JSON加载）
@@ -748,6 +1245,98 @@
         let audioPlayer = document.getElementById('audioPlayer');
         let lyricsInterval = null;
         let pendingAutoPlay = false;
+
+        // ============================================================
+        // 播放列表数据存储 (localStorage)
+        // ============================================================
+        var STORE_KEY = 'musicPlaylistData';
+        var playlistStore = null; // { playlists: [{ id, title, songs: [{id,title,artist}] }] }
+
+        function getStore() {
+            if (playlistStore) return playlistStore;
+            try {
+                var raw = localStorage.getItem(STORE_KEY);
+                if (raw) { playlistStore = JSON.parse(raw); return playlistStore; }
+            } catch(e) {}
+            return null;
+        }
+
+        function saveStore(store) {
+            playlistStore = store;
+            localStorage.setItem(STORE_KEY, JSON.stringify(store));
+        }
+
+        // 首次加载：从JSON文件读取并写入localStorage
+        async function initPlaylistStore() {
+            var store = getStore();
+            if (store && store.playlists && store.playlists.length > 0) {
+                return store;
+            }
+            // 从JSON种子数据初始化
+            store = { version: 1, playlists: [] };
+            try {
+                var indexResp = await fetch('data/music/playlist/music-index.json');
+                var indexData = await indexResp.json();
+                for (var i = 0; i < indexData.length; i++) {
+                    var plInfo = indexData[i];
+                    try {
+                        var songsResp = await fetch(plInfo.file);
+                        var songsData = await songsResp.json();
+                        store.playlists.push({
+                            id: plInfo.id,
+                            title: plInfo.title,
+                            songs: songsData.map(function(s) {
+                                return { id: s.id, title: s.title, artist: s.artist };
+                            })
+                        });
+                    } catch(e) {
+                        console.error('加载歌单失败:', plInfo.file, e);
+                    }
+                }
+                saveStore(store);
+            } catch(e) {
+                console.error('初始化歌单存储失败:', e);
+            }
+            return store;
+        }
+
+        // 获取所有去重歌曲（按 artist+title 去重）
+        function getAllUniqueSongs(store) {
+            var seen = {};
+            var result = [];
+            var pls = store.playlists;
+            for (var i = 0; i < pls.length; i++) {
+                var songs = pls[i].songs;
+                for (var j = 0; j < songs.length; j++) {
+                    var s = songs[j];
+                    var key = s.artist + '|' + s.title;
+                    if (!seen[key]) {
+                        seen[key] = true;
+                        result.push({ id: result.length + 1, title: s.title, artist: s.artist });
+                    }
+                }
+            }
+            return result;
+        }
+
+        // 生成唯一ID
+        function generateId() {
+            return 'pl_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
+        }
+
+        // 根据 artist-title 命名规则构建文件路径
+        function getSongPath(song) {
+            return 'data/music/songs/' + song.artist + '-' + song.title + '.mp3';
+        }
+        function getSongPathOgg(song) {
+            return 'data/music/songs/' + song.artist + '-' + song.title + '.ogg';
+        }
+        function getLyricPath(song) {
+            return 'data/music/lyrics/' + song.artist + '-' + song.title + '.lrc';
+        }
+        function getLyricPathJson(song) {
+            return 'data/music/lyrics/' + song.artist + '-' + song.title + '.json';
+        }
 
         // 循环模式: 'list' | 'single' | 'random' | 'none'
         let loopMode = 'list';
@@ -781,37 +1370,36 @@
         const playlistSelect = document.getElementById('playlistSelect');
         let navLinks, pages;
 
-        // 加载所有歌单列表（从music-index.json读取）
-        async function loadPlaylists() {
-            try {
-                const resp = await fetch('data/music/playlist/music-index.json');
-                playlists = await resp.json();
-
-                playlists.forEach(playlist => {
-                    const option = document.createElement('option');
-                    option.value = playlist.file;
-                    option.textContent = playlist.title;
-                    playlistSelect.appendChild(option);
-                });
-
-                if (playlists.length > 0) {
-                    playlistSelect.value = playlists[0].file;
-                    await loadSongsData(playlists[0].file);
-                }
-            } catch (e) {
-                console.error('加载歌单列表失败:', e);
+        // 从store加载歌单到播放器（播放页面使用）
+        function loadPlaylistsFromStore() {
+            var store = getStore();
+            if (!store) return;
+            playlists = store.playlists;
+            playlistSelect.innerHTML = '<option value="">选择歌单</option>';
+            for (var i = 0; i < playlists.length; i++) {
+                var pl = playlists[i];
+                var option = document.createElement('option');
+                option.value = pl.id;
+                option.textContent = pl.title + ' (' + pl.songs.length + '首)';
+                playlistSelect.appendChild(option);
+            }
+            if (playlists.length > 0) {
+                playlistSelect.value = playlists[0].id;
+                songs = playlists[0].songs;
             }
         }
 
-        // 加载歌曲元数据
-        async function loadSongsData(playlistPath) {
-            try {
-                const resp = await fetch(playlistPath);
-                songs = await resp.json();
-            } catch (e) {
-                console.error('加载歌曲列表失败:', e);
-                songs = [];
+        // 根据歌单ID加载歌曲到播放器
+        function loadSongsById(playlistId) {
+            var store = getStore();
+            if (!store) { songs = []; return; }
+            for (var i = 0; i < store.playlists.length; i++) {
+                if (store.playlists[i].id === playlistId) {
+                    songs = store.playlists[i].songs;
+                    return;
+                }
             }
+            songs = [];
         }
 
         // 解析LRC格式歌词
@@ -842,11 +1430,12 @@
             return lyrics.length > 0 ? lyrics : [{ time: 0, text: '暂无歌词' }];
         }
 
-        // 加载歌词（按需 + 缓存）- 支持JSON和LRC格式
+        // 加载歌词（按需 + 缓存）- 支持LRC和JSON格式，.lrc优先，回退到.json
         async function loadLyrics(lyricFile) {
             if (lyricsCache[lyricFile]) return lyricsCache[lyricFile];
             try {
                 const resp = await fetch(lyricFile);
+                if (!resp.ok) throw new Error('HTTP ' + resp.status);
                 const content = await resp.text();
 
                 let lyrics;
@@ -863,9 +1452,341 @@
                 lyricsCache[lyricFile] = lyrics;
                 return lyrics;
             } catch (e) {
+                // .lrc 失败则尝试 .json 回退
+                if (lyricFile.endsWith('.lrc')) {
+                    var jsonPath = lyricFile.replace(/\.lrc$/, '.json');
+                    if (!lyricsCache[jsonPath]) {
+                        try {
+                            var resp2 = await fetch(jsonPath);
+                            if (resp2.ok) {
+                                var content2 = await resp2.text();
+                                var lyrics2;
+                                try {
+                                    lyrics2 = JSON.parse(content2);
+                                } catch {
+                                    lyrics2 = [{ time: 0, text: '暂无歌词' }];
+                                }
+                                lyricsCache[jsonPath] = lyrics2;
+                                lyricsCache[lyricFile] = lyrics2; // 缓存到原key避免重复尝试
+                                return lyrics2;
+                            }
+                        } catch (e2) { /* fall through */ }
+                    }
+                }
                 console.error('加载歌词失败:', lyricFile, e);
                 return [{ time: 0, text: '暂无歌词' }];
             }
+        }
+
+
+        // ============================================================
+        // 播放列表管理页面
+        // ============================================================
+        var selectedPlaylistId = null;   // 当前选中的歌单ID
+        var checkedSongs = {};           // { songKey: true } 选中的歌曲
+
+        function getSongKey(s) { return s.artist + '|' + s.title; }
+
+        // 渲染所有歌曲卡片（左列）
+        function renderAllSongs(filterText) {
+            var store = getStore();
+            if (!store) return;
+            var allSongs = getAllUniqueSongs(store);
+            var container = document.getElementById('allSongsList');
+            var searchText = (filterText || '').toLowerCase();
+            var html = '<div class="song-cards-grid">';
+            var visibleCount = 0;
+            for (var i = 0; i < allSongs.length; i++) {
+                var s = allSongs[i];
+                if (searchText && s.title.toLowerCase().indexOf(searchText) === -1 && s.artist.toLowerCase().indexOf(searchText) === -1) {
+                    continue;
+                }
+                visibleCount++;
+                var key = getSongKey(s);
+                var selClass = checkedSongs[key] ? ' selected' : '';
+                html += '<div class="song-card' + selClass + '" data-song-key="' + key + '" data-title="' + s.title.replace(/"/g, '&quot;') + '" data-artist="' + s.artist.replace(/"/g, '&quot;') + '">' +
+                    '<div class="song-card-icon"><i class="fas fa-music"></i></div>' +
+                    '<div class="song-card-title">' + s.title + '</div>' +
+                    '<div class="song-card-artist">' + s.artist + '</div>' +
+                '</div>';
+            }
+            html += '</div>';
+            if (visibleCount === 0) {
+                html = '<div class="empty-state">' + (searchText ? '没有匹配的歌曲' : '暂无歌曲') + '</div>';
+            }
+            container.innerHTML = html;
+            updateCheckedCount();
+            updateAddButton();
+            if (visibleCount > 0) bindSongCardClicks(container);
+        }
+
+        function bindSongCardClicks(container) {
+            var cards = container.querySelectorAll('.song-card');
+            for (var i = 0; i < cards.length; i++) {
+                cards[i].addEventListener('click', function() {
+                    var key = this.dataset.songKey;
+                    if (checkedSongs[key]) {
+                        delete checkedSongs[key];
+                        this.classList.remove('selected');
+                    } else {
+                        checkedSongs[key] = { title: this.dataset.title, artist: this.dataset.artist };
+                        this.classList.add('selected');
+                    }
+                    updateCheckedCount();
+                    updateAddButton();
+                });
+            }
+        }
+
+        function updateCheckedCount() {
+            var count = Object.keys(checkedSongs).length;
+            document.getElementById('selectedCount').textContent = '已选 ' + count + ' 首';
+        }
+
+        function updateAddButton() {
+            var btn = document.getElementById('addSongsBtn');
+            btn.disabled = !selectedPlaylistId || Object.keys(checkedSongs).length === 0;
+        }
+
+        // 渲染歌单卡片列表（右列上方）
+        function renderPlaylistCards() {
+            var store = getStore();
+            if (!store) return;
+            var container = document.getElementById('playlistCardList');
+            var pls = store.playlists;
+            var html = '';
+            for (var i = 0; i < pls.length; i++) {
+                var pl = pls[i];
+                var selClass = (pl.id === selectedPlaylistId) ? ' selected' : '';
+                html += '<div class="playlist-card' + selClass + '" data-playlist-id="' + pl.id + '">' +
+                    '<div class="playlist-card-info">' +
+                        '<div class="playlist-card-title">' + pl.title + '</div>' +
+                        '<div class="playlist-card-count">' + pl.songs.length + ' 首歌曲</div>' +
+                    '</div>' +
+                    '<button class="playlist-card-delete" data-delete-id="' + pl.id + '" title="删除歌单"><i class="fas fa-times"></i></button>' +
+                '</div>';
+            }
+            if (pls.length === 0) {
+                html = '<div class="empty-state">暂无播放列表</div>';
+            }
+            container.innerHTML = html;
+            bindPlaylistCardEvents(container);
+        }
+
+        function bindPlaylistCardEvents(container) {
+            var cards = container.querySelectorAll('.playlist-card');
+            for (var i = 0; i < cards.length; i++) {
+                cards[i].addEventListener('click', function(e) {
+                    if (e.target.closest('.playlist-card-delete')) return;
+                    selectedPlaylistId = this.dataset.playlistId;
+                    checkedSongs = {};
+                    renderAllPlaylistManager();
+                });
+            }
+            var deleteBtns = container.querySelectorAll('.playlist-card-delete');
+            for (var j = 0; j < deleteBtns.length; j++) {
+                deleteBtns[j].addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    deletePlaylistById(this.dataset.deleteId);
+                });
+            }
+        }
+
+        function deletePlaylistById(playlistId) {
+            var store = getStore();
+            if (!store) return;
+            var pl = null;
+            for (var i = 0; i < store.playlists.length; i++) {
+                if (store.playlists[i].id === playlistId) { pl = store.playlists[i]; break; }
+            }
+            if (!pl) return;
+            if (!confirm('确定要删除歌单 "' + pl.title + '" 吗？此操作不可恢复。')) return;
+            store.playlists = store.playlists.filter(function(p) { return p.id !== playlistId; });
+            saveStore(store);
+            if (selectedPlaylistId === playlistId) {
+                selectedPlaylistId = null;
+                checkedSongs = {};
+            }
+            loadPlaylistsFromStore();
+            if (playlists.length > 0 && songs.length === 0) {
+                songs = playlists[0].songs;
+                renderSongsList();
+            }
+            renderAllPlaylistManager();
+        }
+
+        function renderSelectedPlaylistSongs() {
+            var header = document.getElementById('selectedPlaylistHeader');
+            var nameEl = document.getElementById('selectedPlaylistName');
+            var songsContainer = document.getElementById('selectedPlaylistSongs');
+            var deleteBtn = document.getElementById('deletePlaylistBtn');
+
+            if (!selectedPlaylistId) {
+                header.style.display = 'none';
+                deleteBtn.style.display = 'none';
+                songsContainer.innerHTML = '<div class="empty-state">请选择一个播放列表</div>';
+                return;
+            }
+
+            var store = getStore();
+            if (!store) return;
+            var pl = null;
+            for (var i = 0; i < store.playlists.length; i++) {
+                if (store.playlists[i].id === selectedPlaylistId) { pl = store.playlists[i]; break; }
+            }
+            if (!pl) {
+                selectedPlaylistId = null;
+                header.style.display = 'none';
+                deleteBtn.style.display = 'none';
+                songsContainer.innerHTML = '<div class="empty-state">歌单不存在</div>';
+                return;
+            }
+
+            header.style.display = 'block';
+            nameEl.textContent = pl.title;
+            deleteBtn.style.display = 'block';
+
+            if (pl.songs.length === 0) {
+                songsContainer.innerHTML = '<div class="empty-state">此歌单暂无歌曲</div>';
+                return;
+            }
+
+            var html = '';
+            for (var j = 0; j < pl.songs.length; j++) {
+                var s = pl.songs[j];
+                html += '<div class="playlist-song-item">' +
+                    '<div class="song-item-icon"><i class="fas fa-music"></i></div>' +
+                    '<div class="song-item-info">' +
+                        '<div class="song-item-title">' + s.title + '</div>' +
+                        '<div class="song-item-artist">' + s.artist + '</div>' +
+                    '</div>' +
+                    '<button class="btn-danger" data-remove-id="' + s.id + '" title="移除歌曲"><i class="fas fa-times"></i></button>' +
+                '</div>';
+            }
+            songsContainer.innerHTML = html;
+            bindRemoveSongButtons(songsContainer, pl.id);
+        }
+
+        function bindRemoveSongButtons(container, playlistId) {
+            var btns = container.querySelectorAll('.btn-danger');
+            for (var i = 0; i < btns.length; i++) {
+                btns[i].addEventListener('click', function() {
+                    removeSongFromPlaylist(playlistId, parseInt(this.dataset.removeId));
+                });
+            }
+        }
+
+        function removeSongFromPlaylist(playlistId, songId) {
+            var store = getStore();
+            if (!store) return;
+            for (var i = 0; i < store.playlists.length; i++) {
+                if (store.playlists[i].id === playlistId) {
+                    store.playlists[i].songs = store.playlists[i].songs.filter(function(s) { return s.id !== songId; });
+                    break;
+                }
+            }
+            // 重新分配歌曲ID
+            for (var j = 0; j < store.playlists.length; j++) {
+                if (store.playlists[j].id === playlistId) {
+                    var plSongs = store.playlists[j].songs;
+                    for (var k = 0; k < plSongs.length; k++) { plSongs[k].id = k + 1; }
+                    break;
+                }
+            }
+            saveStore(store);
+            if (playlistSelect.value === playlistId) {
+                loadSongsById(playlistId);
+                renderSongsList();
+            }
+            loadPlaylistsFromStore();
+            renderSelectedPlaylistSongs();
+            renderPlaylistCards();
+        }
+
+        function addCheckedSongsToPlaylist() {
+            if (!selectedPlaylistId) return;
+            var keys = Object.keys(checkedSongs);
+            if (keys.length === 0) return;
+            var store = getStore();
+            if (!store) return;
+            var targetPl = null;
+            for (var i = 0; i < store.playlists.length; i++) {
+                if (store.playlists[i].id === selectedPlaylistId) { targetPl = store.playlists[i]; break; }
+            }
+            if (!targetPl) return;
+
+            var maxId = 0;
+            for (var j = 0; j < targetPl.songs.length; j++) {
+                if (targetPl.songs[j].id > maxId) maxId = targetPl.songs[j].id;
+            }
+
+            var existing = {};
+            for (var k = 0; k < targetPl.songs.length; k++) {
+                existing[getSongKey(targetPl.songs[k])] = true;
+            }
+
+            var added = 0;
+            for (var m = 0; m < keys.length; m++) {
+                var song = checkedSongs[keys[m]];
+                if (!existing[keys[m]]) {
+                    existing[keys[m]] = true;
+                    maxId++;
+                    targetPl.songs.push({ id: maxId, title: song.title, artist: song.artist });
+                    added++;
+                }
+            }
+
+            if (added > 0) {
+                saveStore(store);
+                if (playlistSelect.value === selectedPlaylistId) {
+                    loadSongsById(selectedPlaylistId);
+                    renderSongsList();
+                }
+                loadPlaylistsFromStore();
+            }
+
+            checkedSongs = {};
+            renderSelectedPlaylistSongs();
+            renderPlaylistCards();
+            renderAllSongs(document.getElementById('songSearch').value);
+        }
+
+        function createNewPlaylist() {
+            var title = prompt('请输入新播放列表名称：');
+            if (!title || !title.trim()) return;
+            title = title.trim();
+            var store = getStore();
+            if (!store) return;
+            store.playlists.push({ id: generateId(), title: title, songs: [] });
+            saveStore(store);
+            selectedPlaylistId = null;
+            checkedSongs = {};
+            loadPlaylistsFromStore();
+            renderAllPlaylistManager();
+        }
+
+        function renderAllPlaylistManager() {
+            renderPlaylistCards();
+            renderSelectedPlaylistSongs();
+            updateAddButton();
+            updateCheckedCount();
+        }
+
+        function setupPlaylistManagerEvents() {
+            document.getElementById('songSearch').addEventListener('input', function() {
+                renderAllSongs(this.value);
+            });
+            document.getElementById('addSongsBtn').addEventListener('click', addCheckedSongsToPlaylist);
+            document.getElementById('createPlaylistBtn').addEventListener('click', createNewPlaylist);
+            document.getElementById('deletePlaylistBtn').addEventListener('click', function() {
+                if (selectedPlaylistId) deletePlaylistById(selectedPlaylistId);
+            });
+        }
+
+        function initPlaylistManager() {
+            setupPlaylistManagerEvents();
+            renderAllSongs('');
+            renderAllPlaylistManager();
         }
 
         // 初始化
@@ -873,31 +1794,38 @@
             navLinks = document.querySelectorAll('.nav-link');
             pages = document.querySelectorAll('.page');
             syncThemeFromIndex();
-            await loadPlaylists();
+            await initPlaylistStore();
+            loadPlaylistsFromStore();
             renderSongsList();
             if (songs.length > 0) {
                 await loadSong(0);
             }
             updateLoopButton();
             setupEventListeners();
+            initPlaylistManager();
         }
 
         // 设置事件监听
         function setupEventListeners() {
-            setupNavLinks(navLinks, pages);
+            setupNavLinks(navLinks, pages, function(pageId) {
+                if (pageId === 'playlist') {
+                    renderAllPlaylistManager();
+                    renderAllSongs(document.getElementById('songSearch').value);
+                }
+            });
 
-            playlistSelect.addEventListener('change', async function() {
-                const selectedPath = this.value;
-                if (selectedPath) {
+            playlistSelect.addEventListener('change', function() {
+                var selectedId = this.value;
+                if (selectedId) {
                     isPlaying = false;
                     audioPlayer.pause();
                     playIcon.className = 'fas fa-play';
                     stopLyricsSync();
 
-                    await loadSongsData(selectedPath);
+                    loadSongsById(selectedId);
                     currentSongIndex = 0;
                     if (songs.length > 0) {
-                        await loadSong(0);
+                        loadSong(0);
                     }
                     renderSongsList();
                 }
@@ -913,6 +1841,13 @@
             audioPlayer.addEventListener('timeupdate', updateProgress);
             audioPlayer.addEventListener('ended', playNextSong);
             audioPlayer.addEventListener('loadedmetadata', updateTotalTime);
+            // 扩展名回退：.mp3 加载失败则尝试 .ogg
+            audioPlayer.addEventListener('error', function() {
+                var song = songs[currentSongIndex];
+                if (song && audioPlayer.src.indexOf('.mp3') !== -1) {
+                    audioPlayer.src = getSongPathOgg(song);
+                }
+            });
         }
 
         // 加载歌曲（index: 歌曲序号, autoPlay: 是否加载完自动播放）
@@ -925,9 +1860,9 @@
             currentSongTitle.textContent = song.title;
             currentSongArtist.textContent = song.artist;
 
-            audioPlayer.src = song.file;
+            audioPlayer.src = getSongPath(song);
 
-            var lyrics = await loadLyrics(song.lyricFile);
+            var lyrics = await loadLyrics(getLyricPath(song));
             renderLyrics(lyrics);
 
             updateSongListActive();
@@ -1135,7 +2070,7 @@
                         '<div class="song-item-title">' + song.title + '</div>' +
                         '<div class="song-item-artist">' + song.artist + '</div>' +
                     '</div>' +
-                    '<div class="song-item-duration">' + song.duration + '</div>';
+                    '<div class="song-item-duration">' + (song.duration || '') + '</div>';
 
                 songItem.addEventListener('click', function() {
                     if (isPlaying) pauseSong();
@@ -1188,4 +2123,5 @@
         })();
     </script>
 </body>
+</html>
 </html>
