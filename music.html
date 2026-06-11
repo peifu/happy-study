@@ -380,8 +380,11 @@
         .songs-panel::-webkit-scrollbar { width: 5px; }
         .songs-panel::-webkit-scrollbar-track { background: transparent; }
         .songs-panel::-webkit-scrollbar-thumb {
-            background: rgba(99, 102, 241, 0.2);
+            background: rgba(59, 130, 246, 0.25);
             border-radius: 3px;
+        }
+        .songs-panel::-webkit-scrollbar-thumb:hover {
+            background: rgba(59, 130, 246, 0.45);
         }
 
         /* -- Playlist selector -- */
@@ -587,7 +590,11 @@
         }
         .light-theme .songs-panel::-webkit-scrollbar-thumb,
         body.light-theme .songs-panel::-webkit-scrollbar-thumb {
-            background: rgba(79, 70, 229, 0.18);
+            background: rgba(37, 99, 235, 0.22);
+        }
+        .light-theme .songs-panel::-webkit-scrollbar-thumb:hover,
+        body.light-theme .songs-panel::-webkit-scrollbar-thumb:hover {
+            background: rgba(37, 99, 235, 0.40);
         }
 
         .light-theme .playlist-selector,
