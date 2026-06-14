@@ -81,6 +81,10 @@ class LearningAssistant {
             img.src = 'assets/logo/jerry.png';
             img.alt = '学习助手';
             img.textContent = '';
+        } else if (animal === 'shixinxiong') {
+            img.src = 'assets/logo/shixinxiong.png';
+            img.alt = '学习助手';
+            img.textContent = '';
         } else {
             img.src = '';
             img.alt = `${animal}学习助手`;
