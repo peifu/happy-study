@@ -326,11 +326,18 @@ class LearningAssistant {
         });
         
         this.currentAudio.addEventListener('error', () => {
-            // 音频文件不存在或加载失败，使用语音合成
-            console.error('音频加载失败:', audioFile);
-            this.isPlaying = false;
-            this.currentAudio = null;
-            this.speakWithSynthesis();
+            // 音频文件不存在，尝试使用默认音效
+            if (animal !== 'bear') {
+                console.warn('音频加载失败，尝试默认音效:', audioFile);
+                this.isPlaying = false;
+                this.currentAudio = null;
+                this.playDefaultAudio(encouragementIndex);
+            } else {
+                console.error('音频加载失败:', audioFile);
+                this.isPlaying = false;
+                this.currentAudio = null;
+                this.speakWithSynthesis();
+            }
         });
         
         this.currentAudio.addEventListener('canplaythrough', () => {
@@ -346,6 +353,35 @@ class LearningAssistant {
         this.currentAudio.load();
     }
     
+    // 播放默认音效（bear）
+    playDefaultAudio(index) {
+        const defaultFile = `assets/audio/bear-${index + 1}.mp3`;
+        this.currentAudio = new Audio(defaultFile);
+        this.isPlaying = true;
+
+        this.currentAudio.addEventListener('ended', () => {
+            this.isPlaying = false;
+            this.currentAudio = null;
+        });
+
+        this.currentAudio.addEventListener('error', () => {
+            console.error('默认音频加载失败:', defaultFile);
+            this.isPlaying = false;
+            this.currentAudio = null;
+            this.speakWithSynthesis();
+        });
+
+        this.currentAudio.addEventListener('canplaythrough', () => {
+            this.currentAudio.play().catch(error => {
+                console.error('默认音频播放失败:', error);
+                this.isPlaying = false;
+                this.currentAudio = null;
+            });
+        });
+
+        this.currentAudio.load();
+    }
+
     // 使用语音合成
     speakWithSynthesis() {
         // 检查是否已经在播放语音，如果是则取消
