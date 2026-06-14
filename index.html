@@ -204,23 +204,6 @@
             color: var(--music);
         }
 
-        .qiboshi-card {
-            border-top: 4px solid var(--qiboshi);
-        }
-
-        .qiboshi-card .subject-icon {
-            color: var(--qiboshi);
-            box-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
-        }
-
-        .qiboshi-card .subject-name {
-            color: var(--qiboshi);
-        }
-
-        .qiboshi-card .stat-value {
-            color: var(--qiboshi);
-        }
-        
         .stat-label {
             font-size: 11px;
             color: var(--text-secondary);
@@ -455,24 +438,6 @@
 		        </div>
 		    </div>
 
-		    <!-- 七博士卡片 -->
-		    <div class="subject-card qiboshi-card" id="qiboshiCard">
-		        <div class="subject-icon">
-		            <i class="fas fa-robot"></i>
-		        </div>
-		        <h2 class="subject-name">七博士</h2>
-		        <p class="subject-desc">AI 学习助手，知识问答与语音对话</p>
-		        <div class="subject-stats">
-		            <div class="stat">
-		                <div class="stat-value">7x24</div>
-		                <div class="stat-label">全天在线</div>
-		            </div>
-		            <div class="stat">
-		                <div class="stat-value">∞</div>
-		                <div class="stat-label">知识问答</div>
-		            </div>
-		        </div>
-		    </div>
 		</div>
 </div>
 
@@ -777,6 +742,11 @@
                 switchPage('game2');
             });
 
+            const qiboshiLink = document.querySelector('[data-page="qiboshi"]');
+            if (qiboshiLink) qiboshiLink.addEventListener('click', function() {
+                switchPage('qiboshi');
+            });
+
             // 卡片点击事件
             document.getElementById('englishCard').addEventListener('click', function() {
                 switchPage('englishCard');
@@ -795,9 +765,6 @@
             });
             document.getElementById('musicCard').addEventListener('click', function() {
                 switchPage('musicCard');
-            });
-            document.getElementById('qiboshiCard').addEventListener('click', function() {
-                switchPage('qiboshiCard');
             });
             
             // 学习助手设置事件
@@ -972,7 +939,7 @@
             'peCard': 'pe.html',
             'scienceCard': 'science.html',
             'musicCard': 'music.html',
-            'qiboshiCard': 'qiboshi.html',
+            'qiboshi': 'qiboshi.html',
             'pomodoro': 'pomodoro.html',
             'game': 'car-game.html',
             'game2': 'https://www.gamestolearnenglish.com/',
@@ -1183,6 +1150,7 @@
                 { page: 'pomodoro', icon: 'fa-clock', label: '番茄时钟', active: false },
                 { page: 'game',     icon: 'fa-game',  label: '闯关挑战', active: false },
                 { page: 'game2',    icon: 'fa-game',  label: '游戏世界', active: false },
+                { page: 'qiboshi', icon: 'fa-robot', label: '七博士',   active: false },
                 { page: 'settings', icon: 'fa-cog',   label: '设置',     active: false },
             ];
             injectNav(NAV_CONFIG);
