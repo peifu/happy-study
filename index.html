@@ -203,6 +203,23 @@
         .music-card .stat-value {
             color: var(--music);
         }
+
+        .qiboshi-card {
+            border-top: 4px solid var(--qiboshi);
+        }
+
+        .qiboshi-card .subject-icon {
+            color: var(--qiboshi);
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+        }
+
+        .qiboshi-card .subject-name {
+            color: var(--qiboshi);
+        }
+
+        .qiboshi-card .stat-value {
+            color: var(--qiboshi);
+        }
         
         .stat-label {
             font-size: 11px;
@@ -434,6 +451,25 @@
 		            <div class="stat">
 		                <div class="stat-value">95%</div>
 		                <div class="stat-label">完成度</div>
+		            </div>
+		        </div>
+		    </div>
+
+		    <!-- 七博士卡片 -->
+		    <div class="subject-card qiboshi-card" id="qiboshiCard">
+		        <div class="subject-icon">
+		            <i class="fas fa-robot"></i>
+		        </div>
+		        <h2 class="subject-name">七博士</h2>
+		        <p class="subject-desc">AI 学习助手，知识问答与语音对话</p>
+		        <div class="subject-stats">
+		            <div class="stat">
+		                <div class="stat-value">7x24</div>
+		                <div class="stat-label">全天在线</div>
+		            </div>
+		            <div class="stat">
+		                <div class="stat-value">∞</div>
+		                <div class="stat-label">知识问答</div>
 		            </div>
 		        </div>
 		    </div>
@@ -760,6 +796,9 @@
             document.getElementById('musicCard').addEventListener('click', function() {
                 switchPage('musicCard');
             });
+            document.getElementById('qiboshiCard').addEventListener('click', function() {
+                switchPage('qiboshiCard');
+            });
             
             // 学习助手设置事件
             setupAssistantSettings();
@@ -933,6 +972,7 @@
             'peCard': 'pe.html',
             'scienceCard': 'science.html',
             'musicCard': 'music.html',
+            'qiboshiCard': 'qiboshi.html',
             'pomodoro': 'pomodoro.html',
             'game': 'car-game.html',
             'game2': 'https://www.gamestolearnenglish.com/',
