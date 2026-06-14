@@ -18,10 +18,172 @@ class LearningAssistant {
     // 初始化学习助手
     init() {
         if (!this.assistant || !this.speechBubble) return;
-        
+
         this.updateAssistantUI();
+        this.restorePosition();
         this.setupAssistantInteraction();
+        this.setupDrag();
         this.setupStorageListener();
+        this.updateBubblePosition();
+        // 窗口大小变化时重新定位气泡
+        var self = this;
+        window.addEventListener('resize', function() { self.updateBubblePosition(); });
+    }
+
+    // 将气泡位置同步到助手当前位置，根据窗口边界自动调整方向
+    updateBubblePosition() {
+        if (!this.assistant || !this.speechBubble) return;
+        var rect = this.assistant.getBoundingClientRect();
+        var bubbleW = this.speechBubble.offsetWidth;
+        var bubbleH = this.speechBubble.offsetHeight;
+        var gap = 12;
+        var aW = this.assistant.offsetWidth;
+        var aH = this.assistant.offsetHeight;
+
+        var spaceOnLeft = (rect.left - bubbleW - gap) >= 0;
+        var spaceAbove = (rect.top - bubbleH - gap) >= 0;
+
+        var left, top, arrow;
+        this.speechBubble.style.bottom = 'auto';
+        this.speechBubble.style.right = 'auto';
+        this.speechBubble.style.transform = 'none';
+
+        if (spaceOnLeft && spaceAbove) {
+            // 默认：气泡在助手左侧，顶部对齐 (left-top)
+            left = rect.left - bubbleW - gap;
+            top = rect.top;
+            arrow = 'right';
+        } else if (!spaceOnLeft && spaceAbove) {
+            // 左侧空间不足：气泡在助手右侧，顶部对齐 (right-top)
+            left = rect.left + aW + gap;
+            top = rect.top;
+            arrow = 'left';
+        } else if (spaceOnLeft && !spaceAbove) {
+            // 上方空间不足：气泡在助手右侧，底部对齐 (right-bottom)
+            left = rect.left + aW + gap;
+            top = rect.top + aH - bubbleH;
+            arrow = 'left';
+        } else {
+            // 左侧和上方都不足：右侧底部 (right-bottom)
+            left = rect.left + aW + gap;
+            top = rect.top + aH - bubbleH;
+            arrow = 'left';
+        }
+
+        // 限制在窗口内
+        left = Math.max(0, Math.min(left, window.innerWidth - bubbleW));
+        top = Math.max(0, Math.min(top, window.innerHeight - bubbleH));
+
+        this.speechBubble.style.left = left + 'px';
+        this.speechBubble.style.top = top + 'px';
+        this.speechBubble.setAttribute('data-arrow', arrow);
+    }
+
+    // 恢复保存的位置
+    restorePosition() {
+        var saved = localStorage.getItem('assistantPosition');
+        if (saved) {
+            try {
+                var pos = JSON.parse(saved);
+                this.assistant.style.bottom = 'auto';
+                this.assistant.style.right = 'auto';
+                this.assistant.style.left = pos.left + 'px';
+                this.assistant.style.top = pos.top + 'px';
+            } catch (e) {}
+        }
+    }
+
+    // 保存位置
+    savePosition() {
+        var rect = this.assistant.getBoundingClientRect();
+        localStorage.setItem('assistantPosition', JSON.stringify({
+            left: rect.left,
+            top: rect.top
+        }));
+    }
+
+    // 拖拽功能
+    setupDrag() {
+        var self = this;
+        var isDragging = false;
+        var hasMoved = false;
+        var mouseDown = false;
+        var startX, startY, startLeft, startTop;
+        var DRAG_THRESHOLD = 3; // 移动超过3px才算拖拽
+
+        function onStart(e) {
+            // 检查拖拽是否启用（默认开启）
+            if (self.getSettings().dragEnabled === false) return;
+            // 只响应主鼠标按钮或单指触摸
+            if (e.type === 'mousedown' && e.button !== 0) return;
+            // 不在 touchstart 上 preventDefault，否则会阻止 click 事件
+            if (e.type !== 'touchstart') {
+                e.preventDefault();
+            }
+            mouseDown = true;
+            var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            var clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            var rect = self.assistant.getBoundingClientRect();
+            startX = clientX;
+            startY = clientY;
+            startLeft = rect.left;
+            startTop = rect.top;
+            hasMoved = false;
+        }
+
+        function onMove(e) {
+            if (!mouseDown) return;
+            if (hasMoved === false && isDragging === false) {
+                var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                var clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                var dx = clientX - startX;
+                var dy = clientY - startY;
+                if (Math.abs(dx) < DRAG_THRESHOLD && Math.abs(dy) < DRAG_THRESHOLD) return;
+
+                // 超过阈值，进入拖拽模式
+                hasMoved = true;
+                isDragging = true;
+                document.body.style.userSelect = 'none';
+                document.body.style.webkitUserSelect = 'none';
+                self.assistant.style.bottom = 'auto';
+                self.assistant.style.right = 'auto';
+                self.assistant.style.left = startLeft + 'px';
+                self.assistant.style.top = startTop + 'px';
+                self.assistant.classList.add('dragging');
+            }
+            if (!isDragging) return;
+            e.preventDefault();
+            var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            var clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            var dx = clientX - startX;
+            var dy = clientY - startY;
+            var newLeft = Math.max(0, Math.min(startLeft + dx, window.innerWidth - self.assistant.offsetWidth));
+            var newTop = Math.max(0, Math.min(startTop + dy, window.innerHeight - self.assistant.offsetHeight));
+            self.assistant.style.left = newLeft + 'px';
+            self.assistant.style.top = newTop + 'px';
+
+            // 气泡跟随助手移动
+            if (self.speechBubble && self.speechBubble.style.display !== 'none') {
+                self.updateBubblePosition();
+            }
+        }
+
+        function onEnd(e) {
+            mouseDown = false;
+            if (!isDragging) return;
+            isDragging = false;
+            document.body.style.userSelect = '';
+            document.body.style.webkitUserSelect = '';
+            self.assistant.classList.remove('dragging');
+            self.savePosition();
+        }
+
+        this.assistant.addEventListener('mousedown', onStart);
+        this.assistant.addEventListener('touchstart', onStart, { passive: false });
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('touchmove', onMove, { passive: false });
+        document.addEventListener('mouseup', onEnd);
+        document.addEventListener('touchend', onEnd);
     }
 
     // 更新助手UI
@@ -39,7 +201,19 @@ class LearningAssistant {
             } else {
                 this.assistant.style.animation = 'none';
             }
-            
+
+            // 拖拽开关影响光标样式
+            this.assistant.style.cursor = (settings.dragEnabled !== false) ? 'grab' : 'pointer';
+
+            // 拖拽关闭时，重置助手到默认位置
+            if (settings.dragEnabled === false) {
+                this.assistant.style.left = '';
+                this.assistant.style.top = '';
+                this.assistant.style.bottom = '';
+                this.assistant.style.right = '';
+                localStorage.removeItem('assistantPosition');
+            }
+
             // 更新助手昵称
             if (this.assistantName) {
                 this.assistantName.textContent = settings.name || '学习助手';
@@ -110,9 +284,10 @@ class LearningAssistant {
     // 显示鼓励语
     showEncouragement() {
         const randomEncouragement = this.encouragements[Math.floor(Math.random() * this.encouragements.length)];
-        
+
         this.speechBubble.style.display = 'block';
         this.speechBubble.textContent = randomEncouragement;
+        this.updateBubblePosition();
         this.speechBubble.classList.add('show');
         
         // 3秒后隐藏语音气泡
@@ -249,12 +424,13 @@ class LearningAssistant {
     // 加载设置
     loadAssistantSettings() {
         const settings = this.getSettings();
-        
+
         document.getElementById('assistantToggle').checked = settings.enabled || false;
         document.getElementById('clickInteractionToggle').checked = settings.clickInteraction !== false;
         document.getElementById('voiceEncouragementToggle').checked = settings.voiceEncouragement !== false;
         document.getElementById('alwaysShowToggle').checked = settings.alwaysShow !== false;
         document.getElementById('floatAnimationToggle').checked = settings.floatAnimation !== false;
+        document.getElementById('dragEnabledToggle').checked = settings.dragEnabled !== false;
         document.getElementById('assistantSizeSlider').value = settings.size || 100;
         document.getElementById('opacitySlider').value = settings.opacity || 100;
         document.getElementById('encouragementFrequencySlider').value = settings.frequency || 3;
@@ -312,7 +488,8 @@ class LearningAssistant {
             'clickInteractionToggle',
             'voiceEncouragementToggle',
             'alwaysShowToggle',
-            'floatAnimationToggle'
+            'floatAnimationToggle',
+            'dragEnabledToggle'
         ];
 
         toggles.forEach(toggleId => {
@@ -350,7 +527,8 @@ class LearningAssistant {
             voiceEncouragement: document.getElementById('voiceEncouragementToggle').checked,
             alwaysShow: document.getElementById('alwaysShowToggle').checked,
             floatAnimation: document.getElementById('floatAnimationToggle').checked,
-            name: document.getElementById('assistantNameInput')?.value || '学习助手' // 保存昵称
+            dragEnabled: document.getElementById('dragEnabledToggle').checked,
+            name: document.getElementById('assistantNameInput')?.value || '学习助手'
         };
         
         this.saveSettings(settings);

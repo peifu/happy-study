@@ -5,18 +5,33 @@
     right: 30px;
     width: 100px;
     height: 100px;
-    cursor: pointer;
-    z-index: 1000;
+    cursor: grab;
+    z-index: 9999;
     box-shadow: 0 4px 20px rgba(255, 94, 98, 0.4);
-    transition: all 0.3s ease;
+    transition: box-shadow 0.3s ease, transform 0.15s ease;
     animation: float 3s ease-in-out infinite;
     border-radius: 50%;
     display: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+}
+
+.learning-assistant.dragging {
+    cursor: grabbing;
+    animation: none;
+    transition: none;
+    opacity: 0.9;
+    box-shadow: 0 8px 32px rgba(255, 94, 98, 0.55);
 }
 
 .learning-assistant:hover {
     transform: scale(1.1);
     box-shadow: 0 6px 25px rgba(255, 94, 98, 0.6);
+}
+
+.learning-assistant.dragging:hover {
+    transform: none;
 }
 
 .assistant-image {
@@ -39,7 +54,7 @@
     font-size: 14px;
     font-weight: 600;
     white-space: nowrap;
-    z-index: 1001;
+    z-index: 10000;
     text-align: center;
     display: flex;
     align-items: center;
@@ -62,32 +77,50 @@
 
 .assistant-speech-bubble {
     position: fixed;
-    bottom: 140px;
-    right: 140px;
     background: white;
     color: #333;
     padding: 15px 20px;
     border-radius: 20px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    z-index: 1001;
+    z-index: 10000;
     max-width: 200px;
     font-size: 16px;
     font-weight: 500;
     opacity: 0;
     transform: translateY(20px);
-    transition: all 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease;
     pointer-events: none;
     display: none;
 }
 
+/* 默认箭头在气泡右侧（气泡在助手左侧） */
 .assistant-speech-bubble::after {
     content: '';
     position: absolute;
-    bottom: -10px;
-    right: 20px;
-    border-width: 10px 10px 0;
+    top: 50%;
+    transform: translateY(-50%);
+    right: -8px;
+    border-width: 8px 0 8px 8px;
     border-style: solid;
-    border-color: white transparent transparent;
+    border-color: transparent transparent transparent white;
+}
+
+/* 箭头在气泡左侧（气泡在助手右侧） */
+.assistant-speech-bubble[data-arrow="left"]::after {
+    right: auto;
+    left: -8px;
+    border-width: 8px 8px 8px 0;
+    border-color: transparent white transparent transparent;
+}
+
+/* 箭头在气泡顶部（气泡在助手下方） */
+.assistant-speech-bubble[data-arrow="top"]::after {
+    top: -8px;
+    right: auto;
+    left: 20px;
+    transform: none;
+    border-width: 0 8px 8px 8px;
+    border-color: transparent transparent white transparent;
 }
 
 .assistant-speech-bubble.show {
