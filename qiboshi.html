@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>快乐学习 - 七博士 AI 学习助手</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/common.css">
+    <link rel="stylesheet" href="assets/css/learning-assistant.css">
+    <style>
+        :root {
+            --qiboshi: #7c3aed;
+            --qiboshi-light: #a78bfa;
+            --bubble-ai: var(--card-bg-color);
+            --bubble-user: linear-gradient(135deg, var(--qiboshi), #5b21b6);
+        }
+
+        body.light-theme {
+            --qiboshi: #6d28d9;
+            --qiboshi-light: #8b5cf6;
+            --bubble-ai: var(--card-bg-color);
+            --bubble-user: linear-gradient(135deg, #6d28d9, #4c1d95);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s ease;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            padding: 0 16px;
+        }
+
+        /* Top bar */
+        .chat-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-subtle);
+            flex-shrink: 0;
+        }
+
+        .chat-topbar .back-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 18px;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .chat-topbar .back-btn:hover {
+            background: rgba(255,255,255,0.08);
+        }
+
+        .chat-topbar .title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--qiboshi-light);
+        }
+
+        .chat-topbar .settings-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .chat-topbar .settings-btn:hover {
+            background: rgba(255,255,255,0.08);
+        }
+
+        /* Messages area */
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: var(--border-accent);
+            border-radius: 2px;
+        }
+
+        /* Welcome message */
+        .welcome-banner {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-secondary);
+        }
+
+        .welcome-banner .welcome-icon {
+            font-size: 56px;
+            margin-bottom: 16px;
+        }
+
+        .welcome-banner h2 {
+            font-size: 22px;
+            color: var(--text-color);
+            margin-bottom: 8px;
+        }
+
+        .welcome-banner p {
+            font-size: 15px;
+            margin-bottom: 20px;
+        }
+
+        .welcome-banner .quick-questions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .welcome-banner .quick-q {
+            background: var(--card-bg-color);
+            border: 1px solid var(--border-card);
+            color: var(--text-secondary);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .welcome-banner .quick-q:hover {
+            border-color: var(--qiboshi-light);
+            color: var(--qiboshi-light);
+        }
+
+        /* Message bubbles */
+        .msg-bubble {
+            max-width: 80%;
+            padding: 12px 18px;
+            border-radius: 18px;
+            line-height: 1.6;
+            font-size: 15px;
+            word-break: break-word;
+            animation: msgIn 0.3s ease;
+        }
+
+        @keyframes msgIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .msg-user {
+            align-self: flex-end;
+            background: var(--bubble-user);
+            color: #fff;
+            border-bottom-right-radius: 6px;
+        }
+
+        .msg-ai {
+            align-self: flex-start;
+            background: var(--bubble-ai);
+            border: 1px solid var(--border-card);
+            border-bottom-left-radius: 6px;
+            position: relative;
+        }
+
+        .msg-ai .speak-msg-btn {
+            display: inline-block;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 14px;
+            padding: 2px 6px;
+            margin-top: 8px;
+            border-radius: 4px;
+            transition: color 0.2s;
+        }
+
+        .msg-ai .speak-msg-btn:hover {
+            color: var(--qiboshi-light);
+        }
+
+        .msg-ai .speak-msg-btn.playing {
+            color: var(--qiboshi);
+        }
+
+        /* Loading indicator */
+        .typing-indicator {
+            align-self: flex-start;
+            display: flex;
+            gap: 4px;
+            padding: 12px 18px;
+            background: var(--bubble-ai);
+            border: 1px solid var(--border-card);
+            border-radius: 18px;
+            border-bottom-left-radius: 6px;
+        }
+
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--text-secondary);
+            animation: typingBounce 1.4s infinite;
+        }
+
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typingBounce {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+            30% { transform: translateY(-6px); opacity: 1; }
+        }
+
+        /* Error message */
+        .msg-error {
+            align-self: flex-start;
+            background: rgba(255,107,107,0.1);
+            border: 1px solid rgba(255,107,107,0.3);
+            color: var(--accent);
+            padding: 12px 18px;
+            border-radius: 18px;
+            font-size: 14px;
+        }
+
+        .msg-error .retry-btn {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 4px 12px;
+            border-radius: 8px;
+            margin-top: 8px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        /* Input area */
+        .chat-input-area {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 0;
+            border-top: 1px solid var(--border-subtle);
+            flex-shrink: 0;
+        }
+
+        .chat-input-area .voice-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid var(--border-card);
+            background: var(--card-bg-color);
+            color: var(--text-secondary);
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .chat-input-area .voice-btn:hover {
+            border-color: var(--qiboshi-light);
+            color: var(--qiboshi-light);
+        }
+
+        .chat-input-area .voice-btn.listening {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            animation: pulse 1.2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255,107,107,0.4); }
+            50% { box-shadow: 0 0 0 12px rgba(255,107,107,0); }
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 22px;
+            border: 1px solid var(--border-card);
+            background: var(--card-bg-color);
+            color: var(--text-color);
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .chat-input-area input:focus {
+            border-color: var(--qiboshi-light);
+        }
+
+        .chat-input-area input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .chat-input-area .send-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, var(--qiboshi), #5b21b6);
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.2s;
+            flex-shrink: 0;
+        }
+
+        .chat-input-area .send-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .chat-input-area .send-btn:hover:not(:disabled) {
+            opacity: 0.9;
+        }
+
+        /* API Key setup prompt */
+        .setup-prompt {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .setup-card {
+            background: var(--card-bg-color);
+            border: 1px solid var(--border-card);
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 440px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .setup-card h2 {
+            margin-bottom: 8px;
+            color: var(--qiboshi-light);
+        }
+
+        .setup-card p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .setup-card input {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid var(--border-card);
+            background: var(--bg-color);
+            color: var(--text-color);
+            font-size: 14px;
+            outline: none;
+            margin-bottom: 12px;
+        }
+
+        .setup-card input:focus {
+            border-color: var(--qiboshi-light);
+        }
+
+        .setup-card .save-key-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--qiboshi), #5b21b6);
+            color: #fff;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .setup-card .key-hint {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 12px;
+        }
+
+        .setup-card .key-hint a {
+            color: var(--qiboshi-light);
+        }
+
+        /* Markdown styles inside AI messages */
+        .msg-ai pre {
+            background: rgba(0,0,0,0.2);
+            padding: 10px 14px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 13px;
+            margin: 8px 0;
+        }
+
+        .msg-ai code {
+            background: rgba(0,0,0,0.15);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .msg-ai pre code {
+            background: none;
+            padding: 0;
+        }
+
+        .msg-ai ul, .msg-ai ol {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+
+        .msg-ai strong {
+            color: var(--qiboshi-light);
+        }
+
+        /* Settings overlay */
+        .settings-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 10001;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .settings-overlay.open {
+            display: flex;
+        }
+
+        .settings-panel {
+            background: var(--card-bg-color);
+            border: 1px solid var(--border-card);
+            border-radius: 16px;
+            padding: 28px;
+            max-width: 440px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .settings-panel h3 {
+            margin-bottom: 20px;
+            color: var(--qiboshi-light);
+        }
+
+        .settings-panel .form-group {
+            margin-bottom: 16px;
+        }
+
+        .settings-panel label {
+            display: block;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .settings-panel input {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border-card);
+            background: var(--bg-color);
+            color: var(--text-color);
+            font-size: 14px;
+            outline: none;
+        }
+
+        .settings-panel input:focus {
+            border-color: var(--qiboshi-light);
+        }
+
+        .settings-panel .btn-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .settings-panel button {
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .settings-panel .btn-primary {
+            background: linear-gradient(135deg, var(--qiboshi), #5b21b6);
+            color: #fff;
+        }
+
+        .settings-panel .btn-secondary {
+            background: rgba(255,255,255,0.08);
+            color: var(--text-color);
+            border: 1px solid var(--border-card);
+        }
+
+        .settings-panel .btn-danger {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--card-bg-color);
+            border: 1px solid var(--border-accent);
+            color: var(--text-color);
+            padding: 10px 24px;
+            border-radius: 20px;
+            font-size: 14px;
+            z-index: 10002;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .msg-bubble { max-width: 90%; }
+            .setup-card { padding: 24px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- API Key Setup (shown when no key exists) -->
+        <div class="setup-prompt" id="setupPrompt">
+            <div class="setup-card">
+                <div class="welcome-icon">🤖</div>
+                <h2>欢迎使用七博士</h2>
+                <p>请先填入你的 DeepSeek API Key 来开始对话</p>
+                <input type="password" id="apiKeyInput" placeholder="sk-..." autocomplete="off">
+                <button class="save-key-btn" id="saveKeyBtn">开始使用</button>
+                <p class="key-hint">在 <a href="https://platform.deepseek.com/api_keys" target="_blank">DeepSeek 控制台</a> 获取 API Key</p>
+            </div>
+        </div>
+
+        <!-- Main Chat UI (hidden until API key is set) -->
+        <div class="chat-container" id="chatUI" style="display:none">
+            <div class="chat-topbar">
+                <button class="back-btn" id="backBtn" title="返回首页"><i class="fas fa-arrow-left"></i></button>
+                <span class="title">七博士 AI 学习助手</span>
+                <button class="settings-btn" id="settingsBtn" title="设置"><i class="fas fa-cog"></i></button>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+                <div class="welcome-banner" id="welcomeBanner">
+                    <div class="welcome-icon">🤖</div>
+                    <h2>你好！我是七博士</h2>
+                    <p>有什么学习问题想问我？</p>
+                    <div class="quick-questions">
+                        <span class="quick-q" data-q="光合作用是什么？">光合作用是什么？</span>
+                        <span class="quick-q" data-q="如何快速记住英语单词？">如何快速记住英语单词？</span>
+                        <span class="quick-q" data-q="鸡兔同笼问题怎么解？">鸡兔同笼问题怎么解？</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-input-area">
+                <button class="voice-btn" id="voiceBtn" title="语音输入"><i class="fas fa-microphone"></i></button>
+                <input type="text" id="chatInput" placeholder="输入你的问题..." autocomplete="off">
+                <button class="send-btn" id="sendBtn" title="发送"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+
+        <!-- Settings Overlay -->
+        <div class="settings-overlay" id="settingsOverlay">
+            <div class="settings-panel">
+                <h3><i class="fas fa-cog"></i> 设置</h3>
+                <div class="form-group">
+                    <label>DeepSeek API Key</label>
+                    <input type="password" id="settingsApiKey" placeholder="sk-..." autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label>模型</label>
+                    <input type="text" id="settingsModel" placeholder="deepseek-chat">
+                </div>
+                <div class="btn-row">
+                    <button class="btn-primary" id="saveSettingsBtn">保存</button>
+                    <button class="btn-danger" id="clearHistoryBtn">清除对话</button>
+                </div>
+                <div class="btn-row" style="margin-top:10px">
+                    <button class="btn-secondary" id="closeSettingsBtn">关闭</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast -->
+        <div class="toast" id="toast"></div>
+    </div>
+
+    <script src="assets/js/common.js"></script>
+    <script src="assets/js/learning-assistant.js"></script>
+    <script>
+        // ========== 七博士 Chat Application ==========
+
+        (function() {
+            // --- State ---
+            var messages = [];
+            var isLoading = false;
+
+            // --- DOM refs ---
+            var setupPrompt = document.getElementById('setupPrompt');
+            var chatUI = document.getElementById('chatUI');
+            var chatMessages = document.getElementById('chatMessages');
+            var welcomeBanner = document.getElementById('welcomeBanner');
+            var chatInput = document.getElementById('chatInput');
+            var sendBtn = document.getElementById('sendBtn');
+            var voiceBtn = document.getElementById('voiceBtn');
+            var settingsOverlay = document.getElementById('settingsOverlay');
+            var toast = document.getElementById('toast');
+            var currentUtterance = null;
+            var recognition = null;
+            var isListening = false;
+
+            // --- Helpers ---
+            function g(key, fallback) {
+                return localStorage.getItem(key) || fallback;
+            }
+
+            function s(key, val) {
+                localStorage.setItem(key, val);
+            }
+
+            function getApiKey() {
+                return g('deepseek_api_key', '');
+            }
+
+            function getModel() {
+                return g('qiboshi_model', 'deepseek-chat');
+            }
+
+            function loadHistory() {
+                try { return JSON.parse(g('qiboshi_history', '[]')); } catch(e) { return []; }
+            }
+
+            function saveHistory(msgs) {
+                var recent = msgs.slice(-50);
+                s('qiboshi_history', JSON.stringify(recent));
+            }
+
+            function scrollBottom() {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            function showToast(text) {
+                toast.textContent = text;
+                toast.classList.add('show');
+                clearTimeout(toast._t);
+                toast._t = setTimeout(function() { toast.classList.remove('show'); }, 2500);
+            }
+
+            // --- Markdown rendering ---
+            function renderMarkdown(text) {
+                var escaped = text
+                    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                // code blocks ```
+                escaped = escaped.replace(/```(\w*)\n([\s\S]*?)```/g,
+                    '<pre><code>$2</code></pre>');
+                // inline code `
+                escaped = escaped.replace(/`([^`]+)`/g, '<code>$1</code>');
+                // bold **
+                escaped = escaped.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+                // unordered lists
+                escaped = escaped.replace(/^- (.+)$/gm, '<li>$1</li>');
+                escaped = escaped.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+                // numbered lists
+                escaped = escaped.replace(/^\d+\. (.+)$/gm, '<li>$1</li>');
+                // newlines to <br>
+                escaped = escaped.replace(/\n/g, '<br>');
+                return escaped;
+            }
+
+            // --- Messages ---
+            function appendUserMsg(text) {
+                var div = document.createElement('div');
+                div.className = 'msg-bubble msg-user';
+                div.textContent = text;
+                chatMessages.appendChild(div);
+                messages.push({ role: 'user', content: text });
+                saveHistory(messages);
+                hideWelcome();
+                scrollBottom();
+            }
+
+            function appendAIMsg(text) {
+                var div = document.createElement('div');
+                div.className = 'msg-bubble msg-ai';
+                div.innerHTML = renderMarkdown(text);
+                var speakBtn = document.createElement('button');
+                speakBtn.className = 'speak-msg-btn';
+                speakBtn.innerHTML = '<i class="fas fa-volume-up"></i> 朗读';
+                speakBtn.addEventListener('click', function() {
+                    speakText(text, speakBtn);
+                });
+                div.appendChild(speakBtn);
+                chatMessages.appendChild(div);
+                messages.push({ role: 'assistant', content: text });
+                saveHistory(messages);
+                scrollBottom();
+            }
+
+            function appendError(text, retryFn) {
+                var div = document.createElement('div');
+                div.className = 'msg-error';
+                div.textContent = text;
+                if (retryFn) {
+                    var btn = document.createElement('button');
+                    btn.className = 'retry-btn';
+                    btn.textContent = '重试';
+                    btn.addEventListener('click', retryFn);
+                    div.appendChild(btn);
+                }
+                chatMessages.appendChild(div);
+                scrollBottom();
+            }
+
+            function showTyping() {
+                var div = document.createElement('div');
+                div.className = 'typing-indicator';
+                div.id = 'typingIndicator';
+                div.innerHTML = '<span></span><span></span><span></span>';
+                chatMessages.appendChild(div);
+                scrollBottom();
+            }
+
+            function hideTyping() {
+                var el = document.getElementById('typingIndicator');
+                if (el) el.remove();
+            }
+
+            function hideWelcome() {
+                if (welcomeBanner) welcomeBanner.style.display = 'none';
+            }
+
+            // --- DeepSeek API ---
+            function callDeepSeek(userMsg, retryCount) {
+                retryCount = retryCount || 0;
+                isLoading = true;
+                sendBtn.disabled = true;
+                showTyping();
+
+                var apiKey = getApiKey();
+                var model = getModel();
+
+                var apiMessages = [{
+                    role: 'system',
+                    content: '你是七博士，一位专门帮助小学生学习的AI助手。你善于用通俗易懂的方式解释知识，鼓励学生思考。请用中文回答，保持友好、鼓励的语气。回答要简洁明了。'
+                }];
+                var recent = messages.slice(-20);
+                apiMessages = apiMessages.concat(recent);
+
+                fetch('https://api.deepseek.com/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + apiKey
+                    },
+                    body: JSON.stringify({
+                        model: model,
+                        messages: apiMessages,
+                        max_tokens: 1024,
+                        temperature: 0.7
+                    })
+                })
+                .then(function(res) {
+                    if (!res.ok) {
+                        return res.json().then(function(err) {
+                            throw { status: res.status, body: err };
+                        });
+                    }
+                    return res.json();
+                })
+                .then(function(data) {
+                    hideTyping();
+                    var reply = data.choices[0].message.content;
+                    appendAIMsg(reply);
+                    isLoading = false;
+                    sendBtn.disabled = false;
+                    chatInput.focus();
+                })
+                .catch(function(err) {
+                    hideTyping();
+                    isLoading = false;
+                    sendBtn.disabled = false;
+                    var status = err.status || 0;
+
+                    if (status === 401) {
+                        appendError('API Key 无效，请在设置中更新。', function() { openSettings(); });
+                    } else if (status === 429) {
+                        appendError('AI博士有点累了，请稍后再试~');
+                    } else if (status === 402) {
+                        appendError('API 余额不足，请检查你的 DeepSeek 账户。');
+                    } else {
+                        var msg = '连接失败：' + (err.message || '未知错误');
+                        appendError(msg, function() { retrySend(userMsg); });
+                    }
+                });
+            }
+
+            function retrySend(userMsg) {
+                messages.pop();
+                saveHistory(messages);
+                callDeepSeek(userMsg);
+            }
+
+            function sendMessage() {
+                var text = chatInput.value.trim();
+                if (!text || isLoading) return;
+                chatInput.value = '';
+                appendUserMsg(text);
+                callDeepSeek(text);
+            }
+
+            // --- Voice Input (SpeechRecognition) ---
+            function initSpeechRecognition() {
+                var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                if (!SpeechRecognition) {
+                    voiceBtn.style.display = 'none';
+                    return;
+                }
+                recognition = new SpeechRecognition();
+                recognition.lang = 'zh-CN';
+                recognition.interimResults = false;
+                recognition.continuous = false;
+
+                recognition.addEventListener('result', function(e) {
+                    var transcript = e.results[0][0].transcript;
+                    chatInput.value = transcript;
+                    chatInput.focus();
+                    stopListening();
+                });
+
+                recognition.addEventListener('error', function(e) {
+                    stopListening();
+                    if (e.error === 'not-allowed') {
+                        showToast('麦克风权限被拒绝');
+                    } else if (e.error !== 'aborted') {
+                        showToast('语音识别出错：' + e.error);
+                    }
+                });
+
+                recognition.addEventListener('end', function() {
+                    stopListening();
+                });
+            }
+
+            function startListening() {
+                if (!recognition || isListening) return;
+                isListening = true;
+                voiceBtn.classList.add('listening');
+                voiceBtn.querySelector('i').className = 'fas fa-microphone-alt';
+                try { recognition.start(); } catch(e) {}
+            }
+
+            function stopListening() {
+                isListening = false;
+                voiceBtn.classList.remove('listening');
+                voiceBtn.querySelector('i').className = 'fas fa-microphone';
+                try { recognition.stop(); } catch(e) {}
+            }
+
+            // --- Voice Output (SpeechSynthesis) ---
+            function speakText(text, btn) {
+                if (currentUtterance) {
+                    speechSynthesis.cancel();
+                    if (currentUtterance._btn) {
+                        currentUtterance._btn.classList.remove('playing');
+                        currentUtterance._btn.querySelector('i').className = 'fas fa-volume-up';
+                        currentUtterance._btn.innerHTML = '<i class="fas fa-volume-up"></i> 朗读';
+                    }
+                    currentUtterance = null;
+                    if (btn && btn.classList.contains('playing')) return;
+                }
+
+                var utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'zh-CN';
+                utterance.rate = parseFloat(g('speechRateZh', '1.0'));
+                utterance.pitch = parseFloat(g('speechPitchZh', '1.0'));
+
+                var savedVoiceName = g('selectedVoiceZh', '');
+                var voices = speechSynthesis.getVoices();
+                if (savedVoiceName) {
+                    var v = voices.find(function(voice) { return voice.name === savedVoiceName; });
+                    if (v) utterance.voice = v;
+                }
+                if (!utterance.voice) {
+                    var cv = voices.find(function(voice) { return voice.lang.includes('zh'); });
+                    if (cv) utterance.voice = cv;
+                }
+
+                utterance._btn = btn;
+                currentUtterance = utterance;
+
+                if (btn) {
+                    btn.classList.add('playing');
+                    btn.querySelector('i').className = 'fas fa-volume-up';
+                    btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> 播放中';
+                }
+
+                utterance.addEventListener('end', function() {
+                    if (btn) {
+                        btn.classList.remove('playing');
+                        btn.querySelector('i').className = 'fas fa-volume-up';
+                        btn.innerHTML = '<i class="fas fa-volume-up"></i> 朗读';
+                    }
+                    currentUtterance = null;
+                });
+
+                utterance.addEventListener('error', function() {
+                    if (btn) {
+                        btn.classList.remove('playing');
+                        btn.querySelector('i').className = 'fas fa-volume-up';
+                        btn.innerHTML = '<i class="fas fa-volume-up"></i> 朗读';
+                    }
+                    currentUtterance = null;
+                });
+
+                speechSynthesis.speak(utterance);
+            }
+
+            // Preload voices
+            speechSynthesis.getVoices();
+            speechSynthesis.addEventListener('voiceschanged', function() { speechSynthesis.getVoices(); });
+
+            // --- Settings ---
+            function openSettings() {
+                document.getElementById('settingsApiKey').value = getApiKey();
+                document.getElementById('settingsModel').value = getModel();
+                settingsOverlay.classList.add('open');
+            }
+
+            function closeSettings() {
+                settingsOverlay.classList.remove('open');
+            }
+
+            function saveSettings() {
+                var newKey = document.getElementById('settingsApiKey').value.trim();
+                var newModel = document.getElementById('settingsModel').value.trim() || 'deepseek-chat';
+                s('deepseek_api_key', newKey);
+                s('qiboshi_model', newModel);
+                closeSettings();
+                showToast('设置已保存');
+
+                if (newKey && chatUI.style.display === 'none') {
+                    setupPrompt.style.display = 'none';
+                    chatUI.style.display = 'flex';
+                    restoreChat();
+                }
+            }
+
+            function clearHistory() {
+                messages = [];
+                s('qiboshi_history', '[]');
+                chatMessages.innerHTML = '';
+                // Restore welcome banner
+                var banner = document.createElement('div');
+                banner.className = 'welcome-banner';
+                banner.id = 'welcomeBanner';
+                banner.innerHTML = '<div class="welcome-icon">🤖</div>' +
+                    '<h2>你好！我是七博士</h2>' +
+                    '<p>有什么学习问题想问我？</p>' +
+                    '<div class="quick-questions">' +
+                        '<span class="quick-q" data-q="光合作用是什么？">光合作用是什么？</span>' +
+                        '<span class="quick-q" data-q="如何快速记住英语单词？">如何快速记住英语单词？</span>' +
+                        '<span class="quick-q" data-q="鸡兔同笼问题怎么解？">鸡兔同笼问题怎么解？</span>' +
+                    '</div>';
+                chatMessages.appendChild(banner);
+                welcomeBanner = document.getElementById('welcomeBanner');
+                bindQuickQuestions();
+                closeSettings();
+                showToast('对话已清除');
+            }
+
+            // --- Restore chat from history ---
+            function restoreChat() {
+                messages = loadHistory();
+                if (messages.length > 0) {
+                    hideWelcome();
+                    messages.forEach(function(msg) {
+                        var div = document.createElement('div');
+                        if (msg.role === 'user') {
+                            div.className = 'msg-bubble msg-user';
+                            div.textContent = msg.content;
+                        } else {
+                            div.className = 'msg-bubble msg-ai';
+                            div.innerHTML = renderMarkdown(msg.content);
+                            var speakBtn = document.createElement('button');
+                            speakBtn.className = 'speak-msg-btn';
+                            speakBtn.innerHTML = '<i class="fas fa-volume-up"></i> 朗读';
+                            speakBtn.addEventListener('click', function() {
+                                speakText(msg.content, speakBtn);
+                            });
+                            div.appendChild(speakBtn);
+                        }
+                        chatMessages.appendChild(div);
+                    });
+                    scrollBottom();
+                }
+            }
+
+            // --- Quick questions ---
+            function bindQuickQuestions() {
+                var qqs = document.querySelectorAll('.quick-q');
+                qqs.forEach(function(el) {
+                    el.addEventListener('click', function() {
+                        var q = this.getAttribute('data-q');
+                        chatInput.value = q;
+                        sendMessage();
+                    });
+                });
+            }
+
+            // --- Event bindings ---
+            sendBtn.addEventListener('click', sendMessage);
+            chatInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+
+            voiceBtn.addEventListener('click', function() {
+                if (isListening) {
+                    stopListening();
+                } else {
+                    startListening();
+                }
+            });
+
+            document.getElementById('backBtn').addEventListener('click', function() {
+                window.location.href = 'index.html';
+            });
+
+            document.getElementById('settingsBtn').addEventListener('click', openSettings);
+            document.getElementById('closeSettingsBtn').addEventListener('click', closeSettings);
+            document.getElementById('saveSettingsBtn').addEventListener('click', saveSettings);
+            document.getElementById('clearHistoryBtn').addEventListener('click', function() {
+                if (confirm('确定要清除所有对话记录吗？')) {
+                    clearHistory();
+                }
+            });
+
+            document.getElementById('saveKeyBtn').addEventListener('click', function() {
+                var key = document.getElementById('apiKeyInput').value.trim();
+                if (!key) { showToast('请输入 API Key'); return; }
+                s('deepseek_api_key', key);
+                setupPrompt.style.display = 'none';
+                chatUI.style.display = 'flex';
+                restoreChat();
+                showToast('欢迎使用七博士！');
+            });
+
+            settingsOverlay.addEventListener('click', function(e) {
+                if (e.target === settingsOverlay) closeSettings();
+            });
+
+            bindQuickQuestions();
+
+            // --- Init ---
+            syncThemeFromIndex();
+            initSpeechRecognition();
+
+            if (getApiKey()) {
+                setupPrompt.style.display = 'none';
+                chatUI.style.display = 'flex';
+                restoreChat();
+            }
+
+            // Nav & assistant injection
+            var NAV_CONFIG = [
+                { page: 'chat', icon: 'fa-robot', label: 'AI对话', active: true }
+            ];
+            injectNav(NAV_CONFIG);
+            injectFooter();
+            injectAssistant();
+            setupHomeLink('homeLink', 'index.html');
+            initLearningAssistant();
+        })();
+    </script>
+</body>
+</html>
