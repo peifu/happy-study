@@ -1271,6 +1271,7 @@
         const NAV_CONFIG = [
             { page: 'player', icon: 'fa-music', label: '音乐播放', active: true },
             { page: 'playlist', icon: 'fa-list-ul', label: '播放列表', active: false },
+            { page: 'theory', icon: 'fa-music', label: '乐理基础', active: false },
         ];
 
         // 音乐数据（从JSON加载）
@@ -1847,6 +1848,10 @@
         // 设置事件监听
         function setupEventListeners() {
             setupNavLinks(navLinks, pages, function(pageId) {
+                if (pageId === 'theory') {
+                    window.location.href = 'http://sevenbaby.xyz/melody/';
+                    return;
+                }
                 if (pageId === 'playlist') {
                     renderAllPlaylistManager();
                     renderAllSongs(document.getElementById('songSearch').value);

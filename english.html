@@ -1678,10 +1678,14 @@
 
             }
 
-            // 设置事件监听
-            function setupEventListeners() {
+                // 设置事件监听
+                function setupEventListeners() {
                 // 导航链接
                 setupNavLinks(navLinks, pages, (pageId) => {
+                    if (pageId === 'ket') {
+                        window.location.href = 'http://sevenbaby.xyz/ket/';
+                        return;
+                    }
                     if (pageId === 'wordlist' || pageId === 'game' || pageId === 'settings') stopAutoPlay();
                     if (pageId === 'wordlist') renderWordList();
                     if (pageId === 'wordcard' && autoPlayEnabled) startAutoPlay();
@@ -2552,6 +2556,7 @@
                     { page: 'wordcard', icon: 'fa-home',    label: '单词记忆', active: true },
                     { page: 'wordlist', icon: 'fa-list',    label: '单词列表', active: false },
                     { page: 'game',     icon: 'fa-gamepad', label: '游戏闯关', active: false },
+                    { page: 'ket',      icon: 'fa-book',    label: 'KET',       active: false },
                     { page: 'settings', icon: 'fa-cog',     label: '设置',     active: false },
                 ];
                 injectNav(NAV_CONFIG);
