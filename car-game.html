@@ -364,10 +364,11 @@
     </div>
 
     <script>
-        // 导航配置
+        // 导航配置（游戏内）
         const NAV_CONFIG = [
-            { page: 'game',    icon: 'fa-gamepad',  label: '单词赛车', active: true },
-            { page: 'english', icon: 'fa-language', label: '单词学习', active: false },
+            { page: 'home',    icon: 'fa-gamepad',  label: '单词赛车', active: true },
+            { page: 'match',   icon: 'fa-th',      label: '单词消消乐', active: false },
+            { page: 'world',   icon: 'fa-globe',   label: '游戏世界', active: false },
         ];
 
         let navLinks, pages;
@@ -376,7 +377,11 @@
             navLinks = document.querySelectorAll('.nav-link');
             pages = document.querySelectorAll('.page');
             setupNavLinks(navLinks, pages, function(pageId) {
-                if (pageId === 'english') window.location.href = 'english.html';
+                if (pageId === 'match') {
+                    window.location.href = 'english.html';
+                } else if (pageId === 'world') {
+                    window.location.href = 'https://www.gamestolearnenglish.com/';
+                }
             });
             initLearningAssistant();
         }
