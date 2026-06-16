@@ -163,60 +163,7 @@
             color: var(--secondary);
         }
 
-        /* 练习题样式 */
-        .exercise-container {
-            background: var(--card-bg-color);
-            border-radius: 16px;
-            padding: 20px;
-            margin-top: 20px;
-            border: 1px solid var(--border-card);
-        }
-
-        .exercise-title {
-            font-size: 20px;
-            margin-bottom: 15px;
-            color: var(--primary);
-        }
-
-        .exercise-question {
-            font-size: 18px;
-            margin-bottom: 15px;
-        }
-
-        .exercise-options {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .exercise-option {
-            padding: 10px;
-            border-radius: 8px;
-            background: rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-            transition: var(--transition);
-            text-align: center;
-        }
-
-        .exercise-option:hover {
-            background: rgba(66, 133, 244, 0.1);
-        }
-
-        .exercise-option.correct {
-            background: rgba(52, 168, 83, 0.3);
-        }
-
-        .exercise-option.incorrect {
-            background: rgba(234, 67, 53, 0.3);
-        }
-
-        .exercise-result {
-            text-align: center;
-            font-weight: bold;
-            margin-top: 15px;
-            min-height: 24px;
-        }
+        
 
         .loading {
             text-align: center;
@@ -263,9 +210,7 @@
             .math-explanation {
                 font-size: 15px;
             }
-            .exercise-options {
-                grid-template-columns: 1fr 1fr;
-            }
+            
         }
 
         @media (max-width: 800px) {
@@ -290,9 +235,7 @@
             .concept-item {
                 padding: 10px 12px;
             }
-            .exercise-options {
-                grid-template-columns: 1fr;
-            }
+            
         }
 
         @media (max-width: 600px) {
@@ -380,20 +323,7 @@
                         </button>
                     </div>
 
-                    <div class="exercise-container" id="exerciseContainer">
-                        <div class="exercise-title">
-                            <i class="fas fa-pencil-alt"></i>
-                            <span>练习题</span>
-                        </div>
-                        <div class="exercise-question" id="exerciseQuestion">5 + 3 = ?</div>
-                        <div class="exercise-options" id="exerciseOptions">
-                            <div class="exercise-option" data-value="7">7</div>
-                            <div class="exercise-option" data-value="8">8</div>
-                            <div class="exercise-option" data-value="9">9</div>
-                            <div class="exercise-option" data-value="10">10</div>
-                        </div>
-                        <div class="exercise-result" id="exerciseResult"></div>
-                    </div>
+                    <!-- 练习题已移除 -->
                 </div>
 
                 <div class="progress-container">
@@ -454,9 +384,7 @@
 
     <script>
         const NAV_CONFIG = [
-            { page: 'math',     icon: 'fa-calculator', label: '数学概念', active: true },
-            { page: 'exercise', icon: 'fa-pencil-alt', label: '练习题',   active: false },
-            { page: 'settings', icon: 'fa-cog',        label: '设置',     active: false },
+            { page: 'math',  icon: 'fa-calculator', label: '数学概念', active: true },
         ];
 
         // 数学概念数据
@@ -568,9 +496,7 @@
         const progressFillElement = document.getElementById('progressFill');
         const progressPercentageElement = document.getElementById('progressPercentage');
         const conceptListElement = document.getElementById('conceptList');
-        const exerciseQuestionElement = document.getElementById('exerciseQuestion');
-        const exerciseOptionsElement = document.getElementById('exerciseOptions');
-        const exerciseResultElement = document.getElementById('exerciseResult');
+        // exercise elements removed
         let navLinks, pages;
 
         // 初始化
@@ -586,7 +512,6 @@
             showCurrentConcept();
             updateProgress();
             updateConceptList();
-            setupExercise();
 
             // 设置事件监听
             setupEventListeners();
@@ -632,8 +557,7 @@
 
             mathExplanationElement.textContent = conceptData.explanation;
 
-            // 更新练习题
-            setupExercise();
+            // 练习题已移除
         }
 
         // 显示示例
@@ -642,55 +566,7 @@
             alert(`示例：${conceptData.explanation}`);
         }
 
-        // 设置练习题
-        function setupExercise() {
-            const conceptData = mathData[currentGrade][currentConceptIndex];
-            exerciseQuestionElement.textContent = conceptData.exercise.question;
-
-            // 清空原有选项
-            exerciseOptionsElement.innerHTML = '';
-
-            // 添加选项
-            conceptData.exercise.options.forEach(option => {
-                const optionElement = document.createElement('div');
-                optionElement.className = 'exercise-option';
-                optionElement.textContent = option;
-                optionElement.setAttribute('data-value', option);
-                optionElement.addEventListener('click', checkAnswer);
-                exerciseOptionsElement.appendChild(optionElement);
-            });
-
-            exerciseResultElement.textContent = '';
-        }
-
-        // 检查答案
-        function checkAnswer(e) {
-            const selectedOption = e.target;
-            const conceptData = mathData[currentGrade][currentConceptIndex];
-            const correctAnswer = conceptData.exercise.answer;
-            const selectedAnswer = selectedOption.getAttribute('data-value');
-
-            // 清除所有选项的样式
-            document.querySelectorAll('.exercise-option').forEach(option => {
-                option.classList.remove('correct', 'incorrect');
-            });
-
-            // 标记正确答案和错误答案
-            if (selectedAnswer === correctAnswer) {
-                selectedOption.classList.add('correct');
-                exerciseResultElement.textContent = '回答正确！';
-                exerciseResultElement.style.color = 'var(--success)';
-            } else {
-                selectedOption.classList.add('incorrect');
-                document.querySelectorAll('.exercise-option').forEach(option => {
-                    if (option.getAttribute('data-value') === correctAnswer) {
-                        option.classList.add('correct');
-                    }
-                });
-                exerciseResultElement.textContent = `回答错误，正确答案是：${correctAnswer}`;
-                exerciseResultElement.style.color = 'var(--accent)';
-            }
-        }
+        
 
         // 标记为已掌握
         function markAsMastered() {
