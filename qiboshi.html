@@ -35,12 +35,13 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
             height: 100vh;
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            padding: 20px;
         }
 
         /* Page switching */
@@ -61,7 +62,7 @@
             flex-direction: column;
             flex: 1;
             overflow: hidden;
-            padding: 0 16px;
+            padding: 0 20px;
         }
 
         /* Top bar */
@@ -181,6 +182,7 @@
             line-height: 1.6;
             font-size: 15px;
             word-break: break-word;
+            word-wrap: break-word;
             animation: msgIn 0.3s ease;
         }
 
@@ -202,6 +204,62 @@
             border: 1px solid var(--border-card);
             border-bottom-left-radius: 6px;
             position: relative;
+            overflow-wrap: break-word;
+            white-space: pre-wrap;
+        }
+
+        .msg-ai p {
+            margin: 12px 0;
+            line-height: 1.65;
+        }
+
+        .msg-ai table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            max-width: 100%;
+            overflow-x: auto;
+            display: table;
+        }
+
+        .msg-ai th,
+        .msg-ai td {
+            border: 1px solid rgba(148, 180, 210, 0.16);
+            padding: 10px 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .msg-ai th {
+            background: rgba(255, 255, 255, 0.08);
+            font-weight: 700;
+        }
+
+        .msg-ai tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .msg-ai ul,
+        .msg-ai ol {
+            margin: 10px 0 10px 20px;
+            padding-left: 16px;
+        }
+
+        .msg-ai li {
+            margin-bottom: 8px;
+        }
+
+        .msg-ai blockquote {
+            margin: 14px 0;
+            padding: 12px 16px;
+            border-left: 3px solid var(--qiboshi-light);
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-secondary);
+        }
+
+        .msg-ai a {
+            color: var(--qiboshi-light);
+            text-decoration: underline;
         }
 
         .msg-ai .speak-msg-btn {
@@ -597,7 +655,6 @@
             <div class="chat-container" id="chatUI" style="display:none">
                 <div class="chat-topbar">
                     <span class="title">七博士 AI 学习助手</span>
-                    <button class="voice-btn" id="topVoiceBtn" title="语音输入"><i class="fas fa-microphone"></i></button>
                 </div>
 
                 <div class="chat-messages" id="chatMessages">
@@ -663,7 +720,6 @@
             var chatInput = document.getElementById('chatInput');
             var sendBtn = document.getElementById('sendBtn');
             var voiceBtn = document.getElementById('voiceBtn');
-            var topVoiceBtn = document.getElementById('topVoiceBtn');
             var toast = document.getElementById('toast');
             var currentUtterance = null;
             var recognition = null;
@@ -710,13 +766,46 @@
             function renderMarkdown(text) {
                 var escaped = text
                     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-                escaped = escaped.replace(/```(\w*)\n([\s\S]*?)```/g,
-                    '<pre><code>$2</code></pre>');
-                escaped = escaped.replace(/`([^`]+)`/g, '<code>$1</code>');
+
+                function renderTable(block) {
+                    var rows = block.trim().split(/\r?\n/);
+                    if (rows.length < 2) return block;
+                    var headers = rows[0].replace(/^\||\|$/g, '').split('|').map(function(cell) { return cell.trim(); });
+                    var body = rows.slice(2);
+                    var html = '<table><thead><tr>';
+                    headers.forEach(function(cell) {
+                        html += '<th>' + cell + '</th>';
+                    });
+                    html += '</tr></thead><tbody>';
+                    body.forEach(function(row) {
+                        if (!row.trim()) return;
+                        var cells = row.replace(/^\||\|$/g, '').split('|').map(function(cell) { return cell.trim(); });
+                        html += '<tr>';
+                        cells.forEach(function(cell) {
+                            html += '<td>' + cell + '</td>';
+                        });
+                        html += '</tr>';
+                    });
+                    html += '</tbody></table>';
+                    return html;
+                }
+
+                escaped = escaped.replace(/```(\w*)\r?\n([\s\S]*?)```/g, function(match, lang, code) {
+                    return '<pre><code>' + code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</code></pre>';
+                });
+
+                escaped = escaped.replace(/^\|.*\|\r?\n^\|[ \t]*[-:| ]+[ \t]*\|(?:\r?\n^\|.*\|)*/gm, renderTable);
+                escaped = escaped.replace(/^>\s*(.+)$/gm, '<blockquote>$1</blockquote>');
+                escaped = escaped.replace(/^\s*[-*+]\s+(.+)$/gm, '[[UL]]<li>$1</li>');
+                escaped = escaped.replace(/^\s*\d+\.\s+(.+)$/gm, '[[OL]]<li>$1</li>');
+                escaped = escaped.replace(/(\[\[UL\]\]<li>[\s\S]*?<\/li>)+/g, function(block) {
+                    return '<ul>' + block.replace(/\[\[UL\]\]/g, '') + '</ul>';
+                });
+                escaped = escaped.replace(/(\[\[OL\]\]<li>[\s\S]*?<\/li>)+/g, function(block) {
+                    return '<ol>' + block.replace(/\[\[OL\]\]/g, '') + '</ol>';
+                });
                 escaped = escaped.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-                escaped = escaped.replace(/^- (.+)$/gm, '<li>$1</li>');
-                escaped = escaped.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
-                escaped = escaped.replace(/^\d+\. (.+)$/gm, '<li>$1</li>');
+                escaped = escaped.replace(/`([^`]+)`/g, '<code>$1</code>');
                 escaped = escaped.replace(/\n/g, '<br>');
                 return escaped;
             }
@@ -866,7 +955,6 @@
                 var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
                 if (!SpeechRecognition) {
                     voiceBtn.style.display = 'none';
-                    topVoiceBtn.style.display = 'none';
                     return;
                 }
                 recognition = new SpeechRecognition();
@@ -1082,8 +1170,6 @@
             });
 
             voiceBtn.addEventListener('click', toggleVoice);
-
-            topVoiceBtn.addEventListener('click', toggleVoice);
 
             function toggleVoice() {
                 if (isListening) {
