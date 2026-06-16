@@ -503,9 +503,10 @@
 
     <script>
         const NAV_CONFIG = [
-            { page: 'chinese',  icon: 'fa-pen-fancy',    label: '语文诗词', active: true },
-            { page: 'daily',    icon: 'fa-calendar-day', label: '日积月累', active: false },
-            { page: 'settings', icon: 'fa-cog',          label: '设置',     active: false },
+            { page: 'chinese',        icon: 'fa-pen-fancy',    label: '语文诗词', active: true },
+            { page: 'daily',          icon: 'fa-calendar-day', label: '日积月累', active: false },
+            { page: 'pinyinKnowledge', icon: 'fa-book',        label: '拼音知识', active: false },
+            { page: 'settings',       icon: 'fa-cog',          label: '设置',     active: false },
         ];
 
         // 默认诗词数据（当JSON加载失败时使用）
@@ -653,7 +654,12 @@
 
         // 设置事件监听
         function setupEventListeners() {
-            setupNavLinks(navLinks, pages);
+            setupNavLinks(navLinks, pages, function(pageId) {
+                if (pageId === 'pinyinKnowledge') {
+                    window.location.href = 'http://sevenbaby.xyz/pinyin/';
+                    return;
+                }
+            });
 
             bookSelectorElement.addEventListener('change', handleBookChange);
 
