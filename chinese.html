@@ -783,14 +783,20 @@
 
         // 应用主题
         function applyTheme() {
+            document.body.classList.remove('light-theme');
             if (currentTheme === 'dark') {
                 document.documentElement.style.setProperty('--bg-color', '#0a1929');
                 document.documentElement.style.setProperty('--text-color', '#ffffff');
                 document.documentElement.style.setProperty('--card-bg-color', 'rgba(15, 35, 55, 0.7)');
             } else if (currentTheme === 'light') {
+                document.body.classList.add('light-theme');
                 document.documentElement.style.setProperty('--bg-color', '#f0f2f5');
                 document.documentElement.style.setProperty('--text-color', '#333333');
                 document.documentElement.style.setProperty('--card-bg-color', 'rgba(255, 255, 255, 0.9)');
+            } else if (currentTheme === 'auto') {
+                if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+                    document.body.classList.add('light-theme');
+                }
             } else if (currentTheme === 'blue') {
                 document.documentElement.style.setProperty('--bg-color', '#0a2f5e');
                 document.documentElement.style.setProperty('--text-color', '#ffffff');
