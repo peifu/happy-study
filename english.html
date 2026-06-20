@@ -3252,157 +3252,145 @@
                 html += `<div class="grammar-section-intro">${section.intro}</div>`;
                 html += `</div>`;
 
-                // 规则块
+                // 渲染所有内容块（支持多种类型）
                 if (section.sections) {
                     section.sections.forEach(sec => {
-                        html += `<div class="grammar-rule-block">`;
-                        html += `<div class="grammar-rule-heading">`;
-                        html += `<span class="dot" style="background:${section.color}"></span>`;
-                        html += sec.heading;
-                        html += `</div>`;
+                        const type = sec.type || 'rule';
 
-                        if (sec.text) {
-                            html += `<div class="grammar-rule-text">${sec.text}</div>`;
-                        }
-
-                        if (sec.formula) {
-                            html += `<div class="grammar-formula">📐 ${sec.formula}</div>`;
-                        }
-
-                        if (sec.badges) {
-                            sec.badges.forEach(b => {
-                                html += `<span class="grammar-badge">⚠️ ${b}</span>`;
-                            });
-                        }
-
-                        if (sec.table) {
-                            html += `<div class="grammar-table-wrap"><table class="grammar-table"><thead><tr>`;
-                            sec.table.headers.forEach(h => {
-                                html += `<th>${h}</th>`;
-                            });
-                            html += `</tr></thead><tbody>`;
-                            sec.table.rows.forEach(row => {
-                                html += `<tr>`;
-                                row.forEach(cell => {
-                                    html += `<td>${cell}</td>`;
+                        if (type === 'rule') {
+                            // === 规则块 ===
+                            html += `<div class="grammar-rule-block">`;
+                            if (sec.heading) {
+                                html += `<div class="grammar-rule-heading">`;
+                                html += `<span class="dot" style="background:${section.color}"></span>`;
+                                html += sec.heading;
+                                html += `</div>`;
+                            }
+                            if (sec.text) {
+                                html += `<div class="grammar-rule-text">${sec.text}</div>`;
+                            }
+                            if (sec.formula) {
+                                html += `<div class="grammar-formula">📐 ${sec.formula}</div>`;
+                            }
+                            if (sec.badges) {
+                                sec.badges.forEach(b => {
+                                    html += `<span class="grammar-badge">⚠️ ${b}</span>`;
                                 });
-                                html += `</tr>`;
-                            });
-                            html += `</tbody></table></div>`;
-                        }
+                            }
+                            if (sec.table) {
+                                html += `<div class="grammar-table-wrap"><table class="grammar-table"><thead><tr>`;
+                                sec.table.headers.forEach(h => {
+                                    html += `<th>${h}</th>`;
+                                });
+                                html += `</tr></thead><tbody>`;
+                                sec.table.rows.forEach(row => {
+                                    html += `<tr>`;
+                                    row.forEach(cell => {
+                                        html += `<td>${cell}</td>`;
+                                    });
+                                    html += `</tr>`;
+                                });
+                                html += `</tbody></table></div>`;
+                            }
+                            if (sec.irregulars) {
+                                html += `<div class="grammar-irregulars">`;
+                                sec.irregulars.forEach(irr => {
+                                    html += `<div class="grammar-irregular-item">${irr[0]}`;
+                                    if (irr[1]) html += `<br><small style="color:var(--text-secondary)">${irr[1]}</small>`;
+                                    html += `</div>`;
+                                });
+                                html += `</div>`;
+                            }
+                            if (sec.examples_inline) {
+                                sec.examples_inline.forEach(ex => {
+                                    html += `<div class="grammar-example-card"><span class="ex-label">例句</span><div class="ex-en">${ex}</div></div>`;
+                                });
+                            }
+                            html += `</div>`;
 
-                        if (sec.irregulars) {
-                            html += `<div class="grammar-irregulars">`;
-                            sec.irregulars.forEach(irr => {
-                                html += `<div class="grammar-irregular-item">${irr[0]}`;
-                                if (irr[1]) html += `<br><small style="color:var(--text-secondary)">${irr[1]}</small>`;
+                        } else if (type === 'highlight') {
+                            // === 重点记忆 ===
+                            html += `<div class="grammar-highlight-box">`;
+                            html += `<p><strong>${sec.title}</strong></p>`;
+                            sec.items.forEach(item => {
+                                html += `<p>${item}</p>`;
+                            });
+                            html += `</div>`;
+
+                        } else if (type === 'rhyme') {
+                            // === 记忆口诀 ===
+                            html += `<div class="grammar-rhyme-box">${sec.text.replace(/\n/g, '<br>')}</div>`;
+
+                        } else if (type === 'compare') {
+                            // === 正误对比 ===
+                            html += `<div class="grammar-compare-box">`;
+                            if (sec.right && sec.right.length) {
+                                html += `<div class="grammar-compare-item grammar-compare-right">`;
+                                html += `<div class="status">✅ 正确</div>`;
+                                sec.right.forEach(item => {
+                                    html += `<div class="example">${item.en}</div>`;
+                                    html += `<div style="font-size:12px;color:var(--text-secondary)">${item.zh}</div>`;
+                                });
+                                html += `</div>`;
+                            }
+                            if (sec.wrong && sec.wrong.length) {
+                                html += `<div class="grammar-compare-item grammar-compare-wrong">`;
+                                html += `<div class="status">❌ 错误</div>`;
+                                sec.wrong.forEach(item => {
+                                    html += `<div class="example">${item.en}</div>`;
+                                    html += `<div style="font-size:12px;color:var(--text-secondary)">${item.zh}</div>`;
+                                });
+                                html += `</div>`;
+                            }
+                            html += `</div>`;
+
+                        } else if (type === 'wordFamily') {
+                            // === 词汇家族 ===
+                            html += `<div class="grammar-word-family">`;
+                            sec.items.forEach(wf => {
+                                html += `<div class="grammar-word-tag"><div class="w">${wf.word}</div><div class="t">${wf.type}</div></div>`;
+                            });
+                            html += `</div>`;
+
+                        } else if (type === 'timeline') {
+                            // === 时间轴 ===
+                            html += `<div class="grammar-timeline">`;
+                            sec.items.forEach(tp => {
+                                html += `<div class="grammar-time-point">`;
+                                html += `<div class="tl">${tp.label}</div>`;
+                                html += `<div class="tx">${tp.example.replace(/\n/g, '<br>')}</div>`;
+                                html += `</div>`;
+                            });
+                            html += `</div>`;
+
+                        } else if (type === 'quiz') {
+                            // === 小测验 ===
+                            html += `<div class="grammar-quiz-box">`;
+                            html += `<h4>📝 小测验（点击题目查看答案）</h4>`;
+                            sec.items.forEach((q, i) => {
+                                html += `<div class="grammar-quiz-item" onclick="this.querySelector('.grammar-quiz-answer').classList.toggle('show')">`;
+                                html += `<strong>${i + 1}.</strong> ${q.q}`;
+                                html += `<div class="grammar-quiz-answer">✅ ${q.a}</div>`;
+                                html += `</div>`;
+                            });
+                            html += `</div>`;
+
+                        } else if (type === 'examples') {
+                            // === 例句汇总 ===
+                            html += `<div class="grammar-rule-block">`;
+                            html += `<div class="grammar-rule-heading">`;
+                            html += `<span class="dot" style="background:${section.color}"></span>`;
+                            html += `例句`;
+                            html += `</div>`;
+                            sec.items.forEach(ex => {
+                                html += `<div class="grammar-example-item">`;
+                                html += `<span class="grammar-example-en">${ex.en}</span>`;
+                                html += `<span class="grammar-example-zh">${ex.zh}</span>`;
                                 html += `</div>`;
                             });
                             html += `</div>`;
                         }
-
-                        if (sec.examples_inline) {
-                            sec.examples_inline.forEach(ex => {
-                                html += `<div class="grammar-example-card"><span class="ex-label">例句</span><div class="ex-en">${ex}</div></div>`;
-                            });
-                        }
-
-                        html += `</div>`;
                     });
-                }
-
-                // Highlight box (重点记忆)
-                if (section.highlight) {
-                    html += `<div class="grammar-highlight-box">`;
-                    html += `<p><strong>${section.highlight.title}</strong></p>`;
-                    section.highlight.items.forEach(item => {
-                        html += `<p>${item}</p>`;
-                    });
-                    html += `</div>`;
-                }
-
-                // Compare box (正误对比)
-                if (section.compare) {
-                    html += `<div class="grammar-compare-box">`;
-                    if (section.compare.right && section.compare.right.length) {
-                        html += `<div class="grammar-compare-item grammar-compare-right">`;
-                        html += `<div class="status">✅ 正确</div>`;
-                        section.compare.right.forEach(item => {
-                            html += `<div class="example">${item.en}</div>`;
-                            html += `<div style="font-size:12px;color:var(--text-secondary)">${item.zh}</div>`;
-                        });
-                        html += `</div>`;
-                    }
-                    if (section.compare.wrong && section.compare.wrong.length) {
-                        html += `<div class="grammar-compare-item grammar-compare-wrong">`;
-                        html += `<div class="status">❌ 错误</div>`;
-                        section.compare.wrong.forEach(item => {
-                            html += `<div class="example">${item.en}</div>`;
-                            html += `<div style="font-size:12px;color:var(--text-secondary)">${item.zh}</div>`;
-                        });
-                        html += `</div>`;
-                    }
-                    html += `</div>`;
-                }
-
-                // Word family (单词家族)
-                if (section.wordFamily) {
-                    html += `<div class="grammar-word-family">`;
-                    section.wordFamily.forEach(wf => {
-                        html += `<div class="grammar-word-tag"><div class="w">${wf.word}</div><div class="t">${wf.type}</div></div>`;
-                    });
-                    html += `</div>`;
-                }
-
-                // Timeline (时态时间轴)
-                if (section.timeline) {
-                    html += `<div class="grammar-timeline">`;
-                    section.timeline.forEach(tp => {
-                        html += `<div class="grammar-time-point">`;
-                        html += `<div class="tl">${tp.label}</div>`;
-                        html += `<div class="tx">${tp.example.replace(/\n/g, '<br>')}</div>`;
-                        html += `</div>`;
-                    });
-                    html += `</div>`;
-                }
-
-                // Rhyme box (记忆口诀 - 增强版)
-                if (section.rhyme) {
-                    html += `<div class="grammar-rhyme-box">${section.rhyme.replace(/\n/g, '<br>')}</div>`;
-                } else if (section.tip) {
-                    html += `<div class="grammar-tip">`;
-                    html += `<span class="grammar-tip-emoji">🎵</span>`;
-                    html += `<span>${section.tip}</span>`;
-                    html += `</div>`;
-                }
-
-                // 例句
-                if (section.examples && section.examples.length) {
-                    html += `<div class="grammar-rule-block">`;
-                    html += `<div class="grammar-rule-heading">`;
-                    html += `<span class="dot" style="background:${section.color}"></span>`;
-                    html += `例句`;
-                    html += `</div>`;
-                    section.examples.forEach(ex => {
-                        html += `<div class="grammar-example-item">`;
-                        html += `<span class="grammar-example-en">${ex.en}</span>`;
-                        html += `<span class="grammar-example-zh">${ex.zh}</span>`;
-                        html += `</div>`;
-                    });
-                    html += `</div>`;
-                }
-
-                // Quiz box (互动练习)
-                if (section.quiz) {
-                    html += `<div class="grammar-quiz-box">`;
-                    html += `<h4>📝 小测验（点击题目查看答案）</h4>`;
-                    section.quiz.forEach((q, i) => {
-                        html += `<div class="grammar-quiz-item" onclick="this.querySelector('.grammar-quiz-answer').classList.toggle('show')">`;
-                        html += `<strong>${i + 1}.</strong> ${q.q}`;
-                        html += `<div class="grammar-quiz-answer">✅ ${q.a}</div>`;
-                        html += `</div>`;
-                    });
-                    html += `</div>`;
                 }
 
                 document.getElementById('grammarContent').innerHTML = html;
