@@ -1104,6 +1104,7 @@
             left: 0;
             right: 0;
             height: 4px;
+            background: var(--primary);
         }
 
         .grammar-section-title {
@@ -1161,6 +1162,12 @@
             border-collapse: collapse;
             margin: 12px 0;
             font-size: 14px;
+            min-width: 400px;
+        }
+
+        .grammar-table-wrap {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .grammar-table th {
@@ -1190,8 +1197,8 @@
         }
 
         .grammar-irregular-item {
-            background: rgba(255, 107, 107, 0.1);
-            border: 1px solid rgba(255, 107, 107, 0.25);
+            background: rgba(229, 62, 62, 0.1);
+            border: 1px solid rgba(229, 62, 62, 0.25);
             border-radius: 8px;
             padding: 10px 14px;
             text-align: center;
@@ -1201,8 +1208,8 @@
 
         .grammar-badge {
             display: inline-block;
-            background: rgba(255, 107, 107, 0.15);
-            color: #e53e3e;
+            background: rgba(229, 62, 62, 0.12);
+            color: var(--accent);
             padding: 3px 10px;
             border-radius: 12px;
             font-size: 12px;
@@ -1344,6 +1351,15 @@
 
             .grammar-irregulars {
                 grid-template-columns: repeat(2, 1fr);
+            }
+
+            .grammar-example-item {
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .grammar-example-en {
+                min-width: 0;
             }
         }
     </style>
