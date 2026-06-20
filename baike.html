@@ -835,6 +835,7 @@
             // 导航链接
             setupNavLinks(navLinks, pages, (pageId) => {
                 if (pageId === 'zodiac') renderZodiacGrid();
+                if (pageId === 'space') setTimeout(() => window.resizeSolarCanvas(), 50);
             });
 
             // 主题选择
@@ -1027,6 +1028,7 @@
 
             resizeCanvas();
             window.addEventListener('resize', resizeCanvas);
+            window.resizeSolarCanvas = resizeCanvas;
 
             // 天体数据
             const celestialBodies = [
