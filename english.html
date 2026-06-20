@@ -1085,6 +1085,267 @@
         }
 
         /* 全局学习助手样式 - 已移动到外部文件 assets/css/learning-assistant.css */
+
+        /* 语法宝典页面样式 */
+        .grammar-section-header {
+            background: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 25px 30px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-card);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .grammar-section-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .grammar-section-title {
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .grammar-section-emoji {
+            font-size: 36px;
+        }
+
+        .grammar-section-intro {
+            color: var(--text-secondary);
+            font-size: 15px;
+            margin-top: 5px;
+        }
+
+        .grammar-rule-block {
+            background: var(--card-bg-color);
+            border-radius: 12px;
+            padding: 20px 25px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border-card);
+        }
+
+        .grammar-rule-heading {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .grammar-rule-heading .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .grammar-rule-text {
+            color: var(--text-color);
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 12px;
+        }
+
+        .grammar-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-size: 14px;
+        }
+
+        .grammar-table th {
+            background: rgba(0, 0, 0, 0.15);
+            padding: 10px 14px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-color);
+            border-bottom: 2px solid var(--border-card);
+        }
+
+        .grammar-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border-subtle);
+            color: var(--text-color);
+        }
+
+        .grammar-table tr:hover td {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .grammar-irregulars {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 10px;
+            margin: 12px 0;
+        }
+
+        .grammar-irregular-item {
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid rgba(255, 107, 107, 0.25);
+            border-radius: 8px;
+            padding: 10px 14px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .grammar-badge {
+            display: inline-block;
+            background: rgba(255, 107, 107, 0.15);
+            color: #e53e3e;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 6px;
+        }
+
+        .grammar-formula {
+            background: rgba(0, 247, 255, 0.08);
+            border: 1px solid rgba(0, 247, 255, 0.2);
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-size: 15px;
+            font-weight: 600;
+            display: inline-block;
+            margin: 8px 0;
+            color: var(--primary);
+        }
+
+        .grammar-examples {
+            margin: 16px 0;
+        }
+
+        .grammar-example-item {
+            display: flex;
+            gap: 12px;
+            padding: 8px 0;
+            border-bottom: 1px dashed var(--border-subtle);
+            font-size: 14px;
+        }
+
+        .grammar-example-en {
+            color: var(--primary);
+            font-weight: 600;
+            min-width: 200px;
+        }
+
+        .grammar-example-zh {
+            color: var(--text-secondary);
+        }
+
+        .grammar-tip {
+            background: linear-gradient(135deg, rgba(241, 196, 15, 0.1), rgba(230, 126, 34, 0.1));
+            border: 1px solid rgba(241, 196, 15, 0.3);
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin-top: 20px;
+            font-size: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .grammar-tip-emoji {
+            font-size: 22px;
+        }
+
+        /* 语法侧边栏 */
+        .grammar-sidebar {
+            background: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid var(--border-card);
+            position: sticky;
+            top: 20px;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+
+        .grammar-sidebar-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .grammar-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 4px;
+            font-size: 15px;
+            border: 2px solid transparent;
+        }
+
+        .grammar-nav-item:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .grammar-nav-item.active {
+            border-color: var(--grammar-accent, var(--primary));
+            background: rgba(0, 0, 0, 0.08);
+            font-weight: 700;
+        }
+
+        .grammar-nav-emoji {
+            font-size: 20px;
+            width: 28px;
+            text-align: center;
+        }
+
+        .grammar-nav-color {
+            width: 4px;
+            height: 20px;
+            border-radius: 2px;
+            margin-left: auto;
+        }
+
+        .grammar-content-area {
+            min-height: 400px;
+        }
+
+        .grammar-placeholder {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+            font-size: 18px;
+        }
+
+        /* 响应式 - 语法页面 */
+        @media (max-width: 800px) {
+            .grammar-sidebar {
+                position: static;
+                max-height: none;
+                overflow-y: visible;
+            }
+
+            .grammar-section-title {
+                font-size: 22px;
+            }
+
+            .grammar-irregulars {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
     </style>
     <script src="assets/js/common.js"></script>
     <script src="assets/js/learning-assistant.js"></script>
