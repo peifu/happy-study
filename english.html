@@ -3247,6 +3247,7 @@
                 html += `<div class="grammar-section-title">`;
                 html += `<span class="grammar-section-emoji">${section.emoji}</span>`;
                 html += `<span style="color:${section.color}">${section.title}</span>`;
+                if (section.subtitle) html += `<span style="font-size:14px;color:var(--text-secondary);margin-left:8px;">${section.subtitle}</span>`;
                 html += `</div>`;
                 html += `<div class="grammar-section-intro">${section.intro}</div>`;
                 html += `</div>`;

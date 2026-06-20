@@ -2,84 +2,99 @@
   {
     "id": "nouns",
     "title": "名词",
-    "emoji": "📦",
-    "color": "#4A90D9",
-    "intro": "所有事物的名字都是名词！比如：人、动物、物品、地点、时间",
+    "emoji": "🍎",
+    "color": "#e74c3c",
+    "subtitle": "Nouns — 表示人或事物的名称",
+    "intro": "名词就是人、地方、事物、动物的名字！就像每个人都有名字一样，世界上的东西都有名字。",
     "sections": [
       {
-        "heading": "名词单复数",
-        "text": "单数表示1个，复数表示2个及以上，单词要变身！",
+        "heading": "名词的两种\"性格\"",
+        "text": "名词分为可数名词和不可数名词",
         "table": {
           "headers": [
-            "变化规则",
-            "例子（单数 → 复数）"
+            "类型",
+            "说明",
+            "例子",
+            "记忆技巧"
           ],
           "rows": [
             [
-              "普通单词直接加 s",
-              "book → books, dog → dogs"
+              "可数名词 (Countable)",
+              "可以数的东西，有单数和复数",
+              "apple 🍎, book 📚, student 👦, dog 🐕",
+              "能数出1,2,3的"
             ],
             [
-              "s/x/ch/sh 结尾加 es",
-              "bus → buses, box → boxes"
-            ],
-            [
-              "辅音+y 结尾，变y为i加es",
-              "city → cities, baby → babies"
-            ],
-            [
-              "f/fe 结尾，变f为v加es",
-              "knife → knives, leaf → leaves"
-            ],
-            [
-              "o结尾（有生命）加es",
-              "tomato → tomatoes, potato → potatoes"
+              "不可数名词 (Uncountable)",
+              "不能数的东西，只有单数形式",
+              "water 💧, milk 🥛, rice 🍚, love ❤️",
+              "数不清的、液体、抽象概念"
             ]
           ]
         }
       },
       {
-        "heading": "不规则复数（必考！）",
-        "text": "这些单词不按规则变身，必须死记！",
-        "irregulars": [
-          [
-            "man → men",
-            "男人"
+        "heading": "可数名词变复数的魔法规则",
+        "table": {
+          "headers": [
+            "规则",
+            "变化方法",
+            "例子",
+            "特殊情况"
           ],
-          [
-            "woman → women",
-            "女人"
-          ],
-          [
-            "child → children",
-            "孩子"
-          ],
-          [
-            "foot → feet",
-            "脚"
-          ],
-          [
-            "tooth → teeth",
-            "牙齿"
-          ],
-          [
-            "mouse → mice",
-            "老鼠"
+          "rows": [
+            [
+              "一般情况",
+              "加 -s",
+              "cat → cats, book → books",
+              "最常用！"
+            ],
+            [
+              "s, x, ch, sh结尾",
+              "加 -es",
+              "bus → buses, box → boxes, watch → watches",
+              "读起来更顺口"
+            ],
+            [
+              "辅音+y结尾",
+              "变y为i加 -es",
+              "baby → babies, city → cities",
+              "元音+y直接加s：boy → boys"
+            ],
+            [
+              "f/fe结尾",
+              "变f/fe为v加 -es",
+              "leaf → leaves, knife → knives",
+              "有些直接加s：roof → roofs"
+            ],
+            [
+              "不规则变化",
+              "特殊记忆",
+              "man → men, woman → women, child → children, foot → feet, tooth → teeth, mouse → mice",
+              "需要特别记住！"
+            ]
           ]
-        ]
+        }
+      },
+      {
+        "heading": "名词所有格 — 表示\"谁的\"",
+        "text": "单数名词加 's，复数名词以s结尾只加 '"
       }
     ],
     "examples": [
       {
-        "en": "one apple",
-        "zh": "一个苹果"
+        "en": "The cat sleeps on the sofa in the living room.",
+        "zh": "那只猫在客厅的沙发上睡觉。"
       },
       {
-        "en": "two apples",
-        "zh": "两个苹果"
+        "en": "Tom's book is on the desk.",
+        "zh": "汤姆的书在桌子上。"
+      },
+      {
+        "en": "The students' classroom is big.",
+        "zh": "学生们的教室很大。"
       }
     ],
-    "tip": "单数名词不加s，复数通常加s或es，不规则的要死记！",
     "highlight": {
       "title": "判断可数/不可数小技巧",
       "items": [
@@ -92,13 +107,17 @@
       "right": [
         {
           "en": "Tom's book",
-          "zh": "汤姆的书（单数加's）"
+          "zh": "汤姆的书（单数加's）✅"
+        },
+        {
+          "en": "the students' classroom",
+          "zh": "学生们的教室（复数只加'）✅"
         }
       ],
       "wrong": [
         {
           "en": "Toms book",
-          "zh": "错误！少了撇号"
+          "zh": "错误！单数少了撇号 ❌"
         }
       ]
     }
@@ -107,53 +126,70 @@
     "id": "pronouns",
     "title": "代词",
     "emoji": "👤",
-    "color": "#9B59B6",
-    "intro": "代词就是用来代替人名、事物名的单词，避免句子重复啰嗦！",
+    "color": "#1abc9c",
+    "subtitle": "Pronouns — 代替名词的词",
+    "intro": "代词是名词的小替身，用来代替名词，避免重复！",
     "sections": [
       {
-        "heading": "人称代词",
-        "text": "小学最核心的是人称代词，分为主格和宾格：",
+        "heading": "人称代词一览表",
+        "text": "人称代词分为主格、宾格、形容词性物主代词和名词性物主代词",
         "table": {
           "headers": [
             "中文",
-            "主格（主语，放开头）",
-            "宾格（宾语，放动词后）"
+            "主格（主语）",
+            "宾格（宾语）",
+            "形容词性物主代词",
+            "名词性物主代词"
           ],
           "rows": [
             [
               "我",
               "I",
-              "me"
+              "me",
+              "my 我的",
+              "mine 我的"
             ],
             [
               "你",
               "you",
-              "you"
+              "you",
+              "your 你的",
+              "yours 你的"
             ],
             [
               "他",
               "he",
-              "him"
+              "him",
+              "his 他的",
+              "his 他的"
             ],
             [
               "她",
               "she",
-              "her"
+              "her",
+              "her 她的",
+              "hers 她的"
             ],
             [
               "它",
               "it",
-              "it"
+              "it",
+              "its 它的",
+              "—"
             ],
             [
               "我们",
               "we",
-              "us"
+              "us",
+              "our 我们的",
+              "ours 我们的"
             ],
             [
               "他们",
               "they",
-              "them"
+              "them",
+              "their 他们的",
+              "theirs 他们的"
             ]
           ]
         }
@@ -161,23 +197,18 @@
     ],
     "examples": [
       {
+        "en": "Mary has a cat. She loves it very much.",
+        "zh": "玛丽有一只猫。她非常爱它。"
+      },
+      {
         "en": "I am a student.",
-        "zh": "我是学生（I放句首）"
+        "zh": "我是学生（I放句首作主语）"
       },
       {
-        "en": "Help me.",
-        "zh": "帮帮我（me放动词后）"
-      },
-      {
-        "en": "She likes cats.",
-        "zh": "她喜欢猫"
-      },
-      {
-        "en": "I like her.",
-        "zh": "我喜欢她"
+        "en": "This book is mine.",
+        "zh": "这本书是我的（mine后不加名词）"
       }
     ],
-    "tip": "主格在句首做主语，宾格在动词后做宾语！",
     "highlight": {
       "title": "使用秘诀",
       "items": [
@@ -226,34 +257,44 @@
   {
     "id": "be-verbs",
     "title": "Be动词",
-    "emoji": "🔗",
-    "color": "#1ABC9C",
-    "intro": "be动词有三个兄弟：am、is、are，专门用来连接主语和后面的内容，翻译为\"是、在\"",
+    "emoji": "⚡",
+    "color": "#3498db",
+    "subtitle": "Be Verbs — 最特别的动词",
+    "intro": "be动词有三个兄弟：am、is、are，是句子里最特别、最重要的动词！",
     "sections": [
       {
-        "heading": "核心用法",
-        "text": "am只跟I搭配，is跟单数/he/she/it搭配，are跟复数/you/we/they搭配",
+        "heading": "Be动词家族（含过去时）",
         "table": {
           "headers": [
-            "be动词",
-            "搭配主语",
-            "例句"
+            "人称",
+            "现在时",
+            "过去时",
+            "记忆口诀"
           ],
           "rows": [
             [
+              "I 我",
               "am",
-              "I（我）",
-              "I am ten. 我十岁。"
+              "was",
+              "我用am，过去变was"
             ],
             [
-              "is",
-              "单数、he/she/it",
-              "He is tall. 他很高。"
-            ],
-            [
+              "You 你/你们",
               "are",
-              "复数、you/we/they",
-              "You are happy. 你很开心。"
+              "were",
+              "你用are，过去变were"
+            ],
+            [
+              "He/She/It 他/她/它",
+              "is",
+              "was",
+              "is连着他她它，过去也变was"
+            ],
+            [
+              "We/They 我们/他们",
+              "are",
+              "were",
+              "复数人称全用are，过去统一变were"
             ]
           ]
         }
@@ -265,38 +306,43 @@
     ],
     "examples": [
       {
-        "en": "I am ten.",
+        "en": "I am ten years old.",
         "zh": "我十岁。"
       },
       {
-        "en": "It is a dog.",
-        "zh": "它是一只小狗。"
+        "en": "He is tall and strong.",
+        "zh": "他很高很壮。"
       },
       {
-        "en": "They are friends.",
-        "zh": "他们是朋友。"
+        "en": "They are best friends.",
+        "zh": "他们是最好的朋友。"
+      },
+      {
+        "en": "I was at home yesterday.",
+        "zh": "我昨天在家。（过去时）"
       }
     ],
-    "tip": "我用am，你用are，is跟着他她它；单数is，复数are！",
-    "rhyme": "Be动词，真神奇，am is are 三兄弟\nI用am，you用are，is跟着他她它\n复数人称全用are，记住口诀不害怕！",
     "highlight": {
       "title": "Be动词变化口诀",
       "items": [
         "我用am，你用are，is连着他她它",
         "复数人称全用are",
-        "过去时：I was, you were, he was, we were"
+        "变否定加not：I am not / isn't / aren't",
+        "变疑问提前：Are you...? / Is he...?"
       ]
-    }
+    },
+    "rhyme": "Be动词，真神奇，am is are 三兄弟\nI用am，you用are，is跟着他她它\n复数人称全用are，记住口诀不害怕！\n过去时，要牢记，am/is变was，are变were"
   },
   {
     "id": "action-verbs",
     "title": "实义动词",
     "emoji": "🏃",
-    "color": "#E67E22",
-    "intro": "表示具体动作：run（跑）、eat（吃）、read（读）、like（喜欢）",
+    "color": "#e67e22",
+    "subtitle": "Action Verbs — 表示动作或状态",
+    "intro": "动词是句子里的\"小超人\"，告诉我们发生了什么事！分为实义动词、be动词和情态动词。",
     "sections": [
       {
-        "heading": "动词三单变化（重中之重）",
+        "heading": "动词三单变化（第三人称单数）",
         "text": "当主语是第三人称单数（he/she/it、单个人、单个物品），动词要变身！",
         "table": {
           "headers": [
@@ -320,36 +366,77 @@
         }
       },
       {
-        "heading": "必考特例",
-        "text": "have（有）→ has（唯一特殊变化）",
-        "irregulars": [
-          [
-            "I have a pen.",
-            "我有一支钢笔。"
+        "heading": "动词三态 — 原形、过去式、过去分词",
+        "table": {
+          "headers": [
+            "原形",
+            "过去式",
+            "过去分词",
+            "中文",
+            "变化类型"
           ],
-          [
-            "He has a pen.",
-            "他有一支钢笔。"
+          "rows": [
+            [
+              "play",
+              "played",
+              "played",
+              "玩",
+              "规则：加-ed"
+            ],
+            [
+              "go",
+              "went",
+              "gone",
+              "去",
+              "不规则"
+            ],
+            [
+              "eat",
+              "ate",
+              "eaten",
+              "吃",
+              "不规则"
+            ],
+            [
+              "run",
+              "ran",
+              "run",
+              "跑",
+              "不规则（过去分词不变）"
+            ],
+            [
+              "study",
+              "studied",
+              "studied",
+              "学习",
+              "辅音+y变i加-ed"
+            ]
           ]
-        ]
+        }
+      },
+      {
+        "heading": "必考特例",
+        "text": "have（有）→ has（第三人称单数唯一特殊变化）"
       }
     ],
     "examples": [
       {
-        "en": "I like apples.",
-        "zh": "我喜欢苹果。"
+        "en": "I like apples very much.",
+        "zh": "我非常喜欢苹果。"
       },
       {
-        "en": "She likes apples.",
-        "zh": "她喜欢苹果。（三单加s）"
+        "en": "She likes bananas.",
+        "zh": "她喜欢香蕉。（三单加s）"
       },
       {
-        "en": "He watches TV.",
-        "zh": "他看电视。（watch加es）"
+        "en": "He watches TV every evening.",
+        "zh": "他每天晚上看电视。（watch加es）"
+      },
+      {
+        "en": "I played football yesterday.",
+        "zh": "我昨天踢了足球。（过去式加ed）"
       }
     ],
-    "tip": "三单动词要加s，he/she/it后面动词要变身！",
-    "rhyme": "规则动词过去式，一般词尾加ed\ne结尾只加d，辅音y变i加ed\n重读闭音节双写尾，不规则变化要记熟！",
     "highlight": {
       "title": "规则动词过去式变化",
       "items": [
@@ -359,6 +446,7 @@
         "重读闭音节，双写尾字母加 -ed：stop → stopped"
       ]
     },
+    "rhyme": "规则动词过去式，一般词尾加ed\ne结尾只加d，辅音y变i加ed\n重读闭音节双写尾，不规则变化要记熟！",
     "wordFamily": [
       {
         "word": "can",
@@ -390,57 +478,69 @@
     "id": "articles",
     "title": "冠词",
     "emoji": "🎩",
-    "color": "#E91E63",
-    "intro": "冠词只有三个：a / an / the，专门放在名词前面，像名词的小帽子",
+    "color": "#e67e22",
+    "subtitle": "Articles — 名词前面的小帽子",
+    "intro": "冠词是名词的小帽子，戴在名词前面，帮助我们知道是\"哪个\"或\"几个\"！只有三个：a、an、the。",
     "sections": [
       {
-        "heading": "a / an / the 用法",
+        "heading": "a / an / the 用法总览",
         "table": {
           "headers": [
             "冠词",
             "用法",
+            "关键规则",
             "例子"
           ],
           "rows": [
             [
               "a",
+              "一个（泛指）",
               "辅音音素开头的单数名词前",
-              "a book, a pen, a dog"
+              "a book, a cat, a university [juː辅音开头]"
             ],
             [
               "an",
-              "元音音素（a/e/i/o/u）开头的单数名词前",
-              "an apple, an egg, an orange"
+              "一个（泛指）",
+              "元音音素开头的单数名词前",
+              "an apple, an egg, an hour [aʊ元音开头，h不发音]"
             ],
             [
               "the",
-              "特指某一个人/物品",
-              "the red pen（这支红色的钢笔）"
+              "这个/那个（特指）",
+              "双方都知道的、独一无二的、第二次提到的",
+              "the sun, the door, the first day"
             ]
           ]
         }
+      },
+      {
+        "heading": "用 the 的情况",
+        "text": "1. 双方都明白指的是什么 → Close the door.\n2. 世界上独一无二的事物 → the sun, the moon, the earth\n3. 第二次提到 → I have a dog. The dog is cute.\n4. 形容词最高级前 → the tallest boy\n5. 序数词前 → the first day\n6. 乐器前 → play the piano"
+      },
+      {
+        "heading": "不用 the 的情况",
+        "text": "1. 球类运动前 → play basketball（不是 the basketball）\n2. 三餐前 → have breakfast（不是 the breakfast）\n3. 学科前 → study English（不是 the English）\n4. 人名、地名（大部分）→ China, Tom"
       }
     ],
     "examples": [
       {
-        "en": "a book",
-        "zh": "一本书"
+        "en": "I have a book and an apple.",
+        "zh": "我有一本书和一个苹果。"
       },
       {
-        "en": "an apple",
-        "zh": "一个苹果"
+        "en": "The sun rises in the east.",
+        "zh": "太阳从东方升起。（独一无二用the）"
       },
       {
-        "en": "the red pen",
-        "zh": "这支红色的钢笔"
+        "en": "She plays the piano very well.",
+        "zh": "她钢琴弹得很好。（乐器前用the）"
       }
     ],
-    "tip": "a/an看发音不看字母！an apple（元音开头），a university（辅音/juː/开头用a）！",
     "highlight": {
       "title": "a/an 选择看发音不看字母！",
       "items": [
-        "a + 辅音音素开头：a book, a cat, a university（[juː]辅音开头）",
-        "an + 元音音素开头：an apple, an egg, an hour（h不发音，元音开头）"
+        "a + 辅音音素开头：a book, a cat, a university（[juː]是辅音音素）",
+        "an + 元音音素开头：an apple, an egg, an hour（h不发音，[aʊ]是元音音素）"
       ]
     },
     "rhyme": "冠词三顶小帽子，a an the 要记牢\n泛指单数a或an，元音前面an来套\n特指双方都知道，the字帽子要戴好\n独一无二最高级，序数乐器the别跑！",
@@ -448,34 +548,104 @@
       "right": [
         {
           "en": "a university",
-          "zh": "正确！university发音[juː]辅音开头"
+          "zh": "✅ university发音[juː]是辅音开头，用a"
         },
         {
           "en": "an hour",
-          "zh": "正确！hour发音[aʊ]元音开头（h不发音）"
+          "zh": "✅ hour发音[aʊ]是元音开头（h不发音），用an"
         }
       ],
       "wrong": [
         {
           "en": "a apple",
-          "zh": "错误！apple元音开头，应用an"
+          "zh": "❌ apple元音开头，应用an"
         },
         {
           "en": "an book",
-          "zh": "错误！book辅音开头，应用a"
+          "zh": "❌ book辅音开头，应用a"
         }
       ]
-    }
+    },
+    "wordFamily": [
+      {
+        "word": "a",
+        "type": "辅音前泛指"
+      },
+      {
+        "word": "an",
+        "type": "元音前泛指"
+      },
+      {
+        "word": "the",
+        "type": "特指"
+      }
+    ]
   },
   {
     "id": "prepositions",
     "title": "介词",
     "emoji": "📍",
-    "color": "#F39C12",
-    "intro": "介词用来表示时间、地点、位置关系",
+    "color": "#f39c12",
+    "subtitle": "Prepositions — 表示位置、时间、方向",
+    "intro": "介词是小向导，告诉我们东西在哪里、什么时候、往哪里去！",
     "sections": [
       {
-        "heading": "时间介词",
+        "heading": "方位介词 — 东西在哪里？",
+        "table": {
+          "headers": [
+            "介词",
+            "含义",
+            "图示记忆",
+            "例句"
+          ],
+          "rows": [
+            [
+              "in",
+              "在...里面",
+              "🎁 in the box",
+              "The cat is in the box."
+            ],
+            [
+              "on",
+              "在...上面（接触）",
+              "📱 on the table",
+              "The book is on the table."
+            ],
+            [
+              "under",
+              "在...下面",
+              "🐱 under the chair",
+              "The cat is under the chair."
+            ],
+            [
+              "behind",
+              "在...后面",
+              "🌳 behind the tree",
+              "The boy is behind the tree."
+            ],
+            [
+              "in front of",
+              "在...前面",
+              "👦 in front of the house",
+              "The car is in front of the house."
+            ],
+            [
+              "between",
+              "在...中间（两者）",
+              "⚽ A between B and C",
+              "The ball is between the two boxes."
+            ],
+            [
+              "next to / beside",
+              "在...旁边",
+              "👫 beside me",
+              "Sit beside me."
+            ]
+          ]
+        }
+      },
+      {
+        "heading": "时间介词 — 什么时候？",
         "table": {
           "headers": [
             "介词",
@@ -484,51 +654,19 @@
           ],
           "rows": [
             [
-              "in",
-              "年/月/季节",
-              "in 2026, in May, in summer"
-            ],
-            [
-              "on",
-              "具体日期/星期",
-              "on Monday, on June 1st"
-            ],
-            [
               "at",
-              "具体时刻",
-              "at 7:00, at noon"
-            ]
-          ]
-        }
-      },
-      {
-        "heading": "地点介词",
-        "table": {
-          "headers": [
-            "介词",
-            "含义",
-            "例子"
-          ],
-          "rows": [
-            [
-              "in",
-              "在……里面",
-              "in the box"
+              "具体时刻、节日",
+              "at 7 o'clock, at noon, at night, at Christmas"
             ],
             [
               "on",
-              "在……上面（表面接触）",
-              "on the desk"
+              "具体某天、日期",
+              "on Monday, on June 1st, on a cold morning"
             ],
             [
-              "under",
-              "在……下面",
-              "under the chair"
-            ],
-            [
-              "near",
-              "在……附近",
-              "near the school"
+              "in",
+              "较长的时间段",
+              "in the morning, in June, in 2026, in summer"
             ]
           ]
         }
@@ -544,12 +682,10 @@
         "zh": "书在桌子上。"
       },
       {
-        "en": "I get up at 7:00.",
-        "zh": "我七点起床。"
+        "en": "I get up at 7:00 every day.",
+        "zh": "我每天七点起床。"
       }
     ],
-    "tip": "in年月季，on日星期，at时刻点！",
-    "rhyme": "时间介词at on in，时刻at某天on，长段in\nat七点at noon，on Monday on June one\nin the morning in July，in 2024记心间！",
     "highlight": {
       "title": "时间介词口诀",
       "items": [
@@ -557,26 +693,54 @@
         "on + 具体某天/星期：on Monday, on June 1st",
         "in + 较长时间段：in summer, in 2026, in the morning"
       ]
-    }
+    },
+    "rhyme": "时间介词at on in，时刻at某天on，长段in\nat七点at noon，on Monday on June one\nin the morning in July，in 2026记心间！",
+    "wordFamily": [
+      {
+        "word": "to",
+        "type": "去...方向"
+      },
+      {
+        "word": "from",
+        "type": "来自..."
+      },
+      {
+        "word": "with",
+        "type": "和...一起/用"
+      },
+      {
+        "word": "for",
+        "type": "为了.../给"
+      },
+      {
+        "word": "about",
+        "type": "关于..."
+      },
+      {
+        "word": "by",
+        "type": "通过.../在...旁"
+      }
+    ]
   },
   {
     "id": "adjectives",
     "title": "形容词",
     "emoji": "🌸",
     "color": "#2ECC71",
-    "intro": "形容词是\"小画家\"，给名词涂上颜色，让描述更生动！",
+    "subtitle": "Adjectives — 修饰名词，让描述更生动",
+    "intro": "形容词是\"小画家\"，给名词涂上颜色，让东西变得更具体、更生动！",
     "sections": [
       {
         "heading": "什么是形容词？",
-        "text": "形容词修饰名词，让东西变得更具体、更生动！",
+        "text": "形容词修饰名词，让描述更具体、更生动。",
         "examples_inline": [
           "The beautiful flower smells sweet. 那朵美丽的花闻起来很香。",
-          "A big red apple. 一个大红苹果。"
+          "A big red apple on the table. 桌子上一个大红苹果。"
         ]
       },
       {
-        "heading": "形容词的比较级和最高级",
-        "text": "比较级用于两者比较，最高级用于三者及以上比较",
+        "heading": "比较级和最高级",
+        "text": "比较级用于两者比较（+ than），最高级用于三者及以上比较（+ the）",
         "table": {
           "headers": [
             "级别",
@@ -589,17 +753,17 @@
               "原级",
               "描述一个事物",
               "—",
-              "tall, fast, happy"
+              "tall, fast, happy, beautiful"
             ],
             [
               "比较级",
-              "两者比较（+ than）",
+              "两者比较 + than",
               "一般加 -er，多音节加 more",
               "taller, faster, more beautiful"
             ],
             [
               "最高级",
-              "三者及以上（+ the）",
+              "三者及以上 + the",
               "一般加 -est，多音节加 most",
               "the tallest, the most beautiful"
             ]
@@ -608,7 +772,6 @@
       },
       {
         "heading": "不规则变化（必考！）",
-        "text": "这些形容词不按规则变化，必须死记！",
         "table": {
           "headers": [
             "原级",
@@ -654,15 +817,15 @@
     "examples": [
       {
         "en": "She is taller than me.",
-        "zh": "她比我高。（比较级）"
+        "zh": "她比我高。（比较级 taller + than）"
       },
       {
         "en": "He is the tallest in class.",
-        "zh": "他是班上最高的。（最高级）"
+        "zh": "他是班上最高的。（最高级 the tallest）"
       },
       {
         "en": "This is the most beautiful flower.",
-        "zh": "这是最美的花。"
+        "zh": "这是最美的花。（多音节用most）"
       }
     ],
     "highlight": {
@@ -680,21 +843,21 @@
       "right": [
         {
           "en": "She is taller than me.",
-          "zh": "正确！比较级taller+than"
+          "zh": "✅ 正确！比较级taller + than"
         },
         {
           "en": "She is the tallest.",
-          "zh": "正确！最高级the tallest"
+          "zh": "✅ 正确！最高级the tallest"
         }
       ],
       "wrong": [
         {
-          "en": "She is more taller.",
-          "zh": "错误！比较级不能加more（taller已含比较级）"
+          "en": "She is more taller than me.",
+          "zh": "❌ 错误！taller已含比较级，不能加more"
         },
         {
           "en": "She is the most tallest.",
-          "zh": "错误！最高级不能加most"
+          "zh": "❌ 错误！tallest已是最高级，不能加most"
         }
       ]
     }
@@ -704,79 +867,116 @@
     "title": "三大时态",
     "emoji": "⏰",
     "color": "#27AE60",
-    "intro": "小学阶段需要掌握的三种基础时态",
+    "subtitle": "Tenses — 表示动作发生的时间",
+    "intro": "时态告诉我们动作发生在什么时候——是现在、过去还是将来！小学阶段主要掌握三种基础时态。",
     "sections": [
       {
-        "heading": "一般现在时",
-        "text": "含义：经常性、习惯性动作，或客观事实",
+        "heading": "1️⃣ 一般现在时 — 每天做的事",
+        "formula": "主语 + 动词原形/三单 + 其他",
+        "text": "含义：经常性、习惯性动作，或客观事实、真理",
         "badges": [
-          "标志词：every day, usually, often, always"
+          "标志词：always, usually, often, sometimes, every day, on Sundays"
         ],
         "examples_inline": [
-          "I get up at 7 every day. 我每天7点起床。"
+          "I play football every day. 我每天踢足球。",
+          "She plays the piano. 她弹钢琴。（第三人称单数加-s）"
         ]
       },
       {
-        "heading": "现在进行时",
-        "text": "含义：正在发生的动作",
-        "formula": "am/is/are + 动词ing",
+        "heading": "2️⃣ 现在进行时 — 正在做的事",
+        "formula": "主语 + am/is/are + 动词ing",
+        "text": "含义：此时此刻正在发生的动作",
         "badges": [
-          "标志词：now, look, listen"
+          "标志词：now, at the moment, look!, listen!"
         ],
         "examples_inline": [
-          "Look! The bird is flying. 看！小鸟正在飞。",
-          "I am reading a book now. 我现在正在看书。"
+          "They are playing games now. 他们正在玩游戏。",
+          "Look! The bird is flying. 看！小鸟正在飞。"
         ]
       },
       {
-        "heading": "一般过去时",
-        "text": "含义：过去发生的动作，现在已经结束。规则变化：动词后加ed；不规则变化需记忆",
+        "heading": "3️⃣ 一般过去时 — 过去做的事",
+        "formula": "主语 + 动词过去式 + 其他",
+        "text": "含义：过去某个时间发生的动作，现在已经结束",
         "badges": [
-          "标志词：yesterday, last day, just now"
-        ],
-        "irregulars": [
-          [
-            "go → went",
-            "去"
-          ],
-          [
-            "do → did",
-            "做"
-          ],
-          [
-            "eat → ate",
-            "吃"
-          ],
-          [
-            "see → saw",
-            "看见"
-          ],
-          [
-            "have → had",
-            "有"
-          ]
+          "标志词：yesterday, last week, last year, ago, in 2020"
         ],
         "examples_inline": [
-          "I played football yesterday. 我昨天踢了足球。",
+          "I visited my grandma yesterday. 我昨天去看望了奶奶。",
           "She went to the park last week. 她上周去了公园。"
         ]
+      },
+      {
+        "heading": "时态对比表",
+        "table": {
+          "headers": [
+            "时态",
+            "结构",
+            "例句",
+            "时间标志"
+          ],
+          "rows": [
+            [
+              "一般现在时",
+              "do/does",
+              "I play.",
+              "every day, often"
+            ],
+            [
+              "现在进行时",
+              "am/is/are doing",
+              "I am playing.",
+              "now, look!"
+            ],
+            [
+              "一般过去时",
+              "did",
+              "I played.",
+              "yesterday, ago"
+            ],
+            [
+              "一般将来时",
+              "will do / be going to do",
+              "I will play.",
+              "tomorrow, next week"
+            ],
+            [
+              "现在完成时（拓展）",
+              "have/has done",
+              "I have played.",
+              "already, yet, ever"
+            ]
+          ]
+        }
       }
     ],
     "examples": [
       {
         "en": "I get up at 7 every day.",
-        "zh": "我每天7点起床。"
+        "zh": "我每天7点起床。（一般现在时）"
       },
       {
         "en": "The bird is flying now.",
-        "zh": "小鸟正在飞。"
+        "zh": "小鸟正在飞。（现在进行时）"
       },
       {
         "en": "She went to the park yesterday.",
-        "zh": "她昨天去了公园。"
+        "zh": "她昨天去了公园。（一般过去时）"
+      },
+      {
+        "en": "I will go to Beijing tomorrow.",
+        "zh": "我明天将去北京。（一般将来时）"
       }
     ],
-    "tip": "现在经常用原形/三单，进行用be+ing，过去动词要变形！",
+    "highlight": {
+      "title": "四大时态速记",
+      "items": [
+        "一般现在：习惯、事实、真理 → every day, often, usually",
+        "现在进行：正在发生 → now, look!, listen!",
+        "一般过去：过去发生 → yesterday, ago, last week",
+        "一般将来：将要发生 → tomorrow, next week, soon"
+      ]
+    },
     "rhyme": "一般现在表习惯，often usually every day见\n现在进行看now，am is are加doing连\n一般过去yesterday，动词过去式记心间\n一般将来tomorrow，will或be going to选！",
     "timeline": [
       {
@@ -785,7 +985,7 @@
       },
       {
         "label": "现在 ⏯️",
-        "example": "now\nI play."
+        "example": "now\nI play / am playing."
       },
       {
         "label": "将来 ⏭️",
@@ -810,48 +1010,73 @@
   {
     "id": "sentences",
     "title": "句子结构",
-    "emoji": "🏗️",
-    "color": "#E74C3C",
-    "intro": "万能句子结构，造句必备！",
+    "emoji": "💬",
+    "color": "#9b59b6",
+    "subtitle": "Sentence Patterns — 英语句子的基本结构",
+    "intro": "掌握四大基本句型，造句不再难！",
     "sections": [
       {
-        "heading": "肯定句",
-        "formula": "主语 + 谓语 + 宾语",
+        "heading": "1️⃣ 陈述句 — 陈述事实",
+        "text": "肯定：主语 + 动词 + 其他\n否定：主语 + 助动词 + not + 动词 + 其他",
         "examples_inline": [
-          "I love apples. （我+喜欢+苹果）"
+          "I like English. 我喜欢英语。",
+          "I do not (don't) like coffee. 我不喜欢咖啡。",
+          "She is not (isn't) happy. 她不高兴。"
         ]
       },
       {
-        "heading": "否定句",
+        "heading": "2️⃣ 疑问句 — 提出问题",
+        "text": "一般疑问句：Be/助动词/情态动词 + 主语 + ...?\n特殊疑问句：疑问词 + 一般疑问句?",
         "examples_inline": [
-          "有be动词/情态动词：直接加not → I am not tall.",
-          "无be动词：加don't/doesn't → I don't like cats."
+          "Are you a student? 你是学生吗？",
+          "Do you like apples? 你喜欢苹果吗？",
+          "What is your name? 你叫什么名字？",
+          "Where do you live? 你住在哪里？"
         ]
       },
       {
-        "heading": "一般疑问句",
+        "heading": "3️⃣ 祈使句 — 命令或请求",
+        "text": "动词原形开头，省略主语you",
         "examples_inline": [
-          "be动词/情态动词提前：Are you a student?",
-          "无be动词：Do/Does开头：Do you like milk?"
+          "Open the door, please. 请开门。",
+          "Don't touch that! 别碰那个！"
+        ]
+      },
+      {
+        "heading": "4️⃣ 感叹句 — 表达强烈感情",
+        "text": "What + (a/an) + 形容词 + 名词! / How + 形容词/副词!",
+        "examples_inline": [
+          "What a beautiful flower! 多么美丽的花啊！(What+名词)",
+          "How beautiful the flower is! 这花多么美丽啊！(How+形容词)"
+        ]
+      },
+      {
+        "heading": "There be 句型 — \"有\"的表达",
+        "text": "There is + 单数/不可数名词\nThere are + 复数名词",
+        "examples_inline": [
+          "There is a book on the desk. 桌子上有一本书。",
+          "There are three apples in the basket. 篮子里有三个苹果。"
         ]
       }
     ],
     "examples": [
       {
         "en": "I love apples.",
-        "zh": "我喜欢苹果。"
-      },
-      {
-        "en": "I don't like cats.",
-        "zh": "我不喜欢猫。"
+        "zh": "我喜欢苹果。（陈述句）"
       },
       {
         "en": "Are you a student?",
-        "zh": "你是学生吗？"
+        "zh": "你是学生吗？（一般疑问句）"
+      },
+      {
+        "en": "Don't be late!",
+        "zh": "别迟到！（祈使句）"
+      },
+      {
+        "en": "What a beautiful day!",
+        "zh": "多么美好的一天！（感叹句）"
       }
     ],
-    "tip": "造句遵循：先主语，后动作，最后加补充！否定加not或don't/doesn't，疑问把be/do提前！",
-    "rhyme": "陈述句，说事实，主语动词排好队\n疑问句，要提问，助动词提前别忘记\n一般疑问Yes No答，特殊疑问疑问词打头阵\n祈使句，命令请，动词开头you省略\n感叹句，感情深，What名词How形副跟！",
     "highlight": {
       "title": "There be 就近原则",
       "items": [
@@ -860,13 +1085,14 @@
         "There are two books and a pen. (books是复数→用are)"
       ]
     },
+    "rhyme": "陈述句，说事实，主语动词排好队\n疑问句，要提问，助动词提前别忘记\n一般疑问Yes No答，特殊疑问疑问词打头阵\n祈使句，命令请，动词开头you省略\n感叹句，感情深，What名词How形副跟！",
     "wordFamily": [
       {
-        "word": "What + (a/an)",
+        "word": "What + (a/an) + 名词",
         "type": "感叹名词 → What a beautiful flower!"
       },
       {
-        "word": "How + 形/副",
+        "word": "How + 形容词/副词",
         "type": "感叹形副 → How beautiful!"
       }
     ],
