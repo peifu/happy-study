@@ -226,8 +226,15 @@
       },
       {
         "heading": "一般过去时",
-        "text": "含义：过去发生的动作，现在已经结束",
+        "text": "含义：过去发生的动作，现在已经结束。规则变化：动词后加ed；不规则变化需记忆",
         "badges": ["标志词：yesterday, last day, just now"],
+        "irregulars": [
+          ["go → went", "去"],
+          ["do → did", "做"],
+          ["eat → ate", "吃"],
+          ["see → saw", "看见"],
+          ["have → had", "有"]
+        ],
         "examples_inline": [
           "I played football yesterday. 我昨天踢了足球。",
           "She went to the park last week. 她上周去了公园。"
