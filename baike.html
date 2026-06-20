@@ -1,0 +1,1370 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>快乐学习 - 百科知识学习系统</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/common.css">
+    <style>
+        /* Concept card styles */
+        .concept-card {
+            background: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--border-card);
+        }
+
+        .concept-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .concept-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(155, 89, 182, 0.1) 0%, transparent 70%);
+            transform: rotate(30deg);
+            z-index: 0;
+        }
+
+        .concept-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+            gap: 15px;
+        }
+
+        .concept {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--science);
+            text-shadow: 0 0 10px rgba(155, 89, 182, 0.3);
+        }
+
+        .speak-btn-icon {
+            background: linear-gradient(90deg, var(--science), var(--primary));
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .speak-btn-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(155, 89, 182, 0.5);
+        }
+
+        .speak-btn-icon i {
+            font-size: 20px;
+        }
+
+        .category {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+            background: rgba(155, 89, 182, 0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+
+        .explanation {
+            font-size: 20px;
+            margin-bottom: 25px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .example {
+            font-style: italic;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+            border-left: 3px solid var(--science);
+            padding-left: 15px;
+            font-size: 16px;
+        }
+
+        /* Card controls override - science keeps controls in a single row */
+        .card-controls {
+            flex-wrap: nowrap;
+            width: 100%;
+        }
+
+        /* Space simulation styles */
+        .space-simulation-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+            align-items: flex-start;
+        }
+
+        .canvas-container {
+            flex: 1;
+            position: relative;
+            background: #000a1f;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-card);
+        }
+
+        .square-canvas {
+            width: 100%;
+            height: 0;
+            padding-bottom: 80%;
+            position: relative;
+        }
+
+        #solarSystem {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000a1f;
+        }
+
+        .controls-panel {
+            width: 300px;
+            background: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid var(--border-card);
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+        }
+
+        .control-label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .control-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        /* Science-themed switch color */
+        input:checked + .slider-round {
+            background-color: var(--science);
+        }
+
+        /* Responsive - page-specific elements only */
+        @media (max-width: 1200px) {
+            .concept-card {
+                min-height: 350px;
+                padding: 25px;
+            }
+        }
+
+        @media (max-width: 1000px) {
+            .concept-card {
+                min-height: 320px;
+                padding: 20px;
+            }
+            .concept {
+                font-size: 32px;
+            }
+            .explanation {
+                font-size: 18px;
+            }
+            .example {
+                font-size: 15px;
+            }
+            .space-simulation-container {
+                flex-direction: column;
+            }
+            .controls-panel {
+                width: 100%;
+            }
+            .square-canvas {
+                padding-bottom: 80%;
+            }
+        }
+
+        @media (max-width: 800px) {
+            .concept-card {
+                min-height: 300px;
+                padding: 18px;
+            }
+            .concept {
+                font-size: 28px;
+            }
+            .explanation {
+                font-size: 17px;
+                margin-bottom: 20px;
+            }
+            .example {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+            .card-controls {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .concept-card {
+                min-height: 280px;
+                padding: 15px;
+            }
+            .concept {
+                font-size: 26px;
+            }
+            .explanation {
+                font-size: 16px;
+            }
+            .example {
+                font-size: 13px;
+            }
+            .concept-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .card-controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .concept-card {
+                min-height: 250px;
+                padding: 12px;
+            }
+            .concept {
+                font-size: 24px;
+            }
+            .explanation {
+                font-size: 15px;
+            }
+            .example {
+                font-size: 12px;
+            }
+        }
+        /* 生肖卡片样式 */
+        .zodiac-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .zodiac-card {
+            background: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid var(--border-card);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .zodiac-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .zodiac-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .zodiac-emoji {
+            font-size: 40px;
+        }
+
+        .zodiac-name {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .zodiac-rank {
+            margin-left: auto;
+            background: rgba(155, 89, 182, 0.15);
+            color: var(--science);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .zodiac-title {
+            font-size: 14px;
+            color: var(--science);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .zodiac-trait {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .zodiac-story {
+            font-size: 13px;
+            color: var(--text-color);
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            padding: 12px;
+            line-height: 1.6;
+            border-left: 3px solid var(--science);
+        }
+
+        .zodiac-detail-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .zodiac-detail-emoji {
+            font-size: 80px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .zodiac-detail-name {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--science);
+        }
+
+        .zodiac-detail-title {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        .zodiac-back-btn {
+            margin-bottom: 20px;
+        }
+
+        .zodiac-rule-block {
+            background: var(--card-bg-color);
+            border-radius: 12px;
+            padding: 20px 25px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border-card);
+        }
+
+        .zodiac-rule-heading {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--science);
+        }
+
+        .zodiac-rule-heading .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
+        .zodiac-rule-text {
+            color: var(--text-color);
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 600px) {
+            .zodiac-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <link rel="stylesheet" href="assets/css/learning-assistant.css">
+    <script src="assets/js/learning-assistant.js"></script>
+    <script src="assets/js/common.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <!-- 科学概念页面 -->
+        <div class="page active" id="conceptPage">
+            <div class="main-content">
+                <div class="concept-card">
+                    <div class="concept-header">
+                        <div class="concept" id="currentConcept">加载中...</div>
+                        <button class="speak-btn-icon" id="speakBtn">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
+                    <div class="category" id="currentCategory">科学</div>
+                    <div class="explanation" id="currentExplanation">加载科学概念数据中</div>
+                    <div class="example" id="currentExample">请稍候，正在加载科学知识数据。</div>
+
+                    <div class="card-controls">
+                        <button class="btn btn-primary" id="prevBtn" disabled>
+                            <i class="fas fa-arrow-left"></i>
+                            <span>上一个</span>
+                        </button>
+                        <button class="btn btn-success" id="knowBtn" disabled>
+                            <i class="fas fa-check"></i>
+                            <span>理解</span>
+                        </button>
+                        <button class="btn btn-warning" id="notKnowBtn" disabled>
+                            <i class="fas fa-times"></i>
+                            <span>不理解</span>
+                        </button>
+                        <button class="btn btn-primary" id="nextBtn" disabled>
+                            <span>下一个</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="progress-container">
+                    <div class="progress-title">
+                        <i class="fas fa-chart-line"></i>
+                        <span>学习进度</span>
+                    </div>
+                    <div class="stats">
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalCount">0</div>
+                            <div class="stat-label">概念总数</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="learnedCount">0</div>
+                            <div class="stat-label">已学概念</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="masteredCount">0</div>
+                            <div class="stat-label">已掌握</div>
+                        </div>
+                    </div>
+
+                    <div class="progress-bar-container">
+                        <div class="progress-info">
+                            <span>学习进度</span>
+                            <span id="progressPercentage">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                    </div>
+
+                    <div class="progress-title">
+                        <i class="fas fa-book"></i>
+                        <span>当前科学主题</span>
+                    </div>
+
+                    <select class="form-control" id="topicSelector">
+                        <option value="physics">物理科学</option>
+                        <option value="chemistry">化学</option>
+                        <option value="biology">生物科学</option>
+                        <option value="earth">地球科学</option>
+                        <option value="space">太空科学</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- 模拟太空页面 -->
+        <div class="page" id="spacePage">
+            <div class="space-simulation-container">
+                <div class="canvas-container">
+                    <div class="square-canvas">
+                        <canvas id="solarSystem"></canvas>
+                    </div>
+                </div>
+
+                <div class="controls-panel">
+                    <div class="control-group">
+                        <div class="control-label">模拟控制</div>
+                        <div class="control-row">
+                            <button id="pauseBtn" class="btn btn-primary" style="flex: 1;">
+                                <i class="fas fa-pause"></i>
+                                <span>暂停</span>
+                            </button>
+                            <button id="resetBtn" class="btn btn-success" style="flex: 1;">
+                                <i class="fas fa-refresh"></i>
+                                <span>重置</span>
+                            </button>
+                        </div>
+                        <div class="control-row">
+                            <button id="fullscreenBtn" class="btn btn-warning" style="flex: 1;">
+                                <i class="fa fa-expand"></i>
+                                <span>全屏</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-label">模拟速度</div>
+                        <div class="control-row">
+                            <input type="range" id="speedRange" min="0.1" max="5" step="0.1" value="1"
+                                style="flex: 1;">
+                            <span id="speedValue" style="min-width: 40px; text-align: center;">1x</span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-label">缩放级别</div>
+                        <div class="control-row">
+                            <input type="range" id="zoomRange" min="0.5" max="2" step="0.1" value="1"
+                                style="flex: 1;">
+                            <span id="zoomValue" style="min-width: 40px; text-align: center;">1x</span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-label">显示选项</div>
+                        <div class="control-row">
+                            <label for="labelsToggle" style="flex: 1;">显示标签</label>
+                            <label class="switch">
+                                <input type="checkbox" id="labelsToggle" checked>
+                                <span class="slider-round"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-label">天体信息</div>
+                        <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.4;">
+                            点击太阳系中的天体查看详细信息。当前显示太阳系八大行星及其主要卫星的轨道运动。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 生活常识页面 - 十二生肖 -->
+        <div class="page" id="zodiacPage">
+            <div class="main-content">
+                <div class="concept-card" id="zodiacCard">
+                    <div id="zodiacGrid">
+                        <!-- 生肖卡片网格 -->
+                    </div>
+                </div>
+
+                <div class="progress-container" id="zodiacSidebar">
+                    <div class="progress-title">
+                        <i class="fas fa-paw"></i>
+                        <span>十二生肖</span>
+                    </div>
+                    <div style="color:var(--text-secondary);font-size:14px;margin-bottom:15px;">
+                        点击卡片查看每个生肖的趣味故事
+                    </div>
+                    <div class="progress-title">
+                        <i class="fas fa-lightbulb"></i>
+                        <span>顺序口诀</span>
+                    </div>
+                    <div style="color:var(--text-secondary);font-size:13px;line-height:1.8;">
+                        鼠、牛、虎、兔、龙、蛇、马、羊、猴、鸡、狗、猪<br><br>
+                        小老鼠，打头来，牛把蹄儿抬。<br>
+                        老虎回头一声吼，兔儿跳得快。<br>
+                        龙和蛇，尾巴甩，马羊步儿迈。<br>
+                        小猴机灵蹦又跳，鸡唱天下白。<br>
+                        狗儿跳，猪儿叫，老鼠又跟来。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 生肖详情页面 -->
+        <div class="page" id="zodiacDetailPage">
+            <div class="main-content">
+                <div class="concept-card" id="zodiacDetailCard">
+                    <!-- 动态渲染 -->
+                </div>
+                <div class="progress-container">
+                    <div class="progress-title">
+                        <i class="fas fa-info-circle"></i>
+                        <span>生肖详情</span>
+                    </div>
+                    <div id="zodiacDetailInfo" style="font-size:14px;color:var(--text-secondary);line-height:1.8;">
+                    </div>
+                    <div style="margin-top:16px;">
+                        <button class="btn btn-primary" id="zodiacBackBtn" style="width:100%;">
+                            <i class="fas fa-arrow-left"></i>
+                            <span>返回生肖列表</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 设置页面 -->
+        <div class="page" id="settingsPage">
+            <h2>系统设置</h2>
+
+            <div class="settings-grid">
+                <div class="settings-card">
+                    <div class="settings-header">
+                        <i class="fas fa-book settings-icon"></i>
+                        <div class="settings-title">学习设置</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">默认科学主题</label>
+                        <select class="form-control" id="defaultTopic">
+                            <option value="physics">物理科学</option>
+                            <option value="chemistry">化学</option>
+                            <option value="biology">生物科学</option>
+                            <option value="earth">地球科学</option>
+                            <option value="space">太空科学</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">新概念每日数量</label>
+                        <input type="range" min="5" max="20" value="10" class="range-slider" id="dailyConceptsSlider">
+                        <div class="slider-value" id="dailyConceptsValue">10 个</div>
+                    </div>
+                </div>
+
+                <div class="settings-card">
+                    <div class="settings-header">
+                        <i class="fas fa-database settings-icon"></i>
+                        <div class="settings-title">数据管理</div>
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-primary" style="width: 100%; margin-bottom: 15px;">
+                            <i class="fas fa-download"></i>
+                            <span>导出学习数据</span>
+                        </button>
+
+                        <button class="btn btn-secondary" style="width: 100%; margin-bottom: 15px;">
+                            <i class="fas fa-upload"></i>
+                            <span>导入学习数据</span>
+                        </button>
+
+                        <button class="btn btn-warning" style="width: 100%;">
+                            <i class="fas fa-trash"></i>
+                            <span>重置学习进度</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 导航配置
+        const NAV_CONFIG = [
+            { page: 'concept',  icon: 'fa-flask', label: '科学概念', active: true },
+            { page: 'zodiac',   icon: 'fa-paw',   label: '生活常识', active: false },
+            { page: 'space',    icon: 'fa-rocket', label: '模拟太空', active: false },
+        ];
+
+        // 十二生肖数据
+        const zodiacAnimals = [
+            {
+                id: 'rat', name: '鼠', emoji: '🐭', rank: 1, title: '机智小先锋',
+                trait: '小老鼠虽然个子小，但它非常聪明机灵。',
+                story: '比赛那天，它跳上了憨厚的牛大哥的背，在快到终点的时候一下子跳了下来，第一个冲过了终点线，成为了十二生肖的第一名！凭借智慧赢得了生肖赛跑的冠军！',
+                detail: '鼠年出生的人通常机智灵活，善于观察，适应能力强。'
+            },
+            {
+                id: 'ox', name: '牛', emoji: '🐮', rank: 2, title: '勤劳老大哥',
+                trait: '牛大哥非常勤劳和憨厚，每天都辛勤地帮助人们耕地，是农民伯伯最好的帮手。',
+                story: '在生肖比赛中被小老鼠"借力"没能得第一，但它依然凭借实力获得了第二名，是大家学习的榜样。',
+                detail: '牛年出生的人通常勤奋踏实，有耐心和毅力，是值得信赖的伙伴。'
+            },
+            {
+                id: 'tiger', name: '虎', emoji: '🐯', rank: 3, title: '威风百兽王',
+                trait: '老虎是森林里的百兽之王，威风凛凛，内心充满自信与勇气，是力量的象征。',
+                story: '在生肖赛跑比赛中，老虎凭借强大的爆发力和惊人的速度，一马当先冲到了前面，最终获得了第三名的好成绩！',
+                detail: '虎年出生的人通常勇敢自信，富有领导力，做事果断有魄力。'
+            },
+            {
+                id: 'rabbit', name: '兔', emoji: '🐰', rank: 4, title: '温柔小天使',
+                trait: '小兔子天生性格温和，待人友善，是大家都喜欢的好朋友。',
+                story: '虽然不会游泳，但它非常聪明。它踩着河里的石头，又借助了龙吐的水浪，巧妙地渡过了难关，最终获得了生肖赛跑的第四名。',
+                detail: '兔年出生的人通常温柔善良，心思细腻，有很好的人缘。'
+            },
+            {
+                id: 'dragon', name: '龙', emoji: '🐲', rank: 5, title: '神秘大英雄',
+                trait: '龙拥有腾云驾雾、呼风唤雨的神奇本领，是传说中无所不能的存在。',
+                story: '比赛途中，它不忍人间干旱，毅然停下脚步帮助降雨，展现了无私的爱心。虽然因此耽误了赛程只获得第五名，但它永远是我们心中的"无冕之王"。能力越大，责任越大！',
+                detail: '龙年出生的人通常充满活力，有远大抱负，是天生的领导者。'
+            },
+            {
+                id: 'snake', name: '蛇', emoji: '🐍', rank: 6, title: '灵活小智者',
+                trait: '小蛇非常灵活和智慧，善于思考，总能找到巧妙的方法。',
+                story: '它悄悄地缠在马的腿上，在快到终点的时候突然窜了出来，超过了马，获得了第六名。',
+                detail: '蛇年出生的人通常聪明冷静，善于思考，有敏锐的直觉。'
+            },
+            {
+                id: 'horse', name: '马', emoji: '🐴', rank: 7, title: '奔放小勇士',
+                trait: '小马非常奔放热情，跑得飞快，是大家心中最棒的奔跑健将！',
+                story: '虽然在比赛中被狡猾的蛇超过，最终获得了第七名，但它依然是我们心中最棒的奔跑健将！',
+                detail: '马年出生的人通常热情开朗，行动力强，追求自由。'
+            },
+            {
+                id: 'goat', name: '羊', emoji: '🐑', rank: 8, title: '温顺小绵羊',
+                trait: '小绵羊温顺善良，和小猴、小鸡成为了好朋友。',
+                story: '在比赛中，它们没有独自行动，而是选择合作，乘着木筏齐心协力过了河，最终获得了第八名的好成绩。团结就是力量！',
+                detail: '羊年出生的人通常温和善良，有同情心，重视团结合作。'
+            },
+            {
+                id: 'monkey', name: '猴', emoji: '🐵', rank: 9, title: '调皮小机灵',
+                trait: '小猴子非常调皮机灵，活泼好动，总能找到捷径。',
+                story: '它在树上荡秋千，抄了近路，很快就赶了上来，获得了第九名。',
+                detail: '猴年出生的人通常聪明伶俐，反应敏捷，富有创造力。'
+            },
+            {
+                id: 'rooster', name: '鸡', emoji: '🐔', rank: 10, title: '准时小闹钟',
+                trait: '小鸡是十二生肖里的"准时小闹钟"，每天天不亮就准时打鸣，非常勤劳可靠。',
+                story: '在生肖排位赛那天，它也严格遵守时间，按时赶到了赛场，最终获得了第十名的好成绩！',
+                detail: '鸡年出生的人通常守时守信，勤劳认真，做事有条理。'
+            },
+            {
+                id: 'dog', name: '狗', emoji: '🐶', rank: 11, title: '忠诚小卫士',
+                trait: '小狗非常忠诚勇敢，是人类最忠实的朋友，总是用热情的摇尾和守护回报我们的爱！',
+                story: '它因为在家看家护院，耽误了一点时间，最终获得了第十一名。但它从不后悔，因为守护家园是最重要的！',
+                detail: '狗年出生的人通常忠诚正直，有责任感，是值得信赖的朋友。'
+            },
+            {
+                id: 'pig', name: '猪', emoji: '🐷', rank: 12, title: '福气小懒虫',
+                trait: '小猪憨厚可爱，虽然有点贪吃贪睡，但依然是我们的福气小宝贝！',
+                story: '因为在路上贪吃贪睡耽误了时间，最后一个到达终点，获得了第十二名。虽然排名最后，但它依然很开心，是十二生肖中最有福气的一个！',
+                detail: '猪年出生的人通常心胸宽广，诚实纯真，有很好的福气。'
+            }
+        ];
+
+        // 十二生肖口诀
+        const zodiacRhyme = '鼠牛虎兔龙蛇马，羊猴鸡狗猪一家。十二生肖轮流转，中华文化传天下！';
+
+        // 科学概念数据
+        const scienceConcepts = {
+            physics: [
+                {
+                    concept: "重力",
+                    category: "物理",
+                    explanation: "物体之间相互吸引的力，使物体向地面下落",
+                    example: "苹果从树上掉下来是因为地球的引力作用"
+                },
+                {
+                    concept: "摩擦力",
+                    category: "物理",
+                    explanation: "两个物体接触表面相对运动时产生的阻力",
+                    example: "汽车刹车时轮胎与地面之间的摩擦力使车停下"
+                },
+                {
+                    concept: "光的折射",
+                    category: "物理",
+                    explanation: "光从一种介质进入另一种介质时改变传播方向的现象",
+                    example: "筷子插入水中看起来弯曲是因为光的折射"
+                }
+            ],
+            chemistry: [
+                {
+                    concept: "化学反应",
+                    category: "化学",
+                    explanation: "物质之间发生化学变化，生成新物质的过程",
+                    example: "铁生锈是铁与氧气发生的化学反应"
+                },
+                {
+                    concept: "元素",
+                    category: "化学",
+                    explanation: "由相同原子组成的纯物质，无法用化学方法分解",
+                    example: "氧气(O₂)、金(Au)、碳(C)都是元素"
+                },
+                {
+                    concept: "pH值",
+                    category: "化学",
+                    explanation: "表示溶液酸碱性强弱的数值，范围0-14",
+                    example: "柠檬汁的pH值约为2，是酸性物质"
+                }
+            ],
+            biology: [
+                {
+                    concept: "光合作用",
+                    category: "生物",
+                    explanation: "植物利用光能将二氧化碳和水转化为有机物和氧气的过程",
+                    example: "植物通过光合作用制造自己需要的营养物质"
+                },
+                {
+                    concept: "细胞",
+                    category: "生物",
+                    explanation: "生物体的基本结构和功能单位",
+                    example: "人体由数万亿个细胞组成，每个细胞都有特定功能"
+                },
+                {
+                    concept: "生态系统",
+                    category: "生物",
+                    explanation: "生物群落与其环境相互作用的统一整体",
+                    example: "森林生态系统包括树木、动物、微生物和环境因素"
+                }
+            ],
+            earth: [
+                {
+                    concept: "地壳运动",
+                    category: "地球科学",
+                    explanation: "地球外壳板块的相对移动，导致地震和火山活动",
+                    example: "喜马拉雅山脉的形成是印度板块与欧亚板块碰撞的结果"
+                },
+                {
+                    concept: "水循环",
+                    category: "地球科学",
+                    explanation: "水在地球上蒸发、凝结、降水、径流的循环过程",
+                    example: "海洋水蒸发形成云，云中的水以降雨形式回到地面"
+                },
+                {
+                    concept: "矿物",
+                    category: "地球科学",
+                    explanation: "自然界中形成的无机固体物质，有特定化学成分和晶体结构",
+                    example: "石英、金刚石、方解石都是常见的矿物"
+                }
+            ],
+            space: [
+                {
+                    concept: "太阳系",
+                    category: "太空科学",
+                    explanation: "以太阳为中心，包括八大行星及其卫星的天体系统",
+                    example: "地球是太阳系中第三颗行星，距离太阳约1.5亿公里"
+                },
+                {
+                    concept: "星系",
+                    category: "太空科学",
+                    explanation: "由恒星、星际物质、暗物质等组成的天体系统",
+                    example: "银河系是我们所在的星系，包含约2000亿颗恒星"
+                },
+                {
+                    concept: "黑洞",
+                    category: "太空科学",
+                    explanation: "引力极强，连光都无法逃逸的天体区域",
+                    example: "黑洞的形成通常是大质量恒星坍缩的结果"
+                }
+            ]
+        };
+
+        let currentTopic = 'physics';
+        let currentIndex = 0;
+        let learnedConcepts = {};
+        let masteredConcepts = {};
+
+        // DOM元素
+        const currentConceptElement = document.getElementById('currentConcept');
+        const currentCategoryElement = document.getElementById('currentCategory');
+        const currentExplanationElement = document.getElementById('currentExplanation');
+        const currentExampleElement = document.getElementById('currentExample');
+        const topicSelectorElement = document.getElementById('topicSelector');
+        const speakBtnElement = document.getElementById('speakBtn');
+        const knowBtnElement = document.getElementById('knowBtn');
+        const notKnowBtnElement = document.getElementById('notKnowBtn');
+        const nextBtnElement = document.getElementById('nextBtn');
+        const prevBtnElement = document.getElementById('prevBtn');
+        const totalCountElement = document.getElementById('totalCount');
+        const learnedCountElement = document.getElementById('learnedCount');
+        const masteredCountElement = document.getElementById('masteredCount');
+        const progressFillElement = document.getElementById('progressFill');
+        const progressPercentageElement = document.getElementById('progressPercentage');
+        let navLinks, pages;
+
+        // 渲染生肖卡片网格
+        function renderZodiacGrid() {
+            const grid = document.getElementById('zodiacGrid');
+            if (!grid) return;
+            grid.innerHTML = zodiacAnimals.map(a => `
+                <div class="zodiac-card" onclick="showZodiacDetail('${a.id}')">
+                    <div class="zodiac-card-header">
+                        <span class="zodiac-emoji">${a.emoji}</span>
+                        <span class="zodiac-name">${a.name}</span>
+                        <span class="zodiac-rank">第${a.rank}名</span>
+                    </div>
+                    <div class="zodiac-title">${a.title}</div>
+                    <div class="zodiac-trait">${a.trait}</div>
+                    <div class="zodiac-story">${a.story.substring(0, 80)}...</div>
+                </div>
+            `).join('');
+        }
+
+        // 显示生肖详情
+        function showZodiacDetail(id) {
+            const animal = zodiacAnimals.find(a => a.id === id);
+            if (!animal) return;
+
+            switchPageCommon('zodiacDetail', document.querySelectorAll('.nav-link'),
+                document.querySelectorAll('.page'));
+
+            document.getElementById('zodiacDetailCard').innerHTML = `
+                <div class="zodiac-detail-header">
+                    <span class="zodiac-detail-emoji">${animal.emoji}</span>
+                    <div class="zodiac-detail-name">${animal.name} — ${animal.title}</div>
+                    <div class="zodiac-detail-title">十二生肖第 ${animal.rank} 名</div>
+                </div>
+                <div class="zodiac-rule-block">
+                    <div class="zodiac-rule-heading">
+                        <span class="dot" style="background:var(--science)"></span>
+                        性格特点
+                    </div>
+                    <div class="zodiac-rule-text">${animal.trait}</div>
+                </div>
+                <div class="zodiac-rule-block">
+                    <div class="zodiac-rule-heading">
+                        <span class="dot" style="background:var(--science)"></span>
+                        生肖故事
+                    </div>
+                    <div class="zodiac-rule-text">${animal.story}</div>
+                </div>
+                <div class="zodiac-rule-block">
+                    <div class="zodiac-rule-heading">
+                        <span class="dot" style="background:var(--science)"></span>
+                        小知识
+                    </div>
+                    <div class="zodiac-rule-text">${animal.detail}</div>
+                </div>
+            `;
+
+            document.getElementById('zodiacDetailInfo').innerHTML = `
+                <div style="text-align:center;font-size:40px;margin-bottom:8px;">${animal.emoji}</div>
+                <div style="text-align:center;font-weight:700;font-size:18px;color:var(--science);margin-bottom:12px;">${animal.name} — 第${animal.rank}名</div>
+                <div>${zodiacRhyme}</div>
+            `;
+        }
+
+        // 返回生肖列表
+        function backToZodiacGrid() {
+            switchPageCommon('zodiac', document.querySelectorAll('.nav-link'),
+                document.querySelectorAll('.page'));
+        }
+
+        // 初始化
+        function init() {
+            navLinks = document.querySelectorAll('.nav-link');
+            pages = document.querySelectorAll('.page');
+            syncThemeFromIndex();
+            loadProgress();
+            showCurrentConcept();
+            updateProgress();
+            renderZodiacGrid();
+            setupEventListeners();
+        }
+
+        // 设置事件监听
+        function setupEventListeners() {
+            // 导航链接
+            setupNavLinks(navLinks, pages, (pageId) => {
+                if (pageId === 'zodiac') renderZodiacGrid();
+            });
+
+            // 主题选择
+            topicSelectorElement.addEventListener('change', handleTopicChange);
+
+            // 控制按钮
+            speakBtnElement.addEventListener('click', speakCurrentConcept);
+            knowBtnElement.addEventListener('click', markAsKnown);
+            notKnowBtnElement.addEventListener('click', markAsUnknown);
+            nextBtnElement.addEventListener('click', showNextConcept);
+            prevBtnElement.addEventListener('click', showPrevConcept);
+
+            // 生肖返回按钮
+            const backBtn = document.getElementById('zodiacBackBtn');
+            if (backBtn) {
+                backBtn.addEventListener('click', backToZodiacGrid);
+            }
+        }
+
+        // 显示当前概念
+        function showCurrentConcept() {
+            const concepts = scienceConcepts[currentTopic];
+            if (!concepts || concepts.length === 0) {
+                currentConceptElement.textContent = "无数据";
+                currentCategoryElement.textContent = "科学";
+                currentExplanationElement.textContent = "当前主题没有数据";
+                currentExampleElement.textContent = "请选择其他科学主题";
+                return;
+            }
+
+            const conceptData = concepts[currentIndex];
+            currentConceptElement.textContent = conceptData.concept;
+            currentCategoryElement.textContent = conceptData.category;
+            currentExplanationElement.textContent = conceptData.explanation;
+            currentExampleElement.textContent = conceptData.example;
+
+            // 启用按钮
+            speakBtnElement.disabled = false;
+            knowBtnElement.disabled = false;
+            notKnowBtnElement.disabled = false;
+            nextBtnElement.disabled = false;
+            prevBtnElement.disabled = false;
+        }
+
+        // 朗读当前概念
+        function speakCurrentConcept() {
+            const concepts = scienceConcepts[currentTopic];
+            if (!concepts || concepts.length === 0) return;
+
+            const concept = concepts[currentIndex].concept;
+            const explanation = concepts[currentIndex].explanation;
+            const text = `${concept}。${explanation}`;
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'zh-CN';
+            utterance.rate = 0.9;
+
+            speechSynthesis.cancel();
+            speechSynthesis.speak(utterance);
+        }
+
+        // 标记为理解
+        function markAsKnown() {
+            const concepts = scienceConcepts[currentTopic];
+            if (!concepts || concepts.length === 0) return;
+
+            const concept = concepts[currentIndex].concept;
+            if (!learnedConcepts[currentTopic]) learnedConcepts[currentTopic] = {};
+            if (!masteredConcepts[currentTopic]) masteredConcepts[currentTopic] = {};
+
+            learnedConcepts[currentTopic][concept] = true;
+            masteredConcepts[currentTopic][concept] = true;
+            saveProgress();
+            updateProgress();
+            showNextConcept();
+        }
+
+        // 标记为不理解
+        function markAsUnknown() {
+            const concepts = scienceConcepts[currentTopic];
+            if (!concepts || concepts.length === 0) return;
+
+            const concept = concepts[currentIndex].concept;
+            if (!learnedConcepts[currentTopic]) learnedConcepts[currentTopic] = {};
+            if (!masteredConcepts[currentTopic]) masteredConcepts[currentTopic] = {};
+
+            learnedConcepts[currentTopic][concept] = true;
+            masteredConcepts[currentTopic][concept] = false;
+            saveProgress();
+            updateProgress();
+            showNextConcept();
+        }
+
+        // 显示下一个概念
+        function showNextConcept() {
+            const concepts = scienceConcepts[currentTopic];
+            if (!concepts || concepts.length === 0) return;
+
+            currentIndex = (currentIndex + 1) % concepts.length;
+            showCurrentConcept();
+        }
+
+        // 显示上一个概念
+        function showPrevConcept() {
+            const concepts = scienceConcepts[currentTopic];
+            if (!concepts || concepts.length === 0) return;
+
+            currentIndex = (currentIndex - 1 + concepts.length) % concepts.length;
+            showCurrentConcept();
+        }
+
+        // 处理主题变更
+        function handleTopicChange() {
+            currentTopic = topicSelectorElement.value;
+            currentIndex = 0;
+            showCurrentConcept();
+            updateProgress();
+        }
+
+        // 更新进度显示
+        function updateProgress() {
+            const concepts = scienceConcepts[currentTopic];
+            if (!concepts || concepts.length === 0) {
+                totalCountElement.textContent = "0";
+                learnedCountElement.textContent = "0";
+                masteredCountElement.textContent = "0";
+                progressFillElement.style.width = "0%";
+                progressPercentageElement.textContent = "0%";
+                return;
+            }
+
+            const total = concepts.length;
+            const learned = learnedConcepts[currentTopic] ? Object.keys(learnedConcepts[currentTopic]).length : 0;
+            const mastered = masteredConcepts[currentTopic] ? Object.keys(masteredConcepts[currentTopic]).filter(
+                concept => masteredConcepts[currentTopic][concept]
+            ).length : 0;
+
+            totalCountElement.textContent = total;
+            learnedCountElement.textContent = learned;
+            masteredCountElement.textContent = mastered;
+
+            const progress = total > 0 ? (learned / total) * 100 : 0;
+            progressFillElement.style.width = `${progress}%`;
+            progressPercentageElement.textContent = `${Math.round(progress)}%`;
+        }
+
+        // 保存进度
+        function saveProgress() {
+            localStorage.setItem('baikeLearnedConcepts', JSON.stringify(learnedConcepts));
+            localStorage.setItem('baikeMasteredConcepts', JSON.stringify(masteredConcepts));
+        }
+
+        // 加载进度
+        function loadProgress() {
+            const learned = localStorage.getItem('baikeLearnedConcepts');
+            const mastered = localStorage.getItem('baikeMasteredConcepts');
+
+            if (learned) {
+                learnedConcepts = JSON.parse(learned);
+            }
+            if (mastered) {
+                masteredConcepts = JSON.parse(mastered);
+            }
+        }
+
+        // 初始化应用
+        (function() {
+            injectNav(NAV_CONFIG);
+            injectFooter();
+            injectAssistant();
+            setupHomeLink('homeLink', 'index.html');
+            initLearningAssistant();
+            init();
+        })();
+
+        // 太阳系模拟器脚本
+        (function() {
+            // 获取Canvas元素并设置上下文
+            const canvas = document.getElementById('solarSystem');
+            const ctx = canvas.getContext('2d');
+
+            // 设置Canvas尺寸 - 适应正方形容器
+            function resizeCanvas() {
+                const container = document.querySelector('.square-canvas');
+                const size = container.clientWidth;
+                canvas.width = size;
+                canvas.height = size*0.8;
+            }
+
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            // 天体数据
+            const celestialBodies = [
+                { name: "太阳", radius: 30, color: "#ff7d00", orbitRadius: 0, orbitSpeed: 0, angle: 0, tilt: 0 },
+                { name: "水星", radius: 4, color: "#a8a8a8", orbitRadius: 70, orbitSpeed: 0.04, angle: 0, tilt: 0 },
+                { name: "金星", radius: 7, color: "#e39e58", orbitRadius: 100, orbitSpeed: 0.015, angle: 0, tilt: 0 },
+                { name: "地球", radius: 7.5, color: "#2e86c1", orbitRadius: 140, orbitSpeed: 0.01, angle: 0, tilt: 23.5 },
+                { name: "月球", radius: 2, color: "#d0d0d0", orbitRadius: 20, orbitSpeed: 0.05, angle: 0, tilt: 0, parent: 3 },
+                { name: "火星", radius: 5, color: "#e74c3c", orbitRadius: 180, orbitSpeed: 0.008, angle: 0, tilt: 0 },
+                { name: "木星", radius: 20, color: "#f39c12", orbitRadius: 230, orbitSpeed: 0.002, angle: 0, tilt: 3 },
+                { name: "土星", radius: 16, color: "#f1c40f", orbitRadius: 300, orbitSpeed: 0.0009, angle: 0, tilt: 26.7, ring: { innerRadius: 20, outerRadius: 30, color: "#d4ac0d" } },
+                { name: "天王星", radius: 12, color: "#3498db", orbitRadius: 350, orbitSpeed: 0.0004, angle: 0, tilt: 97.8 },
+                { name: "海王星", radius: 11, color: "#2980b9", orbitRadius: 400, orbitSpeed: 0.0001, angle: 0, tilt: 28.3 }
+            ];
+
+            // 动画控制变量
+            let isPaused = false;
+            let animationSpeed = 1;
+            let zoomLevel = 1;
+            let showLabels = true;
+
+            // 计算中心坐标
+            function getCenter() {
+                return {
+                    x: canvas.width / 2,
+                    y: canvas.height / 2
+                };
+            }
+
+            // 绘制天体轨道
+            function drawOrbit(orbitRadius, center) {
+                ctx.beginPath();
+                ctx.arc(center.x, center.y, orbitRadius, 0, Math.PI * 2);
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+
+            // 绘制天体
+            function drawCelestialBody(body, center) {
+                // 计算天体位置
+                let x, y;
+                if (body.orbitRadius === 0) {
+                    x = center.x;
+                    y = center.y;
+                } else {
+                    const parent = body.parent !== undefined ? celestialBodies[body.parent] : null;
+                    const parentX = parent ? parent.x : center.x;
+                    const parentY = parent ? parent.y : center.y;
+
+                    x = parentX + Math.cos(body.angle) * body.orbitRadius * zoomLevel;
+                    y = parentY + Math.sin(body.angle) * body.orbitRadius * zoomLevel;
+
+                    body.x = x;
+                    body.y = y;
+                }
+
+                if (body.orbitRadius > 0) {
+                    const orbitCenter = body.parent !== undefined
+                        ? { x: celestialBodies[body.parent].x, y: celestialBodies[body.parent].y }
+                        : center;
+                    drawOrbit(body.orbitRadius * zoomLevel, orbitCenter);
+                }
+
+                if (body.ring) {
+                    ctx.beginPath();
+                    ctx.ellipse(x, y, body.ring.outerRadius * zoomLevel, body.ring.innerRadius * zoomLevel,
+                        body.tilt * Math.PI / 180, 0, Math.PI * 2);
+                    ctx.strokeStyle = body.ring.color;
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                }
+
+                ctx.beginPath();
+                ctx.arc(x, y, body.radius * zoomLevel, 0, Math.PI * 2);
+
+                const gradient = ctx.createRadialGradient(
+                    x - body.radius * zoomLevel * 0.3, y - body.radius * zoomLevel * 0.3, 0,
+                    x, y, body.radius * zoomLevel
+                );
+
+                if (body.name === "太阳") {
+                    gradient.addColorStop(0, "#fffacd");
+                    gradient.addColorStop(0.5, body.color);
+                    gradient.addColorStop(1, "#ff4500");
+                } else {
+                    gradient.addColorStop(0, body.color);
+                    gradient.addColorStop(1, darkenColor(body.color, 0.7));
+                }
+
+                ctx.fillStyle = gradient;
+                ctx.fill();
+
+                if (body.name === "太阳") {
+                    ctx.shadowColor = body.color;
+                    ctx.shadowBlur = 20 * zoomLevel;
+                    ctx.beginPath();
+                    ctx.arc(x, y, body.radius * zoomLevel, 0, Math.PI * 2);
+                    ctx.fillStyle = body.color + "40";
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                }
+
+                if (showLabels) {
+                    ctx.fillStyle = 'white';
+                    ctx.font = 'bold ' + Math.max(8, 12 * zoomLevel) + 'px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(body.name, x, y - body.radius * zoomLevel - 5);
+                }
+            }
+
+            function darkenColor(color, amount) {
+                if (color.startsWith('#')) {
+                    let r = parseInt(color.substr(1, 2), 16);
+                    let g = parseInt(color.substr(3, 2), 16);
+                    let b = parseInt(color.substr(5, 2), 16);
+
+                    r = Math.max(0, Math.floor(r * amount));
+                    g = Math.max(0, Math.floor(g * amount));
+                    b = Math.max(0, Math.floor(b * amount));
+
+                    return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+                }
+                return color;
+            }
+
+            function animate() {
+                if (!isPaused) {
+                    celestialBodies.forEach(body => {
+                        body.angle += body.orbitSpeed * animationSpeed;
+                    });
+                }
+
+                ctx.fillStyle = '#000000';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                const center = getCenter();
+
+                celestialBodies.forEach(body => {
+                    drawCelestialBody(body, center);
+                });
+
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+
+            document.getElementById('pauseBtn').addEventListener('click', function() {
+                isPaused = !isPaused;
+                this.innerHTML = isPaused ? '<i class="fas fa-play"></i><span>继续</span>' : '<i class="fas fa-pause"></i><span>暂停</span>';
+            });
+
+            document.getElementById('resetBtn').addEventListener('click', function() {
+                celestialBodies.forEach(body => {
+                    body.angle = 0;
+                });
+            });
+
+            document.getElementById('fullscreenBtn').addEventListener('click', function() {
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen().catch(err => {
+                        alert(`全屏请求出错: ${err.message}`);
+                    });
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    }
+                }
+            });
+
+            const speedRange = document.getElementById('speedRange');
+            const speedValue = document.getElementById('speedValue');
+            speedRange.addEventListener('input', function() {
+                animationSpeed = parseFloat(this.value);
+                speedValue.textContent = animationSpeed.toFixed(1) + 'x';
+            });
+
+            const zoomRange = document.getElementById('zoomRange');
+            const zoomValue = document.getElementById('zoomValue');
+            zoomRange.addEventListener('input', function() {
+                zoomLevel = parseFloat(this.value);
+                zoomValue.textContent = zoomLevel.toFixed(1) + 'x';
+            });
+
+            document.getElementById('labelsToggle').addEventListener('change', function() {
+                showLabels = this.checked;
+            });
+        })();
+    </script>
+</body>
+
+</html>
