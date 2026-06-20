@@ -1658,6 +1658,27 @@
 
         </div>
 
+        <!-- 语法宝典页面 -->
+        <div class="page" id="grammarPage">
+            <div class="main-content">
+                <div class="grammar-content-area" id="grammarContent">
+                    <div class="grammar-placeholder">
+                        <div style="font-size:48px;margin-bottom:16px;">📖</div>
+                        <div>👈 从右边选择一个语法主题开始学习吧！</div>
+                    </div>
+                </div>
+                <div class="grammar-sidebar" id="grammarSidebar">
+                    <div class="grammar-sidebar-title">
+                        <i class="fas fa-book-open"></i>
+                        <span>语法目录</span>
+                    </div>
+                    <div id="grammarNavList">
+                        <div class="loader"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script>
             // 只存储已加载的词表
             let wordLists = {};
@@ -1963,8 +1984,9 @@
                         window.location.href = 'http://sevenbaby.xyz/ket/';
                         return;
                     }
-                    if (pageId === 'wordlist' || pageId === 'game' || pageId === 'settings') stopAutoPlay();
+                    if (pageId === 'wordlist' || pageId === 'game' || pageId === 'settings' || pageId === 'grammar') stopAutoPlay();
                     if (pageId === 'wordlist') renderWordList();
+                    if (pageId === 'grammar') initGrammarPage();
                     if (pageId === 'wordcard' && autoPlayEnabled) startAutoPlay();
                 });
 
@@ -2830,11 +2852,12 @@
             // 初始化应用
             (function () {
                 var NAV_CONFIG = [
-                    { page: 'wordcard', icon: 'fa-home',    label: '单词记忆', active: true },
-                    { page: 'wordlist', icon: 'fa-list',    label: '单词列表', active: false },
-                    { page: 'game',     icon: 'fa-gamepad', label: '游戏闯关', active: false },
-                    { page: 'ket',      icon: 'fa-book',    label: 'KET',       active: false },
-                    { page: 'settings', icon: 'fa-cog',     label: '设置',     active: false },
+                    { page: 'wordcard', icon: 'fa-home',      label: '单词记忆', active: true },
+                    { page: 'wordlist', icon: 'fa-list',      label: '单词列表', active: false },
+                    { page: 'game',     icon: 'fa-gamepad',   label: '游戏闯关', active: false },
+                    { page: 'grammar',  icon: 'fa-graduation-cap', label: '语法宝典', active: false },
+                    { page: 'ket',      icon: 'fa-book',      label: 'KET',       active: false },
+                    { page: 'settings', icon: 'fa-cog',       label: '设置',     active: false },
                 ];
                 injectNav(NAV_CONFIG);
                 injectFooter();
@@ -2898,6 +2921,172 @@
                 document.getElementById('cancelBtn').onclick = () => {
                     document.body.removeChild(mask);
                 };
+            }
+
+            // 语法宝典功能
+            let grammarData = null;
+            let currentGrammarSection = null;
+
+            async function loadGrammarData() {
+                if (grammarData) return grammarData;
+                try {
+                    const resp = await fetch('data/english/grammar.json');
+                    grammarData = await resp.json();
+                    return grammarData;
+                } catch (e) {
+                    console.error('加载语法数据失败:', e);
+                    return [];
+                }
+            }
+
+            async function initGrammarPage() {
+                const data = await loadGrammarData();
+                if (!data.length) {
+                    document.getElementById('grammarNavList').innerHTML =
+                        '<div class="grammar-placeholder">语法数据加载失败</div>';
+                    return;
+                }
+
+                // 渲染侧边栏
+                const saved = localStorage.getItem('grammarSection');
+                const activeId = saved || data[0].id;
+
+                const navList = document.getElementById('grammarNavList');
+                navList.innerHTML = data.map(section =>
+                    `<div class="grammar-nav-item${section.id === activeId ? ' active' : ''}"
+                          data-id="${section.id}"
+                          style="${section.id === activeId ? '--grammar-accent:' + section.color : ''}">
+                        <span class="grammar-nav-emoji">${section.emoji}</span>
+                        <span>${section.title}</span>
+                        <span class="grammar-nav-color" style="background:${section.color}"></span>
+                    </div>`
+                ).join('');
+
+                // 绑定点击事件
+                navList.querySelectorAll('.grammar-nav-item').forEach(item => {
+                    item.addEventListener('click', () => {
+                        const id = item.getAttribute('data-id');
+                        showGrammarSection(id);
+                    });
+                });
+
+                // 显示已保存的或第一个section
+                showGrammarSection(activeId);
+            }
+
+            function showGrammarSection(id) {
+                if (!grammarData) return;
+                const section = grammarData.find(s => s.id === id);
+                if (!section) return;
+
+                currentGrammarSection = id;
+                localStorage.setItem('grammarSection', id);
+
+                // 更新侧边栏高亮
+                document.querySelectorAll('.grammar-nav-item').forEach(item => {
+                    const isActive = item.getAttribute('data-id') === id;
+                    item.classList.toggle('active', isActive);
+                    if (isActive) {
+                        item.style.setProperty('--grammar-accent', section.color);
+                    }
+                });
+
+                // 渲染内容
+                let html = '';
+                html += `<div class="grammar-section-header" style="border-top: 4px solid ${section.color}">`;
+                html += `<div class="grammar-section-title">`;
+                html += `<span class="grammar-section-emoji">${section.emoji}</span>`;
+                html += `<span style="color:${section.color}">${section.title}</span>`;
+                html += `</div>`;
+                html += `<div class="grammar-section-intro">${section.intro}</div>`;
+                html += `</div>`;
+
+                // 规则块
+                if (section.sections) {
+                    section.sections.forEach(sec => {
+                        html += `<div class="grammar-rule-block">`;
+                        html += `<div class="grammar-rule-heading">`;
+                        html += `<span class="dot" style="background:${section.color}"></span>`;
+                        html += sec.heading;
+                        html += `</div>`;
+
+                        if (sec.text) {
+                            html += `<div class="grammar-rule-text">${sec.text}</div>`;
+                        }
+
+                        if (sec.formula) {
+                            html += `<div class="grammar-formula">📐 ${sec.formula}</div>`;
+                        }
+
+                        if (sec.badges) {
+                            sec.badges.forEach(b => {
+                                html += `<span class="grammar-badge">⚠️ ${b}</span>`;
+                            });
+                        }
+
+                        if (sec.table) {
+                            html += `<div class="grammar-table-wrap"><table class="grammar-table"><thead><tr>`;
+                            sec.table.headers.forEach(h => {
+                                html += `<th>${h}</th>`;
+                            });
+                            html += `</tr></thead><tbody>`;
+                            sec.table.rows.forEach(row => {
+                                html += `<tr>`;
+                                row.forEach(cell => {
+                                    html += `<td>${cell}</td>`;
+                                });
+                                html += `</tr>`;
+                            });
+                            html += `</tbody></table></div>`;
+                        }
+
+                        if (sec.irregulars) {
+                            html += `<div class="grammar-irregulars">`;
+                            sec.irregulars.forEach(irr => {
+                                html += `<div class="grammar-irregular-item">${irr[0]}`;
+                                if (irr[1]) html += `<br><small style="color:var(--text-secondary)">${irr[1]}</small>`;
+                                html += `</div>`;
+                            });
+                            html += `</div>`;
+                        }
+
+                        if (sec.examples_inline) {
+                            html += `<div class="grammar-examples">`;
+                            sec.examples_inline.forEach(ex => {
+                                html += `<div class="grammar-example-item">${ex}</div>`;
+                            });
+                            html += `</div>`;
+                        }
+
+                        html += `</div>`;
+                    });
+                }
+
+                // 例句
+                if (section.examples && section.examples.length) {
+                    html += `<div class="grammar-rule-block">`;
+                    html += `<div class="grammar-rule-heading">`;
+                    html += `<span class="dot" style="background:${section.color}"></span>`;
+                    html += `例句`;
+                    html += `</div>`;
+                    section.examples.forEach(ex => {
+                        html += `<div class="grammar-example-item">`;
+                        html += `<span class="grammar-example-en">${ex.en}</span>`;
+                        html += `<span class="grammar-example-zh">${ex.zh}</span>`;
+                        html += `</div>`;
+                    });
+                    html += `</div>`;
+                }
+
+                // 记忆口诀
+                if (section.tip) {
+                    html += `<div class="grammar-tip">`;
+                    html += `<span class="grammar-tip-emoji">🎵</span>`;
+                    html += `<span>${section.tip}</span>`;
+                    html += `</div>`;
+                }
+
+                document.getElementById('grammarContent').innerHTML = html;
             }
 
         </script>
