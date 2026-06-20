@@ -694,188 +694,35 @@
             { page: 'space',    icon: 'fa-rocket', label: '模拟太空', active: false },
         ];
 
-        // 十二生肖数据
-        const zodiacAnimals = [
-            {
-                id: 'rat', name: '鼠', emoji: '🐭', rank: 1, title: '机智小先锋',
-                trait: '小老鼠虽然个子小，但它非常聪明机灵。',
-                story: '比赛那天，它跳上了憨厚的牛大哥的背，在快到终点的时候一下子跳了下来，第一个冲过了终点线，成为了十二生肖的第一名！凭借智慧赢得了生肖赛跑的冠军！',
-                detail: '鼠年出生的人通常机智灵活，善于观察，适应能力强。'
-            },
-            {
-                id: 'ox', name: '牛', emoji: '🐮', rank: 2, title: '勤劳老大哥',
-                trait: '牛大哥非常勤劳和憨厚，每天都辛勤地帮助人们耕地，是农民伯伯最好的帮手。',
-                story: '在生肖比赛中被小老鼠"借力"没能得第一，但它依然凭借实力获得了第二名，是大家学习的榜样。',
-                detail: '牛年出生的人通常勤奋踏实，有耐心和毅力，是值得信赖的伙伴。'
-            },
-            {
-                id: 'tiger', name: '虎', emoji: '🐯', rank: 3, title: '威风百兽王',
-                trait: '老虎是森林里的百兽之王，威风凛凛，内心充满自信与勇气，是力量的象征。',
-                story: '在生肖赛跑比赛中，老虎凭借强大的爆发力和惊人的速度，一马当先冲到了前面，最终获得了第三名的好成绩！',
-                detail: '虎年出生的人通常勇敢自信，富有领导力，做事果断有魄力。'
-            },
-            {
-                id: 'rabbit', name: '兔', emoji: '🐰', rank: 4, title: '温柔小天使',
-                trait: '小兔子天生性格温和，待人友善，是大家都喜欢的好朋友。',
-                story: '虽然不会游泳，但它非常聪明。它踩着河里的石头，又借助了龙吐的水浪，巧妙地渡过了难关，最终获得了生肖赛跑的第四名。',
-                detail: '兔年出生的人通常温柔善良，心思细腻，有很好的人缘。'
-            },
-            {
-                id: 'dragon', name: '龙', emoji: '🐲', rank: 5, title: '神秘大英雄',
-                trait: '龙拥有腾云驾雾、呼风唤雨的神奇本领，是传说中无所不能的存在。',
-                story: '比赛途中，它不忍人间干旱，毅然停下脚步帮助降雨，展现了无私的爱心。虽然因此耽误了赛程只获得第五名，但它永远是我们心中的"无冕之王"。能力越大，责任越大！',
-                detail: '龙年出生的人通常充满活力，有远大抱负，是天生的领导者。'
-            },
-            {
-                id: 'snake', name: '蛇', emoji: '🐍', rank: 6, title: '灵活小智者',
-                trait: '小蛇非常灵活和智慧，善于思考，总能找到巧妙的方法。',
-                story: '它悄悄地缠在马的腿上，在快到终点的时候突然窜了出来，超过了马，获得了第六名。',
-                detail: '蛇年出生的人通常聪明冷静，善于思考，有敏锐的直觉。'
-            },
-            {
-                id: 'horse', name: '马', emoji: '🐴', rank: 7, title: '奔放小勇士',
-                trait: '小马非常奔放热情，跑得飞快，是大家心中最棒的奔跑健将！',
-                story: '虽然在比赛中被狡猾的蛇超过，最终获得了第七名，但它依然是我们心中最棒的奔跑健将！',
-                detail: '马年出生的人通常热情开朗，行动力强，追求自由。'
-            },
-            {
-                id: 'goat', name: '羊', emoji: '🐑', rank: 8, title: '温顺小绵羊',
-                trait: '小绵羊温顺善良，和小猴、小鸡成为了好朋友。',
-                story: '在比赛中，它们没有独自行动，而是选择合作，乘着木筏齐心协力过了河，最终获得了第八名的好成绩。团结就是力量！',
-                detail: '羊年出生的人通常温和善良，有同情心，重视团结合作。'
-            },
-            {
-                id: 'monkey', name: '猴', emoji: '🐵', rank: 9, title: '调皮小机灵',
-                trait: '小猴子非常调皮机灵，活泼好动，总能找到捷径。',
-                story: '它在树上荡秋千，抄了近路，很快就赶了上来，获得了第九名。',
-                detail: '猴年出生的人通常聪明伶俐，反应敏捷，富有创造力。'
-            },
-            {
-                id: 'rooster', name: '鸡', emoji: '🐔', rank: 10, title: '准时小闹钟',
-                trait: '小鸡是十二生肖里的"准时小闹钟"，每天天不亮就准时打鸣，非常勤劳可靠。',
-                story: '在生肖排位赛那天，它也严格遵守时间，按时赶到了赛场，最终获得了第十名的好成绩！',
-                detail: '鸡年出生的人通常守时守信，勤劳认真，做事有条理。'
-            },
-            {
-                id: 'dog', name: '狗', emoji: '🐶', rank: 11, title: '忠诚小卫士',
-                trait: '小狗非常忠诚勇敢，是人类最忠实的朋友，总是用热情的摇尾和守护回报我们的爱！',
-                story: '它因为在家看家护院，耽误了一点时间，最终获得了第十一名。但它从不后悔，因为守护家园是最重要的！',
-                detail: '狗年出生的人通常忠诚正直，有责任感，是值得信赖的朋友。'
-            },
-            {
-                id: 'pig', name: '猪', emoji: '🐷', rank: 12, title: '福气小懒虫',
-                trait: '小猪憨厚可爱，虽然有点贪吃贪睡，但依然是我们的福气小宝贝！',
-                story: '因为在路上贪吃贪睡耽误了时间，最后一个到达终点，获得了第十二名。虽然排名最后，但它依然很开心，是十二生肖中最有福气的一个！',
-                detail: '猪年出生的人通常心胸宽广，诚实纯真，有很好的福气。'
+        // 数据缓存
+        let zodiacAnimals = [];
+        let zodiacRhyme = '鼠牛虎兔龙蛇马，羊猴鸡狗猪一家。十二生肖轮流转，中华文化传天下！';
+        let scienceConcepts = {};
+
+        // 从JSON加载数据
+        async function loadZodiacData() {
+            if (zodiacAnimals.length) return zodiacAnimals;
+            try {
+                const resp = await fetch('data/baike/zodiac-animals.json');
+                zodiacAnimals = await resp.json();
+                return zodiacAnimals;
+            } catch (e) {
+                console.error('加载生肖数据失败:', e);
+                return [];
             }
-        ];
+        }
 
-        // 十二生肖口诀
-        const zodiacRhyme = '鼠牛虎兔龙蛇马，羊猴鸡狗猪一家。十二生肖轮流转，中华文化传天下！';
-
-        // 科学概念数据
-        const scienceConcepts = {
-            physics: [
-                {
-                    concept: "重力",
-                    category: "物理",
-                    explanation: "物体之间相互吸引的力，使物体向地面下落",
-                    example: "苹果从树上掉下来是因为地球的引力作用"
-                },
-                {
-                    concept: "摩擦力",
-                    category: "物理",
-                    explanation: "两个物体接触表面相对运动时产生的阻力",
-                    example: "汽车刹车时轮胎与地面之间的摩擦力使车停下"
-                },
-                {
-                    concept: "光的折射",
-                    category: "物理",
-                    explanation: "光从一种介质进入另一种介质时改变传播方向的现象",
-                    example: "筷子插入水中看起来弯曲是因为光的折射"
-                }
-            ],
-            chemistry: [
-                {
-                    concept: "化学反应",
-                    category: "化学",
-                    explanation: "物质之间发生化学变化，生成新物质的过程",
-                    example: "铁生锈是铁与氧气发生的化学反应"
-                },
-                {
-                    concept: "元素",
-                    category: "化学",
-                    explanation: "由相同原子组成的纯物质，无法用化学方法分解",
-                    example: "氧气(O₂)、金(Au)、碳(C)都是元素"
-                },
-                {
-                    concept: "pH值",
-                    category: "化学",
-                    explanation: "表示溶液酸碱性强弱的数值，范围0-14",
-                    example: "柠檬汁的pH值约为2，是酸性物质"
-                }
-            ],
-            biology: [
-                {
-                    concept: "光合作用",
-                    category: "生物",
-                    explanation: "植物利用光能将二氧化碳和水转化为有机物和氧气的过程",
-                    example: "植物通过光合作用制造自己需要的营养物质"
-                },
-                {
-                    concept: "细胞",
-                    category: "生物",
-                    explanation: "生物体的基本结构和功能单位",
-                    example: "人体由数万亿个细胞组成，每个细胞都有特定功能"
-                },
-                {
-                    concept: "生态系统",
-                    category: "生物",
-                    explanation: "生物群落与其环境相互作用的统一整体",
-                    example: "森林生态系统包括树木、动物、微生物和环境因素"
-                }
-            ],
-            earth: [
-                {
-                    concept: "地壳运动",
-                    category: "地球科学",
-                    explanation: "地球外壳板块的相对移动，导致地震和火山活动",
-                    example: "喜马拉雅山脉的形成是印度板块与欧亚板块碰撞的结果"
-                },
-                {
-                    concept: "水循环",
-                    category: "地球科学",
-                    explanation: "水在地球上蒸发、凝结、降水、径流的循环过程",
-                    example: "海洋水蒸发形成云，云中的水以降雨形式回到地面"
-                },
-                {
-                    concept: "矿物",
-                    category: "地球科学",
-                    explanation: "自然界中形成的无机固体物质，有特定化学成分和晶体结构",
-                    example: "石英、金刚石、方解石都是常见的矿物"
-                }
-            ],
-            space: [
-                {
-                    concept: "太阳系",
-                    category: "太空科学",
-                    explanation: "以太阳为中心，包括八大行星及其卫星的天体系统",
-                    example: "地球是太阳系中第三颗行星，距离太阳约1.5亿公里"
-                },
-                {
-                    concept: "星系",
-                    category: "太空科学",
-                    explanation: "由恒星、星际物质、暗物质等组成的天体系统",
-                    example: "银河系是我们所在的星系，包含约2000亿颗恒星"
-                },
-                {
-                    concept: "黑洞",
-                    category: "太空科学",
-                    explanation: "引力极强，连光都无法逃逸的天体区域",
-                    example: "黑洞的形成通常是大质量恒星坍缩的结果"
-                }
-            ]
-        };
+        async function loadScienceData() {
+            if (Object.keys(scienceConcepts).length) return scienceConcepts;
+            try {
+                const resp = await fetch('data/baike/science-concepts.json');
+                scienceConcepts = await resp.json();
+                return scienceConcepts;
+            } catch (e) {
+                console.error('加载科学概念数据失败:', e);
+                return {};
+            }
+        }
 
         let currentTopic = 'physics';
         let currentIndex = 0;
@@ -901,10 +748,11 @@
         let navLinks, pages;
 
         // 渲染生肖卡片网格
-        function renderZodiacGrid() {
+        async function renderZodiacGrid() {
             const grid = document.getElementById('zodiacGrid');
             if (!grid) return;
-            grid.innerHTML = zodiacAnimals.map(a => `
+            const animals = await loadZodiacData();
+            grid.innerHTML = animals.map(a => `
                 <div class="zodiac-card" onclick="showZodiacDetail('${a.id}')">
                     <div class="zodiac-card-header">
                         <span class="zodiac-emoji">${a.emoji}</span>
@@ -919,7 +767,8 @@
         }
 
         // 显示生肖详情
-        function showZodiacDetail(id) {
+        async function showZodiacDetail(id) {
+            await loadZodiacData();
             const animal = zodiacAnimals.find(a => a.id === id);
             if (!animal) return;
 
@@ -969,11 +818,12 @@
         }
 
         // 初始化
-        function init() {
+        async function init() {
             navLinks = document.querySelectorAll('.nav-link');
             pages = document.querySelectorAll('.page');
             syncThemeFromIndex();
             loadProgress();
+            await loadScienceData();
             showCurrentConcept();
             updateProgress();
             renderZodiacGrid();
@@ -1005,7 +855,8 @@
         }
 
         // 显示当前概念
-        function showCurrentConcept() {
+        async function showCurrentConcept() {
+            await loadScienceData();
             const concepts = scienceConcepts[currentTopic];
             if (!concepts || concepts.length === 0) {
                 currentConceptElement.textContent = "无数据";

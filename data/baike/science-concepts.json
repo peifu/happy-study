@@ -1,0 +1,102 @@
+{
+  "physics": [
+    {
+      "concept": "重力",
+      "category": "物理",
+      "explanation": "物体之间相互吸引的力，使物体向地面下落",
+      "example": "苹果从树上掉下来是因为地球的引力作用"
+    },
+    {
+      "concept": "摩擦力",
+      "category": "物理",
+      "explanation": "两个物体接触表面相对运动时产生的阻力",
+      "example": "汽车刹车时轮胎与地面之间的摩擦力使车停下"
+    },
+    {
+      "concept": "光的折射",
+      "category": "物理",
+      "explanation": "光从一种介质进入另一种介质时改变传播方向的现象",
+      "example": "筷子插入水中看起来弯曲是因为光的折射"
+    }
+  ],
+  "chemistry": [
+    {
+      "concept": "化学反应",
+      "category": "化学",
+      "explanation": "物质之间发生化学变化，生成新物质的过程",
+      "example": "铁生锈是铁与氧气发生的化学反应"
+    },
+    {
+      "concept": "元素",
+      "category": "化学",
+      "explanation": "由相同原子组成的纯物质，无法用化学方法分解",
+      "example": "氧气(O₂)、金(Au)、碳(C)都是元素"
+    },
+    {
+      "concept": "pH值",
+      "category": "化学",
+      "explanation": "表示溶液酸碱性强弱的数值，范围0-14",
+      "example": "柠檬汁的pH值约为2，是酸性物质"
+    }
+  ],
+  "biology": [
+    {
+      "concept": "光合作用",
+      "category": "生物",
+      "explanation": "植物利用光能将二氧化碳和水转化为有机物和氧气的过程",
+      "example": "植物通过光合作用制造自己需要的营养物质"
+    },
+    {
+      "concept": "细胞",
+      "category": "生物",
+      "explanation": "生物体的基本结构和功能单位",
+      "example": "人体由数万亿个细胞组成，每个细胞都有特定功能"
+    },
+    {
+      "concept": "生态系统",
+      "category": "生物",
+      "explanation": "生物群落与其环境相互作用的统一整体",
+      "example": "森林生态系统包括树木、动物、微生物和环境因素"
+    }
+  ],
+  "earth": [
+    {
+      "concept": "地壳运动",
+      "category": "地球科学",
+      "explanation": "地球外壳板块的相对移动，导致地震和火山活动",
+      "example": "喜马拉雅山脉的形成是印度板块与欧亚板块碰撞的结果"
+    },
+    {
+      "concept": "水循环",
+      "category": "地球科学",
+      "explanation": "水在地球上蒸发、凝结、降水、径流的循环过程",
+      "example": "海洋水蒸发形成云，云中的水以降雨形式回到地面"
+    },
+    {
+      "concept": "矿物",
+      "category": "地球科学",
+      "explanation": "自然界中形成的无机固体物质，有特定化学成分和晶体结构",
+      "example": "石英、金刚石、方解石都是常见的矿物"
+    }
+  ],
+  "space": [
+    {
+      "concept": "太阳系",
+      "category": "太空科学",
+      "explanation": "以太阳为中心，包括八大行星及其卫星的天体系统",
+      "example": "地球是太阳系中第三颗行星，距离太阳约1.5亿公里"
+    },
+    {
+      "concept": "星系",
+      "category": "太空科学",
+      "explanation": "由恒星、星际物质、暗物质等组成的天体系统",
+      "example": "银河系是我们所在的星系，包含约2000亿颗恒星"
+    },
+    {
+      "concept": "黑洞",
+      "category": "太空科学",
+      "explanation": "引力极强，连光都无法逃逸的天体区域",
+      "example": "黑洞的形成通常是大质量恒星坍缩的结果"
+    }
+  ]
+}
