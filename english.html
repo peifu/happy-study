@@ -1362,7 +1362,256 @@
                 min-width: 0;
             }
         }
-    </style>
+        /* 语法宝典 - 增强组件样式 */
+        .grammar-highlight-box {
+            background: linear-gradient(135deg, rgba(241,196,15,0.12), rgba(243,156,18,0.12));
+            border-left: 5px solid var(--warning);
+            padding: 20px 22px;
+            border-radius: 14px;
+            margin: 18px 0;
+            position: relative;
+        }
+        .grammar-highlight-box::before {
+            content: '💡 重点记忆';
+            position: absolute;
+            top: -12px;
+            left: 16px;
+            background: var(--warning);
+            color: #fff;
+            padding: 3px 14px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 13px;
+        }
+        .grammar-highlight-box p {
+            margin: 6px 0;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .grammar-rhyme-box {
+            background: linear-gradient(135deg, rgba(39,174,96,0.12), rgba(30,132,73,0.12));
+            border: 2px solid var(--secondary);
+            padding: 28px 22px 20px;
+            border-radius: 18px;
+            margin: 22px 0;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--secondary);
+            position: relative;
+            line-height: 1.9;
+        }
+        .grammar-rhyme-box::before {
+            content: '🎵 记忆口诀';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--secondary);
+            color: #fff;
+            padding: 4px 18px;
+            border-radius: 18px;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .grammar-example-card {
+            background: linear-gradient(135deg, rgba(0,162,255,0.06), rgba(0,162,255,0.12));
+            border-radius: 14px;
+            padding: 18px 20px;
+            margin: 14px 0;
+            border: 1px solid rgba(0,162,255,0.2);
+        }
+        .grammar-example-card .ex-label {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            padding: 3px 12px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .grammar-example-card .ex-en {
+            font-size: 18px;
+            color: var(--primary);
+            font-weight: 700;
+            margin: 6px 0;
+        }
+        .grammar-example-card .ex-zh {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .grammar-word-family {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin: 18px 0;
+            padding: 16px;
+            background: rgba(0,0,0,0.04);
+            border-radius: 14px;
+        }
+        .grammar-word-tag {
+            text-align: center;
+            padding: 12px 18px;
+            background: var(--card-bg-color);
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            min-width: 80px;
+            border: 1px solid var(--border-subtle);
+        }
+        .grammar-word-tag .w {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .grammar-word-tag .t {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 3px;
+        }
+
+        .grammar-compare-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin: 18px 0;
+        }
+        .grammar-compare-right {
+            background: linear-gradient(135deg, rgba(39,174,96,0.1), rgba(39,174,96,0.05));
+            border: 2px solid var(--secondary);
+        }
+        .grammar-compare-wrong {
+            background: linear-gradient(135deg, rgba(229,62,62,0.1), rgba(229,62,62,0.05));
+            border: 2px solid var(--accent);
+        }
+        .grammar-compare-item {
+            padding: 18px;
+            border-radius: 14px;
+            text-align: center;
+        }
+        .grammar-compare-item .status {
+            font-weight: 700;
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+        .grammar-compare-right .status { color: var(--secondary); }
+        .grammar-compare-wrong .status { color: var(--accent); }
+        .grammar-compare-item .example {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 6px 0;
+        }
+
+        .grammar-timeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 22px 0;
+            padding: 20px 10px;
+            background: linear-gradient(135deg, rgba(241,196,15,0.1), rgba(230,126,34,0.08));
+            border-radius: 16px;
+            position: relative;
+        }
+        .grammar-timeline::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 12%;
+            right: 12%;
+            height: 3px;
+            background: var(--warning);
+            border-radius: 2px;
+        }
+        .grammar-time-point {
+            text-align: center;
+            background: var(--card-bg-color);
+            padding: 12px 14px;
+            border-radius: 12px;
+            z-index: 1;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            min-width: 90px;
+            font-size: 13px;
+            border: 1px solid var(--border-subtle);
+        }
+        .grammar-time-point .tl {
+            font-weight: 700;
+            color: var(--warning);
+            font-size: 14px;
+        }
+        .grammar-time-point .tx {
+            color: var(--text-secondary);
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .grammar-quiz-box {
+            background: linear-gradient(135deg, rgba(241,196,15,0.08), rgba(162,155,254,0.08));
+            border-radius: 18px;
+            padding: 24px;
+            margin: 20px 0;
+            border: 2px solid rgba(162,155,254,0.25);
+        }
+        .grammar-quiz-box h4 {
+            font-size: 16px;
+            color: var(--science);
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .grammar-quiz-item {
+            background: var(--card-bg-color);
+            padding: 14px 18px;
+            border-radius: 12px;
+            margin: 8px 0;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid var(--border-subtle);
+            font-size: 14px;
+        }
+        .grammar-quiz-item:hover {
+            border-color: var(--science);
+            transform: translateX(4px);
+        }
+        .grammar-quiz-answer {
+            display: none;
+            margin-top: 10px;
+            padding: 10px 14px;
+            background: rgba(155,89,182,0.08);
+            border-radius: 10px;
+            color: var(--text-color);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+        .grammar-quiz-answer.show {
+            display: block;
+        }
+
+        /* 增强表格 - 渐变表头 */
+        .grammar-table.enhanced th {
+            background: linear-gradient(135deg, var(--primary), var(--science));
+            color: #fff;
+            padding: 13px 14px;
+            font-size: 14px;
+        }
+        .grammar-table.enhanced td {
+            font-size: 13px;
+        }
+
+        @media (max-width: 600px) {
+            .grammar-compare-box {
+                grid-template-columns: 1fr;
+            }
+            .grammar-timeline {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .grammar-timeline::before {
+                display: none;
+            }
+        }
     <script src="assets/js/common.js"></script>
     <script src="assets/js/learning-assistant.js"></script>
 </head>
@@ -3051,15 +3300,78 @@
                         }
 
                         if (sec.examples_inline) {
-                            html += `<div class="grammar-examples">`;
                             sec.examples_inline.forEach(ex => {
-                                html += `<div class="grammar-example-item">${ex}</div>`;
+                                html += `<div class="grammar-example-card"><span class="ex-label">例句</span><div class="ex-en">${ex}</div></div>`;
                             });
-                            html += `</div>`;
                         }
 
                         html += `</div>`;
                     });
+                }
+
+                // Highlight box (重点记忆)
+                if (section.highlight) {
+                    html += `<div class="grammar-highlight-box">`;
+                    html += `<p><strong>${section.highlight.title}</strong></p>`;
+                    section.highlight.items.forEach(item => {
+                        html += `<p>${item}</p>`;
+                    });
+                    html += `</div>`;
+                }
+
+                // Compare box (正误对比)
+                if (section.compare) {
+                    html += `<div class="grammar-compare-box">`;
+                    if (section.compare.right && section.compare.right.length) {
+                        html += `<div class="grammar-compare-item grammar-compare-right">`;
+                        html += `<div class="status">✅ 正确</div>`;
+                        section.compare.right.forEach(item => {
+                            html += `<div class="example">${item.en}</div>`;
+                            html += `<div style="font-size:12px;color:var(--text-secondary)">${item.zh}</div>`;
+                        });
+                        html += `</div>`;
+                    }
+                    if (section.compare.wrong && section.compare.wrong.length) {
+                        html += `<div class="grammar-compare-item grammar-compare-wrong">`;
+                        html += `<div class="status">❌ 错误</div>`;
+                        section.compare.wrong.forEach(item => {
+                            html += `<div class="example">${item.en}</div>`;
+                            html += `<div style="font-size:12px;color:var(--text-secondary)">${item.zh}</div>`;
+                        });
+                        html += `</div>`;
+                    }
+                    html += `</div>`;
+                }
+
+                // Word family (单词家族)
+                if (section.wordFamily) {
+                    html += `<div class="grammar-word-family">`;
+                    section.wordFamily.forEach(wf => {
+                        html += `<div class="grammar-word-tag"><div class="w">${wf.word}</div><div class="t">${wf.type}</div></div>`;
+                    });
+                    html += `</div>`;
+                }
+
+                // Timeline (时态时间轴)
+                if (section.timeline) {
+                    html += `<div class="grammar-timeline">`;
+                    section.timeline.forEach(tp => {
+                        html += `<div class="grammar-time-point">`;
+                        html += `<div class="tl">${tp.label}</div>`;
+                        html += `<div class="tx">${tp.example.replace(/\n/g, '<br>')}</div>`;
+                        html += `</div>`;
+                    });
+                    html += `</div>`;
+                }
+
+                // Rhyme box (记忆口诀 - 增强版)
+                if (section.rhyme) {
+                    html += `<div class="grammar-rhyme-box">${section.rhyme.replace(/\n/g, '<br>')}</div>`;
+                } else if (section.tip) {
+                    html += `<div class="grammar-tip">`;
+                    html += `<span class="grammar-tip-emoji">🎵</span>`;
+                    html += `<span>${section.tip}</span>`;
+                    html += `</div>`;
                 }
 
                 // 例句
@@ -3078,11 +3390,16 @@
                     html += `</div>`;
                 }
 
-                // 记忆口诀
-                if (section.tip) {
-                    html += `<div class="grammar-tip">`;
-                    html += `<span class="grammar-tip-emoji">🎵</span>`;
-                    html += `<span>${section.tip}</span>`;
+                // Quiz box (互动练习)
+                if (section.quiz) {
+                    html += `<div class="grammar-quiz-box">`;
+                    html += `<h4>📝 小测验（点击题目查看答案）</h4>`;
+                    section.quiz.forEach((q, i) => {
+                        html += `<div class="grammar-quiz-item" onclick="this.querySelector('.grammar-quiz-answer').classList.toggle('show')">`;
+                        html += `<strong>${i + 1}.</strong> ${q.q}`;
+                        html += `<div class="grammar-quiz-answer">✅ ${q.a}</div>`;
+                        html += `</div>`;
+                    });
                     html += `</div>`;
                 }
 
