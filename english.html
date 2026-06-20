@@ -2925,7 +2925,6 @@
 
             // 语法宝典功能
             let grammarData = null;
-            let currentGrammarSection = null;
 
             async function loadGrammarData() {
                 if (grammarData) return grammarData;
@@ -2944,6 +2943,8 @@
                 if (!data.length) {
                     document.getElementById('grammarNavList').innerHTML =
                         '<div class="grammar-placeholder">语法数据加载失败</div>';
+                    document.getElementById('grammarContent').innerHTML =
+                        '<div class="grammar-placeholder">语法数据加载失败，请刷新页面重试</div>';
                     return;
                 }
 
@@ -2979,7 +2980,6 @@
                 const section = grammarData.find(s => s.id === id);
                 if (!section) return;
 
-                currentGrammarSection = id;
                 localStorage.setItem('grammarSection', id);
 
                 // 更新侧边栏高亮
