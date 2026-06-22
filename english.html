@@ -1880,6 +1880,22 @@
                 // 主页链接点击事件
                 setupHomeLink('homeLink', 'index.html');
 
+                // 从外部页面回退时，修正导航栏焦点和页面显示
+                window.addEventListener('pageshow', function() {
+                    navLinks.forEach(function(link) {
+                        link.classList.remove('active');
+                        if (link.getAttribute('data-page') === 'wordcard') {
+                            link.classList.add('active');
+                        }
+                    });
+                    pages.forEach(function(page) {
+                        page.classList.remove('active');
+                        if (page.id === 'wordcardPage') {
+                            page.classList.add('active');
+                        }
+                    });
+                });
+
                 // 单词本选择
                 bookSelectorElement.addEventListener('change', handleBookChange);
 
