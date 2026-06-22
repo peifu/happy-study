@@ -1,0 +1,45 @@
+{
+  "grade": "grade2",
+  "concepts": [
+    {
+      "title": "乘法初步",
+      "category": "【二年级上册】",
+      "content": [
+        "乘法是相同数连加的简便运算。",
+        "符号：\"×\" 读作\"乘\"或\"乘以\"",
+        "例如：<span class='formula'>3 × 4 = 12</span>"
+      ],
+      "explanation": "乘法可以理解为重复加法，比如3×4就是3+3+3+3，结果是12。",
+      "exercise": {
+        "question": "4 × 5 = ?",
+        "options": [
+          "16",
+          "18",
+          "20",
+          "22"
+        ],
+        "answer": "20"
+      }
+    },
+    {
+      "title": "除法初步",
+      "category": "【二年级下册】",
+      "content": [
+        "除法是平均分物品的运算。",
+        "符号：\"÷\" 读作\"除以\"",
+        "例如：<span class='formula'>12 ÷ 4 = 3</span>"
+      ],
+      "explanation": "除法是将一个数平均分成若干等份，求每份是多少的运算。",
+      "exercise": {
+        "question": "18 ÷ 3 = ?",
+        "options": [
+          "5",
+          "6",
+          "7",
+          "8"
+        ],
+        "answer": "6"
+      }
+    }
+  ]
+}

@@ -365,7 +365,8 @@
                     <select class="form-control" id="gradeSelector">
                         <option value="grade1">小学一年级</option>
                         <option value="grade2">小学二年级</option>
-                        <option value="grade3">小学三年级</option>
+                        <option value="grade3">小学三年级（上册）</option>
+                        <option value="grade3b">小学三年级（下册）</option>
                         <option value="grade4">小学四年级</option>
                         <option value="grade5">小学五年级</option>
                         <option value="grade6">小学六年级</option>
@@ -388,93 +389,22 @@
             { page: 'mathGame', icon: 'fa-gamepad', label: '数学闯关', active: false },
         ];
 
-        // 数学概念数据
-        const mathData = {
-            grade1: [
-                {
-                    title: "加法运算",
-                    category: "【一年级上册】",
-                    content: ["加法是将两个或多个数合并成一个数的运算。", "符号：\"+\" 读作\"加\"或\"加上\"", "例如：<span class='formula'>3 + 2 = 5</span>"],
-                    explanation: "加法是数学中最基本的运算之一。当我们把两个数量合并在一起时，就是在做加法运算。",
-                    exercise: {
-                        question: "5 + 3 = ?",
-                        options: ["7", "8", "9", "10"],
-                        answer: "8"
-                    }
-                },
-                {
-                    title: "减法运算",
-                    category: "【一年级下册】",
-                    content: ["减法是从一个数中去掉另一个数的运算。", "符号：\"-\" 读作\"减\"或\"减去\"", "例如：<span class='formula'>5 - 2 = 3</span>"],
-                    explanation: "减法是与加法相反的运算。当我们从一个数量中取出部分时，就是在做减法运算。",
-                    exercise: {
-                        question: "7 - 2 = ?",
-                        options: ["4", "5", "6", "7"],
-                        answer: "5"
-                    }
-                },
-                {
-                    title: "数字认识",
-                    category: "【一年级上册】",
-                    content: ["数字0-9的认识和书写", "数字的大小比较", "数字的顺序排列"],
-                    explanation: "数字是表示数量的符号，学会认识和书写数字是数学学习的基础。",
-                    exercise: {
-                        question: "下列哪个数字最大？",
-                        options: ["3", "7", "5", "2"],
-                        answer: "7"
-                    }
-                }
-            ],
-            grade2: [
-                {
-                    title: "乘法初步",
-                    category: "【二年级上册】",
-                    content: ["乘法是相同数连加的简便运算。", "符号：\"×\" 读作\"乘\"或\"乘以\"", "例如：<span class='formula'>3 × 4 = 12</span>"],
-                    explanation: "乘法可以理解为重复加法，比如3×4就是3+3+3+3，结果是12。",
-                    exercise: {
-                        question: "4 × 5 = ?",
-                        options: ["16", "18", "20", "22"],
-                        answer: "20"
-                    }
-                },
-                {
-                    title: "除法初步",
-                    category: "【二年级下册】",
-                    content: ["除法是平均分物品的运算。", "符号：\"÷\" 读作\"除以\"", "例如：<span class='formula'>12 ÷ 4 = 3</span>"],
-                    explanation: "除法是将一个数平均分成若干等份，求每份是多少的运算。",
-                    exercise: {
-                        question: "18 ÷ 3 = ?",
-                        options: ["5", "6", "7", "8"],
-                        answer: "6"
-                    }
-                }
-            ],
-            grade3: [
-                {
-                    title: "分数初步",
-                    category: "【三年级上册】",
-                    content: ["分数表示一个整体中的一部分", "分数由分子和分母组成", "例如：<span class='formula'>1/2</span> 表示一半"],
-                    explanation: "分数是表示部分与整体关系的数，分母表示整体被分成的份数，分子表示取出的份数。",
-                    exercise: {
-                        question: "1/2 + 1/2 = ?",
-                        options: ["1/4", "1/2", "1", "2"],
-                        answer: "1"
-                    }
-                },
-                {
-                    title: "时间计算",
-                    category: "【三年级下册】",
-                    content: ["认识时钟和日历", "时间单位：时、分、秒", "时间的基本计算"],
-                    explanation: "时间是生活中的重要概念，学会读写时间和进行简单的时间计算非常实用。",
-                    exercise: {
-                        question: "2小时30分钟等于多少分钟？",
-                        options: ["120", "150", "180", "210"],
-                        answer: "150"
-                    }
-                }
-            ]
-        };
+        // 数学概念数据（从JSON按需加载）
+        const mathData = {};
 
+        // 加载指定年级的数学数据
+        async function loadMathData(grade) {
+            if (mathData[grade] && mathData[grade].length > 0) return;
+            try {
+                var resp = await fetch("data/math/math-" + grade + ".json");
+                if (!resp.ok) throw new Error("HTTP " + resp.status);
+                var data = await resp.json();
+                mathData[grade] = data.concepts || [];
+            } catch (e) {
+                console.error("加载数学数据失败:", grade, e);
+                mathData[grade] = [];
+            }
+        }
         let currentGrade = 'grade1';
         let currentConceptIndex = 0;
         let learnedConcepts = {};
@@ -501,13 +431,16 @@
         let navLinks, pages;
 
         // 初始化
-        function init() {
+        async function init() {
             syncThemeFromIndex();
             navLinks = document.querySelectorAll('.nav-link');
             pages = document.querySelectorAll('.page');
 
             // 加载学习进度
             loadProgress();
+
+            // 加载当前年级数据
+            await loadMathData(currentGrade);
 
             // 初始化UI
             showCurrentConcept();
@@ -612,9 +545,10 @@
         }
 
         // 处理年级变更
-        function handleGradeChange() {
+        async function handleGradeChange() {
             currentGrade = gradeSelectorElement.value;
             currentConceptIndex = 0;
+            await loadMathData(currentGrade);
             showCurrentConcept();
             updateProgress();
             updateConceptList();
