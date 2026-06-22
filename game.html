@@ -152,8 +152,8 @@
 <body>
     <div class="container">
 
-        <!-- 汽车游戏页面 -->
-        <div class="page active" id="carGamePage">
+        <!-- 游戏主页 -->
+        <div class="page active" id="gameHomePage">
             <h1 class="main-title">🏎️ 游戏闯关</h1>
 
             <div class="games-grid">
@@ -199,21 +199,6 @@
             </div>
         </div>
 
-        <!-- 游戏世界内部页面 -->
-        <div class="page" id="gameWorldPage">
-            <h1 class="main-title">🌍 游戏世界</h1>
-            <div class="games-grid">
-                <div class="game-card world-card" id="externalGameCard">
-                    <div class="game-icon">
-                        <i class="fas fa-globe-americas"></i>
-                    </div>
-                    <h2 class="game-name">英语学习游戏</h2>
-                    <p class="game-desc">在线英语学习小游戏，通过趣味互动掌握单词和语法！</p>
-                    <span class="game-badge">🌍 在线游戏</span>
-                </div>
-            </div>
-        </div>
-
     </div>
 
     <script>
@@ -229,9 +214,27 @@
         }
 
         function setupEventListeners() {
-            setupNavLinks(navLinks, pages);
+            setupNavLinks(navLinks, pages, function(pageId) {
+                switchPage(pageId);
+            });
 
             setupHomeLink('homeLink', 'index.html');
+
+            // 从游戏页面回退时，重置导航栏焦点和页面
+            window.addEventListener('pageshow', function() {
+                navLinks.forEach(function(link) {
+                    link.classList.remove('active');
+                    if (link.getAttribute('data-page') === 'gameHome') {
+                        link.classList.add('active');
+                    }
+                });
+                pages.forEach(function(page) {
+                    page.classList.remove('active');
+                    if (page.id === 'gameHomePage') {
+                        page.classList.add('active');
+                    }
+                });
+            });
 
             // 游戏卡片点击事件
             document.getElementById('carGameCard').addEventListener('click', function() {
@@ -247,20 +250,15 @@
             });
 
             document.getElementById('gameWorldCard').addEventListener('click', function() {
-                switchPage('gameWorld');
+                window.open('https://www.gamestolearnenglish.com/', '_blank');
             });
-
-            // 游戏世界内 - 外部游戏链接
-            const externalGameCard = document.getElementById('externalGameCard');
-            if (externalGameCard) {
-                externalGameCard.addEventListener('click', function() {
-                    window.open('https://www.gamestolearnenglish.com/', '_blank');
-                });
-            }
         }
 
         const EXTERNAL_PAGES = {
-            wordMatch: 'game-english.html'
+            carGame: 'game-car.html',
+            wordMatch: 'game-english.html',
+            mathGame: 'game-math.html',
+            gameWorld: 'https://www.gamestolearnenglish.com/'
         };
 
         function switchPage(pageId) {
@@ -274,10 +272,11 @@
         // 初始化
         (function() {
             var NAV_CONFIG = [
-                { page: 'carGame',  icon: 'fa-car-side',    label: '汽车游戏',   active: true },
-                { page: 'wordMatch',icon: 'fa-puzzle-piece', label: '单词消消乐', active: false },
-                { page: 'mathGame', icon: 'fa-calculator',  label: '数学闯关',   active: false },
-                { page: 'gameWorld',icon: 'fa-globe-americas', label: '游戏世界', active: false },
+                { page: 'gameHome',  icon: 'fa-home',           label: '游戏主页',   active: true },
+                { page: 'carGame',   icon: 'fa-car-side',       label: '汽车游戏',   active: false },
+                { page: 'wordMatch', icon: 'fa-puzzle-piece',   label: '单词消消乐', active: false },
+                { page: 'mathGame',  icon: 'fa-calculator',     label: '数学闯关',   active: false },
+                { page: 'gameWorld', icon: 'fa-globe-americas', label: '游戏世界',   active: false },
             ];
             injectNav(NAV_CONFIG);
             injectFooter();
