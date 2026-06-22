@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>快乐学习 - 游戏闯关</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/common.css">
+    <link rel="stylesheet" href="assets/css/learning-assistant.css">
+    <style>
+        /* 游戏卡片网格 */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+            flex: 1;
+        }
+
+        .game-card {
+            background: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+            min-height: 240px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--border-subtle);
+            cursor: pointer;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 247, 255, 0.1) 0%, transparent 70%);
+            transform: rotate(30deg);
+            z-index: 0;
+        }
+
+        .game-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* 汽车游戏 - 橙色系 */
+        .car-card { border-top: 4px solid #FF6B35; }
+        .car-card .game-icon { color: #FF6B35; box-shadow: 0 0 20px rgba(255, 107, 53, 0.3); }
+        .car-card .game-name { color: #FF6B35; }
+
+        /* 单词消消乐 - 蓝色系 */
+        .word-card { border-top: 4px solid #4285f4; }
+        .word-card .game-icon { color: #4285f4; box-shadow: 0 0 20px rgba(66, 133, 244, 0.3); }
+        .word-card .game-name { color: #4285f4; }
+
+        /* 数学闯关 - 紫色系 */
+        .math-card { border-top: 4px solid #9b59b6; }
+        .math-card .game-icon { color: #9b59b6; box-shadow: 0 0 20px rgba(155, 89, 182, 0.3); }
+        .math-card .game-name { color: #9b59b6; }
+
+        /* 游戏世界 - 绿色系 */
+        .world-card { border-top: 4px solid #34a853; }
+        .world-card .game-icon { color: #34a853; box-shadow: 0 0 20px rgba(52, 168, 83, 0.3); }
+        .world-card .game-name { color: #34a853; }
+
+        .game-name {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .game-desc {
+            text-align: center;
+            color: var(--text-secondary);
+            position: relative;
+            z-index: 1;
+            margin-bottom: 15px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .game-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        .car-card .game-badge { background: rgba(255, 107, 53, 0.2); color: #FF6B35; }
+        .word-card .game-badge { background: rgba(66, 133, 244, 0.2); color: #4285f4; }
+        .math-card .game-badge { background: rgba(155, 89, 182, 0.2); color: #9b59b6; }
+        .world-card .game-badge { background: rgba(52, 168, 83, 0.2); color: #34a853; }
+
+        /* 响应式 */
+        @media (max-width: 1200px) {
+            .games-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 15px; }
+        }
+        @media (max-width: 1000px) {
+            .games-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+            .game-card { min-height: 220px; padding: 20px; }
+            .game-icon { width: 70px; height: 70px; font-size: 40px; }
+            .game-name { font-size: 22px; }
+        }
+        @media (max-width: 800px) {
+            .games-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .game-card { min-height: 200px; padding: 15px; }
+            .game-icon { width: 60px; height: 60px; font-size: 35px; margin-bottom: 10px; }
+            .game-name { font-size: 20px; margin-bottom: 8px; }
+            .game-desc { font-size: 13px; margin-bottom: 12px; }
+        }
+        @media (max-width: 600px) {
+            .games-grid { grid-template-columns: 1fr; gap: 10px; }
+            .game-card { min-height: 180px; padding: 15px; }
+        }
+        @media (max-width: 400px) {
+            .game-card { min-height: 160px; padding: 12px; }
+            .game-icon { width: 50px; height: 50px; font-size: 30px; }
+            .game-name { font-size: 18px; }
+            .game-desc { font-size: 12px; }
+        }
+    </style>
+    <script src="assets/js/common.js"></script>
+    <script src="assets/js/learning-assistant.js"></script>
+</head>
+<body>
+    <div class="container">
+
+        <!-- 汽车游戏页面 -->
+        <div class="page active" id="carGamePage">
+            <h1 class="main-title">🏎️ 游戏闯关</h1>
+
+            <div class="games-grid">
+                <!-- 汽车游戏 -->
+                <div class="game-card car-card" id="carGameCard">
+                    <div class="game-icon">
+                        <i class="fas fa-car-side"></i>
+                    </div>
+                    <h2 class="game-name">汽车游戏</h2>
+                    <p class="game-desc">驾驶赛车收集英语单词桶，在高速公路上边玩边学！</p>
+                    <span class="game-badge">🏎️ 赛车竞速</span>
+                </div>
+
+                <!-- 单词消消乐 -->
+                <div class="game-card word-card" id="wordMatchCard">
+                    <div class="game-icon">
+                        <i class="fas fa-puzzle-piece"></i>
+                    </div>
+                    <h2 class="game-name">单词消消乐</h2>
+                    <p class="game-desc">匹配英文单词与中文释义，消除方块获取高分！</p>
+                    <span class="game-badge">🧩 益智配对</span>
+                </div>
+
+                <!-- 数学闯关 -->
+                <div class="game-card math-card" id="mathGameCard">
+                    <div class="game-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h2 class="game-name">数学闯关</h2>
+                    <p class="game-desc">在数学大冒险中挑战口算、竖式和应用题，成为数学小达人！</p>
+                    <span class="game-badge">🔢 数学冒险</span>
+                </div>
+
+                <!-- 游戏世界 -->
+                <div class="game-card world-card" id="gameWorldCard">
+                    <div class="game-icon">
+                        <i class="fas fa-globe-americas"></i>
+                    </div>
+                    <h2 class="game-name">游戏世界</h2>
+                    <p class="game-desc">探索更多有趣的英语学习小游戏，快乐学英语！</p>
+                    <span class="game-badge">🌍 探索发现</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 单词消消乐内部页面 -->
+        <div class="page" id="wordMatchPage">
+            <h1 class="main-title">🧩 单词消消乐</h1>
+            <div class="games-grid">
+                <div class="game-card word-card" style="cursor: default;">
+                    <div class="game-icon">
+                        <i class="fas fa-puzzle-piece"></i>
+                    </div>
+                    <h2 class="game-name">单词消消乐</h2>
+                    <p class="game-desc">匹配英文单词与中文释义，消除方块获取高分！</p>
+                    <p class="game-desc" style="margin-top: 10px; color: var(--text-secondary); font-size: 13px;">
+                        🚧 正在建设中，敬请期待...
+                    </p>
+                    <span class="game-badge">🧩 即将上线</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 游戏世界内部页面 -->
+        <div class="page" id="gameWorldPage">
+            <h1 class="main-title">🌍 游戏世界</h1>
+            <div class="games-grid">
+                <div class="game-card world-card" id="externalGameCard">
+                    <div class="game-icon">
+                        <i class="fas fa-globe-americas"></i>
+                    </div>
+                    <h2 class="game-name">英语学习游戏</h2>
+                    <p class="game-desc">在线英语学习小游戏，通过趣味互动掌握单词和语法！</p>
+                    <span class="game-badge">🌍 在线游戏</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let navLinks, pages;
+
+        function init() {
+            navLinks = document.querySelectorAll('.nav-link');
+            pages = document.querySelectorAll('.page');
+            syncThemeFromIndex();
+            setupEventListeners();
+            initLearningAssistant();
+            if (typeof applyAssistantSettings === 'function') applyAssistantSettings();
+        }
+
+        function setupEventListeners() {
+            setupNavLinks(navLinks, pages);
+
+            setupHomeLink('homeLink', 'index.html');
+
+            // 游戏卡片点击事件
+            document.getElementById('carGameCard').addEventListener('click', function() {
+                window.location.href = 'game-car.html';
+            });
+
+            document.getElementById('wordMatchCard').addEventListener('click', function() {
+                switchPage('wordMatch');
+            });
+
+            document.getElementById('mathGameCard').addEventListener('click', function() {
+                window.location.href = 'game-math.html';
+            });
+
+            document.getElementById('gameWorldCard').addEventListener('click', function() {
+                switchPage('gameWorld');
+            });
+
+            // 游戏世界内 - 外部游戏链接
+            const externalGameCard = document.getElementById('externalGameCard');
+            if (externalGameCard) {
+                externalGameCard.addEventListener('click', function() {
+                    window.open('https://www.gamestolearnenglish.com/', '_blank');
+                });
+            }
+        }
+
+        // 外部页面URL映射
+        const EXTERNAL_PAGES = {};
+
+        function switchPage(pageId) {
+            if (EXTERNAL_PAGES[pageId]) {
+                window.location.href = EXTERNAL_PAGES[pageId];
+                return;
+            }
+            switchPageCommon(pageId, navLinks, pages);
+        }
+
+        // 初始化
+        (function() {
+            var NAV_CONFIG = [
+                { page: 'carGame',  icon: 'fa-car-side',    label: '汽车游戏',   active: true },
+                { page: 'wordMatch',icon: 'fa-puzzle-piece', label: '单词消消乐', active: false },
+                { page: 'mathGame', icon: 'fa-calculator',  label: '数学闯关',   active: false },
+                { page: 'gameWorld',icon: 'fa-globe-americas', label: '游戏世界', active: false },
+            ];
+            injectNav(NAV_CONFIG);
+            injectFooter();
+            injectAssistant();
+            init();
+        })();
+    </script>
+
+</body>
+</html>

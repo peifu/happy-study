@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 数学大冒险 - 三年级下册知识闯关</title>
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/common.css">
+    <link rel="stylesheet" href="assets/css/learning-assistant.css">
+    <style>
+        /* ===== 浮动星星背景 ===== */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            color: #FFD700;
+            font-size: 20px;
+            animation: twinkle 2s infinite ease-in-out;
+        }
+
+        .light-theme .star {
+            color: #d4a017;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* ===== 游戏标题区域 ===== */
+        .game-header-wrapper {
+            text-align: center;
+            padding: 20px 0 10px;
+            animation: bounceIn 1s ease-out;
+        }
+
+        .game-title {
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 3rem;
+            background: linear-gradient(90deg, #FF6B6B, #FFE66D, #4ECDC4, #9B59B6);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+            animation: titlePulse 2s infinite;
+        }
+
+        @keyframes titlePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* ===== 左侧主游戏卡片 ===== */
+        .game-main-card {
+            background: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid var(--border-card);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-main-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.06) 0%, transparent 70%);
+            transform: rotate(30deg);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ===== 关卡地图网格 ===== */
+        .level-map {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== 关卡卡片 ===== */
+        .level-card {
+            background: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 22px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            border: 1px solid var(--border-card);
+            border-left: 5px solid transparent;
+        }
+
+        .level-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .level-card.locked {
+            filter: grayscale(0.6);
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .level-card.locked:hover {
+            transform: none;
+        }
+
+        .level-card.completed-card {
+            border-color: rgba(76, 175, 80, 0.3);
+        }
+
+        /* 每关左侧彩色强调条 */
+        .level-card.level-1 { border-left-color: #FF6B6B; }
+        .level-card.level-2 { border-left-color: #4ECDC4; }
+        .level-card.level-3 { border-left-color: #FFE66D; }
+        .level-card.level-4 { border-left-color: #9B59B6; }
+        .level-card.level-5 { border-left-color: #E74C3C; }
+        .level-card.level-6 { border-left-color: #F39C12; }
+        .level-card.level-7 { border-left-color: #1ABC9C; }
+
+        /* 关卡徽章 */
+        .level-badge {
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 1.3rem;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 2;
+        }
+
+        .level-badge.unlocked {
+            background: linear-gradient(145deg, #FF6B6B, #ee5a5a);
+            animation: badgeBounce 2s infinite;
+        }
+
+        .level-badge.completed {
+            background: linear-gradient(145deg, #4CAF50, #388E3C);
+        }
+
+        .level-badge.locked-badge {
+            background: linear-gradient(145deg, #95a5a6, #7f8c8d);
+        }
+
+        @keyframes badgeBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* 关卡图标 */
+        .level-icon {
+            font-size: 3.5rem;
+            text-align: center;
+            margin: 8px 0 5px;
+            animation: iconFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .level-title {
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 1.3rem;
+            color: var(--text-color);
+            text-align: center;
+            margin-bottom: 6px;
+        }
+
+        .level-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        /* 关卡内进度条 */
+        .level-progress-container {
+            background: rgba(128, 128, 128, 0.2);
+            border-radius: 10px;
+            height: 8px;
+            overflow: hidden;
+            margin: 8px 0;
+        }
+
+        .level-progress-bar {
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #FF6B6B, #FFE66D, #4ECDC4);
+            transition: width 1s ease-out;
+        }
+
+        .level-progress-bar.completed-bar {
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+        }
+
+        .level-progress-text {
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 3px;
+        }
+
+        .level-progress-text.completed-text {
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        /* 知识点预览 */
+        .knowledge-preview {
+            background: rgba(102, 126, 234, 0.08);
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 12px;
+            border-left: 4px solid #667eea;
+        }
+
+        .knowledge-preview h4 {
+            color: #667eea;
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .knowledge-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .knowledge-tag {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            padding: 3px 9px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+        }
+
+        .light-theme .knowledge-tag {
+            background: rgba(102, 126, 234, 0.08);
+            color: #5568d3;
+            border-color: rgba(102, 126, 234, 0.2);
+        }
+
+        .light-theme .modal-content {
+            background: rgba(255, 255, 255, 0.98);
+        }
+
+        /* 开始按钮 */
+        .start-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 12px;
+            background: linear-gradient(145deg, #FF6B6B, #ee5a5a);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'ZCOOL KuaiLe', cursive;
+            letter-spacing: 2px;
+        }
+
+        .start-btn:hover {
+            background: linear-gradient(145deg, #ee5a5a, #dd4949);
+            transform: scale(1.02);
+            box-shadow: 0 5px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .start-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .start-btn.review-btn {
+            background: linear-gradient(145deg, #4CAF50, #388E3C);
+        }
+
+        .start-btn.review-btn:hover {
+            background: linear-gradient(145deg, #388E3C, #2E7D32);
+            box-shadow: 0 5px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        /* ===== 右侧状态栏 ===== */
+        .progress-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sidebar-section-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .sidebar-section-title i {
+            color: var(--primary);
+            width: 20px;
+            text-align: center;
+        }
+
+        /* 得分统计 stat cards */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .stat-card {
+            background: rgba(0, 162, 255, 0.06);
+            border-radius: 12px;
+            padding: 14px 8px;
+            text-align: center;
+            border: 1px solid var(--border-subtle);
+            transition: background 0.3s;
+        }
+
+        .stat-value {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary);
+            font-family: 'ZCOOL KuaiLe', cursive;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 3px;
+        }
+
+        /* 通关进度条 */
+        .progress-bar-container {
+            margin: 5px 0;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .progress-info span:last-child {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .progress-bar {
+            background: rgba(128, 128, 128, 0.2);
+            border-radius: 10px;
+            height: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.8s ease-out;
+        }
+
+        /* 关卡状态列表 */
+        .level-status-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .level-status-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 10px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            transition: background 0.2s;
+        }
+
+        .level-status-item:hover {
+            background: rgba(0, 162, 255, 0.04);
+        }
+
+        .level-status-item.completed {
+            color: var(--success);
+        }
+
+        .level-status-item.completed .level-status-name {
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+
+        .level-status-item.current {
+            color: var(--primary);
+            background: rgba(0, 162, 255, 0.08);
+            font-weight: 600;
+        }
+
+        .level-status-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .level-status-name {
+            flex: 1;
+        }
+
+        .level-status-tag {
+            font-size: 0.72rem;
+            white-space: nowrap;
+        }
+
+        /* 通关信息 */
+        .pass-fail-info {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* 等级选择器 */
+        .grade-selector {
+            margin-bottom: 5px;
+        }
+
+        .grade-select {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border-card);
+            background: var(--card-bg-color);
+            color: var(--text-color);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            appearance: auto;
+        }
+
+        .grade-select:hover {
+            border-color: var(--primary);
+        }
+
+        .grade-select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 162, 255, 0.15);
+        }
+
+        /* ===== 知识详情弹窗 ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            backdrop-filter: blur(4px);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: rgba(10, 25, 41, 0.97);
+            border-radius: 20px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 30px;
+            position: relative;
+            animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-card);
+        }
+
+        @keyframes modalPop {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.3s;
+            background: none;
+            border: none;
+            z-index: 5;
+        }
+
+        .modal-close:hover {
+            color: #FF6B6B;
+            transform: rotate(90deg);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px dashed var(--border-card);
+        }
+
+        .modal-title {
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 2rem;
+            color: var(--text-color);
+        }
+
+        .modal-icon {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+        }
+
+        /* 知识卡片网格 */
+        .knowledge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .knowledge-card {
+            background: rgba(255, 107, 107, 0.05);
+            border-radius: 16px;
+            padding: 18px;
+            border: 1px solid rgba(255, 107, 107, 0.15);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .knowledge-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.12);
+            border-color: rgba(255, 107, 107, 0.3);
+        }
+
+        .knowledge-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #FF6B6B, #FFE66D);
+        }
+
+        .knowledge-card h4 {
+            color: #FF6B6B;
+            font-size: 1rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .knowledge-card p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        .knowledge-card .example {
+            background: rgba(102, 126, 234, 0.08);
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-top: 8px;
+            font-family: 'Courier New', monospace;
+            color: #667eea;
+            font-size: 0.8rem;
+        }
+
+        /* 公式卡片 */
+        .formula-box {
+            background: rgba(102, 126, 234, 0.06);
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            border: 2px dashed rgba(102, 126, 234, 0.25);
+        }
+
+        .formula-box h3 {
+            color: #667eea;
+            margin-bottom: 12px;
+            font-family: 'ZCOOL KuaiLe', cursive;
+        }
+
+        .formula-item {
+            display: inline-block;
+            background: rgba(102, 126, 234, 0.08);
+            padding: 8px 16px;
+            border-radius: 12px;
+            margin: 4px;
+            font-family: 'Courier New', monospace;
+            color: var(--text-color);
+            font-size: 0.95rem;
+        }
+
+        /* 核心要点 */
+        .key-points {
+            background: rgba(78, 205, 196, 0.06);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 2px solid rgba(78, 205, 196, 0.25);
+        }
+
+        .key-points h3 {
+            color: #4ECDC4;
+            margin-bottom: 12px;
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 1.2rem;
+        }
+
+        .key-points ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .key-points li {
+            padding: 6px 0 6px 25px;
+            position: relative;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .key-points li::before {
+            content: '⭐';
+            position: absolute;
+            left: 0;
+            top: 6px;
+        }
+
+        /* ===== 练习题区域 ===== */
+        .quiz-section {
+            background: rgba(255, 193, 7, 0.06);
+            border-radius: 16px;
+            padding: 22px;
+            margin-top: 22px;
+            border: 2px solid rgba(255, 193, 7, 0.25);
+        }
+
+        .quiz-section h3 {
+            color: #FF8F00;
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 1.3rem;
+            margin-bottom: 18px;
+            text-align: center;
+        }
+
+        .quiz-section h3::before {
+            content: '📝 ';
+        }
+
+        .quiz-item {
+            background: rgba(128, 128, 128, 0.04);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border-subtle);
+            transition: all 0.3s;
+        }
+
+        .quiz-item:hover {
+            border-color: rgba(255, 193, 7, 0.3);
+        }
+
+        .quiz-question {
+            font-size: 1rem;
+            color: var(--text-color);
+            margin-bottom: 12px;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        .quiz-question .q-num {
+            display: inline-block;
+            background: linear-gradient(145deg, #FF6B6B, #ee5a5a);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 28px;
+            margin-right: 10px;
+            font-size: 0.85rem;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .quiz-option {
+            padding: 10px 14px;
+            border: 2px solid var(--border-card);
+            border-radius: 10px;
+            background: var(--card-bg-color);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            text-align: center;
+            color: var(--text-color);
+        }
+
+        .quiz-option:hover {
+            background: rgba(33, 150, 243, 0.08);
+            border-color: #2196F3;
+            transform: scale(1.02);
+        }
+
+        .quiz-option.correct {
+            background: #C8E6C9;
+            border-color: #4CAF50;
+            color: #2E7D32;
+        }
+
+        .quiz-option.wrong {
+            background: #FFCDD2;
+            border-color: #F44336;
+            color: #C62828;
+        }
+
+        .quiz-option.disabled {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .quiz-feedback {
+            margin-top: 8px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            display: none;
+        }
+
+        .quiz-feedback.show {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .quiz-feedback.correct-fb {
+            background: #E8F5E9;
+            color: #2E7D32;
+            border: 1px solid #4CAF50;
+        }
+
+        .quiz-feedback.wrong-fb {
+            background: #FFEBEE;
+            color: #C62828;
+            border: 1px solid #F44336;
+        }
+
+        /* 闯关结果 */
+        .quiz-result {
+            text-align: center;
+            padding: 22px;
+            margin-top: 18px;
+            border-radius: 16px;
+            display: none;
+        }
+
+        .quiz-result.show {
+            display: block;
+            animation: bounceIn 0.5s ease-out;
+        }
+
+        .quiz-result.pass {
+            background: linear-gradient(135deg, rgba(200, 230, 201, 0.3), rgba(165, 214, 167, 0.3));
+            border: 2px solid #4CAF50;
+        }
+
+        .quiz-result.fail {
+            background: linear-gradient(135deg, rgba(255, 205, 210, 0.3), rgba(239, 154, 154, 0.3));
+            border: 2px solid #F44336;
+        }
+
+        .quiz-result h4 {
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+        }
+
+        .quiz-result.pass h4 { color: #2E7D32; }
+        .quiz-result.fail h4 { color: #C62828; }
+
+        .quiz-result p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .quiz-result .result-btn {
+            margin-top: 12px;
+            padding: 10px 28px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            font-family: 'ZCOOL KuaiLe', cursive;
+            transition: all 0.3s;
+        }
+
+        .quiz-result.pass .result-btn {
+            background: linear-gradient(145deg, #4CAF50, #388E3C);
+            color: white;
+        }
+
+        .quiz-result.pass .result-btn:hover {
+            background: linear-gradient(145deg, #388E3C, #2E7D32);
+            transform: scale(1.05);
+        }
+
+        .quiz-result.fail .result-btn {
+            background: linear-gradient(145deg, #FF6B6B, #ee5a5a);
+            color: white;
+        }
+
+        .quiz-result.fail .result-btn:hover {
+            background: linear-gradient(145deg, #ee5a5a, #dd4949);
+            transform: scale(1.05);
+        }
+
+        /* 彩纸动画 */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            top: -10px;
+            animation: confettiFall 3s linear forwards;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        @keyframes confettiFall {
+            to {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 1000px) {
+            .game-title { font-size: 2.5rem; }
+            .level-map { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 15px; }
+            .knowledge-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 800px) {
+            .game-title { font-size: 2.2rem; }
+            .level-map { grid-template-columns: 1fr; }
+            .game-main-card { padding: 18px; }
+            .quiz-options { grid-template-columns: 1fr; }
+            .modal-content { padding: 20px; border-radius: 16px; }
+            .modal-title { font-size: 1.6rem; }
+            .stats { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+            .stat-value { font-size: 1.3rem; }
+        }
+
+        @media (max-width: 600px) {
+            .game-title { font-size: 1.8rem; }
+            .game-main-card { padding: 14px; }
+            .level-card { padding: 16px; }
+        }
+
+        @media (max-width: 400px) {
+            .game-title { font-size: 1.5rem; }
+            .level-map { gap: 10px; }
+            .level-icon { font-size: 2.5rem; }
+            .stats { gap: 4px; }
+            .stat-card { padding: 10px 4px; }
+            .stat-value { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 浮动星星背景 -->
+    <div class="stars" id="stars"></div>
+
+    <div class="container">
+        <div class="page active" id="gamePage">
+
+            <!-- 游戏标题 -->
+            <div class="game-header-wrapper">
+                <h1 class="game-title">🎮 数学大冒险</h1>
+            </div>
+
+            <!-- 双栏布局 -->
+            <div class="main-content">
+                <!-- 左侧：游戏主内容 -->
+                <div class="game-main-card">
+                    <div class="level-map" id="levelMap"></div>
+                </div>
+
+                <!-- 右侧：状态栏 -->
+                <div class="progress-container" id="statsSidebar">
+                    <!-- 得分统计 -->
+                    <div>
+                        <div class="sidebar-section-title">
+                            <i class="fas fa-chart-bar"></i><span>得分统计</span>
+                        </div>
+                        <div class="stats">
+                            <div class="stat-card">
+                                <div class="stat-value" id="sidebarCompleted">0</div>
+                                <div class="stat-label">已通关</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="sidebarStars">0</div>
+                                <div class="stat-label">总星级</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="sidebarCurrent">1</div>
+                                <div class="stat-label">当前关卡</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 通关进度条 -->
+                    <div>
+                        <div class="sidebar-section-title">
+                            <i class="fas fa-trophy"></i><span>通关进度</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-info">
+                                <span>完成进度</span>
+                                <span id="progressPercentage">0%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill" style="width:0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 游戏等级选择 -->
+                    <div class="grade-selector">
+                        <div class="sidebar-section-title">
+                            <i class="fas fa-layer-group"></i><span>游戏等级</span>
+                        </div>
+                        <select class="grade-select" id="gradeSelect">
+                            <option value="grade3b">📘 三年级下册</option>
+                            <option value="grade4b">📙 四年级下册</option>
+                        </select>
+                    </div>
+
+                    <!-- 关卡状态列表 -->
+                    <div>
+                        <div class="sidebar-section-title">
+                            <i class="fas fa-list-check"></i><span>关卡状态</span>
+                        </div>
+                        <div class="level-status-list" id="levelStatusList"></div>
+                    </div>
+
+                    <!-- 通关信息 -->
+                    <div>
+                        <div class="sidebar-section-title">
+                            <i class="fas fa-clipboard-check"></i><span>通关信息</span>
+                        </div>
+                        <div class="pass-fail-info" id="passFailInfo">
+                            <p>还没有通关记录，开始挑战吧！💪</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 知识详情弹窗 -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <div class="modal-header">
+                <div class="modal-icon" id="modalIcon">📚</div>
+                <h2 class="modal-title" id="modalTitle">关卡标题</h2>
+            </div>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script src="assets/js/learning-assistant.js"></script>
+    <script src="assets/js/common.js"></script>
+    <script>
+        // ===== 等级与关卡数据（从JSON加载） =====
+        const GRADE_CONFIG = {
+            grade3b: { file: 'data/math/game-math-grade3b.json', label: '三年级下册' },
+            grade4b: { file: 'data/math/game-math-grade4b.json', label: '四年级下册' }
+        };
+
+        let currentGrade = 'grade3b';
+        let levels = [];
+        let totalLevels = 0;
+        let currentLevelIndex = -1;
+        let quizAnswers = {};
+        let quizScore = 0;
+
+        // ===== localStorage 进度存取 =====
+        function getProgressKey(gradeKey) {
+            return 'mathGameProgress_' + gradeKey;
+        }
+
+        function saveProgress(gradeKey) {
+            const progress = levels.map(function(l) {
+                return { id: l.id, unlocked: l.unlocked, completed: l.completed, progress: l.progress };
+            });
+            localStorage.setItem(getProgressKey(gradeKey), JSON.stringify(progress));
+        }
+
+        function loadProgress(gradeKey) {
+            const raw = localStorage.getItem(getProgressKey(gradeKey));
+            if (raw) {
+                try {
+                    return JSON.parse(raw);
+                } catch (e) {
+                    return null;
+                }
+            }
+            return null;
+        }
+
+        function applyProgress(saved) {
+            if (!saved) return;
+            saved.forEach(function(sp) {
+                var level = levels.find(function(l) { return l.id === sp.id; });
+                if (level) {
+                    level.unlocked = sp.unlocked;
+                    level.completed = sp.completed;
+                    level.progress = sp.progress;
+                }
+            });
+        }
+
+        // ===== 加载等级数据 =====
+        function loadGradeData(gradeKey) {
+            var config = GRADE_CONFIG[gradeKey];
+            if (!config) return;
+
+            // 保存当前进度
+            if (levels.length > 0) {
+                saveProgress(currentGrade);
+            }
+
+            fetch(config.file)
+                .then(function(res) {
+                    if (!res.ok) throw new Error('Failed to load: ' + config.file);
+                    return res.json();
+                })
+                .then(function(data) {
+                    totalLevels = data.totalLevels;
+
+                    // 数据未就绪：显示占位信息
+                    if (totalLevels === 0 || data.levels.length === 0) {
+                        var container = document.getElementById('levelMap');
+                        container.innerHTML = '<div style="text-align:center;padding:60px 20px;color:var(--text-secondary)">' +
+                            '<div style="font-size:4rem;margin-bottom:15px;">📚</div>' +
+                            '<h3 style="margin-bottom:10px;color:var(--text-color)">' + config.label + ' · 即将上线</h3>' +
+                            '<p>该等级的游戏内容正在准备中，请先挑战已开放的等级！</p>' +
+                            '</div>';
+                        levels = [];
+                        totalLevels = 0;
+                        currentGrade = gradeKey;
+                        updateStatsSidebar();
+                        return;
+                    }
+
+                    // 深拷贝关卡数据并初始化运行时状态
+                    levels = data.levels.map(function(l) {
+                        return Object.assign({}, l, {
+                            unlocked: true,
+                            completed: false,
+                            progress: 0
+                        });
+                    });
+
+                    // 首关默认解锁
+                    if (levels.length > 0) {
+                        levels[0].unlocked = true;
+                    }
+
+                    // 加载该等级的保存进度
+                    var saved = loadProgress(gradeKey);
+                    applyProgress(saved);
+
+                    currentGrade = gradeKey;
+
+                    // 重新渲染
+                    renderLevels();
+                })
+                .catch(function(err) {
+                    console.error('加载等级数据失败:', err);
+                    // 显示占位信息
+                    var container = document.getElementById('levelMap');
+                    container.innerHTML = '<div style="text-align:center;padding:60px 20px;color:var(--text-secondary)">' +
+                        '<div style="font-size:4rem;margin-bottom:15px;">📚</div>' +
+                        '<h3 style="margin-bottom:10px;color:var(--text-color)">' + config.label + ' · 即将上线</h3>' +
+                        '<p>该等级的游戏内容正在准备中，请先挑战已开放的等级！</p>' +
+                        '</div>';
+                    // 清空levels防止误操作
+                    levels = [];
+                    totalLevels = 0;
+                    updateStatsSidebar();
+                });
+        }
+
+        // ===== 切换等级 =====
+        function switchGrade(gradeKey) {
+            if (gradeKey === currentGrade) return;
+            loadGradeData(gradeKey);
+        }
+
+        // ===== 星星背景 =====
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 30; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.innerHTML = ['⭐', '✨', '🌟', '💫'][Math.floor(Math.random() * 4)];
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                star.style.fontSize = (15 + Math.random() * 15) + 'px';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // ===== 更新右侧状态栏 =====
+        function updateStatsSidebar() {
+            var total = totalLevels || levels.length;
+            const completed = levels.filter(function(l) { return l.completed; }).length;
+            const totalStars = completed * 3;
+            const maxStars = total * 3;
+            const currentLevelNum = completed < total ? completed + 1 : total;
+            const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+            // 得分统计
+            document.getElementById('sidebarCompleted').textContent = completed + '/' + total;
+            document.getElementById('sidebarStars').textContent = totalStars + '/' + maxStars;
+            document.getElementById('sidebarCurrent').textContent = completed >= total && total > 0 ? '全部通关！' : '第' + currentLevelNum + '关';
+            document.getElementById('progressPercentage').textContent = percentage + '%';
+            document.getElementById('progressFill').style.width = percentage + '%';
+
+            // 关卡状态列表
+            const statusList = document.getElementById('levelStatusList');
+            statusList.innerHTML = levels.map((level, i) => {
+                let statusClass, dotColor, statusText;
+                if (level.completed) {
+                    statusClass = 'completed';
+                    dotColor = '#4CAF50';
+                    statusText = '✅ 已通关';
+                } else if (level.unlocked && i === completed) {
+                    statusClass = 'current';
+                    dotColor = '#00a2ff';
+                    statusText = '🔓 进行中';
+                } else if (level.unlocked) {
+                    statusClass = '';
+                    dotColor = '#a0aec0';
+                    statusText = '已解锁';
+                } else {
+                    statusClass = '';
+                    dotColor = '#555';
+                    statusText = '🔒 未解锁';
+                }
+                return '<div class="level-status-item ' + statusClass + '">' +
+                    '<span class="level-status-dot" style="background:' + dotColor + '"></span>' +
+                    '<span class="level-status-name">第' + level.id + '关 ' + level.title + '</span>' +
+                    '<span class="level-status-tag">' + statusText + '</span>' +
+                    '</div>';
+            }).join('');
+
+            // 通关信息
+            const passFailDiv = document.getElementById('passFailInfo');
+            if (total === 0) {
+                passFailDiv.innerHTML = '<p>该等级数据暂未开放，敬请期待！📚</p>';
+            } else if (completed === 0) {
+                passFailDiv.innerHTML = '<p>还没有通关记录，开始挑战吧！💪</p>';
+            } else if (completed === total) {
+                passFailDiv.innerHTML = '<p style="color:var(--success);font-weight:600;">🎉 恭喜！全部 <strong>' + total + '</strong> 关已通关！<br>你是数学小达人！🏆</p>';
+            } else {
+                passFailDiv.innerHTML = '<p>已通关 <strong style="color:var(--success);">' + completed + '</strong> 关，还剩 <strong style="color:var(--primary);">' + (total - completed) + '</strong> 关，继续加油！🔥</p>';
+            }
+        }
+
+        // ===== 渲染关卡卡片 =====
+        function renderLevels() {
+            const container = document.getElementById('levelMap');
+            container.innerHTML = '';
+
+            levels.forEach((level, index) => {
+                const card = document.createElement('div');
+                card.className = 'level-card level-' + level.id +
+                    (level.unlocked ? '' : ' locked') +
+                    (level.completed ? ' completed-card' : '');
+
+                const badgeClass = level.completed ? 'completed' : (level.unlocked ? 'unlocked' : 'locked-badge');
+                const badgeIcon = level.completed ? '✓' : level.id;
+
+                const btnClass = level.completed ? 'review-btn' : '';
+                const btnText = level.completed ? '🎉 再复习' : (level.unlocked ? '🚀 开始闯关' : '🔒 需先通关上一关');
+
+                const progressBarClass = level.completed ? 'completed-bar' : '';
+                const progressTextClass = level.completed ? 'completed-text' : '';
+                const progressText = level.completed ? '✅ 已通关' : (level.unlocked ? '🔓 已解锁' : '🔒 未解锁');
+
+                card.innerHTML =
+                    '<div class="level-badge ' + badgeClass + '">' + badgeIcon + '</div>' +
+                    '<div class="level-icon">' + level.icon + '</div>' +
+                    '<h3 class="level-title">第' + level.id + '关：' + level.title + '</h3>' +
+                    '<p class="level-desc">' + level.desc + '</p>' +
+                    '<div class="level-progress-container">' +
+                        '<div class="level-progress-bar ' + progressBarClass + '" style="width: ' + (level.completed ? 100 : level.progress) + '%"></div>' +
+                    '</div>' +
+                    '<p class="level-progress-text ' + progressTextClass + '">' + progressText + '</p>' +
+                    '<div class="knowledge-preview">' +
+                        '<h4>📚 知识点预览</h4>' +
+                        '<div class="knowledge-tags">' +
+                            level.knowledge.slice(0, 3).map(function(k) {
+                                return '<span class="knowledge-tag">' + (k.title.split(' ')[1] || k.title) + '</span>';
+                            }).join('') +
+                            (level.knowledge.length > 3 ? '<span class="knowledge-tag">+' + (level.knowledge.length - 3) + '</span>' : '') +
+                        '</div>' +
+                    '</div>' +
+                    '<button class="start-btn ' + btnClass + '" ' + (!level.unlocked ? 'disabled' : '') + '>' + btnText + '</button>';
+
+                // 整张卡片点击打开关卡
+                card.addEventListener('click', function(e) {
+                    // 如果点的是按钮，按钮自己处理（但我们也委托给 openLevel）
+                    openLevel(index);
+                });
+
+                container.appendChild(card);
+            });
+
+            // 更新右侧状态栏
+            updateStatsSidebar();
+        }
+
+        // ===== 打开关卡详情弹窗 =====
+        function openLevel(index) {
+            const level = levels[index];
+            if (!level.unlocked) return;
+
+            currentLevelIndex = index;
+            quizAnswers = {};
+            quizScore = 0;
+
+            document.getElementById('modalIcon').textContent = level.icon;
+            document.getElementById('modalTitle').textContent = '第' + level.id + '关：' + level.title;
+
+            var bodyHTML = '';
+
+            // 知识卡片
+            bodyHTML += '<div class="knowledge-grid">' +
+                level.knowledge.map(function(k) {
+                    return '<div class="knowledge-card">' +
+                        '<h4>' + k.title + '</h4>' +
+                        '<p>' + k.content + '</p>' +
+                        '<div class="example">💡 ' + k.example + '</div>' +
+                        '</div>';
+                }).join('') +
+                '</div>';
+
+            // 公式
+            if (level.formulas.length > 0) {
+                bodyHTML += '<div class="formula-box">' +
+                    '<h3>📐 重要公式</h3>' +
+                    level.formulas.map(function(f) { return '<span class="formula-item">' + f + '</span>'; }).join('') +
+                    '</div>';
+            }
+
+            // 核心要点
+            bodyHTML += '<div class="key-points">' +
+                '<h3>🎯 核心要点（记住这些就能通关！）</h3>' +
+                '<ul>' +
+                level.keyPoints.map(function(p) { return '<li>' + p + '</li>'; }).join('') +
+                '</ul>' +
+                '</div>';
+
+            // 练习题
+            bodyHTML += '<div class="quiz-section">' +
+                '<h3>闯关练习题（答对所有题目才能通关哦！）</h3>' +
+                level.quizzes.map(function(q, qIndex) {
+                    return '<div class="quiz-item" id="quiz-' + qIndex + '">' +
+                        '<div class="quiz-question">' +
+                            '<span class="q-num">' + (qIndex + 1) + '</span>' + q.question +
+                        '</div>' +
+                        '<div class="quiz-options" id="options-' + qIndex + '">' +
+                            q.options.map(function(opt, optIndex) {
+                                return '<div class="quiz-option" onclick="selectAnswer(' + qIndex + ', ' + optIndex + ', ' + q.answer + ')">' + opt + '</div>';
+                            }).join('') +
+                        '</div>' +
+                        '<div class="quiz-feedback" id="feedback-' + qIndex + '"></div>' +
+                        '</div>';
+                }).join('') +
+                '<div class="quiz-result" id="quizResult"></div>' +
+                '</div>';
+
+            document.getElementById('modalBody').innerHTML = bodyHTML;
+            document.getElementById('modalOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // ===== 选择答案 =====
+        function selectAnswer(qIndex, selectedIndex, correctIndex) {
+            if (quizAnswers[qIndex] !== undefined) return;
+
+            quizAnswers[qIndex] = selectedIndex;
+
+            const optionsDiv = document.getElementById('options-' + qIndex);
+            const options = optionsDiv.querySelectorAll('.quiz-option');
+            const feedbackDiv = document.getElementById('feedback-' + qIndex);
+
+            options.forEach(function(opt) { opt.classList.add('disabled'); });
+            options[correctIndex].classList.add('correct');
+
+            if (selectedIndex === correctIndex) {
+                quizScore++;
+                feedbackDiv.className = 'quiz-feedback correct-fb show';
+                feedbackDiv.innerHTML = '🎉 答对了！你真棒！';
+            } else {
+                options[selectedIndex].classList.add('wrong');
+                feedbackDiv.className = 'quiz-feedback wrong-fb show';
+                feedbackDiv.innerHTML = '😅 答错了！正确答案是：' + options[correctIndex].textContent.trim();
+            }
+
+            const level = levels[currentLevelIndex];
+            if (Object.keys(quizAnswers).length === level.quizzes.length) {
+                setTimeout(function() { showQuizResult(); }, 500);
+            }
+        }
+
+        // ===== 显示闯关结果 =====
+        function showQuizResult() {
+            const level = levels[currentLevelIndex];
+            const resultDiv = document.getElementById('quizResult');
+            const totalQuestions = level.quizzes.length;
+
+            if (quizScore === totalQuestions) {
+                resultDiv.className = 'quiz-result pass show';
+                resultDiv.innerHTML =
+                    '<h4>🎊 恭喜通关！</h4>' +
+                    '<p>你答对了全部 ' + totalQuestions + '/' + totalQuestions + ' 道题！</p>' +
+                    '<p>🌟 获得 3 颗星！</p>' +
+                    '<button class="result-btn" onclick="completeLevel(' + currentLevelIndex + ')">✨ 领取奖励，标记通关！</button>';
+            } else {
+                resultDiv.className = 'quiz-result fail show';
+                resultDiv.innerHTML =
+                    '<h4>💪 继续加油！</h4>' +
+                    '<p>你答对了 ' + quizScore + '/' + totalQuestions + ' 道题</p>' +
+                    '<p>需要全部答对才能通关哦~ 再复习一下知识点吧！</p>' +
+                    '<button class="result-btn" onclick="retryQuiz()">🔄 重新挑战</button>';
+            }
+        }
+
+        // ===== 重新挑战 =====
+        function retryQuiz() {
+            openLevel(currentLevelIndex);
+        }
+
+        // ===== 关闭弹窗 =====
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+            currentLevelIndex = -1;
+        }
+
+        // ===== 完成关卡 =====
+        function completeLevel(index) {
+            if (!levels[index].completed) {
+                levels[index].completed = true;
+                levels[index].progress = 100;
+
+                if (index + 1 < levels.length) {
+                    levels[index + 1].unlocked = true;
+                }
+
+                // 保存进度到 localStorage
+                saveProgress(currentGrade);
+
+                createConfetti();
+
+                setTimeout(function() {
+                    renderLevels();
+                    closeModal();
+                }, 1000);
+            } else {
+                closeModal();
+            }
+        }
+
+        // ===== 彩纸效果 =====
+        function createConfetti() {
+            const colors = ['#FF6B6B', '#4ECDC4', '#FFE66D', '#9B59B6', '#F39C12', '#1ABC9C', '#4CAF50'];
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                confetti.style.animationDuration = (2 + Math.random() * 2) + 's';
+                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                document.body.appendChild(confetti);
+
+                setTimeout(function() { confetti.remove(); }, 4000);
+            }
+        }
+
+        // ===== 弹窗关闭事件 =====
+        document.getElementById('modalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // ===== 初始化 =====
+        function init() {
+            syncThemeFromIndex();
+            setupHomeLink('homeLink', 'game.html');
+            initLearningAssistant();
+            if (typeof applyAssistantSettings === 'function') applyAssistantSettings();
+        }
+
+        (function() {
+            var NAV_CONFIG = [
+                { page: 'mathGame', icon: 'fa-calculator', label: '数学闯关', active: true },
+            ];
+            injectNav(NAV_CONFIG);
+            injectFooter();
+            injectAssistant();
+            init();
+            createStars();
+
+            // 恢复上次选择的等级
+            var savedGrade = localStorage.getItem('mathGameCurrentGrade') || 'grade3b';
+            document.getElementById('gradeSelect').value = savedGrade;
+            currentGrade = savedGrade;
+
+            // 加载等级数据
+            loadGradeData(savedGrade);
+
+            // 等级切换事件
+            document.getElementById('gradeSelect').addEventListener('change', function() {
+                var newGrade = this.value;
+                localStorage.setItem('mathGameCurrentGrade', newGrade);
+                switchGrade(newGrade);
+            });
+        })();
+    </script>
+</body>
+</html>
