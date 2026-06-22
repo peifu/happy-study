@@ -199,24 +199,6 @@
             </div>
         </div>
 
-        <!-- 单词消消乐内部页面 -->
-        <div class="page" id="wordMatchPage">
-            <h1 class="main-title">🧩 单词消消乐</h1>
-            <div class="games-grid">
-                <div class="game-card word-card" style="cursor: default;">
-                    <div class="game-icon">
-                        <i class="fas fa-puzzle-piece"></i>
-                    </div>
-                    <h2 class="game-name">单词消消乐</h2>
-                    <p class="game-desc">匹配英文单词与中文释义，消除方块获取高分！</p>
-                    <p class="game-desc" style="margin-top: 10px; color: var(--text-secondary); font-size: 13px;">
-                        🚧 正在建设中，敬请期待...
-                    </p>
-                    <span class="game-badge">🧩 即将上线</span>
-                </div>
-            </div>
-        </div>
-
         <!-- 游戏世界内部页面 -->
         <div class="page" id="gameWorldPage">
             <h1 class="main-title">🌍 游戏世界</h1>
@@ -257,7 +239,7 @@
             });
 
             document.getElementById('wordMatchCard').addEventListener('click', function() {
-                switchPage('wordMatch');
+                window.location.href = 'game-english.html';
             });
 
             document.getElementById('mathGameCard').addEventListener('click', function() {
@@ -277,8 +259,9 @@
             }
         }
 
-        // 外部页面URL映射
-        const EXTERNAL_PAGES = {};
+        const EXTERNAL_PAGES = {
+            wordMatch: 'game-english.html'
+        };
 
         function switchPage(pageId) {
             if (EXTERNAL_PAGES[pageId]) {

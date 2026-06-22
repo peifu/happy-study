@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>快乐学习 - 单词消消乐</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/common.css">
+    <link rel="stylesheet" href="assets/css/learning-assistant.css">
+    <style>
+        /* Page-specific overrides */
+        :root {
+            --progress-bg: rgba(255, 255, 255, 0.1);
+            --progress-fill: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        body.light-theme {
+            --bg-color: #f5f7fa;
+            --text-color: #2d3748;
+            --card-bg-color: rgba(255, 255, 255, 0.95);
+            --text-secondary: #718096;
+            --darker: #e2e8f0;
+            --dark: #edf2f7;
+            --primary: #3182ce;
+            --secondary: #38a169;
+            --accent: #e53e3e;
+            --success: #38a169;
+            --warning: #d69e2e;
+            --info: #3182ce;
+            --progress-bg: rgba(0, 0, 0, 0.1);
+            --progress-fill: linear-gradient(90deg, #3182ce, #38a169);
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .game-header h2 {
+            color: var(--primary);
+            font-size: 28px;
+            margin: 0;
+        }
+
+        .game-info {
+            display: flex;
+            gap: 20px;
+            color: var(--text-secondary);
+        }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+            min-height: 400px;
+        }
+
+        .game-tile {
+            background: var(--card-bg-color);
+            border-radius: 12px;
+            padding: 15px;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            user-select: none;
+            text-align: center;
+            font-weight: 600;
+            color: var(--text-color);
+            border: 2px solid var(--border-subtle);
+            transition: all 0.3s ease;
+            font-size: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-tile:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            border-color: var(--primary);
+        }
+
+        .game-tile.en {
+            background: linear-gradient(135deg, var(--primary), #4a90e2);
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .game-tile.cn {
+            background: linear-gradient(135deg, var(--secondary), #38b2ac);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .game-tile.matched {
+            opacity: 0;
+            transform: scale(0.8);
+            pointer-events: none;
+        }
+
+        .game-tile.selected {
+            border-color: var(--accent);
+            box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+            transform: scale(1.05);
+            background: var(--accent);
+            color: white;
+        }
+
+        .game-tile.connected {
+            animation: connectPulse 0.5s ease-out;
+        }
+
+        @keyframes connectPulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7); }
+            50% { transform: scale(1.1); box-shadow: 0 0 0 15px rgba(76, 175, 80, 0); }
+            100% { transform: scale(1); }
+        }
+
+        .lightning-effect {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        @keyframes lightningPulse {
+            0% { opacity: 1; filter: drop-shadow(0 0 8px #00f7ff); }
+            50% { opacity: 0.8; filter: drop-shadow(0 0 15px #00f7ff); }
+            100% { opacity: 0; filter: drop-shadow(0 0 5px #00f7ff); }
+        }
+
+        .game-tile::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .game-tile:hover::before { opacity: 1; }
+
+        .game-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .game-controls .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .game-status-container {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .game-status {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            font-size: 16px;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .compact-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .compact-stat-card {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 10px 5px;
+            text-align: center;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .compact-stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 3px;
+        }
+
+        .compact-stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .game-grid { grid-template-columns: repeat(3, 1fr); }
+            .game-tile { min-height: 80px; padding: 10px; font-size: 14px; }
+            .game-tile.en { font-size: 16px; }
+            .game-tile.cn { font-size: 14px; }
+        }
+
+        @media (max-width: 480px) {
+            .game-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page active" id="gamePage">
+            <h1 class="main-title">🧩 单词消消乐</h1>
+            <div class="main-content">
+                <!-- 游戏区域 -->
+                <div class="word-card" style="background:var(--card-bg-color);border-radius:16px;padding:25px;border:1px solid var(--border-card);position:relative;overflow:hidden;">
+                    <div class="game-header">
+                        <h2>匹配单词</h2>
+                    </div>
+                    <div class="game-grid" id="gameGrid" style="display:flex;align-items:center;justify-content:center;">
+                        <div style="display:flex;align-items:center;justify-content:center;min-height:400px;color:var(--text-secondary);font-size:1.5rem;flex-direction:column;gap:15px;">
+                            <div style="font-size:4rem;">🎮</div>
+                            <div>请开始闯关！</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 游戏控制区域 -->
+                <div class="progress-container">
+                    <div class="progress-title">
+                        <i class="fas fa-info-circle"></i>
+                        <span>游戏状态</span>
+                    </div>
+                    <div class="control-group">
+                        <div class="game-status" id="gameStatus">准备就绪</div>
+
+                        <div class="stats">
+                            <div class="stat-card">
+                                <div class="stat-value" id="gameScore">0</div>
+                                <div class="stat-label">得分</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="currentLevel">1</div>
+                                <div class="stat-label">关卡</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="gameTime">00:00</div>
+                                <div class="stat-label">游戏时间</div>
+                            </div>
+                        </div>
+
+                        <div class="progress-bar-container">
+                            <div class="progress-info">
+                                <span>游戏进度</span>
+                                <span id="gamePairsInfo">0 / 0</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="gameProgressFill"></div>
+                            </div>
+                        </div>
+
+                        <div class="progress-title">
+                            <i class="fas fa-book"></i>
+                            <span>游戏词汇</span>
+                        </div>
+                        <select class="form-control" id="gameBookSelector"></select>
+
+                        <div class="progress-title">
+                            <i class="fas fa-trophy"></i>
+                            <span>游戏控制</span>
+                        </div>
+                        <div class="game-controls">
+                            <button class="btn btn-success" id="startGameBtn">
+                                <i class="fas fa-play"></i>
+                                <span>开始闯关</span>
+                            </button>
+                            <button class="btn btn-warning" id="pauseGameBtn" disabled>
+                                <i class="fas fa-pause"></i>
+                                <span>暂停游戏</span>
+                            </button>
+                            <button class="btn btn-primary" id="restartGameBtn" disabled>
+                                <i class="fas fa-redo"></i>
+                                <span>重新开始</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/learning-assistant.js"></script>
+    <script src="assets/js/common.js"></script>
+    <script>
+        // ===== 数据 =====
+        let wordLists = {};
+        let currentBook = 'grade3a';
+        let bookIndex = null;
+
+        // ===== 游戏状态 =====
+        let gamePairs = [];
+        let firstTile = null;
+        let secondTile = null;
+        let matchedCount = 0;
+        let totalPairs = 0;
+        let gameActive = false;
+        let currentGameScore = 0;
+        let gameWrongStreak = 0;
+        let selectedWordsForGame = [];
+        let gameTimer = null;
+        let gameTime = 0;
+        let gameLives = 3;
+        let currentLevel = 1;
+
+        // DOM元素
+        const gameGridElement = document.getElementById('gameGrid');
+        const gameScoreElement = document.getElementById('gameScore');
+        const gameTimeElement = document.getElementById('gameTime');
+        const gameLivesElement = document.getElementById('gameLives');
+        const gameStatusElement = document.getElementById('gameStatus');
+        const gamePairsInfoElement = document.getElementById('gamePairsInfo');
+        const currentLevelElement = document.getElementById('currentLevel');
+        const gameBookSelectorElement = document.getElementById('gameBookSelector');
+        const startGameBtnElement = document.getElementById('startGameBtn');
+        const pauseGameBtnElement = document.getElementById('pauseGameBtn');
+        const restartGameBtnElement = document.getElementById('restartGameBtn');
+
+        // ===== 数据加载 =====
+        async function loadBookIndex() {
+            try {
+                const resp = await fetch('data/english/book-index.json');
+                bookIndex = await resp.json();
+            } catch (e) {
+                console.error('加载单词本索引失败:', e);
+                return;
+            }
+            if (gameBookSelectorElement) {
+                gameBookSelectorElement.innerHTML = '';
+                bookIndex.forEach(function(entry) {
+                    var opt = document.createElement('option');
+                    opt.value = entry.id;
+                    opt.textContent = entry.title;
+                    gameBookSelectorElement.appendChild(opt);
+                });
+                gameBookSelectorElement.value = currentBook;
+            }
+        }
+
+        async function loadWordData(book) {
+            if (!book) book = currentBook;
+            if (wordLists[book] && wordLists[book].length > 0) return;
+            try {
+                var resp = await fetch('data/english/english-wordlist-' + book + '.json');
+                if (!resp.ok) throw new Error('HTTP ' + resp.status);
+                var data = await resp.json();
+                wordLists[book] = data.words || data;
+            } catch (e) {
+                console.error('加载单词数据失败:', book, e);
+                wordLists[book] = [];
+            }
+        }
+
+        // ===== 分数管理 =====
+        function loadGameScore(book) {
+            var raw = localStorage.getItem('gameScore_' + book);
+            return raw ? parseInt(raw, 10) || 0 : 0;
+        }
+
+        function saveGameScore(book, score) {
+            localStorage.setItem('gameScore_' + book, String(score));
+        }
+
+        // ===== 工具函数 =====
+        function shuffleArray(arr) {
+            for (var i = arr.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+            }
+            return arr;
+        }
+
+        // ===== 语音 =====
+        function speakWordText(text) {
+            if (!text) return;
+            var u = new SpeechSynthesisUtterance(text);
+            u.lang = 'en-US';
+            u.rate = parseFloat(localStorage.getItem('speechRateEn') || '1.0');
+            u.pitch = parseFloat(localStorage.getItem('speechPitchEn') || '1.0');
+            speechSynthesis.cancel();
+            speechSynthesis.speak(u);
+        }
+
+        // ===== 游戏核心 =====
+        function renderGamePlaceholder() {
+            if (gameGridElement) {
+                gameGridElement.style.display = 'flex';
+                gameGridElement.style.alignItems = 'center';
+                gameGridElement.style.justifyContent = 'center';
+                gameGridElement.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;min-height:400px;color:var(--text-secondary);font-size:1.5rem;flex-direction:column;gap:15px;">' +
+                    '<div style="font-size:4rem;">🎮</div>' +
+                    '<div>请开始闯关！</div>' +
+                    '</div>';
+            }
+            if (gamePairsInfoElement) gamePairsInfoElement.textContent = '0 / 0';
+            if (currentLevelElement) currentLevelElement.textContent = '1';
+        }
+
+        async function startGame() {
+            var selectedBook = gameBookSelectorElement ? gameBookSelectorElement.value : (currentBook || 'grade3a');
+            await loadWordData(selectedBook);
+            var list = wordLists[selectedBook] || [];
+
+            if (!list || list.length === 0) {
+                if (gameGridElement) gameGridElement.innerHTML = '<div class="stat-card">当前单词本没有数据</div>';
+                return;
+            }
+
+            var pairCount = Math.min(10, Math.floor(list.length));
+            totalPairs = pairCount;
+            matchedCount = 0;
+            firstTile = null;
+            secondTile = null;
+            gameWrongStreak = 0;
+            gameActive = true;
+            gameTime = 0;
+            gameLives = 3;
+
+            var indices = shuffleArray(Array.from({ length: list.length }, function(_, i) { return i; })).slice(0, pairCount);
+            selectedWordsForGame = indices.map(function(i) { return list[i]; });
+
+            gamePairs = [];
+            for (var i = 0; i < selectedWordsForGame.length; i++) {
+                var w = selectedWordsForGame[i];
+                var chineseMeaning = w.meaning.replace(/^[a-z]+\.[\s]*/, '');
+                gamePairs.push({ id: i, type: 'en', text: w.word });
+                gamePairs.push({ id: i, type: 'cn', text: chineseMeaning });
+            }
+
+            renderGameGrid();
+
+            currentGameScore = loadGameScore(selectedBook);
+            if (gameScoreElement) gameScoreElement.textContent = currentGameScore;
+            if (gamePairsInfoElement) gamePairsInfoElement.textContent = matchedCount + ' / ' + totalPairs;
+            if (gameStatusElement) gameStatusElement.textContent = '游戏进行中';
+            if (gameLivesElement) gameLivesElement.textContent = gameLives;
+            if (currentLevelElement) currentLevelElement.textContent = currentLevel.toString();
+
+            startGameBtnElement.disabled = true;
+            pauseGameBtnElement.disabled = false;
+            restartGameBtnElement.disabled = false;
+
+            startGameTimer();
+        }
+
+        function renderGameGrid() {
+            if (!gameGridElement) return;
+            gameGridElement.style.display = '';
+            gameGridElement.style.alignItems = '';
+            gameGridElement.style.justifyContent = '';
+            gameGridElement.innerHTML = '';
+
+            var shuffledPairs = gamePairs.slice();
+            for (var i = shuffledPairs.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var tmp = shuffledPairs[i]; shuffledPairs[i] = shuffledPairs[j]; shuffledPairs[j] = tmp;
+            }
+
+            shuffledPairs.forEach(function(tileData, idx) {
+                var tile = document.createElement('div');
+                tile.className = 'game-tile ' + tileData.type;
+                tile.dataset.pairId = tileData.id;
+                tile.dataset.index = idx;
+                tile.dataset.text = tileData.text;
+                tile.textContent = tileData.text;
+
+                tile.addEventListener('click', function() {
+                    handleTileClick(this, tileData);
+                });
+
+                gameGridElement.appendChild(tile);
+            });
+        }
+
+        function handleTileClick(tileEl, tileData) {
+            if (!gameActive) return;
+            if (tileEl.classList.contains('matched')) return;
+
+            if (tileEl.classList.contains('selected')) {
+                tileEl.classList.remove('selected');
+                if (firstTile && firstTile.el === tileEl) firstTile = null;
+                if (secondTile && secondTile.el === tileEl) secondTile = null;
+                return;
+            }
+
+            tileEl.classList.add('selected');
+
+            if (!firstTile) {
+                firstTile = { el: tileEl, data: tileData };
+                return;
+            }
+
+            if (firstTile.el === tileEl) return;
+
+            secondTile = { el: tileEl, data: tileData };
+
+            if (firstTile.data.id === secondTile.data.id && firstTile.data.type !== secondTile.data.type) {
+                // 正确匹配
+                createLightningEffect(firstTile.el, secondTile.el);
+
+                setTimeout(function() {
+                    firstTile.el.classList.add('matched');
+                    secondTile.el.classList.add('matched');
+                    firstTile.el.classList.remove('selected');
+                    secondTile.el.classList.remove('selected');
+                    firstTile.el.classList.add('connected');
+                    secondTile.el.classList.add('connected');
+
+                    var wordObj = selectedWordsForGame[firstTile.data.id];
+                    if (wordObj && wordObj.word) speakWordText(wordObj.word);
+
+                    currentGameScore += 10;
+                    var book = gameBookSelectorElement ? gameBookSelectorElement.value : currentBook;
+                    saveGameScore(book, currentGameScore);
+                    if (gameScoreElement) gameScoreElement.textContent = currentGameScore;
+
+                    matchedCount++;
+                    if (gamePairsInfoElement) gamePairsInfoElement.textContent = matchedCount + ' / ' + totalPairs;
+
+                    var progress = totalPairs > 0 ? (matchedCount / totalPairs) * 100 : 0;
+                    var gameProgressFill = document.getElementById('gameProgressFill');
+                    if (gameProgressFill) gameProgressFill.style.width = progress + '%';
+
+                    firstTile = null;
+                    secondTile = null;
+
+                    if (matchedCount >= totalPairs) {
+                        gameActive = false;
+                        stopGameTimer();
+                        if (gameStatusElement) gameStatusElement.textContent = '恭喜通关！得分 ' + currentGameScore;
+                        startGameBtnElement.disabled = false;
+
+                        setTimeout(function() {
+                            currentLevel++;
+                            startGame();
+                        }, 2000);
+                    }
+                }, 500);
+            } else {
+                // 错误匹配
+                gameWrongStreak++;
+                if (gameWrongStreak >= 3) {
+                    currentGameScore = Math.max(0, currentGameScore - 10);
+                    var book = gameBookSelectorElement ? gameBookSelectorElement.value : currentBook;
+                    saveGameScore(book, currentGameScore);
+                    if (gameScoreElement) gameScoreElement.textContent = currentGameScore;
+                    gameWrongStreak = 0;
+                    if (gameStatusElement) gameStatusElement.textContent = '连续三次匹配错误，扣除10分';
+                } else {
+                    if (gameStatusElement) gameStatusElement.textContent = '匹配错误（连续 ' + gameWrongStreak + ' 次）';
+                }
+
+                setTimeout(function() {
+                    var allTiles = document.querySelectorAll('.game-tile');
+                    allTiles.forEach(function(tile) { tile.classList.remove('selected'); });
+                    firstTile = null;
+                    secondTile = null;
+                }, 1000);
+            }
+        }
+
+        function createLightningEffect(element1, element2) {
+            var rect1 = element1.getBoundingClientRect();
+            var rect2 = element2.getBoundingClientRect();
+            var scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+            var scrollY = window.pageYOffset || document.documentElement.scrollTop;
+
+            var x1 = rect1.left + rect1.width / 2 + scrollX;
+            var y1 = rect1.top + rect1.height / 2 + scrollY;
+            var x2 = rect2.left + rect2.width / 2 + scrollX;
+            var y2 = rect2.top + rect2.height / 2 + scrollY;
+
+            var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.classList.add('lightning-effect');
+
+            var minX = Math.min(x1, x2), minY = Math.min(y1, y2);
+            var maxX = Math.max(x1, x2), maxY = Math.max(y1, y2);
+            var padding = 30;
+
+            svg.style.position = 'absolute';
+            svg.style.left = (minX - padding) + 'px';
+            svg.style.top = (minY - padding) + 'px';
+            svg.style.width = (maxX - minX + padding * 2) + 'px';
+            svg.style.height = (maxY - minY + padding * 2) + 'px';
+            svg.style.pointerEvents = 'none';
+            svg.style.zIndex = '1000';
+
+            var innerLine = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            var outerLine = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+
+            var distance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+            var segments = Math.max(5, Math.floor(distance / 50));
+            var pathData = 'M ' + (x1 - minX + padding) + ' ' + (y1 - minY + padding);
+
+            for (var i = 1; i < segments; i++) {
+                var ratio = i / segments;
+                var cx = x1 + (x2 - x1) * ratio;
+                var cy = y1 + (y2 - y1) * ratio;
+                var offset = (Math.random() - 0.5) * 40;
+                var angle = Math.atan2(y2 - y1, x2 - x1) + Math.PI / 2;
+                pathData += ' L ' + (cx - minX + padding + Math.cos(angle) * offset) + ' ' + (cy - minY + padding + Math.sin(angle) * offset);
+            }
+            pathData += ' L ' + (x2 - minX + padding) + ' ' + (y2 - minY + padding);
+
+            innerLine.setAttribute('d', pathData);
+            innerLine.setAttribute('stroke', '#ff0000');
+            innerLine.setAttribute('stroke-width', '4');
+            innerLine.setAttribute('fill', 'none');
+            innerLine.style.filter = 'drop-shadow(0 0 10px #ff0000)';
+
+            outerLine.setAttribute('d', pathData);
+            outerLine.setAttribute('stroke', '#ffffff');
+            outerLine.setAttribute('stroke-width', '8');
+            outerLine.setAttribute('fill', 'none');
+            outerLine.style.filter = 'drop-shadow(0 0 15px #ffffff)';
+
+            innerLine.style.animation = 'lightningPulse 0.3s ease-out';
+            outerLine.style.animation = 'lightningPulse 0.3s ease-out';
+
+            svg.appendChild(outerLine);
+            svg.appendChild(innerLine);
+            document.body.appendChild(svg);
+
+            setTimeout(function() {
+                if (svg.parentNode) svg.parentNode.removeChild(svg);
+            }, 300);
+        }
+
+        // ===== 计时器 =====
+        function startGameTimer() {
+            gameTimer = setInterval(function() {
+                gameTime++;
+                var minutes = Math.floor(gameTime / 60).toString().padStart(2, '0');
+                var seconds = (gameTime % 60).toString().padStart(2, '0');
+                if (gameTimeElement) gameTimeElement.textContent = minutes + ':' + seconds;
+            }, 1000);
+        }
+
+        function stopGameTimer() {
+            if (gameTimer) { clearInterval(gameTimer); gameTimer = null; }
+        }
+
+        // ===== 控制按钮 =====
+        function togglePauseGame() {
+            if (!gameActive && pauseGameBtnElement.innerHTML.includes('继续游戏')) {
+                gameActive = true;
+                startGameTimer();
+                if (gameStatusElement) gameStatusElement.textContent = '游戏继续';
+                pauseGameBtnElement.innerHTML = '<i class="fas fa-pause"></i><span>暂停游戏</span>';
+                return;
+            }
+            if (!gameActive) return;
+            gameActive = !gameActive;
+            if (gameActive) {
+                startGameTimer();
+                if (gameStatusElement) gameStatusElement.textContent = '游戏继续';
+                pauseGameBtnElement.innerHTML = '<i class="fas fa-pause"></i><span>暂停游戏</span>';
+            } else {
+                stopGameTimer();
+                if (gameStatusElement) gameStatusElement.textContent = '游戏暂停';
+                pauseGameBtnElement.innerHTML = '<i class="fas fa-play"></i><span>继续游戏</span>';
+            }
+        }
+
+        function restartGame() {
+            gameActive = false;
+            stopGameTimer();
+            matchedCount = 0;
+            firstTile = null;
+            secondTile = null;
+            gameWrongStreak = 0;
+            gameTime = 0;
+            gameLives = 3;
+            currentLevel = 1;
+            currentGameScore = 0;
+            var book = gameBookSelectorElement ? gameBookSelectorElement.value : currentBook;
+            saveGameScore(book, currentGameScore);
+            if (gameScoreElement) gameScoreElement.textContent = currentGameScore;
+            if (gameTimeElement) gameTimeElement.textContent = '00:00';
+            if (gameLivesElement) gameLivesElement.textContent = gameLives.toString();
+            if (currentLevelElement) currentLevelElement.textContent = currentLevel.toString();
+            if (gameStatusElement) gameStatusElement.textContent = '游戏已重置';
+            startGameBtnElement.disabled = false;
+            pauseGameBtnElement.disabled = true;
+            restartGameBtnElement.disabled = true;
+            renderGamePlaceholder();
+        }
+
+        function handleGameBookChange() {
+            var book = gameBookSelectorElement.value;
+            currentGameScore = loadGameScore(book);
+            if (gameScoreElement) gameScoreElement.textContent = currentGameScore;
+            if (gameStatusElement) gameStatusElement.textContent = '已切换单词本';
+        }
+
+        // ===== 初始化游戏页面 =====
+        function initGamePage() {
+            var savedGrade = localStorage.getItem('mathGameCurrentGrade') || null;
+            if (gameBookSelectorElement) {
+                gameBookSelectorElement.value = currentBook || 'grade3a';
+            }
+            var book = currentBook || 'grade3a';
+            currentGameScore = loadGameScore(book);
+            if (gameScoreElement) gameScoreElement.textContent = currentGameScore;
+            if (gameStatusElement) gameStatusElement.textContent = '准备就绪';
+            renderGamePlaceholder();
+            if (startGameBtnElement) startGameBtnElement.disabled = false;
+            if (pauseGameBtnElement) pauseGameBtnElement.disabled = true;
+            if (restartGameBtnElement) restartGameBtnElement.disabled = true;
+        }
+
+        // ===== 初始化 =====
+        function init() {
+            syncThemeFromIndex();
+            setupHomeLink('homeLink', 'game.html');
+            initLearningAssistant();
+            if (typeof applyAssistantSettings === 'function') applyAssistantSettings();
+        }
+
+        async function bootstrap() {
+            await loadBookIndex();
+            initGamePage();
+        }
+
+        // 事件绑定
+        if (startGameBtnElement) startGameBtnElement.addEventListener('click', startGame);
+        if (pauseGameBtnElement) pauseGameBtnElement.addEventListener('click', togglePauseGame);
+        if (restartGameBtnElement) restartGameBtnElement.addEventListener('click', restartGame);
+        if (gameBookSelectorElement) gameBookSelectorElement.addEventListener('change', handleGameBookChange);
+
+        (function() {
+            var NAV_CONFIG = [
+                { page: 'game', icon: 'fa-gamepad', label: '消消乐', active: true },
+            ];
+            injectNav(NAV_CONFIG);
+            injectFooter();
+            injectAssistant();
+            init();
+            bootstrap();
+        })();
+    </script>
+</body>
+</html>
