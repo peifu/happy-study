@@ -385,6 +385,7 @@
     <script>
         const NAV_CONFIG = [
             { page: 'math',  icon: 'fa-calculator', label: '数学概念', active: true },
+            { page: 'mathGame', icon: 'fa-gamepad', label: '数学闯关', active: false },
         ];
 
         // 数学概念数据
@@ -533,6 +534,14 @@
 
             // 导航链接
             setupNavLinks(navLinks, pages);
+
+            // 数学闯关导航
+            const mathGameLink = document.querySelector('[data-page="mathGame"]');
+            if (mathGameLink) {
+                mathGameLink.addEventListener('click', function() {
+                    window.location.href = 'game-math.html';
+                });
+            }
 
             // 主页链接
             setupHomeLink('homeLink', 'index.html');
