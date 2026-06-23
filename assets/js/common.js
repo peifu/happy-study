@@ -104,6 +104,16 @@ function injectFooter() {
 function injectAssistant() {
     const html = '<div class="learning-assistant" id="learningAssistant">' +
         '<img src="assets/logo/bear.png" alt="学习助手" class="assistant-image">' +
+        '<svg class="assistant-progress-ring" id="assistantProgressRing" viewBox="0 0 100 100">' +
+            '<defs>' +
+                '<linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">' +
+                    '<stop offset="0%" stop-color="#00f7ff" />' +
+                    '<stop offset="100%" stop-color="#ff5e62" />' +
+                '</linearGradient>' +
+            '</defs>' +
+            '<circle class="progress-ring-bg" cx="50" cy="50" r="44" />' +
+            '<circle class="progress-ring-fill" id="progressRingFill" cx="50" cy="50" r="44" />' +
+        '</svg>' +
         '<div class="assistant-name" id="assistantName">学习助手</div>' +
         '</div>' +
         '<div class="assistant-speech-bubble" id="assistantSpeechBubble">加油，你是最棒的！</div>';
