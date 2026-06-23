@@ -460,7 +460,16 @@ class LearningAssistant {
         var hadFloatAnimation = !!(savedAnimation && savedAnimation.indexOf('float') !== -1);
         this.assistant.style.animation = '';
 
-        // ① 旋转跳跃动画
+        // ① 随机庆祝动画
+        var anims = [
+            { name: 'celebrateJump',  duration: 0.6 },
+            { name: 'celebrateBounce', duration: 0.8 },
+            { name: 'celebrateFlip',   duration: 0.6 },
+            { name: 'celebrateShake',  duration: 0.5 },
+        ];
+        var anim = anims[Math.floor(Math.random() * anims.length)];
+        this.assistant.style.setProperty('--celebrate-anim', anim.name);
+        this.assistant.style.animationDuration = anim.duration + 's';
         this.assistant.classList.add('celebrating');
 
         // ② 粒子爆发（延迟50ms，与跳跃同步）
@@ -477,8 +486,11 @@ class LearningAssistant {
         this.playCelebrateAudio();
 
         // 动画结束后清理
+        var cleanupDelay = anim.duration * 1000;
         setTimeout(() => {
             this.assistant.classList.remove('celebrating');
+            this.assistant.style.removeProperty('--celebrate-anim');
+            this.assistant.style.animationDuration = '';
             // 还原 float 动画（如果之前有这个设置）
             if (hadFloatAnimation) {
                 this.assistant.style.animation = savedAnimation;
@@ -486,7 +498,7 @@ class LearningAssistant {
                 this.assistant.style.animation = '';
             }
             this.isCelebrating = false;
-        }, 600);
+        }, cleanupDelay);
 
         // 气泡自动隐藏
         setTimeout(() => {
