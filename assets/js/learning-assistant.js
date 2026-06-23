@@ -453,25 +453,18 @@ class LearningAssistant {
         if (this.isCelebrating) return;
         this.isCelebrating = true;
 
-        var self = this;
-
         // ★ 解决 inline animation 与 CSS class 冲突
         // updateAssistantUI() 在 floatAnimation 开启时设置了 inline style animation，
         // 这会覆盖 .celebrating 类添加的 celebrateJump 动画。此处暂时清除。
-        var hadFloatAnimation = false;
-        if (this.assistant.style.animation &&
-            this.assistant.style.animation.indexOf('float') !== -1) {
-            hadFloatAnimation = true;
-            this.assistant.style.animation = '';
-        }
+        var savedAnimation = this.assistant.style.animation;
+        var hadFloatAnimation = !!(savedAnimation && savedAnimation.indexOf('float') !== -1);
+        this.assistant.style.animation = '';
 
         // ① 旋转跳跃动画
         this.assistant.classList.add('celebrating');
 
         // ② 粒子爆发（延迟50ms，与跳跃同步）
-        setTimeout(function() {
-            if (typeof self.spawnParticles === 'function') { self.spawnParticles(); }
-        }, 50);
+        setTimeout(() => { this.spawnParticles(); }, 50);
 
         // ③ 气泡庆祝文字
         var phrase = this.celebratePhrases[Math.floor(Math.random() * this.celebratePhrases.length)];
@@ -481,25 +474,25 @@ class LearningAssistant {
         this.speechBubble.classList.add('show');
 
         // ④ 庆祝音效
-        if (typeof this.playCelebrateAudio === 'function') { this.playCelebrateAudio(); }
+        this.playCelebrateAudio();
 
         // 动画结束后清理
-        setTimeout(function() {
-            self.assistant.classList.remove('celebrating');
+        setTimeout(() => {
+            this.assistant.classList.remove('celebrating');
             // 还原 float 动画（如果之前有这个设置）
             if (hadFloatAnimation) {
-                self.assistant.style.animation = 'float 3s ease-in-out infinite';
+                this.assistant.style.animation = savedAnimation;
             } else {
-                self.assistant.style.animation = '';
+                this.assistant.style.animation = '';
             }
-            self.isCelebrating = false;
+            this.isCelebrating = false;
         }, 600);
 
         // 气泡自动隐藏
-        setTimeout(function() {
-            self.speechBubble.classList.remove('show');
-            setTimeout(function() {
-                self.speechBubble.style.display = 'none';
+        setTimeout(() => {
+            this.speechBubble.classList.remove('show');
+            setTimeout(() => {
+                this.speechBubble.style.display = 'none';
             }, 300);
         }, 2000);
     }
@@ -531,8 +524,7 @@ class LearningAssistant {
         document.body.appendChild(fragment);
 
         // 动画结束后清理 DOM
-        var self = this;
-        setTimeout(function() {
+        setTimeout(() => {
             var particles = document.querySelectorAll('.celebrate-particle');
             for (var p = 0; p < particles.length; p++) {
                 particles[p].remove();
@@ -550,16 +542,15 @@ class LearningAssistant {
         }
 
         var audio = new Audio('assets/audio/celebrate.mp3');
-        var self = this;
 
-        audio.addEventListener('canplaythrough', function() {
-            audio.play().catch(function() {
-                self.speakCelebratePhrase();
+        audio.addEventListener('canplaythrough', () => {
+            audio.play().catch(() => {
+                this.speakCelebratePhrase();
             });
         });
 
-        audio.addEventListener('error', function() {
-            self.speakCelebratePhrase();
+        audio.addEventListener('error', () => {
+            this.speakCelebratePhrase();
         });
 
         audio.load();
