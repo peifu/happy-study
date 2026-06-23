@@ -107,8 +107,9 @@ function injectAssistant() {
         '<svg class="assistant-progress-ring" id="assistantProgressRing" viewBox="0 0 100 100">' +
             '<defs>' +
                 '<linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">' +
-                    '<stop offset="0%" stop-color="#00f7ff" />' +
-                    '<stop offset="100%" stop-color="#ff5e62" />' +
+                    '<stop offset="0%" stop-color="#00e5ff" />' +
+                    '<stop offset="50%" stop-color="#7c4dff" />' +
+                    '<stop offset="100%" stop-color="#ff4081" />' +
                 '</linearGradient>' +
             '</defs>' +
             '<circle class="progress-ring-bg" cx="50" cy="50" r="44" />' +
