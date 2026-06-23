@@ -22,6 +22,9 @@ class LearningAssistant {
         ];
         this.isCelebrating = false;
         this.isGamePage = false;
+        this.progressPercent = 0;
+        this.progressRingFill = null;
+        this.progressRing = null;
     }
 
     // 初始化学习助手
@@ -30,6 +33,13 @@ class LearningAssistant {
 
         // 检测是否为游戏页面
         this.isGamePage = /game/i.test(window.location.pathname);
+
+        // 初始化进度环
+        this.progressRing = document.getElementById('assistantProgressRing');
+        this.progressRingFill = document.getElementById('progressRingFill');
+        if (this.isGamePage && this.progressRing) {
+            this.progressRing.classList.add('show');
+        }
 
         this.updateAssistantUI();
         this.restorePosition();
@@ -447,6 +457,42 @@ class LearningAssistant {
         
         speechSynthesis.speak(utterance);
     }
+
+    // 设置环形进度（0-100）
+    setProgress(percent) {
+        if (!this.progressRingFill) return;
+        percent = Math.max(0, Math.min(100, Math.round(percent)));
+        if (percent === this.progressPercent) return;
+        this.progressPercent = percent;
+
+        var circumference = 276.46;
+        var offset = circumference * (1 - percent / 100);
+        this.progressRingFill.style.strokeDashoffset = offset;
+
+        if (percent >= 100) {
+            this.progressRingFill.classList.add('complete');
+            // 自动触发庆祝
+            if (!this.isCelebrating) {
+                this.celebrate();
+            }
+        } else {
+            this.progressRingFill.classList.remove('complete');
+        }
+    },
+
+    // 获取当前进度
+    getProgress() {
+        return this.progressPercent;
+    },
+
+    // 重置进度
+    resetProgress() {
+        this.progressPercent = 0;
+        if (this.progressRingFill) {
+            this.progressRingFill.style.strokeDashoffset = '276.46';
+            this.progressRingFill.classList.remove('complete');
+        }
+    },
 
     // 庆祝效果（游戏页面专用）
     celebrate() {
