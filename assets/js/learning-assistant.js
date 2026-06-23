@@ -504,6 +504,79 @@ class LearningAssistant {
         }, 2000);
     }
 
+    // 粒子庆祝效果
+    spawnParticles() {
+        var emojis = ['🎉', '⭐', '✨', '🎊', '💫', '🌟'];
+        var rect = this.assistant.getBoundingClientRect();
+        var centerX = rect.left + rect.width / 2;
+        var centerY = rect.top + rect.height / 2;
+        var fragment = document.createDocumentFragment();
+
+        for (var i = 0; i < 8; i++) {
+            var particle = document.createElement('span');
+            particle.className = 'celebrate-particle';
+            particle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            // 随机方向偏移：左右 -80~80px，向上 -60~-120px
+            var dx = (Math.random() - 0.5) * 160;
+            var dy = -(60 + Math.random() * 60);
+            particle.style.left = centerX + 'px';
+            particle.style.top = centerY + 'px';
+            particle.style.setProperty('--dx', dx + 'px');
+            particle.style.setProperty('--dy', dy + 'px');
+            // 随机延迟，错落感
+            particle.style.animationDelay = (Math.random() * 0.15) + 's';
+            fragment.appendChild(particle);
+        }
+
+        document.body.appendChild(fragment);
+
+        // 动画结束后清理 DOM
+        var self = this;
+        setTimeout(function() {
+            var particles = document.querySelectorAll('.celebrate-particle');
+            for (var p = 0; p < particles.length; p++) {
+                particles[p].remove();
+            }
+        }, 1200);
+    }
+
+    // 庆祝音效
+    playCelebrateAudio() {
+        // 先停止已在播放的音频
+        if (this.isPlaying && this.currentAudio) {
+            this.currentAudio.pause();
+            this.currentAudio = null;
+            this.isPlaying = false;
+        }
+
+        var audio = new Audio('assets/audio/celebrate.mp3');
+        var self = this;
+
+        audio.addEventListener('canplaythrough', function() {
+            audio.play().catch(function() {
+                self.speakCelebratePhrase();
+            });
+        });
+
+        audio.addEventListener('error', function() {
+            self.speakCelebratePhrase();
+        });
+
+        audio.load();
+    }
+
+    // 语音合成庆祝短语（音频不可用时的降级）
+    speakCelebratePhrase() {
+        if (speechSynthesis.speaking) {
+            speechSynthesis.cancel();
+        }
+        var utterance = new SpeechSynthesisUtterance('太棒了！');
+        utterance.lang = 'zh-CN';
+        utterance.rate = 1.2;
+        utterance.pitch = 1.3;
+        speechSynthesis.speak(utterance);
+    }
+
     // 设置存储监听
     setupStorageListener() {
         window.addEventListener('storage', (e) => {
