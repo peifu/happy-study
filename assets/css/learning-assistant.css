@@ -226,7 +226,7 @@
     height: calc(100% + 8px);
     pointer-events: none;
     z-index: 2;
-    transform: rotate(-135deg);
+    transform: rotate(90deg);
     display: none;
 }
 
