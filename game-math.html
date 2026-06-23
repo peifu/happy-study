@@ -1305,6 +1305,10 @@
             currentLevelIndex = index;
             quizAnswers = {};
             quizScore = 0;
+            // 重置进度环
+            if (window.learningAssistant && window.learningAssistant.resetProgress) {
+                window.learningAssistant.resetProgress();
+            }
 
             document.getElementById('modalIcon').textContent = level.icon;
             document.getElementById('modalTitle').textContent = '第' + level.id + '关：' + level.title;
@@ -1377,6 +1381,12 @@
 
             if (selectedIndex === correctIndex) {
                 quizScore++;
+                // 通知助手更新环形进度（每题25%）
+                var questionsCount = levels[currentLevelIndex].quizzes.length;
+                var progress = Math.min(100, Math.round((quizScore / questionsCount) * 100));
+                if (window.learningAssistant && window.learningAssistant.setProgress) {
+                    window.learningAssistant.setProgress(progress);
+                }
                 feedbackDiv.className = 'quiz-feedback correct-fb show';
                 feedbackDiv.innerHTML = '🎉 答对了！你真棒！';
             } else {
