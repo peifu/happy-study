@@ -637,7 +637,23 @@ class LearningAssistant {
 
     // 获取设置
     getSettings() {
-        return JSON.parse(localStorage.getItem('assistantSettings') || '{}');
+        var defaults = {
+            enabled: true,
+            animal: 'bear',
+            size: 100,
+            opacity: 100,
+            clickInteraction: true,
+            voiceEncouragement: true,
+            alwaysShow: true,
+            floatAnimation: true,
+            dragEnabled: true,
+            name: '学习助手',
+            frequency: 3
+        };
+        var saved = JSON.parse(localStorage.getItem('assistantSettings') || '{}');
+        // Merge saved over defaults
+        for (var k in saved) { defaults[k] = saved[k]; }
+        return defaults;
     }
 
     // 保存设置
