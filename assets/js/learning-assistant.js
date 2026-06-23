@@ -478,12 +478,12 @@ class LearningAssistant {
         } else {
             this.progressRingFill.classList.remove('complete');
         }
-    },
+    }
 
     // 获取当前进度
     getProgress() {
         return this.progressPercent;
-    },
+    }
 
     // 重置进度
     resetProgress() {
@@ -492,7 +492,7 @@ class LearningAssistant {
             this.progressRingFill.style.strokeDashoffset = '276.46';
             this.progressRingFill.classList.remove('complete');
         }
-    },
+    }
 
     // 庆祝效果（游戏页面专用）
     celebrate() {
