@@ -469,7 +469,9 @@ class LearningAssistant {
         this.assistant.classList.add('celebrating');
 
         // ② 粒子爆发（延迟50ms，与跳跃同步）
-        setTimeout(function() { self.spawnParticles(); }, 50);
+        setTimeout(function() {
+            if (typeof self.spawnParticles === 'function') { self.spawnParticles(); }
+        }, 50);
 
         // ③ 气泡庆祝文字
         var phrase = this.celebratePhrases[Math.floor(Math.random() * this.celebratePhrases.length)];
@@ -479,7 +481,7 @@ class LearningAssistant {
         this.speechBubble.classList.add('show');
 
         // ④ 庆祝音效
-        this.playCelebrateAudio();
+        if (typeof this.playCelebrateAudio === 'function') { this.playCelebrateAudio(); }
 
         // 动画结束后清理
         setTimeout(function() {
@@ -487,6 +489,8 @@ class LearningAssistant {
             // 还原 float 动画（如果之前有这个设置）
             if (hadFloatAnimation) {
                 self.assistant.style.animation = 'float 3s ease-in-out infinite';
+            } else {
+                self.assistant.style.animation = '';
             }
             self.isCelebrating = false;
         }, 600);
@@ -498,71 +502,6 @@ class LearningAssistant {
                 self.speechBubble.style.display = 'none';
             }, 300);
         }, 2000);
-    }
-
-    // 粒子爆发
-    spawnParticles() {
-        var container = document.getElementById('particleContainer');
-        if (!container) {
-            container = document.createElement('div');
-            container.id = 'particleContainer';
-            container.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;overflow:hidden;';
-            document.body.appendChild(container);
-        }
-
-        var colors = ['#ff6b6b', '#feca57', '#48dbfb', '#ff9ff3', '#54a0ff', '#5f27cd'];
-        for (var i = 0; i < 20; i++) {
-            var particle = document.createElement('div');
-            particle.className = 'celebrate-particle';
-            particle.style.cssText =
-                'position:absolute;' +
-                'left:' + (40 + Math.random() * 20) + '%;' +
-                'top:' + (40 + Math.random() * 20) + '%;' +
-                'width:' + (8 + Math.random() * 12) + 'px;' +
-                'height:' + (8 + Math.random() * 12) + 'px;' +
-                'background:' + colors[Math.floor(Math.random() * colors.length)] + ';' +
-                'border-radius:' + (Math.random() > 0.5 ? '50%' : '2px') + ';' +
-                'pointer-events:none;';
-            particle.style.setProperty('--dx', (Math.random() * 200 - 100) + 'px');
-            particle.style.setProperty('--dy', (Math.random() * -200 - 50) + 'px');
-            particle.style.setProperty('--dr', (Math.random() * 720) + 'deg');
-            container.appendChild(particle);
-
-            // 粒子动画结束后移除
-            (function(p) {
-                p.addEventListener('animationend', function() {
-                    if (p.parentNode) p.parentNode.removeChild(p);
-                });
-            })(particle);
-        }
-    }
-
-    // 庆祝音效
-    playCelebrateAudio() {
-        try {
-            var audio = new Audio();
-            // 使用 Web Audio API 生成简单的庆祝音效（避免依赖外部音频文件）
-            var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            var now = audioCtx.currentTime;
-
-            // 播放上升音阶：C5 → E5 → G5 → C6（欢快庆祝音效）
-            var freqs = [523.25, 659.25, 783.99, 1046.50];
-            freqs.forEach(function(freq, i) {
-                var osc = audioCtx.createOscillator();
-                var gain = audioCtx.createGain();
-                osc.type = 'sine';
-                osc.frequency.value = freq;
-                gain.gain.setValueAtTime(0, now + i * 0.1);
-                gain.gain.linearRampToValueAtTime(0.15, now + i * 0.1 + 0.05);
-                gain.gain.linearRampToValueAtTime(0, now + i * 0.1 + 0.3);
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start(now + i * 0.1);
-                osc.stop(now + i * 0.1 + 0.3);
-            });
-        } catch (e) {
-            // Web Audio API 不可用时静默降级，无音频输出但不报错
-        }
     }
 
     // 设置存储监听
