@@ -532,20 +532,15 @@ class WordRacingGame {
     }
     
     updateScoreDisplay() {
-        this.scoreDisplay.textContent = this.score;
+        if (this.scoreDisplay) this.scoreDisplay.textContent = this.score;
     }
-    
+
     updateLevelDisplay() {
-        this.levelDisplay.textContent = `关卡 ${this.level}`;
+        if (this.levelDisplay) this.levelDisplay.textContent = '🏁 关卡 ' + this.level;
     }
-    
+
     updateLivesDisplay() {
-        this.livesContainer.innerHTML = '';
-        for (let i = 0; i < this.lives; i++) {
-            const heart = document.createElement('div');
-            heart.className = 'heart-icon';
-            this.livesContainer.appendChild(heart);
-        }
+        if (this.livesContainer) this.livesContainer.textContent = '❤️ x' + this.lives;
     }
     
     gameOver() {

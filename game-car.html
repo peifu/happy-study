@@ -93,55 +93,6 @@
             text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
         }
 
-        .game-ui {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            right: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 20;
-        }
-
-        .lives-container {
-            display: flex;
-            gap: 8px;
-        }
-
-        .heart-icon {
-            width: 32px;
-            height: 32px;
-            background: url('assets/resources/heart-icon.png') no-repeat center;
-            background-size: contain;
-        }
-
-        .score-container {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: bold;
-            color: #2F4F4F;
-        }
-
-        .star-icon {
-            width: 24px;
-            height: 24px;
-            background: url('assets/resources/star-icon.png') no-repeat center;
-            background-size: contain;
-        }
-
-        .level-display {
-            background: rgba(255, 215, 0, 0.9);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: bold;
-            color: #2F4F4F;
-        }
-
         .game-controls {
             position: absolute;
             bottom: 20px;
@@ -320,22 +271,39 @@
             position: absolute;
             width: 130px;
             height: 130px;
-            background: url('assets/resources/word-barrel.png') no-repeat center;
+            background-color: rgba(255,255,255,0.9);
+            background-image: url('assets/resources/word-barrel.png');
+            background-repeat: no-repeat;
+            background-position: center;
             background-size: contain;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
             font-size: 20px;
             color: #2F4F4F;
-            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+            text-shadow: none;
             z-index: 10;
         }
-        .word-barrel[data-correct="1"] {
-            filter: drop-shadow(0 0 10px rgba(0, 255, 150, 0.7)) drop-shadow(0 0 20px rgba(0, 200, 120, 0.4));
-        }
 
-        /* 中文提示条 */
+        /* 状态面板 - 右上 */
+        .game-ui {
+            position: absolute;
+            top: 15px; right: 15px;
+            z-index: 25;
+            display: flex; flex-direction: column; gap: 8px;
+            align-items: flex-end;
+        }
+        .game-ui .stat-item {
+            background: rgba(0,0,0,0.75); color: white;
+            border-radius: 10px; padding: 6px 16px;
+            font-size: 16px; font-weight: bold;
+            display: flex; align-items: center; gap: 8px;
+            white-space: nowrap;
+        }
+        .star-icon { width: 20px; height: 20px; background: url('assets/resources/star-icon.png') no-repeat center; background-size: contain; }
+        .heart-icon { width: 20px; height: 20px; background: url('assets/resources/heart-icon.png') no-repeat center; background-size: contain; }
         .chinese-hint-bar {
             position: absolute; top: 80px; left: 50%; transform: translateX(-50%);
             background: rgba(0,0,0,0.7); border: 2px solid #FFD700;
@@ -369,20 +337,11 @@
                 <!-- 玩家汽车 -->
                 <div class="player-car" id="playerCar"></div>
 
-                <!-- 游戏UI -->
+                <!-- 状态面板 - 右上 -->
                 <div class="game-ui">
-                    <div class="flex items-center gap-4">
-                        <div class="lives-container" id="livesContainer">
-                            <div class="heart-icon"></div>
-                            <div class="heart-icon"></div>
-                            <div class="heart-icon"></div>
-                        </div>
-                        <div class="level-display" id="levelDisplay">关卡 1</div>
-                    </div>
-                    <div class="score-container">
-                        <div class="star-icon"></div>
-                        <span id="scoreDisplay">0</span>
-                    </div>
+                    <div class="stat-item" id="levelDisplay">🏁 关卡 1</div>
+                    <div class="stat-item"><span class="star-icon"></span> <span id="scoreDisplay">0</span></div>
+                    <div class="stat-item" id="livesContainer">❤️ x5</div>
                 </div>
 
                 <!-- 中文提示 -->
