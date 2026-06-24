@@ -309,7 +309,7 @@ class WordRacingGame {
     }
 
     spawnWordItem(wordObj, isCorrect) {
-        var lane = Math.floor(Math.random() * 6);
+        var lane = 1 + Math.floor(Math.random() * 4);
         var el = document.createElement('div');
         el.className = 'word-barrel';
         el.textContent = wordObj.word;
@@ -326,7 +326,7 @@ class WordRacingGame {
     }
 
     spawnObstacle() {
-        var lane = Math.floor(Math.random() * 6);
+        var lane = 1 + Math.floor(Math.random() * 4);
         var obstacle = document.createElement('div');
         obstacle.className = 'obstacle';
         obstacle.style.backgroundImage = "url('assets/resources/road-barrier.png')";
@@ -344,7 +344,7 @@ class WordRacingGame {
         this.obstacles = this.obstacles.filter(function(obs) {
             obs.y += obs.speed;
             obs.element.style.top = obs.y + 'px';
-            if (obs.y > this.playerY + 80) {
+            if (obs.y > this.playerY + 20) {
                 obs.element.remove();
                 return false;
             }
