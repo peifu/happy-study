@@ -41,8 +41,7 @@ class WordRacingGame {
         this.currentTargetWord = null;
         this.correctHits = 0;
         this.bombCooldown = false;
-        this.bombAvailable = false;
-        this.bombPowerUp = null;
+        this.empCharged = false;
         this.chineseHint = document.getElementById('chineseHint');
         this.onCorrectHit = null;
         this.onBombUsed = null;
@@ -209,8 +208,8 @@ class WordRacingGame {
         this.wordItems = [];
         this.wordBarrels = [];
         this.learnedWords.clear();
-        if (this.bombPowerUp) { this.bombPowerUp.element.remove(); this.bombPowerUp = null; }
-        this.bombAvailable = false;
+        this.empCharged = false;
+        this.playerCar.classList.remove('emp-aura');
         this.updateBombBtn();
         
         // 更新显示
@@ -234,7 +233,6 @@ class WordRacingGame {
         this.updateBackground();
         this.updateObstacles();
         this.updateWordItems();
-        this.updateBombPowerUp();
         this.checkCollisions();
         this.checkLevelUp();
         
@@ -256,9 +254,16 @@ class WordRacingGame {
             this.chineseHint.textContent = this.currentTargetWord.translation || this.currentTargetWord.word;
         }
         this.wordItems = [];
-        // 重置炸弹状态
-        this.bombAvailable = false;
-        this.updateBombBtn();
+    }
+
+    getFreeLane() {
+        var occupied = {};
+        this.wordItems.forEach(function(item) { if (item.y < this.playerY - 50) occupied[item.lane] = true; }, this);
+        this.obstacles.forEach(function(obs) { if (obs.y < this.playerY - 50) occupied[obs.lane] = true; }, this);
+        var freeLanes = [];
+        for (var l = 1; l <= 4; l++) { if (!occupied[l]) freeLanes.push(l); }
+        if (freeLanes.length === 0) freeLanes = [1, 2, 3, 4];
+        return freeLanes[Math.floor(Math.random() * freeLanes.length)];
     }
 
     spawnWordWave() {
@@ -280,22 +285,6 @@ class WordRacingGame {
         for (var j = 0; j < obsCount; j++) {
             this.spawnObstacle();
         }
-        // 30%概率生成炸弹技能包
-        if (!this.bombAvailable && Math.random() < 0.3) {
-            this.spawnBombPowerUp();
-        }
-    }
-
-    spawnBombPowerUp() {
-        var lane = 1 + Math.floor(Math.random() * 4); // 中间4车道
-        var el = document.createElement('div');
-        el.style.cssText = 'position:absolute;width:50px;height:50px;font-size:40px;text-align:center;line-height:50px;z-index:15;';
-        el.textContent = '💣';
-        el.style.left = ((lane + 0.5) * this.laneWidth - 25) + 'px';
-        el.style.top = '-60px';
-        el.style.pointerEvents = 'none';
-        this.gameContainer.appendChild(el);
-        this.bombPowerUp = { element: el, lane: lane, y: -60, speed: 1.8 };
     }
 
     updateBombBtn() {
@@ -309,7 +298,7 @@ class WordRacingGame {
     }
 
     spawnWordItem(wordObj, isCorrect) {
-        var lane = 1 + Math.floor(Math.random() * 4);
+        var lane = this.getFreeLane();
         var el = document.createElement('div');
         el.className = 'word-barrel';
         el.textContent = wordObj.word;
@@ -326,7 +315,7 @@ class WordRacingGame {
     }
 
     spawnObstacle() {
-        var lane = 1 + Math.floor(Math.random() * 4);
+        var lane = this.getFreeLane();
         var obstacle = document.createElement('div');
         obstacle.className = 'obstacle';
         obstacle.style.backgroundImage = "url('assets/resources/road-barrier.png')";
@@ -386,18 +375,6 @@ class WordRacingGame {
             }
         });
         
-        // 炸弹技能包碰撞
-        if (this.bombPowerUp) {
-            var bp = this.bombPowerUp;
-            var bpRect = { x: bp.lane * this.laneWidth, y: bp.y, width: 50, height: 50 };
-            if (this.isColliding(playerRect, bpRect)) {
-                bp.element.remove();
-                this.bombPowerUp = null;
-                this.bombAvailable = true;
-                this.updateBombBtn();
-            }
-        }
-
         // 单词碰撞
         this.wordItems.forEach(function(item, index) {
             var itemRect = { x: item.lane * this.laneWidth, y: item.y, width: 60, height: 80 };
@@ -451,6 +428,14 @@ class WordRacingGame {
         this.updateScoreDisplay();
         this.addCollectionEffect(item);
         this.showScorePopup(item.element.offsetLeft, item.element.offsetTop, '+20');
+
+        // EMP 充能：5次正确撞击后可释放电磁脉冲
+        if (this.correctHits >= 5 && !this.empCharged) {
+            this.empCharged = true;
+            this.playerCar.classList.add('emp-aura');
+            this.updateBombBtn();
+        }
+
         if (this.onCorrectHit) this.onCorrectHit(item.wordObj);
     }
 
@@ -463,47 +448,42 @@ class WordRacingGame {
         if (this.lives <= 0) this.gameOver();
     }
 
-    updateBombPowerUp() {
-        if (!this.bombPowerUp) return;
-        var bp = this.bombPowerUp;
-        bp.y += bp.speed;
-        bp.element.style.top = bp.y + 'px';
-        if (bp.y > this.playerY + 20) {
-            bp.element.remove();
-            this.bombPowerUp = null;
-        }
-    }
-
     useBomb() {
-        if (!this.bombAvailable || this.bombCooldown || !this.gameRunning) return;
+        if (!this.empCharged || this.bombCooldown || !this.gameRunning) return;
         this.bombCooldown = true;
-        this.bombAvailable = false;
+        this.empCharged = false;
+        this.correctHits = 0;
+        this.playerCar.classList.remove('emp-aura');
         this.updateBombBtn();
-        var bombBtn = document.getElementById('bombBtn');
-        if (bombBtn) bombBtn.classList.add('cooldown');
 
-        var hitCount = 0;
-        var self = this;
-        this.wordItems.forEach(function(item) {
-            if (item.isCorrect) {
-                item.element.remove();
-                hitCount++;
-            }
-        });
-        this.wordItems = this.wordItems.filter(function(item) { return !item.isCorrect; });
+        var count = this.wordItems.length + this.obstacles.length;
+        this.wordItems.forEach(function(item) { item.element.remove(); });
+        this.obstacles.forEach(function(obs) { obs.element.remove(); });
+        this.wordItems = [];
+        this.obstacles = [];
 
-        if (hitCount > 0) {
-            var bonus = hitCount * 20;
+        if (count > 0) {
+            var bonus = count * 10;
             this.score += bonus;
-            this.correctHits += hitCount;
             this.updateScoreDisplay();
-            if (this.onBombUsed) this.onBombUsed(hitCount, bonus);
+            if (this.onBombUsed) this.onBombUsed(count, bonus);
         }
 
+        var self = this;
         setTimeout(function() {
             self.bombCooldown = false;
             self.updateBombBtn();
         }, 5000);
+    }
+
+    updateBombBtn() {
+        var bombBtn = document.getElementById('bombBtn');
+        if (!bombBtn) return;
+        if (this.empCharged && !this.bombCooldown) {
+            bombBtn.classList.add('active');
+        } else {
+            bombBtn.classList.remove('active');
+        }
     }
     
     addCollisionEffect() {

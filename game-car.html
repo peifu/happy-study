@@ -327,6 +327,19 @@
         }
         .chinese-hint-bar .hint-label { color: #FFD700; font-size: 16px; font-weight: bold; }
         .chinese-hint-bar .hint-word { color: white; font-size: 28px; font-weight: bold; }
+
+        /* EMP 电磁脉冲车体电光 */
+        .player-car.emp-aura {
+            animation: empGlow 0.6s ease-in-out infinite;
+        }
+        @keyframes empGlow {
+            0%, 100% {
+                filter: drop-shadow(0 0 8px #00f7ff) drop-shadow(0 0 16px #00aaff) drop-shadow(0 0 24px #0066ff);
+            }
+            50% {
+                filter: drop-shadow(0 0 16px #00ffff) drop-shadow(0 0 32px #00ccff) drop-shadow(0 0 48px #0088ff);
+            }
+        }
     </style>
     <script src="assets/js/word-system.js"></script>
     <script src="assets/js/car-game.js"></script>
@@ -381,7 +394,7 @@
                         <button class="touch-btn" id="touchRightBtn">▶</button>
                     </div>
                     <div class="bomb-btn-wrap">
-                        <button class="bomb-btn" id="bombBtn">💣</button>
+                        <button class="bomb-btn" id="bombBtn">⚡</button>
                     </div>
                 </div>
 
