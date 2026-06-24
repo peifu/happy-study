@@ -178,6 +178,16 @@ class WordRacingGame {
     startGame() {
         console.log('开始游戏按钮被点击');
         try {
+            // 清理旧物品
+            this.wordItems.forEach(function(item) { item.element.remove(); });
+            this.obstacles.forEach(function(obs) { obs.element.remove(); });
+            this.wordItems = [];
+            this.obstacles = [];
+            this.correctHits = 0;
+            this.empCharged = false;
+            this.playerCar.classList.remove('emp-aura');
+            this.updateBombBtn();
+
             this.startScreen.classList.add('hidden');
             this.gameRunning = true;
             this.currentLane = 2; // 固定在中间车道
@@ -256,34 +266,38 @@ class WordRacingGame {
         this.wordItems = [];
     }
 
-    getFreeLane() {
-        var occupied = {};
+    getFreeLane(usedInWave) {
+        var occupied = usedInWave || {};
         this.wordItems.forEach(function(item) { if (item.y < this.playerY - 50) occupied[item.lane] = true; }, this);
         this.obstacles.forEach(function(obs) { if (obs.y < this.playerY - 50) occupied[obs.lane] = true; }, this);
         var freeLanes = [];
         for (var l = 1; l <= 4; l++) { if (!occupied[l]) freeLanes.push(l); }
-        if (freeLanes.length === 0) freeLanes = [1, 2, 3, 4];
+        if (freeLanes.length === 0) return 1 + Math.floor(Math.random() * 4);
         return freeLanes[Math.floor(Math.random() * freeLanes.length)];
     }
 
     spawnWordWave() {
+        var usedInWave = {};
         // 1个正确单词
-        this.spawnWordItem(this.currentTargetWord, true);
+        var lane = this.getFreeLane(usedInWave); usedInWave[lane] = true;
+        this.spawnWordItem(this.currentTargetWord, true, lane);
         // 3-4个错误单词
         var wrongCount = 3 + Math.floor(Math.random() * 2);
         for (var i = 0; i < wrongCount; i++) {
+            lane = this.getFreeLane(usedInWave); usedInWave[lane] = true;
             var wrongWord = this.wordSystem.getRandomWord(this.level);
             var tries = 0;
             while (wrongWord.word === this.currentTargetWord.word && tries < 20) {
                 wrongWord = this.wordSystem.getRandomWord(this.level);
                 tries++;
             }
-            this.spawnWordItem(wrongWord, false);
+            this.spawnWordItem(wrongWord, false, lane);
         }
         // 1-2个障碍物
         var obsCount = 1 + Math.floor(Math.random() * 2);
         for (var j = 0; j < obsCount; j++) {
-            this.spawnObstacle();
+            lane = this.getFreeLane(usedInWave); usedInWave[lane] = true;
+            this.spawnObstacle(lane);
         }
     }
 
@@ -297,8 +311,8 @@ class WordRacingGame {
         }
     }
 
-    spawnWordItem(wordObj, isCorrect) {
-        var lane = this.getFreeLane();
+    spawnWordItem(wordObj, isCorrect, optLane) {
+        var lane = optLane !== undefined ? optLane : this.getFreeLane();
         var el = document.createElement('div');
         el.className = 'word-barrel';
         el.textContent = wordObj.word;
@@ -310,12 +324,12 @@ class WordRacingGame {
         this.wordItems.push({
             element: el, lane: lane, y: -80,
             wordObj: wordObj, isCorrect: isCorrect,
-            speed: 3.5
+            speed: 2.5
         });
     }
 
-    spawnObstacle() {
-        var lane = this.getFreeLane();
+    spawnObstacle(optLane) {
+        var lane = optLane !== undefined ? optLane : this.getFreeLane();
         var obstacle = document.createElement('div');
         obstacle.className = 'obstacle';
         obstacle.style.backgroundImage = "url('assets/resources/road-barrier.png')";
@@ -325,7 +339,7 @@ class WordRacingGame {
         this.gameContainer.appendChild(obstacle);
         this.obstacles.push({
             element: obstacle, lane: lane, y: -120,
-            speed: 3.5
+            speed: 2.5
         });
     }
     
