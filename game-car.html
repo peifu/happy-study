@@ -289,11 +289,9 @@
         .bottom-controls {
             position: absolute; bottom: 15px; left: 0; right: 0;
             display: flex; justify-content: space-between; align-items: center;
-            padding: 0 40px; z-index: 30; pointer-events: none;
+            padding: 0 40px; z-index: 30;
         }
-        .direction-btns {
-            display: flex; gap: 20px; pointer-events: auto;
-        }
+        .direction-btns { display: flex; gap: 20px; }
         .touch-btn {
             width: 80px; height: 80px;
             background: rgba(255,255,255,0.25); border: 3px solid rgba(255,255,255,0.5);
@@ -301,11 +299,12 @@
             display: flex; align-items: center; justify-content: center;
             cursor: pointer; user-select: none; -webkit-user-select: none;
             touch-action: manipulation; transition: all 0.15s ease;
+            pointer-events: auto;
         }
         .touch-btn:active { background: rgba(255,215,0,0.5); transform: scale(0.92); }
 
         /* 炸药包按钮 */
-        .bomb-btn-wrap { pointer-events: auto; }
+        .bomb-btn-wrap { }
         .bomb-btn {
             width: 90px; height: 90px;
             background: rgba(255,60,30,0.3); border: 3px solid rgba(255,100,50,0.6);

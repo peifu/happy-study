@@ -181,6 +181,9 @@ class WordRacingGame {
         try {
             this.startScreen.classList.add('hidden');
             this.gameRunning = true;
+            this.currentLane = 2; // 固定在中间车道
+            this.positionPlayerCar();
+            this.pickNewTarget(); // 立即显示第一条中文提示
             this.gameLoop();
             this.spawnLoop();
             console.log('游戏启动成功');
