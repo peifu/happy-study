@@ -356,7 +356,7 @@ class WordRacingGame {
         this.wordItems = this.wordItems.filter(function(item) {
             item.y += item.speed;
             item.element.style.top = item.y + 'px';
-            if (item.y > this.playerY + 80) {
+            if (item.y > this.playerY + 20) {
                 item.element.remove();
                 return false;
             }
@@ -468,7 +468,7 @@ class WordRacingGame {
         var bp = this.bombPowerUp;
         bp.y += bp.speed;
         bp.element.style.top = bp.y + 'px';
-        if (bp.y > this.playerY + 80) {
+        if (bp.y > this.playerY + 20) {
             bp.element.remove();
             this.bombPowerUp = null;
         }
