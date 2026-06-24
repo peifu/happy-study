@@ -303,20 +303,37 @@
         }
         .touch-btn:active { background: rgba(255,215,0,0.5); transform: scale(0.92); }
 
-        /* 炸药包按钮 */
-        .bomb-btn-wrap { }
-        .bomb-btn {
-            width: 90px; height: 90px;
-            background: rgba(255,60,30,0.3); border: 3px solid rgba(255,100,50,0.6);
-            border-radius: 50%; font-size: 48px; color: white;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; user-select: none; -webkit-user-select: none;
-            touch-action: manipulation; transition: all 0.2s ease;
-            opacity: 0.3; pointer-events: none;
+        /* 右侧难度面板 */
+        .side-panel {
+            position: absolute; right: 15px; top: 130px;
+            z-index: 30; display: flex; flex-direction: column; gap: 10px;
         }
-        .bomb-btn.active { opacity: 1; pointer-events: auto; background: rgba(255,60,30,0.5); }
-        .bomb-btn:active { background: rgba(255,100,30,0.7); transform: scale(0.88); }
-        .bomb-btn.cooldown { opacity: 0.4; pointer-events: none; }
+        .difficulty-select {
+            background: rgba(0,0,0,0.7); color: white; border: 2px solid rgba(255,255,255,0.4);
+            border-radius: 12px; padding: 10px 14px; font-size: 16px; font-weight: bold;
+            cursor: pointer; outline: none;
+        }
+        .difficulty-select option { background: #333; color: white; }
+
+        /* 单词桶显示优化 */
+        .word-barrel {
+            position: absolute;
+            width: 140px; height: 80px;
+            background: linear-gradient(135deg, rgba(255,215,0,0.9), rgba(255,180,0,0.85));
+            border: 3px solid #FFD700;
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 22px;
+            color: #1a1a2e;
+            text-shadow: 0 1px 2px rgba(255,255,255,0.5);
+            box-shadow: 0 4px 16px rgba(255,215,0,0.4), inset 0 2px 4px rgba(255,255,255,0.3);
+            z-index: 10;
+        }
+        .word-barrel[data-correct="1"] {
+            background: linear-gradient(135deg, rgba(0,255,150,0.9), rgba(0,200,120,0.85));
+            border-color: #00ff96;
+            box-shadow: 0 4px 20px rgba(0,255,150,0.5), inset 0 2px 4px rgba(255,255,255,0.3);
+        }
 
         /* 中文提示条 */
         .chinese-hint-bar {
@@ -327,19 +344,6 @@
         }
         .chinese-hint-bar .hint-label { color: #FFD700; font-size: 16px; font-weight: bold; }
         .chinese-hint-bar .hint-word { color: white; font-size: 28px; font-weight: bold; }
-
-        /* EMP 电磁脉冲车体电光 */
-        .player-car.emp-aura {
-            animation: empGlow 0.6s ease-in-out infinite;
-        }
-        @keyframes empGlow {
-            0%, 100% {
-                filter: drop-shadow(0 0 8px #00f7ff) drop-shadow(0 0 16px #00aaff) drop-shadow(0 0 24px #0066ff);
-            }
-            50% {
-                filter: drop-shadow(0 0 16px #00ffff) drop-shadow(0 0 32px #00ccff) drop-shadow(0 0 48px #0088ff);
-            }
-        }
     </style>
     <script src="assets/js/word-system.js"></script>
     <script src="assets/js/car-game.js"></script>
@@ -387,14 +391,20 @@
                     <span class="hint-word" id="chineseHint">---</span>
                 </div>
 
+                <!-- 右侧难度面板 -->
+                <div class="side-panel">
+                    <select class="difficulty-select" id="difficultySelect">
+                        <option value="easy">🟢 简单</option>
+                        <option value="normal" selected>🟡 一般</option>
+                        <option value="hard">🔴 困难</option>
+                    </select>
+                </div>
+
                 <!-- 底部控制栏 -->
                 <div class="bottom-controls">
                     <div class="direction-btns">
                         <button class="touch-btn" id="touchLeftBtn">◀</button>
                         <button class="touch-btn" id="touchRightBtn">▶</button>
-                    </div>
-                    <div class="bomb-btn-wrap">
-                        <button class="bomb-btn" id="bombBtn">⚡</button>
                     </div>
                 </div>
 
