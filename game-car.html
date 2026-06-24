@@ -254,6 +254,18 @@
         }
         .touch-btn:active { background: rgba(255,215,0,0.5); transform: scale(0.92); }
 
+        /* EMP 按钮 */
+        .bomb-btn {
+            width: 80px; height: 80px;
+            background: rgba(255,60,30,0.3); border: 3px solid rgba(255,100,50,0.6);
+            border-radius: 50%; font-size: 40px; color: white;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; user-select: none;
+            opacity: 0.3; pointer-events: none; transition: all 0.2s ease;
+        }
+        .bomb-btn.active { opacity: 1; pointer-events: auto; background: rgba(255,60,30,0.5); animation: empGlow 0.6s ease-in-out infinite; }
+        .bomb-btn:active { background: rgba(255,100,30,0.7); transform: scale(0.88); }
+
         /* 右侧难度面板 */
         .side-panel {
             position: absolute; right: 15px; top: 130px;
@@ -271,20 +283,37 @@
             position: absolute;
             width: 130px;
             height: 130px;
-            background-color: rgba(255,255,255,0.9);
-            background-image: url('assets/resources/word-barrel.png');
-            background-repeat: no-repeat;
-            background-position: center;
+            background: url('assets/resources/word-barrel.png') no-repeat center;
             background-size: contain;
-            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
+            z-index: 10;
+        }
+        .word-barrel .word-label {
+            background: rgba(255,255,255,0.9);
+            padding: 4px 10px;
+            border-radius: 8px;
             font-weight: bold;
             font-size: 20px;
             color: #2F4F4F;
-            text-shadow: none;
-            z-index: 10;
+        }
+
+        /* EMP 电光 */
+        .player-car.emp-aura {
+            animation: empGlow 0.6s ease-in-out infinite;
+        }
+        @keyframes empGlow {
+            0%, 100% { filter: drop-shadow(0 0 8px #00f7ff) drop-shadow(0 0 16px #00aaff); }
+            50% { filter: drop-shadow(0 0 16px #00ffff) drop-shadow(0 0 32px #00ccff); }
+        }
+
+        /* 左上生命值 */
+        .lives-top-left {
+            position: absolute; top: 15px; left: 15px; z-index: 25;
+            background: rgba(0,0,0,0.7); color: white;
+            border-radius: 12px; padding: 8px 16px;
+            font-size: 18px; font-weight: bold;
         }
 
         /* 状态面板 - 右上 */
@@ -337,11 +366,13 @@
                 <!-- 玩家汽车 -->
                 <div class="player-car" id="playerCar"></div>
 
+                <!-- 左上生命值 -->
+                <div class="lives-top-left" id="livesContainer">❤️ x5</div>
+
                 <!-- 状态面板 - 右上 -->
                 <div class="game-ui">
                     <div class="stat-item" id="levelDisplay">🏁 关卡 1</div>
                     <div class="stat-item"><span class="star-icon"></span> <span id="scoreDisplay">0</span></div>
-                    <div class="stat-item" id="livesContainer">❤️ x5</div>
                 </div>
 
                 <!-- 中文提示 -->
@@ -365,6 +396,7 @@
                         <button class="touch-btn" id="touchLeftBtn">◀</button>
                         <button class="touch-btn" id="touchRightBtn">▶</button>
                     </div>
+                    <button class="bomb-btn" id="bombBtn">⚡</button>
                 </div>
 
                 <!-- 开始界面 -->

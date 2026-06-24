@@ -41,6 +41,8 @@ class WordRacingGame {
         this.perfectLevelBonus = 0;
         this.currentTargetWord = null;
         this.correctHits = 0;
+        this.empCharged = false;
+        this.bombCooldown = false;
         this.chineseHint = document.getElementById('chineseHint');
         this.onCorrectHit = null;
         
@@ -180,6 +182,9 @@ class WordRacingGame {
             this.wordItems.forEach(function(item) { item.element.remove(); });
             this.wordItems = [];
             this.correctHits = 0;
+            this.empCharged = false;
+            this.playerCar.classList.remove('emp-aura');
+            this.updateBombBtn();
 
             this.startScreen.classList.add('hidden');
             this.gameRunning = true;
@@ -206,6 +211,9 @@ class WordRacingGame {
         this.currentLane = 2;
         this.fallSpeed = this.speedMap[this.difficulty];
         this.correctHits = 0;
+        this.empCharged = false;
+        this.playerCar.classList.remove('emp-aura');
+        this.updateBombBtn();
         this.wordItems = [];
         this.wordBarrels = [];
         this.learnedWords.clear();
@@ -246,11 +254,13 @@ class WordRacingGame {
     }
 
     pickNewTarget() {
+        // 清理旧物品的 DOM 元素
+        this.wordItems.forEach(function(item) { item.element.remove(); });
+        this.wordItems = [];
         this.currentTargetWord = this.wordSystem.getRandomWord(this.level);
         if (this.chineseHint && this.currentTargetWord) {
             this.chineseHint.textContent = this.currentTargetWord.translation || this.currentTargetWord.word;
         }
-        this.wordItems = [];
     }
 
     getFreeLane(usedInWave) {
@@ -295,8 +305,11 @@ class WordRacingGame {
         var lane = optLane !== undefined ? optLane : this.getFreeLane();
         var el = document.createElement('div');
         el.className = 'word-barrel';
-        el.textContent = wordObj.word;
         el.dataset.correct = isCorrect ? '1' : '0';
+        var label = document.createElement('span');
+        label.className = 'word-label';
+        label.textContent = wordObj.word;
+        el.appendChild(label);
         var x = (lane + 0.5) * this.laneWidth - 65;
         el.style.left = x + 'px';
         el.style.top = '-80px';
@@ -356,6 +369,12 @@ class WordRacingGame {
         this.updateScoreDisplay();
         this.addCollectionEffect(item);
         this.showScorePopup(item.element.offsetLeft, item.element.offsetTop, '+20');
+
+        if (this.correctHits >= 5 && !this.empCharged) {
+            this.empCharged = true;
+            this.playerCar.classList.add('emp-aura');
+            this.updateBombBtn();
+        }
         if (this.onCorrectHit) this.onCorrectHit(item.wordObj);
     }
 
@@ -372,6 +391,40 @@ class WordRacingGame {
         if (!this.speedMap[level]) return;
         this.difficulty = level;
         this.fallSpeed = this.speedMap[level];
+    }
+
+    useBomb() {
+        if (!this.empCharged || this.bombCooldown || !this.gameRunning) return;
+        this.bombCooldown = true;
+        this.empCharged = false;
+        this.correctHits = 0;
+        this.playerCar.classList.remove('emp-aura');
+        this.updateBombBtn();
+
+        var count = this.wordItems.length;
+        this.wordItems.forEach(function(item) { item.element.remove(); });
+        this.wordItems = [];
+
+        if (count > 0) {
+            this.score += count * 10;
+            this.updateScoreDisplay();
+        }
+
+        var self = this;
+        setTimeout(function() {
+            self.bombCooldown = false;
+            self.updateBombBtn();
+        }, 5000);
+    }
+
+    updateBombBtn() {
+        var bombBtn = document.getElementById('bombBtn');
+        if (!bombBtn) return;
+        if (this.empCharged && !this.bombCooldown) {
+            bombBtn.classList.add('active');
+        } else {
+            bombBtn.classList.remove('active');
+        }
     }
     
     addCollisionEffect() {
@@ -582,8 +635,10 @@ document.addEventListener('DOMContentLoaded', function() {
         // 触控按钮
         var touchLeftBtn = document.getElementById('touchLeftBtn');
         var touchRightBtn = document.getElementById('touchRightBtn');
+        var bombBtnEl = document.getElementById('bombBtn');
         if (touchLeftBtn) touchLeftBtn.addEventListener('click', function() { game.moveLeft(); });
         if (touchRightBtn) touchRightBtn.addEventListener('click', function() { game.moveRight(); });
+        if (bombBtnEl) bombBtnEl.addEventListener('click', function() { game.useBomb(); });
 
         // 难度选择器
         var diffSelect = document.getElementById('difficultySelect');
