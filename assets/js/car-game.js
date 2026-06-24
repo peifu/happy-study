@@ -246,7 +246,7 @@ class WordRacingGame {
         if (!this.gameRunning) return;
         this.pickNewTarget();
         this.spawnWordWave();
-        const spawnDelay = Math.max(2000, 3500 - (this.level * 150));
+        const spawnDelay = 4500;
         setTimeout(() => this.spawnLoop(), spawnDelay);
     }
 
@@ -321,7 +321,7 @@ class WordRacingGame {
         this.wordItems.push({
             element: el, lane: lane, y: -80,
             wordObj: wordObj, isCorrect: isCorrect,
-            speed: 1.8
+            speed: 3.5
         });
     }
 
@@ -336,7 +336,7 @@ class WordRacingGame {
         this.gameContainer.appendChild(obstacle);
         this.obstacles.push({
             element: obstacle, lane: lane, y: -120,
-            speed: 1.8
+            speed: 3.5
         });
     }
     
