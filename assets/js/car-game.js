@@ -33,10 +33,17 @@ class WordRacingGame {
         this.backgroundY = 0;
         
         this.obstacles = [];
+        this.wordItems = [];
         this.wordBarrels = [];
         this.learnedWords = new Set();
         this.consecutiveCollections = 0;
         this.perfectLevelBonus = 0;
+        this.currentTargetWord = null;
+        this.correctHits = 0;
+        this.bombCooldown = false;
+        this.chineseHint = document.getElementById('chineseHint');
+        this.onCorrectHit = null;
+        this.onBombUsed = null;
         
         // 键盘状态控制
         this.keys = {
@@ -182,16 +189,19 @@ class WordRacingGame {
     
     restartGame() {
         // 清理游戏状态
-        this.obstacles.forEach(obs => obs.element.remove());
-        this.wordBarrels.forEach(barrel => barrel.element.remove());
-        
+        this.obstacles.forEach(function(obs) { obs.element.remove(); });
+        this.wordItems.forEach(function(item) { item.element.remove(); });
+        this.wordBarrels.forEach(function(b) { b.element.remove(); });
+
         // 重置游戏数据
         this.score = 0;
         this.level = 1;
         this.lives = 5;
         this.currentLane = 2;
         this.gameSpeed = 3;
+        this.correctHits = 0;
         this.obstacles = [];
+        this.wordItems = [];
         this.wordBarrels = [];
         this.learnedWords.clear();
         
@@ -213,11 +223,9 @@ class WordRacingGame {
     gameLoop() {
         if (!this.gameRunning) return;
         
-        // 移除键盘连续移动逻辑，改为单次按键单次移动
-        // 更新游戏元素
         this.updateBackground();
         this.updateObstacles();
-        this.updateWordBarrels();
+        this.updateWordItems();
         this.checkCollisions();
         this.checkLevelUp();
         
@@ -227,67 +235,68 @@ class WordRacingGame {
     
     spawnLoop() {
         if (!this.gameRunning) return;
-        
-        // 随机生成障碍物或单词油箱
-        if (Math.random() < 0.6) {
-            this.spawnObstacle();
-        } else {
-            this.spawnWordBarrel();
-        }
-        
-        // 根据关卡调整生成频率
-        const spawnDelay = Math.max(800, 2000 - (this.level * 100));
+        this.pickNewTarget();
+        this.spawnWordWave();
+        const spawnDelay = Math.max(1200, 2500 - (this.level * 100));
         setTimeout(() => this.spawnLoop(), spawnDelay);
     }
-    
-    spawnObstacle() {
-        const lane = Math.floor(Math.random() * 6);
-        const obstacle = document.createElement('div');
-        obstacle.className = 'obstacle';
-        obstacle.style.backgroundImage = `url('assets/resources/road-barrier.png')`;
-        
-        const laneCenterX = (lane + 0.5) * this.laneWidth - 40;
-        obstacle.style.left = laneCenterX + 'px';
-        obstacle.style.top = '-120px';
-        
-        this.gameContainer.appendChild(obstacle);
-        
-        this.obstacles.push({
-            element: obstacle,
-            lane: lane,
-            y: -120,
-            speed: this.gameSpeed + Math.random() * 2
+
+    pickNewTarget() {
+        this.currentTargetWord = this.wordSystem.getRandomWord(this.level);
+        if (this.chineseHint) this.chineseHint.textContent = this.currentTargetWord.translation;
+        this.wordItems = [];
+    }
+
+    spawnWordWave() {
+        // 1个正确单词
+        this.spawnWordItem(this.currentTargetWord, true);
+        // 3-4个错误单词
+        var wrongCount = 3 + Math.floor(Math.random() * 2);
+        for (var i = 0; i < wrongCount; i++) {
+            var wrongWord = this.wordSystem.getRandomWord(this.level);
+            var tries = 0;
+            while (wrongWord.word === this.currentTargetWord.word && tries < 20) {
+                wrongWord = this.wordSystem.getRandomWord(this.level);
+                tries++;
+            }
+            this.spawnWordItem(wrongWord, false);
+        }
+        // 1-2个障碍物
+        var obsCount = 1 + Math.floor(Math.random() * 2);
+        for (var j = 0; j < obsCount; j++) {
+            this.spawnObstacle();
+        }
+    }
+
+    spawnWordItem(wordObj, isCorrect) {
+        var lane = Math.floor(Math.random() * 6);
+        var el = document.createElement('div');
+        el.className = 'word-barrel';
+        el.textContent = wordObj.word;
+        el.dataset.correct = isCorrect ? '1' : '0';
+        var x = (lane + 0.5) * this.laneWidth - 30;
+        el.style.left = x + 'px';
+        el.style.top = '-80px';
+        this.gameContainer.appendChild(el);
+        this.wordItems.push({
+            element: el, lane: lane, y: -80,
+            wordObj: wordObj, isCorrect: isCorrect,
+            speed: this.gameSpeed + Math.random() * 1.5
         });
     }
-    
-    spawnWordBarrel() {
-        const lane = Math.floor(Math.random() * 6);
-        const wordObj = this.wordSystem.getRandomWord(this.level);
-        
-        const barrel = document.createElement('div');
-        barrel.className = 'word-barrel';
-        barrel.textContent = wordObj.word;
-        barrel.title = `${wordObj.translation} [${wordObj.pronunciation}]`;
-        barrel.style.cursor = 'pointer';
-        
-        // 添加点击发音功能
-        barrel.addEventListener('click', () => {
-            this.pronunciationSystem.speakWord(wordObj.word);
-        });
-        
-        const laneCenterX = (lane + 0.5) * this.laneWidth - 30;
-        barrel.style.left = laneCenterX + 'px';
-        barrel.style.top = '-80px';
-        
-        this.gameContainer.appendChild(barrel);
-        
-        this.wordBarrels.push({
-            element: barrel,
-            lane: lane,
-            y: -80,
-            word: wordObj.word,
-            wordObj: wordObj,
-            speed: this.gameSpeed + Math.random() * 1.5
+
+    spawnObstacle() {
+        var lane = Math.floor(Math.random() * 6);
+        var obstacle = document.createElement('div');
+        obstacle.className = 'obstacle';
+        obstacle.style.backgroundImage = "url('assets/resources/road-barrier.png')";
+        var laneCenterX = (lane + 0.5) * this.laneWidth - 40;
+        obstacle.style.left = laneCenterX + 'px';
+        obstacle.style.top = '-120px';
+        this.gameContainer.appendChild(obstacle);
+        this.obstacles.push({
+            element: obstacle, lane: lane, y: -120,
+            speed: this.gameSpeed + Math.random() * 2
         });
     }
     
@@ -305,18 +314,16 @@ class WordRacingGame {
         });
     }
     
-    updateWordBarrels() {
-        this.wordBarrels = this.wordBarrels.filter(barrel => {
-            barrel.y += barrel.speed;
-            barrel.element.style.top = barrel.y + 'px';
-            
-            // 移除超出屏幕的单词油箱
-            if (barrel.y > this.gameHeight) {
-                barrel.element.remove();
+    updateWordItems() {
+        this.wordItems = this.wordItems.filter(function(item) {
+            item.y += item.speed;
+            item.element.style.top = item.y + 'px';
+            if (item.y > this.gameHeight) {
+                item.element.remove();
                 return false;
             }
             return true;
-        });
+        }, this);
     }
     
     checkCollisions() {
@@ -341,19 +348,17 @@ class WordRacingGame {
             }
         });
         
-        // 检查与单词油箱的碰撞
-        this.wordBarrels.forEach((barrel, index) => {
-            const barrelRect = {
-                x: barrel.lane * this.laneWidth,
-                y: barrel.y,
-                width: 60,
-                height: 80
-            };
-            
-            if (this.isColliding(playerRect, barrelRect)) {
-                this.handleWordCollection(barrel, index);
+        // 单词碰撞
+        this.wordItems.forEach(function(item, index) {
+            var itemRect = { x: item.lane * this.laneWidth, y: item.y, width: 60, height: 80 };
+            if (this.isColliding(playerRect, itemRect)) {
+                if (item.isCorrect) {
+                    this.handleCorrectHit(item, index);
+                } else {
+                    this.handleWrongHit(item, index);
+                }
             }
-        });
+        }, this);
     }
     
     isColliding(rect1, rect2) {
@@ -388,44 +393,54 @@ class WordRacingGame {
         }
     }
     
-    handleWordCollection(barrel, index) {
-        // 移除单词油箱
-        barrel.element.remove();
-        this.wordBarrels.splice(index, 1);
-        
-        // 增加基础分数
-        let points = 10;
-        
-        // 连续收集奖励
-        this.consecutiveCollections++;
-        if (this.consecutiveCollections >= 3) {
-            points += 5;
-            this.showScorePopup(barrel.element.offsetLeft, barrel.element.offsetTop, '连击 +5');
-        }
-        
-        // 完美关卡奖励（如果一关内没有碰撞）
-        this.perfectLevelBonus++;
-        
-        // 更新分数
-        this.score += points;
+    handleCorrectHit(item, index) {
+        item.element.remove();
+        this.wordItems.splice(index, 1);
+        this.score += 20;
+        this.correctHits++;
         this.updateScoreDisplay();
-        
-        // 记录学到的单词和统计
-        this.learnedWords.add(barrel.word);
-        this.learningStats.addLearnedWord(barrel.word, this.level, barrel.wordObj.category);
-        this.learningStats.addAttempt(true);
-        
-        // 播放单词发音
-        this.pronunciationSystem.speakWord(barrel.word);
-        
-        // 添加收集效果
-        this.addCollectionEffect(barrel);
-        
-        // 显示分数弹出
-        this.showScorePopup(barrel.element.offsetLeft, barrel.element.offsetTop, `+${points}`);
-        
-        // 显示单词信息
-        this.showWordInfoPopup(barrel.wordObj, barrel.element.offsetLeft, barrel.element.offsetTop);
+        this.addCollectionEffect(item);
+        this.showScorePopup(item.element.offsetLeft, item.element.offsetTop, '+20');
+        if (this.onCorrectHit) this.onCorrectHit(item.wordObj);
+    }
+
+    handleWrongHit(item, index) {
+        item.element.remove();
+        this.wordItems.splice(index, 1);
+        this.lives--;
+        this.updateLivesDisplay();
+        this.addCollisionEffect();
+        if (this.lives <= 0) this.gameOver();
+    }
+
+    useBomb() {
+        if (this.bombCooldown || !this.gameRunning) return;
+        this.bombCooldown = true;
+        var bombBtn = document.getElementById('bombBtn');
+        if (bombBtn) bombBtn.classList.add('cooldown');
+
+        var hitCount = 0;
+        var self = this;
+        this.wordItems.forEach(function(item) {
+            if (item.isCorrect) {
+                item.element.remove();
+                hitCount++;
+            }
+        });
+        this.wordItems = this.wordItems.filter(function(item) { return !item.isCorrect; });
+
+        if (hitCount > 0) {
+            var bonus = hitCount * 20;
+            this.score += bonus;
+            this.correctHits += hitCount;
+            this.updateScoreDisplay();
+            if (this.onBombUsed) this.onBombUsed(hitCount, bonus);
+        }
+
+        setTimeout(function() {
+            self.bombCooldown = false;
+            if (bombBtn) bombBtn.classList.remove('cooldown');
+        }, 5000);
     }
     
     addCollisionEffect() {
