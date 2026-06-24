@@ -297,7 +297,7 @@ class WordRacingGame {
         el.className = 'word-barrel';
         el.textContent = wordObj.word;
         el.dataset.correct = isCorrect ? '1' : '0';
-        var x = (lane + 0.5) * this.laneWidth - 70;
+        var x = (lane + 0.5) * this.laneWidth - 65;
         el.style.left = x + 'px';
         el.style.top = '-80px';
         this.gameContainer.appendChild(el);
@@ -330,7 +330,7 @@ class WordRacingGame {
         
         // 单词碰撞
         this.wordItems.forEach(function(item, index) {
-            var itemRect = { x: item.lane * this.laneWidth, y: item.y, width: 80, height: 80 };
+            var itemRect = { x: item.lane * this.laneWidth, y: item.y, width: 130, height: 130 };
             if (this.isColliding(playerRect, itemRect)) {
                 if (item.isCorrect) {
                     this.handleCorrectHit(item, index);
