@@ -274,19 +274,23 @@ class WordRacingGame {
 
     spawnWordWave() {
         var usedInWave = {};
+        var usedWords = {};
+        // 记录正确单词避免重复
+        usedWords[this.currentTargetWord.word] = true;
         // 1个正确单词
         var lane = this.getFreeLane(usedInWave); usedInWave[lane] = true;
         this.spawnWordItem(this.currentTargetWord, true, lane);
-        // 3-4个错误单词
+        // 3-4个错误单词，去除重复
         var wrongCount = 3 + Math.floor(Math.random() * 2);
         for (var i = 0; i < wrongCount; i++) {
             lane = this.getFreeLane(usedInWave); usedInWave[lane] = true;
             var wrongWord = this.wordSystem.getRandomWord(this.level);
             var tries = 0;
-            while (wrongWord.word === this.currentTargetWord.word && tries < 20) {
+            while ((wrongWord.word === this.currentTargetWord.word || usedWords[wrongWord.word]) && tries < 30) {
                 wrongWord = this.wordSystem.getRandomWord(this.level);
                 tries++;
             }
+            usedWords[wrongWord.word] = true;
             this.spawnWordItem(wrongWord, false, lane);
         }
     }
