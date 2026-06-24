@@ -246,7 +246,7 @@ class WordRacingGame {
         if (!this.gameRunning) return;
         this.pickNewTarget();
         this.spawnWordWave();
-        const spawnDelay = Math.max(1200, 2500 - (this.level * 100));
+        const spawnDelay = Math.max(2000, 3500 - (this.level * 150));
         setTimeout(() => this.spawnLoop(), spawnDelay);
     }
 
@@ -295,7 +295,7 @@ class WordRacingGame {
         el.style.top = '-60px';
         el.style.pointerEvents = 'none';
         this.gameContainer.appendChild(el);
-        this.bombPowerUp = { element: el, lane: lane, y: -60, speed: this.gameSpeed + 1 };
+        this.bombPowerUp = { element: el, lane: lane, y: -60, speed: 1.3 + Math.random() * 0.8 };
     }
 
     updateBombBtn() {
@@ -321,7 +321,7 @@ class WordRacingGame {
         this.wordItems.push({
             element: el, lane: lane, y: -80,
             wordObj: wordObj, isCorrect: isCorrect,
-            speed: this.gameSpeed + Math.random() * 1.5
+            speed: 1.2 + Math.random() * 1.0
         });
     }
 
@@ -336,29 +336,27 @@ class WordRacingGame {
         this.gameContainer.appendChild(obstacle);
         this.obstacles.push({
             element: obstacle, lane: lane, y: -120,
-            speed: this.gameSpeed + Math.random() * 2
+            speed: 1.5 + Math.random() * 1.2
         });
     }
     
     updateObstacles() {
-        this.obstacles = this.obstacles.filter(obstacle => {
-            obstacle.y += obstacle.speed;
-            obstacle.element.style.top = obstacle.y + 'px';
-            
-            // 移除超出屏幕的障碍物
-            if (obstacle.y > this.gameHeight) {
-                obstacle.element.remove();
+        this.obstacles = this.obstacles.filter(function(obs) {
+            obs.y += obs.speed;
+            obs.element.style.top = obs.y + 'px';
+            if (obs.y > this.playerY + 80) {
+                obs.element.remove();
                 return false;
             }
             return true;
-        });
+        }, this);
     }
-    
+
     updateWordItems() {
         this.wordItems = this.wordItems.filter(function(item) {
             item.y += item.speed;
             item.element.style.top = item.y + 'px';
-            if (item.y > this.gameHeight) {
+            if (item.y > this.playerY + 80) {
                 item.element.remove();
                 return false;
             }
@@ -470,7 +468,7 @@ class WordRacingGame {
         var bp = this.bombPowerUp;
         bp.y += bp.speed;
         bp.element.style.top = bp.y + 'px';
-        if (bp.y > this.gameHeight) {
+        if (bp.y > this.playerY + 80) {
             bp.element.remove();
             this.bombPowerUp = null;
         }
