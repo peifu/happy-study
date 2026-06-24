@@ -488,6 +488,10 @@
             var pairCount = Math.min(10, Math.floor(list.length));
             totalPairs = pairCount;
             matchedCount = 0;
+            // 重置进度光环
+            if (window.learningAssistant && window.learningAssistant.resetProgress) {
+                window.learningAssistant.resetProgress();
+            }
             firstTile = null;
             secondTile = null;
             gameWrongStreak = 0;
@@ -577,6 +581,23 @@
                 // 正确匹配
                 createLightningEffect(firstTile.el, secondTile.el);
 
+                // 方块发光
+                firstTile.el.classList.add('tile-match-glow');
+                secondTile.el.classList.add('tile-match-glow');
+                setTimeout(function() {
+                    firstTile.el.classList.remove('tile-match-glow');
+                    secondTile.el.classList.remove('tile-match-glow');
+                }, 500);
+
+                // 分数飘字
+                showScoreFloat(firstTile.el, secondTile.el);
+
+                // 配对粒子
+                spawnMatchParticles(firstTile.el, secondTile.el);
+
+                // 正确音效
+                playCorrectSound();
+
                 setTimeout(function() {
                     firstTile.el.classList.add('matched');
                     secondTile.el.classList.add('matched');
@@ -594,6 +615,10 @@
                     if (gameScoreElement) gameScoreElement.textContent = currentGameScore;
 
                     matchedCount++;
+                    // 通知助手更新进度光环
+                    if (window.learningAssistant && window.learningAssistant.setProgress) {
+                        window.learningAssistant.setProgress(Math.round((matchedCount / totalPairs) * 100));
+                    }
                     if (gamePairsInfoElement) gamePairsInfoElement.textContent = matchedCount + ' / ' + totalPairs;
 
                     var progress = totalPairs > 0 ? (matchedCount / totalPairs) * 100 : 0;
@@ -608,6 +633,15 @@
                         stopGameTimer();
                         if (gameStatusElement) gameStatusElement.textContent = '恭喜通关！得分 ' + currentGameScore;
                         startGameBtnElement.disabled = false;
+
+                        // 关卡完成效果
+                        showLevelCompleteFlash();
+                        setTimeout(function() {
+                            var tiles = document.querySelectorAll('.game-tile.matched');
+                            tiles.forEach(function(t, i) {
+                                setTimeout(function() { t.classList.add('tile-disappear'); }, i * 60);
+                            });
+                        }, 300);
 
                         setTimeout(function() {
                             currentLevel++;
@@ -705,6 +739,68 @@
             }, 300);
         }
 
+        // ===== 配对成功效果 =====
+        function showScoreFloat(el1, el2) {
+            var r1 = el1.getBoundingClientRect();
+            var r2 = el2.getBoundingClientRect();
+            var cx = (r1.left + r1.right + r2.left + r2.right) / 4;
+            var cy = (r1.top + r1.bottom + r2.top + r2.bottom) / 4;
+            var span = document.createElement('span');
+            span.className = 'score-float';
+            span.textContent = '+10';
+            span.style.left = cx + 'px';
+            span.style.top = cy + 'px';
+            document.body.appendChild(span);
+            setTimeout(function() { span.remove(); }, 1000);
+        }
+
+        function spawnMatchParticles(el1, el2) {
+            var emojis = ['✨', '⭐', '🎯'];
+            var r1 = el1.getBoundingClientRect();
+            var r2 = el2.getBoundingClientRect();
+            var centers = [
+                { x: r1.left + r1.width / 2, y: r1.top + r1.height / 2 },
+                { x: r2.left + r2.width / 2, y: r2.top + r2.height / 2 }
+            ];
+            centers.forEach(function(c) {
+                for (var i = 0; i < 3; i++) {
+                    var p = document.createElement('span');
+                    p.className = 'match-particle';
+                    p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    p.style.left = c.x + 'px';
+                    p.style.top = c.y + 'px';
+                    p.style.setProperty('--mdx', ((Math.random() - 0.5) * 100) + 'px');
+                    p.style.setProperty('--mdy', (-(40 + Math.random() * 60)) + 'px');
+                    p.style.animationDelay = (Math.random() * 0.1) + 's';
+                    document.body.appendChild(p);
+                    setTimeout(function() { p.remove(); }, 900);
+                }
+            });
+        }
+
+        function playCorrectSound() {
+            var audio = new Audio('assets/audio/correct.mp3');
+            audio.addEventListener('error', function() {
+                var u = new SpeechSynthesisUtterance('正确！');
+                u.lang = 'zh-CN'; u.rate = 1.2; u.pitch = 1.3;
+                speechSynthesis.cancel();
+                speechSynthesis.speak(u);
+            });
+            audio.play().catch(function() {
+                var u = new SpeechSynthesisUtterance('正确！');
+                u.lang = 'zh-CN'; u.rate = 1.2; u.pitch = 1.3;
+                speechSynthesis.cancel();
+                speechSynthesis.speak(u);
+            });
+        }
+
+        function showLevelCompleteFlash() {
+            var flash = document.createElement('div');
+            flash.className = 'level-complete-flash';
+            document.body.appendChild(flash);
+            setTimeout(function() { flash.remove(); }, 500);
+        }
+
         // ===== 计时器 =====
         function startGameTimer() {
             gameTimer = setInterval(function() {
@@ -745,6 +841,10 @@
             gameActive = false;
             stopGameTimer();
             matchedCount = 0;
+            // 重置进度光环
+            if (window.learningAssistant && window.learningAssistant.resetProgress) {
+                window.learningAssistant.resetProgress();
+            }
             firstTile = null;
             secondTile = null;
             gameWrongStreak = 0;
