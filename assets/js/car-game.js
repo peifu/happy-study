@@ -291,13 +291,34 @@ class WordRacingGame {
         }
     }
 
+    celebrateEMP() {
+        var emojis = ['⚡', '✨', '💥', '🌟', '🔥', '🎉', '⭐', '💫'];
+        for (var i = 0; i < 40; i++) {
+            var p = document.createElement('span');
+            p.style.cssText = 'position:fixed;pointer-events:none;z-index:9999;font-size:28px;left:' +
+                (100 + Math.random() * 800) + 'px;top:' + (50 + Math.random() * 500) + 'px;';
+            p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            document.body.appendChild(p);
+            anime({ targets: p,
+                translateX: (Math.random() - 0.5) * 600,
+                translateY: (Math.random() - 0.5) * 500,
+                rotate: Math.random() * 720,
+                opacity: [1, 0], scale: [0.5, 1.5],
+                duration: 1200, easing: 'easeOutExpo',
+                complete: function() { p.remove(); }
+            });
+        }
+    }
+
     updateBombBtn() {
         var bombBtn = document.getElementById('bombBtn');
         if (!bombBtn) return;
-        if (this.bombAvailable && !this.bombCooldown) {
+        if (this.empCharges > 0 && !this.bombCooldown) {
             bombBtn.classList.add('active');
+            bombBtn.textContent = '⚡x' + this.empCharges;
         } else {
             bombBtn.classList.remove('active');
+            bombBtn.textContent = '⚡';
         }
     }
 
@@ -308,7 +329,7 @@ class WordRacingGame {
         el.dataset.correct = isCorrect ? '1' : '0';
         var label = document.createElement('span');
         label.className = 'word-label';
-        label.textContent = wordObj.word;
+        label.textContent = wordObj.word.toLowerCase();
         el.appendChild(label);
         var x = (lane + 0.5) * this.laneWidth - 65;
         el.style.left = x + 'px';
@@ -372,12 +393,13 @@ class WordRacingGame {
         this.addCollectionEffect(item);
         this.showScorePopup(item.element.offsetLeft, item.element.offsetTop, '+20');
 
-        // 每4个正确单词 = 1次EMP充能（可叠加）
+        // 每4个正确单词 = 1次EMP充能（可叠加），触发庆祝
         if (this.correctHits >= 4) {
             this.correctHits = 0;
             this.empCharges++;
             this.playerCar.classList.add('emp-aura');
             this.updateBombBtn();
+            this.celebrateEMP();
         }
         if (this.onCorrectHit) this.onCorrectHit(item.wordObj);
     }
@@ -422,18 +444,6 @@ class WordRacingGame {
         }, 5000);
     }
 
-    updateBombBtn() {
-        var bombBtn = document.getElementById('bombBtn');
-        if (!bombBtn) return;
-        if (this.empCharges > 0 && !this.bombCooldown) {
-            bombBtn.classList.add('active');
-            bombBtn.textContent = '⚡x' + this.empCharges;
-        } else {
-            bombBtn.classList.remove('active');
-            bombBtn.textContent = '⚡';
-        }
-    }
-    
     addCollisionEffect() {
         this.gameContainer.classList.add('collision-effect');
         setTimeout(() => {

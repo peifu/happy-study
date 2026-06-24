@@ -128,51 +128,33 @@
 
         .start-screen,
         .game-over-screen {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 100; gap: 12px;
         }
-
-        .start-btn,
-        .restart-btn {
-            background: linear-gradient(45deg, #FFD700, #FFA500);
-            border: none;
-            padding: 16px 32px;
-            border-radius: 30px;
-            font-size: 24px;
-            font-weight: bold;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-            margin-top: 20px;
-            z-index: 101;
-            position: relative;
+        .start-screen h2, .game-over-screen h2 {
+            color: #FFD700; font-size: 2.8rem; margin: 0; text-shadow: 0 0 20px rgba(255,215,0,0.5);
         }
-
-        .start-btn:hover,
-        .restart-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        .start-subtitle { color: rgba(255,255,255,0.8); font-size: 1.2rem; margin-bottom: 8px; }
+        .start-btn, .restart-btn {
+            background: linear-gradient(135deg, #FFD700, #FF8C00);
+            border: none; padding: 18px 40px; border-radius: 35px;
+            font-size: 22px; font-weight: bold; color: #1a1a2e; cursor: pointer;
+            transition: all 0.3s ease; box-shadow: 0 6px 24px rgba(255,215,0,0.4);
+            z-index: 101; margin-top: 10px;
         }
-
+        .start-btn:hover, .restart-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(255,215,0,0.6); }
         .instructions {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 20px;
-            border-radius: 15px;
-            margin-top: 20px;
-            text-align: center;
-            max-width: 500px;
-            color: #2F4F4F;
+            background: rgba(255,255,255,0.1); padding: 20px 30px; border-radius: 16px;
+            max-width: 460px; color: rgba(255,255,255,0.9); display: flex; flex-direction: column; gap: 8px;
+            border: 1px solid rgba(255,255,255,0.15);
         }
+        .instr-item { font-size: 15px; padding: 4px 0; }
+        .gameover-stats { display: flex; gap: 20px; margin: 10px 0; }
+        .go-stat { background: rgba(255,255,255,0.1); color: white; padding: 10px 20px; border-radius: 12px; font-size: 18px; font-weight: bold; }
+        .learned-words-box { background: rgba(255,255,255,0.08); padding: 15px 25px; border-radius: 14px; color: rgba(255,255,255,0.85); text-align: center; max-width: 400px; }
+        .learned-words-box h3 { margin: 0 0 8px; font-size: 16px; color: #FFD700; }
 
         .hidden {
             display: none !important;
@@ -404,31 +386,29 @@
 
                 <!-- 开始界面 -->
                 <div class="start-screen" id="startScreen">
-                    <h2 style="color: white; font-size: 2.5rem; margin-bottom: 20px;">准备开始单词赛车！</h2>
-                    <button class="start-btn" id="startBtn">开始游戏</button>
+                    <h2>🏎️ 单词赛车</h2>
+                    <p class="start-subtitle">看中文提示 · 撞击对应英文单词</p>
+                    <button class="start-btn" id="startBtn">🚀 开始游戏</button>
                     <div class="instructions">
-                        <h3 style="margin-bottom: 10px;">🎮 游戏说明</h3>
-                        <p>• 看顶部中文提示，撞击对应的英文单词得分</p>
-                        <p>• 使用 ← → 或左侧触控按钮控制汽车</p>
-                        <p>• 躲避错误的英文单词和障碍物</p>
-                        <p>• 点击右侧💣炸毁屏幕上所有正确单词！</p>
+                        <div class="instr-item">🎯 顶部显示中文提示，撞击匹配的英文单词得分</div>
+                        <div class="instr-item">◀▶ 左右触控按钮 或 键盘 ←→ 控制赛车</div>
+                        <div class="instr-item">🚫 躲避错误单词，碰撞会扣减生命</div>
+                        <div class="instr-item">⚡ 每4个正确单词充能一次EMP，可清屏</div>
                     </div>
                 </div>
 
                 <!-- 游戏结束界面 -->
                 <div class="game-over-screen hidden" id="gameOverScreen">
-                    <h2 style="color: white; font-size: 2.5rem; margin-bottom: 20px;">游戏结束！</h2>
-                    <div style="color: white; font-size: 1.5rem; margin-bottom: 10px;">
-                        最终得分: <span id="finalScore">0</span>
+                    <h2>🏁 游戏结束</h2>
+                    <div class="gameover-stats">
+                        <div class="go-stat">⭐ 最终得分：<span id="finalScore">0</span></div>
+                        <div class="go-stat">🏆 达到关卡：<span id="finalLevel">1</span></div>
                     </div>
-                    <div style="color: white; font-size: 1.2rem; margin-bottom: 20px;">
-                        达到关卡: <span id="finalLevel">1</span>
-                    </div>
-                    <div id="learnedWords" style="color: white; margin-bottom: 0px; text-align: center;">
-                        <h3>本局学到的单词：</h3>
+                    <div id="learnedWords" class="learned-words-box">
+                        <h3>📚 本局学到的单词</h3>
                         <div id="wordsList"></div>
                     </div>
-                    <button class="restart-btn" id="restartBtn">重新开始</button>
+                    <button class="restart-btn" id="restartBtn">🔄 再来一局</button>
                 </div>
             </div>
         </div>
