@@ -213,6 +213,68 @@
         @media (max-width: 480px) {
             .game-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
         }
+
+        /* 配对成功方块发光 */
+        .tile-match-glow {
+            animation: tileGlow 0.5s ease-out;
+        }
+        @keyframes tileGlow {
+            0% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); transform: scale(1); }
+            50% { box-shadow: 0 0 30px rgba(255, 215, 0, 1), 0 0 60px rgba(255, 200, 0, 0.6); transform: scale(1.08); }
+            100% { box-shadow: 0 0 0px rgba(255, 215, 0, 0); transform: scale(1); }
+        }
+
+        /* 分数飘字 */
+        .score-float {
+            position: fixed;
+            pointer-events: none;
+            z-index: 10001;
+            font-size: 28px;
+            font-weight: 700;
+            color: #FFD700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+            animation: scoreUp 1s ease-out forwards;
+        }
+        @keyframes scoreUp {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-60px) scale(1.3); }
+        }
+
+        /* 配对成功粒子 */
+        .match-particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            font-size: 22px;
+            animation: matchParticleFly 0.8s ease-out forwards;
+        }
+        @keyframes matchParticleFly {
+            0% { opacity: 1; transform: translate(0, 0) scale(1); }
+            100% { opacity: 0; transform: translate(var(--mdx), var(--mdy)) scale(0.3); }
+        }
+
+        /* 关卡完成闪白 */
+        .level-complete-flash {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: white;
+            z-index: 9998;
+            pointer-events: none;
+            animation: flashWhite 0.5s ease-out forwards;
+        }
+        @keyframes flashWhite {
+            0% { opacity: 0.8; }
+            100% { opacity: 0; }
+        }
+
+        /* 方块依次消失 */
+        .tile-disappear {
+            animation: tileVanish 0.4s ease-in forwards;
+        }
+        @keyframes tileVanish {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0.3); }
+        }
     </style>
 </head>
 <body>
