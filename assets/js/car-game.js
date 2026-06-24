@@ -41,7 +41,7 @@ class WordRacingGame {
         this.perfectLevelBonus = 0;
         this.currentTargetWord = null;
         this.correctHits = 0;
-        this.empCharged = false;
+        this.empCharges = 0;
         this.bombCooldown = false;
         this.chineseHint = document.getElementById('chineseHint');
         this.onCorrectHit = null;
@@ -182,7 +182,7 @@ class WordRacingGame {
             this.wordItems.forEach(function(item) { item.element.remove(); });
             this.wordItems = [];
             this.correctHits = 0;
-            this.empCharged = false;
+            this.empCharges = 0;
             this.playerCar.classList.remove('emp-aura');
             this.updateBombBtn();
 
@@ -317,7 +317,7 @@ class WordRacingGame {
         this.wordItems.push({
             element: el, lane: lane, y: -80,
             wordObj: wordObj, isCorrect: isCorrect,
-            speed: this.fallSpeed
+            speed: this.fallSpeed, alreadyHit: false
         });
     }
 
@@ -343,8 +343,10 @@ class WordRacingGame {
         
         // 单词碰撞
         this.wordItems.forEach(function(item, index) {
+            if (item.alreadyHit) return;
             var itemRect = { x: item.lane * this.laneWidth, y: item.y, width: 130, height: 130 };
             if (this.isColliding(playerRect, itemRect)) {
+                item.alreadyHit = true;
                 if (item.isCorrect) {
                     this.handleCorrectHit(item, index);
                 } else {
@@ -370,8 +372,10 @@ class WordRacingGame {
         this.addCollectionEffect(item);
         this.showScorePopup(item.element.offsetLeft, item.element.offsetTop, '+20');
 
-        if (this.correctHits >= 5 && !this.empCharged) {
-            this.empCharged = true;
+        // 每4个正确单词 = 1次EMP充能（可叠加）
+        if (this.correctHits >= 4) {
+            this.correctHits = 0;
+            this.empCharges++;
             this.playerCar.classList.add('emp-aura');
             this.updateBombBtn();
         }
@@ -394,11 +398,12 @@ class WordRacingGame {
     }
 
     useBomb() {
-        if (!this.empCharged || this.bombCooldown || !this.gameRunning) return;
+        if (this.empCharges <= 0 || this.bombCooldown || !this.gameRunning) return;
         this.bombCooldown = true;
-        this.empCharged = false;
-        this.correctHits = 0;
-        this.playerCar.classList.remove('emp-aura');
+        this.empCharges--;
+        if (this.empCharges <= 0) {
+            this.playerCar.classList.remove('emp-aura');
+        }
         this.updateBombBtn();
 
         var count = this.wordItems.length;
@@ -420,10 +425,12 @@ class WordRacingGame {
     updateBombBtn() {
         var bombBtn = document.getElementById('bombBtn');
         if (!bombBtn) return;
-        if (this.empCharged && !this.bombCooldown) {
+        if (this.empCharges > 0 && !this.bombCooldown) {
             bombBtn.classList.add('active');
+            bombBtn.textContent = '⚡x' + this.empCharges;
         } else {
             bombBtn.classList.remove('active');
+            bombBtn.textContent = '⚡';
         }
     }
     
@@ -657,9 +664,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 speechSynthesis.cancel(); speechSynthesis.speak(u);
             });
             if (window.learningAssistant && window.learningAssistant.setProgress) {
-                window.learningAssistant.setProgress(game.correctHits * 20);
+                window.learningAssistant.setProgress(game.correctHits * 25);
             }
-            if (game.correctHits >= 5) {
+            if (game.correctHits >= 4) {
                 game.correctHits = 0;
                 if (window.learningAssistant) window.learningAssistant.resetProgress();
             }
