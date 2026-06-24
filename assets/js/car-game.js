@@ -648,26 +648,65 @@ class WordRacingGame {
 }
 
 // 初始化游戏
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOMContentLoaded事件触发，准备初始化游戏');
+document.addEventListener('DOMContentLoaded', function() {
     try {
-        const game = new WordRacingGame();
-        console.log('游戏实例创建成功:', game);
-        
-        // 测试开始按钮是否存在并可点击
-        const startBtn = document.getElementById('startBtn');
-        if (startBtn) {
-            console.log('开始按钮存在，类型:', startBtn.tagName);
-            console.log('开始按钮类名:', startBtn.className);
-            console.log('开始按钮文本:', startBtn.textContent);
-            
-            // 手动测试点击事件
-            startBtn.addEventListener('click', () => {
-                console.log('开始按钮点击测试 - 事件正常触发');
+        var game = new WordRacingGame();
+        window.carGame = game;
+
+        // 触控按钮
+        var touchLeftBtn = document.getElementById('touchLeftBtn');
+        var touchRightBtn = document.getElementById('touchRightBtn');
+        var bombBtnEl = document.getElementById('bombBtn');
+        if (touchLeftBtn) touchLeftBtn.addEventListener('click', function() { game.moveLeft(); });
+        if (touchRightBtn) touchRightBtn.addEventListener('click', function() { game.moveRight(); });
+        if (bombBtnEl) bombBtnEl.addEventListener('click', function() { game.useBomb(); });
+
+        // 正确撞击回调
+        game.onCorrectHit = function(wordObj) {
+            var audio = new Audio('assets/audio/correct.mp3');
+            audio.play().catch(function() {
+                var u = new SpeechSynthesisUtterance('正确！');
+                u.lang = 'zh-CN'; u.rate = 1.2; u.pitch = 1.3;
+                speechSynthesis.cancel(); speechSynthesis.speak(u);
             });
-        } else {
-            console.error('开始按钮不存在！');
-        }
+            if (window.learningAssistant && window.learningAssistant.setProgress) {
+                window.learningAssistant.setProgress(game.correctHits * 20);
+            }
+            if (game.correctHits >= 5) {
+                game.correctHits = 0;
+                if (window.learningAssistant) window.learningAssistant.resetProgress();
+            }
+        };
+
+        // 炸药包回调
+        game.onBombUsed = function(count, bonus) {
+            for (var i = 0; i < count * 5; i++) {
+                var p = document.createElement('span');
+                p.style.cssText = 'position:fixed;pointer-events:none;z-index:9999;font-size:30px;left:' +
+                    (200 + Math.random() * 600) + 'px;top:' + (100 + Math.random() * 400) + 'px;';
+                p.textContent = '💥';
+                document.body.appendChild(p);
+                anime({ targets: p, translateX: (Math.random()-0.5)*400, translateY: (Math.random()-0.5)*300,
+                    opacity: [1,0], scale: [1,2], duration: 800, easing: 'easeOutExpo',
+                    complete: function() { p.remove(); } });
+            }
+            if (window.learningAssistant && window.learningAssistant.setProgress) {
+                window.learningAssistant.setProgress(game.correctHits * 20);
+            }
+            if (game.correctHits >= 5) {
+                game.correctHits = 0;
+                if (window.learningAssistant) window.learningAssistant.resetProgress();
+            }
+        };
+
+        // 开始游戏时重置进度
+        var origStart = game.startGame.bind(game);
+        game.startGame = function() {
+            if (window.learningAssistant && window.learningAssistant.resetProgress) {
+                window.learningAssistant.resetProgress();
+            }
+            origStart();
+        };
     } catch (error) {
         console.error('创建游戏实例时出错:', error);
     }
