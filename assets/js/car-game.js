@@ -295,7 +295,7 @@ class WordRacingGame {
         el.style.top = '-60px';
         el.style.pointerEvents = 'none';
         this.gameContainer.appendChild(el);
-        this.bombPowerUp = { element: el, lane: lane, y: -60, speed: 1.3 + Math.random() * 0.8 };
+        this.bombPowerUp = { element: el, lane: lane, y: -60, speed: 1.8 };
     }
 
     updateBombBtn() {
@@ -321,7 +321,7 @@ class WordRacingGame {
         this.wordItems.push({
             element: el, lane: lane, y: -80,
             wordObj: wordObj, isCorrect: isCorrect,
-            speed: 1.2 + Math.random() * 1.0
+            speed: 1.8
         });
     }
 
@@ -336,7 +336,7 @@ class WordRacingGame {
         this.gameContainer.appendChild(obstacle);
         this.obstacles.push({
             element: obstacle, lane: lane, y: -120,
-            speed: 1.5 + Math.random() * 1.2
+            speed: 1.8
         });
     }
     
