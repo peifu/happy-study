@@ -41,6 +41,8 @@ class WordRacingGame {
         this.currentTargetWord = null;
         this.correctHits = 0;
         this.bombCooldown = false;
+        this.bombAvailable = false;
+        this.bombPowerUp = null;
         this.chineseHint = document.getElementById('chineseHint');
         this.onCorrectHit = null;
         this.onBombUsed = null;
@@ -150,15 +152,15 @@ class WordRacingGame {
     }
     
     moveLeft() {
-        if (this.currentLane > 0 && this.gameRunning) {
+        if (this.currentLane > 1 && this.gameRunning) {
             this.currentLane--;
             this.positionPlayerCar();
             this.addMoveEffect();
         }
     }
-    
+
     moveRight() {
-        if (this.currentLane < 5 && this.gameRunning) {
+        if (this.currentLane < 4 && this.gameRunning) {
             this.currentLane++;
             this.positionPlayerCar();
             this.addMoveEffect();
@@ -204,6 +206,9 @@ class WordRacingGame {
         this.wordItems = [];
         this.wordBarrels = [];
         this.learnedWords.clear();
+        if (this.bombPowerUp) { this.bombPowerUp.element.remove(); this.bombPowerUp = null; }
+        this.bombAvailable = false;
+        this.updateBombBtn();
         
         // 更新显示
         this.updateScoreDisplay();
@@ -226,6 +231,7 @@ class WordRacingGame {
         this.updateBackground();
         this.updateObstacles();
         this.updateWordItems();
+        this.updateBombPowerUp();
         this.checkCollisions();
         this.checkLevelUp();
         
@@ -243,8 +249,13 @@ class WordRacingGame {
 
     pickNewTarget() {
         this.currentTargetWord = this.wordSystem.getRandomWord(this.level);
-        if (this.chineseHint) this.chineseHint.textContent = this.currentTargetWord.translation;
+        if (this.chineseHint && this.currentTargetWord) {
+            this.chineseHint.textContent = this.currentTargetWord.translation || this.currentTargetWord.word;
+        }
         this.wordItems = [];
+        // 重置炸弹状态
+        this.bombAvailable = false;
+        this.updateBombBtn();
     }
 
     spawnWordWave() {
@@ -265,6 +276,32 @@ class WordRacingGame {
         var obsCount = 1 + Math.floor(Math.random() * 2);
         for (var j = 0; j < obsCount; j++) {
             this.spawnObstacle();
+        }
+        // 30%概率生成炸弹技能包
+        if (!this.bombAvailable && Math.random() < 0.3) {
+            this.spawnBombPowerUp();
+        }
+    }
+
+    spawnBombPowerUp() {
+        var lane = 1 + Math.floor(Math.random() * 4); // 中间4车道
+        var el = document.createElement('div');
+        el.style.cssText = 'position:absolute;width:50px;height:50px;font-size:40px;text-align:center;line-height:50px;z-index:15;';
+        el.textContent = '💣';
+        el.style.left = ((lane + 0.5) * this.laneWidth - 25) + 'px';
+        el.style.top = '-60px';
+        el.style.pointerEvents = 'none';
+        this.gameContainer.appendChild(el);
+        this.bombPowerUp = { element: el, lane: lane, y: -60, speed: this.gameSpeed + 1 };
+    }
+
+    updateBombBtn() {
+        var bombBtn = document.getElementById('bombBtn');
+        if (!bombBtn) return;
+        if (this.bombAvailable && !this.bombCooldown) {
+            bombBtn.classList.add('active');
+        } else {
+            bombBtn.classList.remove('active');
         }
     }
 
@@ -348,6 +385,18 @@ class WordRacingGame {
             }
         });
         
+        // 炸弹技能包碰撞
+        if (this.bombPowerUp) {
+            var bp = this.bombPowerUp;
+            var bpRect = { x: bp.lane * this.laneWidth, y: bp.y, width: 50, height: 50 };
+            if (this.isColliding(playerRect, bpRect)) {
+                bp.element.remove();
+                this.bombPowerUp = null;
+                this.bombAvailable = true;
+                this.updateBombBtn();
+            }
+        }
+
         // 单词碰撞
         this.wordItems.forEach(function(item, index) {
             var itemRect = { x: item.lane * this.laneWidth, y: item.y, width: 60, height: 80 };
@@ -413,9 +462,22 @@ class WordRacingGame {
         if (this.lives <= 0) this.gameOver();
     }
 
+    updateBombPowerUp() {
+        if (!this.bombPowerUp) return;
+        var bp = this.bombPowerUp;
+        bp.y += bp.speed;
+        bp.element.style.top = bp.y + 'px';
+        if (bp.y > this.gameHeight) {
+            bp.element.remove();
+            this.bombPowerUp = null;
+        }
+    }
+
     useBomb() {
-        if (this.bombCooldown || !this.gameRunning) return;
+        if (!this.bombAvailable || this.bombCooldown || !this.gameRunning) return;
         this.bombCooldown = true;
+        this.bombAvailable = false;
+        this.updateBombBtn();
         var bombBtn = document.getElementById('bombBtn');
         if (bombBtn) bombBtn.classList.add('cooldown');
 
@@ -439,7 +501,7 @@ class WordRacingGame {
 
         setTimeout(function() {
             self.bombCooldown = false;
-            if (bombBtn) bombBtn.classList.remove('cooldown');
+            self.updateBombBtn();
         }, 5000);
     }
     

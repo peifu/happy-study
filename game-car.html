@@ -285,10 +285,14 @@
             }
         }
 
-        /* 左侧触控按钮组 */
-        .touch-controls-left {
-            position: absolute; left: 20px; top: 50%; transform: translateY(-50%);
-            display: flex; flex-direction: column; gap: 30px; z-index: 30;
+        /* 底部控制栏 */
+        .bottom-controls {
+            position: absolute; bottom: 15px; left: 0; right: 0;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 40px; z-index: 30; pointer-events: none;
+        }
+        .direction-btns {
+            display: flex; gap: 20px; pointer-events: auto;
         }
         .touch-btn {
             width: 80px; height: 80px;
@@ -300,10 +304,8 @@
         }
         .touch-btn:active { background: rgba(255,215,0,0.5); transform: scale(0.92); }
 
-        /* 右侧炸药包 */
-        .bomb-btn-wrap {
-            position: absolute; right: 20px; top: 50%; transform: translateY(-50%); z-index: 30;
-        }
+        /* 炸药包按钮 */
+        .bomb-btn-wrap { pointer-events: auto; }
         .bomb-btn {
             width: 90px; height: 90px;
             background: rgba(255,60,30,0.3); border: 3px solid rgba(255,100,50,0.6);
@@ -311,7 +313,9 @@
             display: flex; align-items: center; justify-content: center;
             cursor: pointer; user-select: none; -webkit-user-select: none;
             touch-action: manipulation; transition: all 0.2s ease;
+            opacity: 0.3; pointer-events: none;
         }
+        .bomb-btn.active { opacity: 1; pointer-events: auto; background: rgba(255,60,30,0.5); }
         .bomb-btn:active { background: rgba(255,100,30,0.7); transform: scale(0.88); }
         .bomb-btn.cooldown { opacity: 0.4; pointer-events: none; }
 
@@ -365,27 +369,21 @@
                     </div>
                 </div>
 
-                <!-- 游戏控制 -->
-                <div class="game-controls">
-                    <button class="control-btn" id="leftBtn">←</button>
-                    <button class="control-btn" id="rightBtn">→</button>
-                </div>
-
                 <!-- 中文提示 -->
                 <div class="chinese-hint-bar" id="chineseHintBar">
                     <span class="hint-label">🎯 寻找：</span>
                     <span class="hint-word" id="chineseHint">---</span>
                 </div>
 
-                <!-- 左侧触控 -->
-                <div class="touch-controls-left">
-                    <button class="touch-btn" id="touchLeftBtn">◀</button>
-                    <button class="touch-btn" id="touchRightBtn">▶</button>
-                </div>
-
-                <!-- 右侧炸药包 -->
-                <div class="bomb-btn-wrap">
-                    <button class="bomb-btn" id="bombBtn">💣</button>
+                <!-- 底部控制栏 -->
+                <div class="bottom-controls">
+                    <div class="direction-btns">
+                        <button class="touch-btn" id="touchLeftBtn">◀</button>
+                        <button class="touch-btn" id="touchRightBtn">▶</button>
+                    </div>
+                    <div class="bomb-btn-wrap">
+                        <button class="bomb-btn" id="bombBtn">💣</button>
+                    </div>
                 </div>
 
                 <!-- 开始界面 -->
