@@ -664,7 +664,7 @@
             }
             .lyrics-container {
                 grid-row: auto;
-                max-height: 320px;
+                max-height: 420px;
                 padding: 24px 20px;
             }
             .songs-panel { max-height: 320px; }
@@ -676,10 +676,11 @@
             .player-layout { gap: 10px; }
             .lyrics-container {
                 padding: 16px 14px;
-                max-height: 240px;
+                max-height: 55vh;
+                display: flex; flex-direction: column; justify-content: center;
             }
-            .lyric-line { font-size: 14px; padding: 8px 10px; }
-            .lyric-line.active { font-size: 15px; }
+            .lyric-line { font-size: 14px; padding: 8px 10px; text-align: center; }
+            .lyric-line.active { font-size: 15px; text-align: center; }
             .song-title { font-size: 18px; }
             .music-player { padding: 16px; }
             .songs-panel { padding: 12px; max-height: 260px; }
