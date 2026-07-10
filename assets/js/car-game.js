@@ -44,6 +44,10 @@ class WordRacingGame {
         this.empCharges = 0;
         this.chineseHint = document.getElementById('chineseHint');
         this.onCorrectHit = null;
+        this.wordLevel = 3;
+        this.spawnTimer = null;
+        this.animFrameId = null;
+        this.gameSpeed = 3;
         
         // 键盘状态控制
         this.keys = {
@@ -177,6 +181,10 @@ class WordRacingGame {
     startGame() {
         console.log('开始游戏按钮被点击');
         try {
+            // 取消旧循环（防止重复启动导致多个循环链）
+            if (this.spawnTimer) clearTimeout(this.spawnTimer);
+            if (this.animFrameId) cancelAnimationFrame(this.animFrameId);
+
             // 清理旧物品
             this.wordItems.forEach(function(item) { item.element.remove(); });
             this.wordItems = [];
@@ -199,6 +207,10 @@ class WordRacingGame {
     }
     
     restartGame() {
+        // 取消旧循环（防止重复启动导致多个循环链）
+        if (this.spawnTimer) clearTimeout(this.spawnTimer);
+        if (this.animFrameId) cancelAnimationFrame(this.animFrameId);
+
         // 清理游戏状态
         this.wordItems.forEach(function(item) { item.element.remove(); });
         this.wordBarrels.forEach(function(b) { b.element.remove(); });
@@ -240,8 +252,8 @@ class WordRacingGame {
         this.checkCollisions();
         this.checkLevelUp();
         
-        // 继续游戏循环
-        requestAnimationFrame(() => this.gameLoop());
+        // 继续游戏循环，保存引用以便取消
+        this.animFrameId = requestAnimationFrame(() => this.gameLoop());
     }
     
     spawnLoop() {
@@ -249,14 +261,14 @@ class WordRacingGame {
         this.pickNewTarget();
         this.spawnWordWave();
         const spawnDelay = 4000;
-        setTimeout(() => this.spawnLoop(), spawnDelay);
+        this.spawnTimer = setTimeout(() => this.spawnLoop(), spawnDelay);
     }
 
     pickNewTarget() {
         // 清理旧物品的 DOM 元素
         this.wordItems.forEach(function(item) { item.element.remove(); });
         this.wordItems = [];
-        this.currentTargetWord = this.wordSystem.getRandomWord(this.level);
+        this.currentTargetWord = this.wordSystem.getRandomWord(this.wordLevel);
         if (this.chineseHint && this.currentTargetWord) {
             this.chineseHint.textContent = this.currentTargetWord.translation || this.currentTargetWord.word;
         }
@@ -283,10 +295,10 @@ class WordRacingGame {
         var wrongCount = 3 + Math.floor(Math.random() * 2);
         for (var i = 0; i < wrongCount; i++) {
             lane = this.getFreeLane(usedInWave); usedInWave[lane] = true;
-            var wrongWord = this.wordSystem.getRandomWord(this.level);
+            var wrongWord = this.wordSystem.getRandomWord(this.wordLevel);
             var tries = 0;
             while ((wrongWord.word === this.currentTargetWord.word || usedWords[wrongWord.word]) && tries < 30) {
-                wrongWord = this.wordSystem.getRandomWord(this.level);
+                wrongWord = this.wordSystem.getRandomWord(this.wordLevel);
                 tries++;
             }
             usedWords[wrongWord.word] = true;
@@ -365,19 +377,20 @@ class WordRacingGame {
             height: 120
         };
         
-        // 单词碰撞
-        this.wordItems.forEach(function(item, index) {
-            if (item.alreadyHit) return;
+        // 单词碰撞 — 倒序遍历避免 splice 导致索引偏移
+        for (var i = this.wordItems.length - 1; i >= 0; i--) {
+            var item = this.wordItems[i];
+            if (item.alreadyHit) continue;
             var itemRect = { x: item.lane * this.laneWidth, y: item.y, width: 130, height: 130 };
             if (this.isColliding(playerRect, itemRect)) {
                 item.alreadyHit = true;
                 if (item.isCorrect) {
-                    this.handleCorrectHit(item, index);
+                    this.handleCorrectHit(item, i);
                 } else {
-                    this.handleWrongHit(item, index);
+                    this.handleWrongHit(item, i);
                 }
             }
-        }, this);
+        }
     }
     
     isColliding(rect1, rect2) {
@@ -388,13 +401,18 @@ class WordRacingGame {
     }
     
     handleCorrectHit(item, index) {
-        item.element.remove();
+        // 先从数组中移除
         this.wordItems.splice(index, 1);
         this.score += 20;
         this.correctHits++;
+        this.learnedWords.add(item.wordObj.word);
         this.updateScoreDisplay();
+        // 在移除 DOM 前读取位置并触发动画
+        var el = item.element;
+        this.showScorePopup(el.offsetLeft, el.offsetTop, '+20');
         this.addCollectionEffect(item);
-        this.showScorePopup(item.element.offsetLeft, item.element.offsetTop, '+20');
+        // 延迟移除，让收集动画播放完成
+        setTimeout(function() { el.remove(); }, 800);
 
         // 每4个正确单词 = 1次EMP充能（可叠加），触发庆祝
         if (this.correctHits >= 4) {
@@ -408,8 +426,8 @@ class WordRacingGame {
     }
 
     handleWrongHit(item, index) {
-        item.element.remove();
         this.wordItems.splice(index, 1);
+        item.element.remove();
         this.lives--;
         this.updateLivesDisplay();
         this.addCollisionEffect();
@@ -612,6 +630,12 @@ class WordRacingGame {
     gameOver() {
         this.gameRunning = false;
         
+        // 取消动画和生成循环
+        if (this.spawnTimer) clearTimeout(this.spawnTimer);
+        if (this.animFrameId) cancelAnimationFrame(this.animFrameId);
+        this.spawnTimer = null;
+        this.animFrameId = null;
+
         // 更新游戏结束界面
         document.getElementById('finalScore').textContent = this.score;
         document.getElementById('finalLevel').textContent = this.level;
@@ -658,6 +682,14 @@ document.addEventListener('DOMContentLoaded', function() {
         if (diffSelect) {
             diffSelect.addEventListener('change', function() {
                 game.setDifficulty(this.value);
+            });
+        }
+
+        // 单词等级选择器
+        var wordLevelSelect = document.getElementById('wordLevelSelect');
+        if (wordLevelSelect) {
+            wordLevelSelect.addEventListener('change', function() {
+                game.wordLevel = parseInt(this.value, 10);
             });
         }
 
