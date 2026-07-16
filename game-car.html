@@ -38,7 +38,7 @@
         .car-container {
             position: relative;
             width: 1200px;
-            height: 675px;
+            height: 750px;
             margin: 0 auto;
             background: url('assets/resources/highway-bg.png') repeat-y;
             background-size: cover;
@@ -222,19 +222,36 @@
         .bottom-controls {
             position: absolute; bottom: 15px; left: 0; right: 0;
             display: flex; justify-content: space-between; align-items: center;
-            padding: 0 40px; z-index: 30;
+            padding: 0 20px; z-index: 30;
         }
-        .direction-btns { display: flex; gap: 20px; }
+        .bottom-left { display: flex; gap: 16px; align-items: center; }
+        .bottom-right { display: flex; gap: 12px; align-items: center; }
+        .direction-btns { display: flex; gap: 12px; }
         .touch-btn {
-            width: 80px; height: 80px;
-            background: rgba(255,255,255,0.25); border: 3px solid rgba(255,255,255,0.5);
-            border-radius: 16px; font-size: 36px; color: white;
+            width: 72px; height: 72px;
+            background: rgba(0,0,0,0.45); border: 2px solid rgba(255,255,255,0.35);
+            border-radius: 16px; font-size: 32px; color: white;
             display: flex; align-items: center; justify-content: center;
             cursor: pointer; user-select: none; -webkit-user-select: none;
             touch-action: manipulation; transition: all 0.15s ease;
-            pointer-events: auto;
+            pointer-events: auto; backdrop-filter: blur(4px);
         }
-        .touch-btn:active { background: rgba(255,215,0,0.5); transform: scale(0.92); }
+        .touch-btn:active { background: rgba(255,215,0,0.4); transform: scale(0.92); }
+
+        /* 暂停遮罩 */
+        .pause-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); z-index: 90;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            backdrop-filter: blur(4px);
+        }
+        .pause-overlay .pause-text {
+            color: #FFD700; font-size: 3rem; font-weight: bold;
+            text-shadow: 0 0 30px rgba(255,215,0,0.4);
+        }
+        .pause-overlay .pause-hint {
+            color: rgba(255,255,255,0.6); font-size: 1.1rem; margin-top: 12px;
+        }
 
         /* EMP 按钮 */
         .bomb-btn {
@@ -248,17 +265,47 @@
         .bomb-btn.active { opacity: 1; pointer-events: auto; background: rgba(255,60,30,0.5); animation: empGlow 0.6s ease-in-out infinite; }
         .bomb-btn:active { background: rgba(255,100,30,0.7); transform: scale(0.88); }
 
-        /* 右侧难度面板 */
+        /* 右侧面板 */
         .side-panel {
-            position: absolute; right: 15px; top: 130px;
-            z-index: 30; display: flex; flex-direction: column; gap: 10px;
+            position: absolute; right: 10px; top: 110px;
+            z-index: 30; display: flex; flex-direction: column; gap: 5px;
+            width: 160px; box-sizing: border-box;
+            background: rgba(0,0,0,0.3); backdrop-filter: blur(6px);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 16px; padding: 12px 14px;
+        }
+        .panel-label {
+            color: rgba(255,255,255,0.6); font-size: 11px; font-weight: bold;
+            letter-spacing: 1px; margin-top: 4px;
         }
         .difficulty-select {
-            background: rgba(0,0,0,0.7); color: white; border: 2px solid rgba(255,255,255,0.4);
-            border-radius: 12px; padding: 10px 14px; font-size: 16px; font-weight: bold;
-            cursor: pointer; outline: none;
+            background: rgba(255,255,255,0.08); color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 10px; padding: 8px 12px; font-size: 14px; font-weight: bold;
+            cursor: pointer; outline: none; margin-bottom: 2px;
         }
-        .difficulty-select option { background: #333; color: white; }
+        .difficulty-select option { background: #222; color: white; }
+
+        /* 播控条 — 暂停/音乐/重开 */
+        .control-bar {
+            position: absolute; right: 12px; top: 300px;
+            z-index: 30; display: flex; gap: 8px;
+            justify-content: center;
+            width: 160px; box-sizing: border-box;
+            background: rgba(0,0,0,0.3); backdrop-filter: blur(6px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px; padding: 12px 14px;
+        }
+        .ctrl-btn {
+            width: 48px; height: 48px;
+            background: rgba(255,255,255,0.06); border: none;
+            border-radius: 12px; font-size: 20px; color: white;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.15s ease;
+        }
+        .ctrl-btn:hover { background: rgba(255,255,255,0.15); }
+        .ctrl-btn:active { transform: scale(0.88); }
+        .ctrl-btn.muted { opacity: 0.4; }
 
         /* 单词桶 */
         .word-barrel {
@@ -277,6 +324,22 @@
             background: rgba(255,255,255,0.7);
             padding: 5px 12px; border-radius: 8px;
             font-weight: 800; font-size: 20px; color: #1a1a2e;
+        }
+
+        /* 炸弹道具 — 独立图标，无桶背景 */
+        .bomb-only {
+            position: absolute;
+            width: 80px; height: 80px;
+            font-size: 56px;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 12;
+            filter: drop-shadow(0 0 10px rgba(255,30,0,0.6));
+            animation: bombPulse 0.4s ease-in-out infinite;
+            pointer-events: none;
+        }
+        @keyframes bombPulse {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 8px rgba(255,30,0,0.5)); }
+            50% { transform: scale(1.12); filter: drop-shadow(0 0 18px rgba(255,30,0,0.9)); }
         }
 
         /* EMP 电光 */
@@ -298,25 +361,27 @@
 
         /* 状态面板 - 右上 */
         .game-ui {
-            position: absolute;
-            top: 15px; right: 15px;
+            position: absolute; top: 15px; right: 12px;
             z-index: 25;
-            display: flex; flex-direction: column; gap: 8px;
-            align-items: flex-end;
+            display: flex; flex-direction: column; gap: 6px;
+            align-items: stretch;
+            width: 160px; box-sizing: border-box;
+            background: rgba(0,0,0,0.3); backdrop-filter: blur(6px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 14px; padding: 12px 14px;
         }
         .game-ui .stat-item {
-            background: rgba(0,0,0,0.75); color: white;
-            border-radius: 10px; padding: 6px 16px;
-            font-size: 16px; font-weight: bold;
+            background: transparent; color: white;
+            font-size: 15px; font-weight: bold;
             display: flex; align-items: center; gap: 8px;
             white-space: nowrap;
         }
         .star-icon { width: 20px; height: 20px; background: url('assets/resources/star-icon.png') no-repeat center; background-size: contain; }
         .heart-icon { width: 20px; height: 20px; background: url('assets/resources/heart-icon.png') no-repeat center; background-size: contain; }
         .chinese-hint-bar {
-            position: absolute; top: 80px; left: 50%; transform: translateX(-50%);
+            position: absolute; top: 50px; left: 50%; transform: translateX(-50%);
             background: rgba(0,0,0,0.7); border: 2px solid #FFD700;
-            border-radius: 30px; padding: 12px 30px; z-index: 25;
+            border-radius: 30px; padding: 10px 24px; z-index: 25;
             display: flex; align-items: center; gap: 12px;
         }
         .chinese-hint-bar .hint-label { color: #FFD700; font-size: 16px; font-weight: bold; }
@@ -333,7 +398,6 @@
         <!-- 主页内容 -->
         <div class="page active" id="homePage">
 
-            <h1 class="game-title text-center mb-8">🏎️ 单词赛车 🏎️</h1>
 
             <div class="car-container" id="gameContainer">
                 <!-- 车道线 -->
@@ -363,30 +427,36 @@
 
                 <!-- 右侧难度/词库面板 -->
                 <div class="side-panel">
+                    <div class="panel-label">🎮 难度选择</div>
                     <select class="difficulty-select" id="difficultySelect">
                         <option value="easy">🟢 简单</option>
                         <option value="normal" selected>🟡 一般</option>
                         <option value="hard">🔴 困难</option>
                     </select>
-                    <select class="difficulty-select" id="wordLevelSelect">
-                        <option value="1">📖 第1级 (基础)</option>
-                        <option value="2">📖 第2级</option>
-                        <option value="3" selected>📖 第3级</option>
-                        <option value="4">📖 第4级</option>
-                        <option value="5">📖 第5级</option>
-                        <option value="6">📖 第6级</option>
-                        <option value="7">📖 第7级</option>
-                        <option value="8">📖 第8级 (高阶)</option>
+                    <div class="panel-label" style="margin-top:6px;">📖 单词选择</div>
+                    <select class="difficulty-select" id="bookSelector">
+                        <option value="">📖 加载中...</option>
                     </select>
+                </div>
+
+                <!-- 播控条 -->
+                <div class="control-bar" id="controlBar">
+                    <button class="ctrl-btn" id="pauseBtn" title="暂停/继续">⏸</button>
+                    <button class="ctrl-btn" id="musicBtn" title="背景音乐">🎵</button>
+                    <button class="ctrl-btn" id="restartBtn2" title="重新开始">🔄</button>
                 </div>
 
                 <!-- 底部控制栏 -->
                 <div class="bottom-controls">
-                    <div class="direction-btns">
-                        <button class="touch-btn" id="touchLeftBtn">◀</button>
-                        <button class="touch-btn" id="touchRightBtn">▶</button>
+                    <div class="bottom-left">
+                        <div class="direction-btns">
+                            <button class="touch-btn" id="touchLeftBtn">◀</button>
+                            <button class="touch-btn" id="touchRightBtn">▶</button>
+                        </div>
                     </div>
-                    <button class="bomb-btn" id="bombBtn">⚡</button>
+                    <div class="bottom-right">
+                        <button class="bomb-btn" id="bombBtn">⚡</button>
+                    </div>
                 </div>
 
                 <!-- 开始界面 -->
@@ -487,7 +557,25 @@
             }
         })();
 
-        (function () {
+        // 加载单词本列表到选择器并初始化
+        (async function () {
+            try {
+                var resp = await fetch('data/english/book-index.json');
+                var bookIndex = await resp.json();
+                var sel = document.getElementById('bookSelector');
+                if (sel) {
+                    sel.innerHTML = '';
+                    bookIndex.forEach(function(entry) {
+                        var opt = document.createElement('option');
+                        opt.value = entry.id;
+                        opt.textContent = entry.title;
+                        if (entry.id === 'grade3a') opt.selected = true;
+                        sel.appendChild(opt);
+                    });
+                }
+            } catch (e) {
+                console.error('加载单词本列表失败:', e);
+            }
             injectNav(NAV_CONFIG);
             injectFooter();
             injectAssistant();

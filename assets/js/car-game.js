@@ -20,7 +20,7 @@ class WordRacingGame {
         }
         
         this.gameWidth = 1200;
-        this.gameHeight = 675;
+        this.gameHeight = 750;
         this.laneWidth = this.gameWidth / 6;
         this.currentLane = 2; // 0-5 lanes
         this.playerY = this.gameHeight - 150;
@@ -31,7 +31,7 @@ class WordRacingGame {
         this.gameRunning = false;
         this.backgroundY = 0;
         this.difficulty = 'normal'; // easy/normal/hard
-        this.speedMap = { easy: 1.8, normal: 2.5, hard: 3.2 };
+        this.speedMap = { easy: 1.2, normal: 1.8, hard: 2.4 };
         this.fallSpeed = this.speedMap.normal;
 
         this.wordItems = [];
@@ -44,10 +44,24 @@ class WordRacingGame {
         this.empCharges = 0;
         this.chineseHint = document.getElementById('chineseHint');
         this.onCorrectHit = null;
-        this.wordLevel = 3;
         this.spawnTimer = null;
         this.animFrameId = null;
         this.gameSpeed = 3;
+        this.currentBook = 'grade3a';  // 当前单词本 ID
+        this.wordIndex = null;         // book-index.json 内容
+        this.audioCtx = null;          // Web Audio API 上下文
+        this.bgmAudio = null;          // BGM 音频元素
+        this.bgmVolume = 0.25;
+        this.bgmSongs = [               // 随机播放列表
+            'data/music/songs/Sia-Unstoppable.mp3',
+            'data/music/songs/Sia-Move Your Body.mp3',
+            'data/music/songs/王力宏-天地龙鳞.mp3',
+            'data/music/songs/班得瑞-敲击.mp3'
+        ];
+        this.bgmIndex = -1;
+        this.paused = false;
+        this.bgmEnabled = true;
+        this.pauseOverlay = null;
         
         // 键盘状态控制
         this.keys = {
@@ -57,20 +71,144 @@ class WordRacingGame {
             rightPressed: false
         };
         
-        // 初始化单词学习系统
-        this.wordSystem = new WordLearningSystem();
-        this.learningStats = new LearningStats();
-        this.pronunciationSystem = new PronunciationSystem();
+        // 单词列表（从 JSON 加载）
+        this.wordList = [];
         
         this.init();
     }
     
+    // ========== 音频系统 ==========
+
+    initAudioContext() {
+        if (this.audioCtx) return;
+        this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+
+    startBgm() {
+        this.stopBgm();
+        if (!this.bgmEnabled) return;
+        // 随机选一首（不重复上一首）
+        var idx;
+        do { idx = Math.floor(Math.random() * this.bgmSongs.length); }
+        while (idx === this.bgmIndex && this.bgmSongs.length > 1);
+        this.bgmIndex = idx;
+        try {
+            var audio = new Audio(this.bgmSongs[idx]);
+            audio.loop = false;
+            audio.volume = this.bgmVolume;
+            audio.play().catch(function(){});
+            audio.addEventListener('ended', function() { this.startBgm(); }.bind(this));
+            this.bgmAudio = audio;
+        } catch(e) { console.warn('BGM 加载失败:', e); }
+    }
+
+    stopBgm() {
+        if (this.bgmAudio) {
+            this.bgmAudio.pause();
+            this.bgmAudio = null;
+        }
+    }
+
+    playCorrectSound() {
+        if (!this.audioCtx) return;
+        var now = this.audioCtx.currentTime;
+        [523.25, 659.25].forEach(function(freq, i) {
+            var osc = this.audioCtx.createOscillator();
+            var gain = this.audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, now + i * 0.1);
+            gain.gain.setValueAtTime(0.3, now + i * 0.1);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.1 + 0.3);
+            osc.connect(gain);
+            gain.connect(this.audioCtx.destination);
+            osc.start(now + i * 0.1);
+            osc.stop(now + i * 0.1 + 0.3);
+        }, this);
+    }
+
+    playWrongSound() {
+        if (!this.audioCtx) return;
+        var now = this.audioCtx.currentTime;
+        var osc = this.audioCtx.createOscillator();
+        var gain = this.audioCtx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(220, now);
+        osc.frequency.exponentialRampToValueAtTime(80, now + 0.35);
+        gain.gain.setValueAtTime(0.15, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+        osc.connect(gain);
+        gain.connect(this.audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.4);
+    }
+
+    playEmpSound() {
+        if (!this.audioCtx) return;
+        var now = this.audioCtx.currentTime;
+        var osc = this.audioCtx.createOscillator();
+        var gain = this.audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(150, now);
+        osc.frequency.exponentialRampToValueAtTime(3000, now + 0.6);
+        gain.gain.setValueAtTime(0.25, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.7);
+        osc.connect(gain);
+        gain.connect(this.audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.7);
+    }
+
+    // ========== 暂停 / BGM 控制 ==========
+
+    togglePause() {
+        if (!this.gameRunning) return;
+        this.paused = !this.paused;
+        if (this.paused) {
+            this.showPauseOverlay();
+            if (this.bgmAudio) this.bgmAudio.pause();
+        } else {
+            this.hidePauseOverlay();
+            if (this.bgmAudio) this.bgmAudio.play().catch(function(){});
+        }
+        var btn = document.getElementById('pauseBtn');
+        if (btn) btn.textContent = this.paused ? '▶' : '⏸';
+    }
+
+    showPauseOverlay() {
+        if (this.pauseOverlay) return;
+        var div = document.createElement('div');
+        div.className = 'pause-overlay';
+        div.innerHTML = '<div class="pause-text">⏸ 暂停</div><div class="pause-hint">点击 ▶ 继续游戏</div>';
+        div.addEventListener('click', function() { this.togglePause(); }.bind(this));
+        this.gameContainer.appendChild(div);
+        this.pauseOverlay = div;
+    }
+
+    hidePauseOverlay() {
+        if (this.pauseOverlay) {
+            this.pauseOverlay.remove();
+            this.pauseOverlay = null;
+        }
+    }
+
+    toggleBgm() {
+        this.bgmEnabled = !this.bgmEnabled;
+        if (this.bgmEnabled) {
+            this.startBgm();
+        } else {
+            this.stopBgm();
+        }
+        var btn = document.getElementById('musicBtn');
+        if (btn) btn.classList.toggle('muted', !this.bgmEnabled);
+    }
+
     init() {
         console.log('游戏初始化开始');
         try {
             this.setupEventListeners();
             this.positionPlayerCar();
             this.updateLivesDisplay();
+            this.loadTestedWords();
             console.log('游戏初始化完成');
         } catch (error) {
             console.error('游戏初始化失败:', error);
@@ -197,9 +335,10 @@ class WordRacingGame {
             this.gameRunning = true;
             this.currentLane = 2; // 固定在中间车道
             this.positionPlayerCar();
-            this.pickNewTarget(); // 立即显示第一条中文提示
+            this.initAudioContext();
+            this.startBgm();
+            this.spawnNextWave(); // 生成第一波单词并设置中文提示
             this.gameLoop();
-            this.spawnLoop();
             console.log('游戏启动成功');
         } catch (error) {
             console.error('游戏启动失败:', error);
@@ -222,12 +361,13 @@ class WordRacingGame {
         this.currentLane = 2;
         this.fallSpeed = this.speedMap[this.difficulty];
         this.correctHits = 0;
-        this.empCharged = false;
+        this.empCharges = 0;
         this.playerCar.classList.remove('emp-aura');
         this.updateBombBtn();
         this.wordItems = [];
         this.wordBarrels = [];
-        this.learnedWords.clear();
+        this.initAudioContext();
+        this.startBgm();
         
         // 更新显示
         this.updateScoreDisplay();
@@ -240,37 +380,76 @@ class WordRacingGame {
         
         // 重新开始游戏
         this.gameRunning = true;
+        this.spawnNextWave();
         this.gameLoop();
-        this.spawnLoop();
     }
     
     gameLoop() {
         if (!this.gameRunning) return;
         
-        this.updateBackground();
-        this.updateWordItems();
-        this.checkCollisions();
-        this.checkLevelUp();
+        if (!this.paused) {
+            this.updateBackground();
+            this.updateWordItems();
+            this.checkCollisions();
+            this.checkLevelUp();
+
+            // 当前波次结束后（无目标且无物品），自动发起下一波
+            if (!this.currentTargetWord && this.wordItems.length === 0) {
+                this.spawnNextWave();
+            }
+        }
         
         // 继续游戏循环，保存引用以便取消
         this.animFrameId = requestAnimationFrame(() => this.gameLoop());
     }
     
-    spawnLoop() {
+    // 发起新的一波：先挑选所有单词（确保不重复），再生成，最后更新提示
+    spawnNextWave() {
         if (!this.gameRunning) return;
-        this.pickNewTarget();
-        this.spawnWordWave();
-        const spawnDelay = 4000;
-        this.spawnTimer = setTimeout(() => this.spawnLoop(), spawnDelay);
-    }
 
-    pickNewTarget() {
-        // 清理旧物品的 DOM 元素
-        this.wordItems.forEach(function(item) { item.element.remove(); });
-        this.wordItems = [];
-        this.currentTargetWord = this.wordSystem.getRandomWord(this.wordLevel);
-        if (this.chineseHint && this.currentTargetWord) {
-            this.chineseHint.textContent = this.currentTargetWord.translation || this.currentTargetWord.word;
+        // 收集屏幕上已有单词，防止跨波重复
+        var usedWords = {};
+        this.wordItems.forEach(function(it) { usedWords[it.wordObj.word] = true; });
+
+        // 挑选正确单词
+        var target = this.getRandomWord();
+        this.currentTargetWord = target;
+        usedWords[target.word] = true;
+
+        // 挑选 3 个不重复的错误单词（4条车道，1条给正确单词）
+        var wrongCount = 3;
+        var wrongWords = [];
+        var tries = 0;
+        while (wrongWords.length < wrongCount && tries < 100) {
+            tries++;
+            var w = this.getRandomWord();
+            if (!usedWords[w.word]) {
+                usedWords[w.word] = true;
+                wrongWords.push(w);
+            }
+        }
+
+        // 分配车道并生成
+        var lanes = [1, 2, 3, 4];
+        for (var i = lanes.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var tmp = lanes[i]; lanes[i] = lanes[j]; lanes[j] = tmp;
+        }
+        this.spawnWordItem(target, true, lanes[0]);
+
+        // 约30%概率将其中一个错误单词替换为炸弹
+        var spawnBomb = Math.random() < 0.3;
+        for (var k = 0; k < wrongWords.length; k++) {
+            if (spawnBomb && k === wrongWords.length - 1) {
+                this.spawnBombItem(lanes[k + 1]);
+            } else {
+                this.spawnWordItem(wrongWords[k], false, lanes[k + 1]);
+            }
+        }
+
+        // 最后更新提示 — 此时 target 确定已生成
+        if (this.chineseHint && target) {
+            this.chineseHint.textContent = target.translation || target.word;
         }
     }
 
@@ -283,26 +462,77 @@ class WordRacingGame {
         return freeLanes[Math.floor(Math.random() * freeLanes.length)];
     }
 
-    spawnWordWave() {
-        var usedInWave = {};
-        var usedWords = {};
-        // 记录正确单词避免重复
-        usedWords[this.currentTargetWord.word] = true;
-        // 1个正确单词
-        var lane = this.getFreeLane(usedInWave); usedInWave[lane] = true;
-        this.spawnWordItem(this.currentTargetWord, true, lane);
-        // 3-4个错误单词，去除重复
-        var wrongCount = 3 + Math.floor(Math.random() * 2);
-        for (var i = 0; i < wrongCount; i++) {
-            lane = this.getFreeLane(usedInWave); usedInWave[lane] = true;
-            var wrongWord = this.wordSystem.getRandomWord(this.wordLevel);
-            var tries = 0;
-            while ((wrongWord.word === this.currentTargetWord.word || usedWords[wrongWord.word]) && tries < 30) {
-                wrongWord = this.wordSystem.getRandomWord(this.wordLevel);
-                tries++;
+    // 从 book-index.json 加载单词数据
+    async loadWordData(bookId) {
+        if (!this.wordIndex) {
+            try {
+                var resp = await fetch('data/english/book-index.json');
+                this.wordIndex = await resp.json();
+            } catch (e) {
+                console.error('加载单词本索引失败:', e);
+                return;
             }
-            usedWords[wrongWord.word] = true;
-            this.spawnWordItem(wrongWord, false, lane);
+        }
+        // 切换单词本时：先保存当前词库的已测单词，再加载新词库的
+        this.saveTestedWords();
+        this.learnedWords.clear();
+        this.currentBook = bookId;
+        var fileMap = {};
+        this.wordIndex.forEach(function(entry) { fileMap[entry.id] = entry.file; });
+        var file = fileMap[bookId];
+        if (!file) { console.error('未知的单词本:', bookId); return; }
+        try {
+            var resp = await fetch(file);
+            var data = await resp.json();
+            // 统一格式：将 JSON 中的 meaning/phonetic 映射为 translation/pronunciation
+            this.wordList = data.map(function(w) {
+                return { word: w.word, translation: w.meaning, pronunciation: w.phonetic };
+            });
+            console.log('单词数据加载成功:', this.wordList.length, '个单词');
+            this.loadTestedWords();
+        } catch (error) {
+            console.error('加载单词数据失败:', error);
+            this.wordList = [];
+        }
+    }
+
+    // 从已加载的词表中随机选一个单词（排除已测试过的单词）
+    getRandomWord() {
+        if (this.wordList.length === 0) {
+            return { word: 'HELLO', translation: '你好', pronunciation: 'həˈloʊ' };
+        }
+        // 排除在已经测试/掌握的单词，防止重复出现
+        var available = this.wordList.filter(function(w) { return !this.learnedWords.has(w.word); }.bind(this));
+        if (available.length === 0) {
+            // 所有单词都测试过了，回退到完整词表
+            available = this.wordList;
+        }
+        return available[Math.floor(Math.random() * available.length)];
+    }
+
+    // ========== 已测试单词持久化（跨局的 localStorage） ==========
+
+    loadTestedWords() {
+        try {
+            var key = 'carGame_testedWords_' + this.currentBook;
+            var stored = localStorage.getItem(key);
+            if (stored) {
+                var words = JSON.parse(stored);
+                var self = this;
+                words.forEach(function(w) { self.learnedWords.add(w); });
+                console.log('加载已测试单词:', this.learnedWords.size, '个');
+            }
+        } catch (e) {
+            console.warn('加载已测试单词失败:', e);
+        }
+    }
+
+    saveTestedWords() {
+        try {
+            var key = 'carGame_testedWords_' + this.currentBook;
+            localStorage.setItem(key, JSON.stringify(Array.from(this.learnedWords)));
+        } catch (e) {
+            console.warn('保存已测试单词失败:', e);
         }
     }
 
@@ -353,20 +583,44 @@ class WordRacingGame {
         this.wordItems.push({
             element: el, lane: lane, y: -80,
             wordObj: wordObj, isCorrect: isCorrect,
-            speed: this.fallSpeed, alreadyHit: false
+            speed: this.fallSpeed, alreadyHit: false, isBomb: false
+        });
+    }
+
+    spawnBombItem(optLane) {
+        var lane = optLane !== undefined ? optLane : this.getFreeLane();
+        var el = document.createElement('div');
+        el.className = 'bomb-only';
+        var x = (lane + 0.5) * this.laneWidth - 40;
+        el.style.left = x + 'px';
+        el.style.top = '-80px';
+        el.textContent = '💣';
+        this.gameContainer.appendChild(el);
+        this.wordItems.push({
+            element: el, lane: lane, y: -80,
+            wordObj: null, isCorrect: false,
+            speed: this.fallSpeed * 1.5, alreadyHit: false, isBomb: true
         });
     }
 
     updateWordItems() {
+        var wasCorrectRemoved = false;
         this.wordItems = this.wordItems.filter(function(item) {
             item.y += item.speed;
             item.element.style.top = item.y + 'px';
             if (item.y > this.playerY + 20) {
+                if (item.isCorrect) wasCorrectRemoved = true;
                 item.element.remove();
                 return false;
             }
             return true;
         }, this);
+        // 正确单词未被命中就落出屏幕 → 清除剩余单词，准备下一波
+        if (wasCorrectRemoved) {
+            this.wordItems.forEach(function(item) { item.element.remove(); });
+            this.wordItems = [];
+            this.currentTargetWord = null;
+        }
     }
     
     checkCollisions() {
@@ -376,7 +630,7 @@ class WordRacingGame {
             width: 80,
             height: 120
         };
-        
+
         // 单词碰撞 — 倒序遍历避免 splice 导致索引偏移
         for (var i = this.wordItems.length - 1; i >= 0; i--) {
             var item = this.wordItems[i];
@@ -384,7 +638,12 @@ class WordRacingGame {
             var itemRect = { x: item.lane * this.laneWidth, y: item.y, width: 130, height: 130 };
             if (this.isColliding(playerRect, itemRect)) {
                 item.alreadyHit = true;
-                if (item.isCorrect) {
+                if (item.isBomb) {
+                    this.handleBombHit(item, i);
+                    continue;
+                }
+                // 必须同时匹配 isCorrect 标记和 currentTargetWord，防止多波重叠时错配
+                if (item.isCorrect && this.currentTargetWord && item.wordObj.word === this.currentTargetWord.word) {
                     this.handleCorrectHit(item, i);
                 } else {
                     this.handleWrongHit(item, i);
@@ -401,18 +660,29 @@ class WordRacingGame {
     }
     
     handleCorrectHit(item, index) {
-        // 先从数组中移除
-        this.wordItems.splice(index, 1);
+        // 命中正确单词后，清除所有其他掉落中的单词
+        this.wordItems.forEach(function(other) {
+            if (other !== item) other.element.remove();
+        });
+        this.wordItems = [item]; // 只保留被命中的这个等待动画
+
         this.score += 20;
         this.correctHits++;
         this.learnedWords.add(item.wordObj.word);
+        this.currentTargetWord = null; // 让 spawnLoop 选下一个目标
         this.updateScoreDisplay();
+        this.playCorrectSound();
         // 在移除 DOM 前读取位置并触发动画
         var el = item.element;
         this.showScorePopup(el.offsetLeft, el.offsetTop, '+20');
         this.addCollectionEffect(item);
-        // 延迟移除，让收集动画播放完成
-        setTimeout(function() { el.remove(); }, 800);
+        // 延迟移除，让收集动画播放完成，然后从 wordItems 清除以便下一波
+        var self = this;
+        setTimeout(function() {
+            el.remove();
+            var idx = self.wordItems.indexOf(item);
+            if (idx !== -1) self.wordItems.splice(idx, 1);
+        }, 800);
 
         // 每4个正确单词 = 1次EMP充能（可叠加），触发庆祝
         if (this.correctHits >= 4) {
@@ -430,7 +700,22 @@ class WordRacingGame {
         item.element.remove();
         this.lives--;
         this.updateLivesDisplay();
+        this.playWrongSound();
         this.addCollisionEffect();
+        if (this.lives <= 0) this.gameOver();
+    }
+
+    handleBombHit(item, index) {
+        var el = item.element;
+        var left = el.offsetLeft;
+        var top = el.offsetTop;
+        this.wordItems.splice(index, 1);
+        el.remove();
+        this.lives--;
+        this.updateLivesDisplay();
+        this.playWrongSound();
+        this.addCollisionEffect();
+        this.showScorePopup(left, top, '💣-1');
         if (this.lives <= 0) this.gameOver();
     }
 
@@ -451,6 +736,8 @@ class WordRacingGame {
         var count = this.wordItems.length;
         this.wordItems.forEach(function(item) { item.element.remove(); });
         this.wordItems = [];
+        this.currentTargetWord = null; // 清屏后触发下一波
+        this.playEmpSound();
 
         if (count > 0) {
             this.score += count * 10;
@@ -651,6 +938,9 @@ class WordRacingGame {
         }
         
         this.gameOverScreen.classList.remove('hidden');
+        this.stopBgm();
+        this.hidePauseOverlay();
+        this.saveTestedWords();
         
         // 添加游戏结束动画
         anime({
@@ -685,13 +975,23 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        // 单词等级选择器
-        var wordLevelSelect = document.getElementById('wordLevelSelect');
-        if (wordLevelSelect) {
-            wordLevelSelect.addEventListener('change', function() {
-                game.wordLevel = parseInt(this.value, 10);
+        // 单词本选择器
+        var bookSelector = document.getElementById('bookSelector');
+        if (bookSelector) {
+            bookSelector.addEventListener('change', function() {
+                game.loadWordData(this.value);
             });
         }
+        // 初始化加载默认单词本
+        game.loadWordData('grade3a');
+
+        // 新控制按钮
+        var pauseBtn = document.getElementById('pauseBtn');
+        if (pauseBtn) pauseBtn.addEventListener('click', function() { game.togglePause(); });
+        var musicBtn = document.getElementById('musicBtn');
+        if (musicBtn) musicBtn.addEventListener('click', function() { game.toggleBgm(); });
+        var restartBtn2 = document.getElementById('restartBtn2');
+        if (restartBtn2) restartBtn2.addEventListener('click', function() { game.restartGame(); });
 
         // 正确撞击回调
         game.onCorrectHit = function(wordObj) {
@@ -703,10 +1003,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             if (window.learningAssistant && window.learningAssistant.setProgress) {
                 window.learningAssistant.setProgress(game.correctHits * 25);
-            }
-            if (game.correctHits >= 4) {
-                game.correctHits = 0;
-                if (window.learningAssistant) window.learningAssistant.resetProgress();
             }
         };
 
