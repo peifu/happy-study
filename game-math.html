@@ -1002,7 +1002,12 @@
                         </div>
                         <select class="grade-select" id="gradeSelect">
                             <option value="grade3b">📘 三年级下册</option>
+                            <option value="grade4a">📗 四年级上册</option>
                             <option value="grade4b">📙 四年级下册</option>
+                            <option value="grade5a">📕 五年级上册</option>
+                            <option value="grade5b">📕 五年级下册</option>
+                            <option value="grade6a">📒 六年级上册</option>
+                            <option value="grade6b">📒 六年级下册</option>
                         </select>
                     </div>
 
@@ -1047,7 +1052,12 @@
         // ===== 等级与关卡数据（从JSON加载） =====
         const GRADE_CONFIG = {
             grade3b: { file: 'data/math/game-math-grade3b.json', label: '三年级下册' },
-            grade4b: { file: 'data/math/game-math-grade4b.json', label: '四年级下册' }
+            grade4a: { file: 'data/math/game-math-grade4a.json', label: '四年级上册' },
+            grade4b: { file: 'data/math/game-math-grade4b.json', label: '四年级下册' },
+            grade5a: { file: 'data/math/game-math-grade5a.json', label: '五年级上册' },
+            grade5b: { file: 'data/math/game-math-grade5b.json', label: '五年级下册' },
+            grade6a: { file: 'data/math/game-math-grade6a.json', label: '六年级上册' },
+            grade6b: { file: 'data/math/game-math-grade6b.json', label: '六年级下册' }
         };
 
         let currentGrade = 'grade3b';
