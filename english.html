@@ -2118,11 +2118,16 @@
                 if (!wordLists[currentBook] || wordLists[currentBook].length === 0) return;
 
                 const word = wordLists[currentBook][currentIndex].word;
+                const wasAlreadyMastered = getMasteredWords()[word] === true;
                 getMasteredWords()[word] = true;
                 getLearnedWords()[word] = true;
                 saveProgress();
                 updateProgress();
                 renderWordList();
+                // 首次掌握才奖励积分
+                if (!wasAlreadyMastered && typeof addStudyPoints === 'function') {
+                    addStudyPoints('english', 10, '掌握单词: ' + word);
+                }
                 showNextWord();
             }
 

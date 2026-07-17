@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>快乐学习 - 学习助手设置</title>
+    <title>快乐学习 - 学习助手</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/common.css">
     <link rel="stylesheet" href="assets/css/learning-assistant.css">
@@ -21,17 +21,11 @@
         }
 
         /* Page switching */
-        .page {
-            display: none;
-            flex-direction: column;
-        }
+        .page { display: none; flex-direction: column; }
+        .page.active { display: flex; }
 
-        .page.active {
-            display: flex;
-        }
-
-        /* Settings page styles */
-        .settings-title {
+        /* Shared section title */
+        .page-title {
             font-size: 28px;
             font-weight: 700;
             margin-bottom: 10px;
@@ -83,13 +77,8 @@
             background-clip: unset;
         }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group:last-child {
-            margin-bottom: 0;
-        }
+        .form-group { margin-bottom: 20px; }
+        .form-group:last-child { margin-bottom: 0; }
 
         .form-label {
             display: block;
@@ -115,41 +104,22 @@
             height: 26px;
             flex-shrink: 0;
         }
-
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
+        .switch input { opacity: 0; width: 0; height: 0; }
         .slider-round {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            position: absolute; cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
             background: #ccc;
-            transition: 0.3s;
-            border-radius: 26px;
+            transition: 0.3s; border-radius: 26px;
         }
-
         .slider-round::before {
-            content: "";
-            position: absolute;
-            height: 20px;
-            width: 20px;
-            left: 3px;
-            bottom: 3px;
-            background: white;
-            transition: 0.3s;
-            border-radius: 50%;
+            content: ""; position: absolute;
+            height: 20px; width: 20px;
+            left: 3px; bottom: 3px;
+            background: white; transition: 0.3s; border-radius: 50%;
         }
-
         .switch input:checked + .slider-round {
             background: linear-gradient(90deg, var(--assistant-primary), var(--assistant-secondary));
         }
-
         .switch input:checked + .slider-round::before {
             transform: translateX(22px);
         }
@@ -157,40 +127,24 @@
         /* Range slider */
         .range-slider {
             -webkit-appearance: none;
-            width: 100%;
-            height: 6px;
-            border-radius: 3px;
-            background: rgba(255, 255, 255, 0.12);
-            outline: none;
-            transition: background 0.3s;
+            width: 100%; height: 6px; border-radius: 3px;
+            background: rgba(255, 255, 255, 0.12); outline: none;
         }
-
         .range-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
+            width: 20px; height: 20px; border-radius: 50%;
             background: linear-gradient(135deg, var(--assistant-primary), var(--assistant-secondary));
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(124, 77, 255, 0.4);
+            cursor: pointer; box-shadow: 0 2px 8px rgba(124, 77, 255, 0.4);
         }
-
         .range-slider::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
+            width: 20px; height: 20px; border-radius: 50%;
             background: linear-gradient(135deg, var(--assistant-primary), var(--assistant-secondary));
-            cursor: pointer;
-            border: none;
+            cursor: pointer; border: none;
             box-shadow: 0 2px 8px rgba(124, 77, 255, 0.4);
         }
-
         .slider-value {
-            text-align: center;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--assistant-primary);
-            margin-top: 5px;
+            text-align: center; font-size: 14px; font-weight: 600;
+            color: var(--assistant-primary); margin-top: 5px;
         }
 
         /* Animal selection */
@@ -199,97 +153,222 @@
             grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
             gap: 10px;
         }
-
         .animal-option {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            padding: 10px 6px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            display: flex; flex-direction: column; align-items: center;
+            gap: 6px; padding: 10px 6px; border-radius: 12px;
+            cursor: pointer; transition: all 0.3s ease;
             background: rgba(255, 255, 255, 0.05);
             border: 2px solid transparent;
         }
-
         .animal-option:hover {
             background: rgba(124, 77, 255, 0.1);
             transform: translateY(-2px);
         }
-
         .animal-option.selected {
             background: rgba(124, 77, 255, 0.15);
             border-color: var(--assistant-primary);
             box-shadow: 0 0 15px rgba(124, 77, 255, 0.2);
         }
-
         .animal-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
+            width: 50px; height: 50px; border-radius: 50%;
             object-fit: cover;
             border: 2px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.3s ease;
         }
-
-
         .animal-option span {
-            font-size: 11px;
-            color: var(--text-secondary);
-            text-align: center;
-            line-height: 1.2;
+            font-size: 11px; color: var(--text-secondary);
+            text-align: center; line-height: 1.2;
         }
-
         .animal-option.selected span {
-            color: var(--assistant-primary);
-            font-weight: 600;
+            color: var(--assistant-primary); font-weight: 600;
         }
 
         /* Form input */
         .form-control {
-            width: 100%;
-            padding: 10px 14px;
-            border-radius: 10px;
+            width: 100%; padding: 10px 14px; border-radius: 10px;
             border: 1px solid var(--border-card);
             background: rgba(255, 255, 255, 0.06);
-            color: var(--text-color);
-            font-size: 14px;
-            outline: none;
-            transition: all 0.3s ease;
+            color: var(--text-color); font-size: 14px; outline: none;
         }
-
         .form-control:focus {
             border-color: var(--assistant-primary);
             box-shadow: 0 0 0 3px rgba(124, 77, 255, 0.15);
         }
 
+        /* ===== 学习记录页样式 ===== */
+        .records-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+        .record-card {
+            background: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid var(--border-card);
+            transition: transform 0.3s ease;
+        }
+        .record-card:hover { transform: translateY(-2px); }
+        .record-card .card-top {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .record-card .subject-icon-bg {
+            width: 48px; height: 48px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 22px; color: #fff; flex-shrink: 0;
+        }
+        .record-card .subject-name {
+            font-size: 16px; font-weight: 600; color: var(--text-color);
+        }
+        .record-card .record-stats {
+            display: flex; justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        .record-card .record-stat {
+            text-align: center;
+        }
+        .record-card .record-stat-value {
+            font-size: 22px; font-weight: 700;
+        }
+        .record-card .record-stat-label {
+            font-size: 11px; color: var(--text-secondary);
+        }
+        .record-bar-container {
+            width: 100%; height: 8px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 4px; overflow: hidden;
+        }
+        .record-bar-fill {
+            height: 100%; border-radius: 4px;
+            transition: width 0.6s ease;
+        }
+
+        /* ===== 积分奖励页样式 ===== */
+        .points-summary {
+            background: var(--card-bg-color);
+            border-radius: 20px;
+            padding: 32px;
+            border: 1px solid var(--border-card);
+            text-align: center;
+            margin-top: 15px;
+            margin-bottom: 20px;
+        }
+        .points-total {
+            font-size: 56px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .points-total-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+        .points-subjects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .points-subject-card {
+            background: var(--card-bg-color);
+            border-radius: 14px;
+            padding: 18px;
+            border: 1px solid var(--border-card);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .points-subject-card .ps-icon {
+            width: 40px; height: 40px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; color: #fff; flex-shrink: 0;
+        }
+        .points-subject-card .ps-info { flex: 1; }
+        .points-subject-card .ps-name { font-size: 13px; color: var(--text-secondary); }
+        .points-subject-card .ps-points { font-size: 20px; font-weight: 700; color: #ffd700; }
+
+        .points-history {
+            background: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid var(--border-card);
+        }
+        .points-history-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        .points-history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-subtle);
+            font-size: 13px;
+        }
+        .points-history-item:last-child { border-bottom: none; }
+        .ph-reason { color: var(--text-color); flex: 1; }
+        .ph-time { color: var(--text-secondary); font-size: 11px; margin: 0 12px; white-space: nowrap; }
+        .ph-points { font-weight: 700; color: #ffd700; white-space: nowrap; }
+        .points-empty {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-secondary);
+        }
+        .points-empty i { font-size: 48px; margin-bottom: 12px; opacity: 0.4; }
+
+        /* Milestones */
+        .milestones {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+        .milestone {
+            flex: 1;
+            min-width: 100px;
+            background: var(--card-bg-color);
+            border-radius: 14px;
+            padding: 16px;
+            border: 1px solid var(--border-card);
+            text-align: center;
+            opacity: 0.4;
+            transition: all 0.3s ease;
+        }
+        .milestone.unlocked {
+            opacity: 1;
+            border-color: #ffd700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
+        }
+        .milestone .ms-icon { font-size: 28px; margin-bottom: 6px; }
+        .milestone .ms-points { font-size: 14px; font-weight: 700; color: var(--text-color); }
+        .milestone .ms-label { font-size: 11px; color: var(--text-secondary); }
+        .milestone.unlocked .ms-points { color: #ffd700; }
+
         @media (max-width: 768px) {
-            .settings-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .settings-title {
-                font-size: 22px;
-            }
-
-            .animal-selection {
-                grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
-                gap: 8px;
-            }
-
-            .animal-icon {
-                width: 40px;
-                height: 40px;
-            }
+            .settings-grid, .records-grid { grid-template-columns: 1fr; }
+            .points-subjects { grid-template-columns: 1fr 1fr; }
+            .page-title { font-size: 22px; }
+            .animal-selection { grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: 8px; }
+            .animal-icon { width: 40px; height: 40px; }
+            .points-total { font-size: 40px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- 学习助手设置页面 -->
+
+        <!-- ========== 助手设置页面 ========== -->
         <div class="page active" id="assistantPage">
-            <h2 class="settings-title">学习助手设置</h2>
+            <h2 class="page-title">助手设置</h2>
 
             <div class="settings-grid">
                 <!-- 卡片1：助手设置 -->
@@ -298,7 +377,6 @@
                         <i class="fas fa-robot settings-icon"></i>
                         <div class="settings-title">助手设置</div>
                     </div>
-                    
                     <div class="form-group">
                         <label class="control-label">
                             <span>启用助手</span>
@@ -308,54 +386,44 @@
                             </label>
                         </label>
                     </div>
-
                     <div class="form-group">
                         <label class="form-label">设置昵称</label>
                         <input type="text" class="form-control" id="assistantNameInput" placeholder="请输入助手昵称" maxlength="20">
                     </div>
-                    
                     <div class="form-group">
                         <label class="form-label">选择形象</label>
                         <div class="animal-selection" id="animalSelection">
                             <div class="animal-option" data-animal="bear">
-                                <img src="assets/logo/bear.png" alt="仔仔熊" class="animal-icon">
-                                <span>仔仔熊</span>
+                                <img src="assets/logo/bear.png" alt="仔仔熊" class="animal-icon"><span>仔仔熊</span>
                             </div>
                             <div class="animal-option" data-animal="cat">
-                                <img src="assets/logo/cat.png" alt="哆啦A梦" class="animal-icon">
-                                <span>哆啦A梦</span>
+                                <img src="assets/logo/cat.png" alt="哆啦A梦" class="animal-icon"><span>哆啦A梦</span>
                             </div>
                             <div class="animal-option" data-animal="peppa">
-                                <img src="assets/logo/peppa.png" alt="小猪佩奇" class="animal-icon">
-                                <span>小猪佩奇</span>
+                                <img src="assets/logo/peppa.png" alt="小猪佩奇" class="animal-icon"><span>小猪佩奇</span>
                             </div>
                             <div class="animal-option" data-animal="nezha">
-                                <img src="assets/logo/nezha.png" alt="哪吒" class="animal-icon">
-                                <span>哪吒</span>
+                                <img src="assets/logo/nezha.png" alt="哪吒" class="animal-icon"><span>哪吒</span>
                             </div>
                             <div class="animal-option" data-animal="tom">
-                                <img src="assets/logo/tom.png" alt="Tom" class="animal-icon">
-                                <span>Tom</span>
+                                <img src="assets/logo/tom.png" alt="Tom" class="animal-icon"><span>Tom</span>
                             </div>
                             <div class="animal-option" data-animal="jerry">
-                                <img src="assets/logo/jerry.png" alt="Jerry" class="animal-icon">
-                                <span>Jerry</span>
+                                <img src="assets/logo/jerry.png" alt="Jerry" class="animal-icon"><span>Jerry</span>
                             </div>
                             <div class="animal-option" data-animal="shixinxiong">
-                                <img src="assets/logo/shixinxiong.png" alt="失心熊" class="animal-icon">
-                                <span>失心熊</span>
+                                <img src="assets/logo/shixinxiong.png" alt="失心熊" class="animal-icon"><span>失心熊</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- 卡片2：互动设置 -->
                 <div class="settings-card">
                     <div class="settings-header">
                         <i class="fas fa-comment settings-icon"></i>
                         <div class="settings-title">互动设置</div>
                     </div>
-                    
                     <div class="form-group">
                         <label class="control-label">
                             <span>点击互动</span>
@@ -365,7 +433,6 @@
                             </label>
                         </label>
                     </div>
-                    
                     <div class="form-group">
                         <label class="control-label">
                             <span>语音鼓励</span>
@@ -375,21 +442,19 @@
                             </label>
                         </label>
                     </div>
-                    
                     <div class="form-group">
                         <label class="form-label">鼓励语频率</label>
                         <input type="range" min="1" max="10" value="3" class="range-slider" id="encouragementFrequencySlider">
                         <div class="slider-value" id="encouragementFrequencyValue">3</div>
                     </div>
                 </div>
-                
+
                 <!-- 卡片3：显示设置 -->
                 <div class="settings-card">
                     <div class="settings-header">
                         <i class="fas fa-eye settings-icon"></i>
                         <div class="settings-title">显示设置</div>
                     </div>
-                    
                     <div class="form-group">
                         <label class="control-label">
                             <span>始终显示</span>
@@ -399,7 +464,6 @@
                             </label>
                         </label>
                     </div>
-                    
                     <div class="form-group">
                         <label class="control-label">
                             <span>浮动动画</span>
@@ -409,7 +473,6 @@
                             </label>
                         </label>
                     </div>
-
                     <div class="form-group">
                         <label class="control-label">
                             <span>允许拖拽</span>
@@ -419,13 +482,11 @@
                             </label>
                         </label>
                     </div>
-
                     <div class="form-group">
                         <label class="form-label">显示大小</label>
                         <input type="range" min="80" max="150" value="100" class="range-slider" id="assistantSizeSlider">
                         <div class="slider-value" id="assistantSizeValue">100px</div>
                     </div>
-
                     <div class="form-group">
                         <label class="form-label">透明度</label>
                         <input type="range" min="30" max="100" value="100" class="range-slider" id="opacitySlider">
@@ -434,6 +495,60 @@
                 </div>
             </div>
         </div>
+
+        <!-- ========== 学习记录页面 ========== -->
+        <div class="page" id="recordsPage">
+            <h2 class="page-title">学习记录</h2>
+
+            <div class="records-grid" id="recordsGrid">
+                <!-- 由 JS 动态渲染 -->
+            </div>
+        </div>
+
+        <!-- ========== 积分奖励页面 ========== -->
+        <div class="page" id="pointsPage">
+            <h2 class="page-title">积分奖励</h2>
+
+            <!-- 积分总数 -->
+            <div class="points-summary">
+                <div class="points-total" id="pointsTotal">0</div>
+                <div class="points-total-label">总积分</div>
+            </div>
+
+            <!-- 里程碑 -->
+            <div class="milestones" id="milestones">
+                <div class="milestone" data-points="100">
+                    <div class="ms-icon">🌱</div>
+                    <div class="ms-points">100</div>
+                    <div class="ms-label">学习新手</div>
+                </div>
+                <div class="milestone" data-points="500">
+                    <div class="ms-icon">🌟</div>
+                    <div class="ms-points">500</div>
+                    <div class="ms-label">学习达人</div>
+                </div>
+                <div class="milestone" data-points="1000">
+                    <div class="ms-icon">🏆</div>
+                    <div class="ms-points">1,000</div>
+                    <div class="ms-label">学习精英</div>
+                </div>
+                <div class="milestone" data-points="5000">
+                    <div class="ms-icon">👑</div>
+                    <div class="ms-points">5,000</div>
+                    <div class="ms-label">学习大师</div>
+                </div>
+            </div>
+
+            <!-- 各科目积分 -->
+            <div class="points-subjects" id="pointsSubjects"></div>
+
+            <!-- 积分记录 -->
+            <div class="points-history">
+                <div class="points-history-title">📜 积分记录</div>
+                <div id="pointsHistoryList"></div>
+            </div>
+        </div>
+
     </div>
 
     <script src="assets/js/common.js"></script>
@@ -441,23 +556,34 @@
     <script>
         // 页面配置
         (function() {
-            // 注入导航（简约导航，指向首页）
             var NAV_CONFIG = [
-                { page: 'home', icon: 'fa-home', label: '学习主页', active: false },
-                { page: 'assistant', icon: 'fa-robot', label: '学习助手', active: true },
+                { page: 'home',      icon: 'fa-home',     label: '学习主页', active: false },
+                { page: 'assistant', icon: 'fa-robot',    label: '助手设置', active: true },
+                { page: 'records',   icon: 'fa-chart-bar', label: '学习记录', active: false },
+                { page: 'points',    icon: 'fa-star',     label: '积分奖励', active: false },
             ];
             injectNav(NAV_CONFIG);
             injectFooter();
             injectAssistant();
 
-            // 修复：injectAssistant 后 DOM 才存在，刷新实例的 DOM 引用
+            // 修复 DOM 引用
             if (window.learningAssistant) {
                 window.learningAssistant.assistant = document.getElementById('learningAssistant');
                 window.learningAssistant.speechBubble = document.getElementById('assistantSpeechBubble');
                 window.learningAssistant.assistantName = document.getElementById('assistantName');
             }
 
-            // 点击"学习主页"导航链接回到首页
+            // 导航事件
+            var navLinks = document.querySelectorAll('.nav-link');
+            var pages = document.querySelectorAll('.page');
+            if (typeof setupNavLinks === 'function') {
+                setupNavLinks(navLinks, pages, function(pageId) {
+                    if (pageId === 'records') renderRecords();
+                    if (pageId === 'points') renderPoints();
+                });
+            }
+
+            // 学习主页 → index.html
             var homeNav = document.querySelector('[data-page="home"]');
             if (homeNav) {
                 homeNav.addEventListener('click', function(e) {
@@ -465,14 +591,169 @@
                 });
             }
 
-            // 点击快乐学习 Logo 回到首页
             if (typeof setupHomeLink === 'function') {
                 setupHomeLink('homeLink', 'index.html');
             }
-
-            // 同步主题
             if (typeof syncThemeFromIndex === 'function') {
                 syncThemeFromIndex();
+            }
+
+            // 积分更新时自动刷新积分页面
+            window.addEventListener('studyPointsUpdated', function() {
+                var pointsPage = document.getElementById('pointsPage');
+                if (pointsPage && pointsPage.classList.contains('active')) {
+                    renderPoints();
+                }
+            });
+
+            // ===== 学习记录渲染 =====
+            function renderRecords() {
+                var subjects = [
+                    {
+                        id: 'english', name: '英语', icon: 'fa-language', color: '#4285f4',
+                        getData: function() {
+                            var map = JSON.parse(localStorage.getItem('masteredWordsMap') || '{}');
+                            var total = 0, mastered = 0;
+                            for (var book in map) {
+                                for (var word in map[book]) {
+                                    total++;
+                                    if (map[book][word]) mastered++;
+                                }
+                            }
+                            return { mastered: mastered, total: total > 0 ? total : 1258 };
+                        }
+                    },
+                    {
+                        id: 'chinese', name: '语文', icon: 'fa-pen-fancy', color: '#ea4335',
+                        getData: function() {
+                            var map = JSON.parse(localStorage.getItem('masteredPoems') || '{}');
+                            var total = 0, mastered = 0;
+                            for (var title in map) {
+                                total++;
+                                if (map[title]) mastered++;
+                            }
+                            return { mastered: mastered, total: total > 0 ? total : 64 };
+                        }
+                    },
+                    {
+                        id: 'math', name: '数学', icon: 'fa-calculator', color: '#fbbc05',
+                        getData: function() {
+                            var map = JSON.parse(localStorage.getItem('masteredConcepts') || '{}');
+                            var total = 0, mastered = 0;
+                            for (var t in map) {
+                                total++;
+                                if (map[t]) mastered++;
+                            }
+                            return { mastered: mastered, total: total > 0 ? total : 128 };
+                        }
+                    },
+                    {
+                        id: 'pe', name: '体育', icon: 'fa-running', color: '#34a853',
+                        getData: function() {
+                            var map = JSON.parse(localStorage.getItem('masteredSports') || '{}');
+                            var total = 0, mastered = 0;
+                            for (var t in map) {
+                                total++;
+                                if (map[t]) mastered++;
+                            }
+                            return { mastered: mastered, total: total > 0 ? total : 36 };
+                        }
+                    },
+                    {
+                        id: 'science', name: '科学', icon: 'fa-flask', color: '#9b59b6',
+                        getData: function() {
+                            var map = JSON.parse(localStorage.getItem('baikeMasteredConcepts') || '{}');
+                            var total = 0, mastered = 0;
+                            for (var topic in map) {
+                                for (var c in map[topic]) {
+                                    total++;
+                                    if (map[topic][c]) mastered++;
+                                }
+                            }
+                            return { mastered: mastered, total: total > 0 ? total : 42 };
+                        }
+                    }
+                ];
+
+                var grid = document.getElementById('recordsGrid');
+                var html = '';
+                subjects.forEach(function(s) {
+                    var data = s.getData();
+                    var pct = data.total > 0 ? Math.round(data.mastered / data.total * 100) : 0;
+                    html += '<div class="record-card">' +
+                        '<div class="card-top">' +
+                            '<div class="subject-icon-bg" style="background:' + s.color + '">' +
+                                '<i class="fas ' + s.icon + '"></i>' +
+                            '</div>' +
+                            '<div class="subject-name">' + s.name + '</div>' +
+                        '</div>' +
+                        '<div class="record-stats">' +
+                            '<div class="record-stat"><div class="record-stat-value" style="color:' + s.color + '">' + data.mastered + '</div><div class="record-stat-label">已掌握</div></div>' +
+                            '<div class="record-stat"><div class="record-stat-value">' + data.total + '</div><div class="record-stat-label">总数量</div></div>' +
+                            '<div class="record-stat"><div class="record-stat-value" style="color:' + s.color + '">' + pct + '%</div><div class="record-stat-label">进度</div></div>' +
+                        '</div>' +
+                        '<div class="record-bar-container"><div class="record-bar-fill" style="width:' + pct + '%;background:' + s.color + '"></div></div>' +
+                    '</div>';
+                });
+                grid.innerHTML = html || '<div class="points-empty"><i class="fas fa-book-open"></i><p>暂无学习记录</p></div>';
+            }
+
+            // ===== 积分奖励渲染 =====
+            function renderPoints() {
+                var data = typeof getStudyPoints === 'function' ? getStudyPoints() : { total: 0, subjects: {}, history: [] };
+                if (!data.subjects) data.subjects = {};
+                if (!data.history) data.history = [];
+
+                document.getElementById('pointsTotal').textContent = data.total.toLocaleString();
+
+                // 里程碑
+                document.querySelectorAll('.milestone').forEach(function(m) {
+                    var pts = parseInt(m.dataset.points);
+                    m.classList.toggle('unlocked', data.total >= pts);
+                });
+
+                // 各科目积分
+                var subjectMap = {
+                    english: { name: '英语', icon: 'fa-language', color: '#4285f4' },
+                    chinese: { name: '语文', icon: 'fa-pen-fancy', color: '#ea4335' },
+                    math: { name: '数学', icon: 'fa-calculator', color: '#fbbc05' },
+                    pe: { name: '体育', icon: 'fa-running', color: '#34a853' },
+                    science: { name: '科学', icon: 'fa-flask', color: '#9b59b6' }
+                };
+                var subjectsHtml = '';
+                for (var key in subjectMap) {
+                    var info = subjectMap[key];
+                    var pts = data.subjects[key] ? data.subjects[key].points : 0;
+                    subjectsHtml += '<div class="points-subject-card">' +
+                        '<div class="ps-icon" style="background:' + info.color + '">' +
+                            '<i class="fas ' + info.icon + '"></i>' +
+                        '</div>' +
+                        '<div class="ps-info">' +
+                            '<div class="ps-name">' + info.name + '</div>' +
+                            '<div class="ps-points">' + pts + ' 分</div>' +
+                        '</div>' +
+                    '</div>';
+                }
+                document.getElementById('pointsSubjects').innerHTML = subjectsHtml;
+
+                // 积分记录
+                var list = document.getElementById('pointsHistoryList');
+                if (data.history.length === 0) {
+                    list.innerHTML = '<div class="points-empty"><i class="fas fa-coins"></i><p>暂无积分记录，开始学习赚取积分吧！</p></div>';
+                } else {
+                    var h = data.history.slice().reverse();
+                    var hHtml = '';
+                    for (var i = 0; i < Math.min(h.length, 50); i++) {
+                        var item = h[i];
+                        var time = item.time ? item.time.slice(0, 10) : '';
+                        hHtml += '<div class="points-history-item">' +
+                            '<span class="ph-reason">' + (item.reason || '学习') + '</span>' +
+                            '<span class="ph-time">' + time + '</span>' +
+                            '<span class="ph-points">+' + item.points + '</span>' +
+                        '</div>';
+                    }
+                    list.innerHTML = hHtml;
+                }
             }
         })();
     </script>

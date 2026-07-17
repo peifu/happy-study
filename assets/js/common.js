@@ -122,3 +122,50 @@ function injectAssistant() {
         '<div class="assistant-speech-bubble" id="assistantSpeechBubble">加油，你是最棒的！</div>';
     document.body.insertAdjacentHTML('beforeend', html);
 }
+
+// ===== 积分奖励系统 =====
+
+function getStudyPoints() {
+    return JSON.parse(localStorage.getItem('studyPoints') || '{"total":0,"subjects":{},"history":[]}');
+}
+
+function addStudyPoints(subject, points, reason) {
+    var data = getStudyPoints();
+    data.total += points;
+    if (!data.subjects[subject]) data.subjects[subject] = { points: 0, count: 0 };
+    data.subjects[subject].points += points;
+    data.subjects[subject].count += 1;
+    data.history.push({ time: new Date().toISOString(), subject: subject, reason: reason, points: points });
+    localStorage.setItem('studyPoints', JSON.stringify(data));
+    // 触发积分更新事件，供页面实时刷新
+    window.dispatchEvent(new CustomEvent('studyPointsUpdated', { detail: data }));
+    // 弹出积分奖励提示
+    showPointsNotification(points, reason);
+    return data;
+}
+
+function showPointsNotification(points, reason) {
+    var assistant = document.getElementById('learningAssistant');
+    var bubble = document.getElementById('assistantSpeechBubble');
+    // 助手显示时使用气泡提示
+    if (assistant && assistant.style.display !== 'none' && bubble) {
+        bubble.textContent = '+' + points + ' 积分！' + reason;
+        bubble.style.display = 'block';
+        bubble.classList.add('show');
+        setTimeout(function() {
+            bubble.classList.remove('show');
+            setTimeout(function() {
+                bubble.style.display = 'none';
+                // 恢复默认鼓励语
+                var encouragements = [
+                    '加油，努力，学习要用力！',
+                    '好好学习，天天向上！',
+                    '学习真有趣，我们齐努力！',
+                    '学习让人进步，努力可能更酷！',
+                    '每天向前一小步，终会长成参天树！'
+                ];
+                bubble.textContent = encouragements[Math.floor(Math.random() * encouragements.length)];
+            }, 300);
+        }, 2500);
+    }
+}

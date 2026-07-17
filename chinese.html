@@ -997,11 +997,16 @@
             }
 
             const poemTitle = poemsData[currentBook][currentPoemIndex].title;
+            const wasAlreadyMemorized = masteredPoems[poemTitle] === true;
             masteredPoems[poemTitle] = true;
             learnedPoems[poemTitle] = true;
             saveProgress();
             updateProgress();
             updatePoemList();
+            // 首次背诵才奖励积分
+            if (!wasAlreadyMemorized && typeof addStudyPoints === 'function') {
+                addStudyPoints('chinese', 20, '背诵古诗: ' + poemTitle);
+            }
             showNextPoem();
         }
 
