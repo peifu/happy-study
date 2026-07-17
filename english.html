@@ -451,6 +451,14 @@
             border-left: 4px solid var(--secondary);
         }
 
+        .word-item.not-mastered {
+            border-left: 4px solid #e74c3c;
+        }
+
+        .word-item.untouched {
+            border-left: 4px solid #999;
+        }
+
         .word-item-header {
             display: flex;
             justify-content: space-between;
@@ -495,6 +503,16 @@
             font-size: 12px;
             background: rgba(0, 255, 157, 0.2);
             color: var(--secondary);
+        }
+
+        .status-badge.not-mastered {
+            background: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+        }
+
+        .status-badge.untouched {
+            background: rgba(153, 153, 153, 0.15);
+            color: #999;
         }
 
         /* 加载指示器 */
@@ -2204,14 +2222,26 @@
                     wordItem.className = 'word-item';
                     if (isMastered) {
                         wordItem.classList.add('mastered');
+                    } else if (isLearned) {
+                        wordItem.classList.add('not-mastered');
+                    } else {
+                        wordItem.classList.add('untouched');
+                    }
+
+                    let badgeHtml = '';
+                    if (isMastered) {
+                        badgeHtml = '<div class="status-badge">已掌握</div>';
+                    } else if (isLearned) {
+                        badgeHtml = '<div class="status-badge not-mastered">未掌握</div>';
+                    } else {
+                        badgeHtml = '<div class="status-badge untouched">未学习</div>';
                     }
 
                     wordItem.innerHTML = `
                     <div class="word-item-header">
                         <div class="word-item-word">${wordData.word}</div>
                         <div class="word-item-status">
-                            ${isMastered ? '<div class="status-badge">已掌握</div>' :
-                            isLearned ? '<div class="status-badge">学习中</div>' : ''}
+                            ${badgeHtml}
                         </div>
                     </div>
                     <div class="word-item-phonetic">${wordData.phonetic}</div>

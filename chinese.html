@@ -142,6 +142,14 @@
             border-left: 4px solid var(--secondary);
         }
 
+        .poem-item.not-mastered {
+            border-left: 4px solid #e74c3c;
+        }
+
+        .poem-item.untouched {
+            border-left: 4px solid #999;
+        }
+
         .poem-item .poem-name {
             font-weight: 600;
         }
@@ -161,8 +169,18 @@
             padding: 5px 10px;
             border-radius: 20px;
             font-size: 12px;
-            background: rgba(251, 188, 5, 0.2);
+            background: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+        }
+
+        .status-badge.mastered {
+            background: rgba(52, 168, 83, 0.2);
             color: var(--secondary);
+        }
+
+        .status-badge.untouched {
+            background: rgba(153, 153, 153, 0.15);
+            color: #999;
         }
 
         /* 设置页面特有样式 */
@@ -1069,6 +1087,21 @@
 
                 if (masteredPoems[poem.title]) {
                     poemItem.classList.add('mastered');
+                } else if (learnedPoems[poem.title]) {
+                    poemItem.classList.add('not-mastered');
+                }
+
+                const isMastered = masteredPoems[poem.title];
+                const isLearned = learnedPoems[poem.title];
+                let badgeText = '未学习';
+                let badgeClass = 'untouched';
+                if (isMastered) {
+                    badgeText = '已背诵';
+                    badgeClass = 'mastered';
+                } else if (isLearned) {
+                    badgeText = '未掌握';
+                } else {
+                    poemItem.classList.add('untouched');
                 }
 
                 poemItem.innerHTML = `
@@ -1077,7 +1110,7 @@
                         <div class="poem-author">${poem.author.replace('【', '').replace('】', '')}</div>
                     </div>
                     <div class="poem-item-status">
-                        <div class="status-badge">${masteredPoems[poem.title] ? '已背诵' : (learnedPoems[poem.title] ? '学习中' : '未学习')}</div>
+                        <div class="status-badge${badgeClass ? ' ' + badgeClass : ''}">${badgeText}</div>
                     </div>
                 `;
 

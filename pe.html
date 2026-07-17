@@ -141,6 +141,14 @@
             border-left: 4px solid var(--secondary);
         }
 
+        .sports-item.not-mastered {
+            border-left: 4px solid #e74c3c;
+        }
+
+        .sports-item.untouched {
+            border-left: 4px solid #999;
+        }
+
         .sports-item .sports-name {
             font-weight: 600;
         }
@@ -160,8 +168,18 @@
             padding: 5px 10px;
             border-radius: 20px;
             font-size: 12px;
-            background: rgba(244, 180, 0, 0.2);
+            background: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+        }
+
+        .status-badge.mastered {
+            background: rgba(52, 168, 83, 0.2);
             color: var(--secondary);
+        }
+
+        .status-badge.untouched {
+            background: rgba(153, 153, 153, 0.15);
+            color: #999;
         }
 
         /* 标准表格样式 */
@@ -1130,6 +1148,21 @@
 
                 if (masteredSports[sport.title]) {
                     sportItem.classList.add('mastered');
+                } else if (testedSports[sport.title]) {
+                    sportItem.classList.add('not-mastered');
+                }
+
+                const isMastered = masteredSports[sport.title];
+                const isTested = testedSports[sport.title];
+                let badgeText = '未测试';
+                let badgeClass = 'untouched';
+                if (isMastered) {
+                    badgeText = '已达标';
+                    badgeClass = 'mastered';
+                } else if (isTested) {
+                    badgeText = '未达标';
+                } else {
+                    sportItem.classList.add('untouched');
                 }
 
                 sportItem.innerHTML = `
@@ -1138,7 +1171,7 @@
                         <div class="sports-category">${sport.category.replace('【', '').replace('】', '')}</div>
                     </div>
                     <div class="sports-item-status">
-                        <div class="status-badge">${masteredSports[sport.title] ? '已达标' : (testedSports[sport.title] ? '未达标' : '未测试')}</div>
+                        <div class="status-badge${badgeClass ? ' ' + badgeClass : ''}">${badgeText}</div>
                     </div>
                 `;
 
