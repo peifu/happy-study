@@ -66,7 +66,9 @@ function setupHomeLink(homeLinkId, url) {
 
 // 学习助手初始化
 function initLearningAssistant() {
-    const assistantEnabled = localStorage.getItem('assistantEnabled') !== 'false';
+    // 优先读取新的 assistantSettings JSON，兼容旧的 assistantEnabled key
+    var settings = JSON.parse(localStorage.getItem('assistantSettings') || '{}');
+    var assistantEnabled = settings.hasOwnProperty('enabled') ? settings.enabled : localStorage.getItem('assistantEnabled') !== 'false';
     if (typeof LearningAssistant !== 'undefined' && assistantEnabled) {
         window.learningAssistant = new LearningAssistant();
         window.learningAssistant.init();

@@ -535,152 +535,6 @@
                 </div>
             </div>
         </div>
-        
-        <!-- 学习助手页面 -->
-        <div class="page" id="assistantPage">
-            <h2 class="settings-title">学习助手设置</h2>
-            
-            <div class="settings-grid">
-                <div class="settings-card">
-                    <div class="settings-header">
-                        <i class="fas fa-robot settings-icon"></i>
-                        <div class="settings-title">助手设置</div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="control-label">
-                            <span>启用助手</span>
-                            <label class="switch">
-                                <input type="checkbox" id="assistantToggle">
-                                <span class="slider-round"></span>
-                            </label>
-                        </label>
-                    </div>
-
-                    <!-- 添加助手昵称设置 -->
-                    <div class="form-group">
-                        <label class="form-label">设置昵称</label>
-                        <input type="text" class="form-control" id="assistantNameInput" placeholder="请输入助手昵称" maxlength="20">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">选择形象</label>
-                        <div class="animal-selection" id="animalSelection">
-                            <div class="animal-option" data-animal="bear">
-                                <img src="assets/logo/bear.png" alt="仔仔熊" class="animal-icon">
-                                <span>仔仔熊</span>
-                            </div>
-                            <div class="animal-option" data-animal="cat">
-                                <img src="assets/logo/cat.png" alt="哆啦A梦" class="animal-icon">
-                                <span>哆啦A梦</span>
-                            </div>
-                            <div class="animal-option" data-animal="peppa">
-                                <img src="assets/logo/peppa.png" alt="小猪佩奇" class="animal-icon">
-                                <span>小猪佩奇</span>
-                            </div>
-                            <div class="animal-option" data-animal="nezha">
-                                <img src="assets/logo/nezha.png" alt="哪吒" class="animal-icon">
-                                <span>哪吒</span>
-                            </div>
-                            <div class="animal-option" data-animal="tom">
-                                <img src="assets/logo/tom.png" alt="Tom" class="animal-icon">
-                                <span>Tom</span>
-                            </div>
-                            <div class="animal-option" data-animal="jerry">
-                                <img src="assets/logo/jerry.png" alt="Jerry" class="animal-icon">
-                                <span>Jerry</span>
-                            </div>
-                            <div class="animal-option" data-animal="shixinxiong">
-                                <img src="assets/logo/shixinxiong.png" alt="失心熊" class="animal-icon">
-                                <span>失心熊</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-
-                </div>
-                
-                <div class="settings-card">
-                    <div class="settings-header">
-                        <i class="fas fa-comment settings-icon"></i>
-                        <div class="settings-title">互动设置</div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="control-label">
-                            <span>点击互动</span>
-                            <label class="switch">
-                                <input type="checkbox" id="clickInteractionToggle" checked>
-                                <span class="slider-round"></span>
-                            </label>
-                        </label>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="control-label">
-                            <span>语音鼓励</span>
-                            <label class="switch">
-                                <input type="checkbox" id="voiceEncouragementToggle" checked>
-                                <span class="slider-round"></span>
-                            </label>
-                        </label>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">鼓励语频率</label>
-                        <input type="range" min="1" max="10" value="3" class="range-slider" id="encouragementFrequencySlider">
-                        <div class="slider-value" id="encouragementFrequencyValue">3</div>
-                    </div>
-                </div>
-                
-                <div class="settings-card">
-                    <div class="settings-header">
-                        <i class="fas fa-eye settings-icon"></i>
-                        <div class="settings-title">显示设置</div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="control-label">
-                            <span>始终显示</span>
-                            <label class="switch">
-                                <input type="checkbox" id="alwaysShowToggle" checked>
-                                <span class="slider-round"></span>
-                            </label>
-                        </label>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="control-label">
-                            <span>浮动动画</span>
-                            <label class="switch">
-                                <input type="checkbox" id="floatAnimationToggle" checked>
-                                <span class="slider-round"></span>
-                            </label>
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">
-                            <span>允许拖拽</span>
-                            <label class="switch">
-                                <input type="checkbox" id="dragEnabledToggle" checked>
-                                <span class="slider-round"></span>
-                            </label>
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">显示大小</label>
-                        <input type="range" min="80" max="150" value="100" class="range-slider" id="assistantSizeSlider">
-                        <div class="slider-value" id="assistantSizeValue">100px</div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">透明度</label>
-                        <input type="range" min="30" max="100" value="100" class="range-slider" id="opacitySlider">
-                        <div class="slider-value" id="opacityValue">100%</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
     </div>
 
     <script>
@@ -697,7 +551,6 @@
             setupThemeSelect();
             // 初始化学习助手
             initLearningAssistant();
-            if (typeof applyAssistantSettings === 'function') applyAssistantSettings();
         }
 
         function setupThemeSelect() {
@@ -763,8 +616,11 @@
                 switchPage('musicCard');
             });
             
-            // 学习助手设置事件
-            setupAssistantSettings();
+            // 助手设置页面跳转
+            const assistantLink = document.querySelector('[data-page="assistant"]');
+            if (assistantLink) assistantLink.addEventListener('click', function() {
+                switchPage('assistant');
+            });
 
             setupVoiceSelect();
         }
@@ -892,9 +748,6 @@
                 { id: 'reviewWordsSlider', output: 'reviewWordsValue', format: v => `${v} 个` },
                 { id: 'speechRateSlider', output: 'speechRateValue', format: v => v },
                 { id: 'speechPitchSlider', output: 'speechPitchValue', format: v => v },
-                { id: 'assistantSizeSlider', output: 'assistantSizeValue', format: v => `${v}px` },
-                { id: 'encouragementFrequencySlider', output: 'encouragementFrequencyValue', format: v => v },
-                { id: 'opacitySlider', output: 'opacityValue', format: v => `${v}%` }
             ];
             
             sliders.forEach(({ id, output, format }) => {
@@ -917,11 +770,6 @@
                         if (id === 'fontSizeSlider') {
                             applyFontSize(slider.value);
                         }
-                        
-                        // 应用助手设置
-                        if (['assistantSizeSlider', 'opacitySlider'].includes(id)) {
-                            applyAssistantSettings();
-                        }
                     });
                 }
             });
@@ -938,6 +786,7 @@
             'qiboshi': 'qiboshi.html',
             'pomodoro': 'pomodoro.html',
             'game': 'game.html',
+            'assistant': 'assistant.html',
         };
 
         // 切换页面
@@ -947,194 +796,6 @@
                 return;
             }
             switchPageCommon(pageId, navLinks, pages);
-        }
-
-        // 学习助手设置
-        function setupAssistantSettings() {
-            // 助手开关
-            const assistantToggle = document.getElementById('assistantToggle');
-            assistantToggle.addEventListener('change', function() {
-                toggleAssistant(this.checked);
-                localStorage.setItem('assistantEnabled', this.checked);
-            });
-
-            // 助手形象选择
-            const animalOptions = document.querySelectorAll('.animal-option');
-            animalOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    animalOptions.forEach(opt => opt.classList.remove('selected'));
-                    this.classList.add('selected');
-                    const animal = this.dataset.animal;
-                    changeAssistantAnimal(animal);
-                    localStorage.setItem('assistantAnimal', animal);
-                });
-            });
-
-            // 助手昵称输入事件
-            const assistantNameInput = document.getElementById('assistantNameInput');
-            assistantNameInput.addEventListener('input', function() {
-                const name = this.value || '学习助手';
-                document.getElementById('assistantName').textContent = name;
-                localStorage.setItem('assistantName', name);
-            });
-
-            // 其他开关设置
-            const clickInteractionToggle = document.getElementById('clickInteractionToggle');
-            const voiceEncouragementToggle = document.getElementById('voiceEncouragementToggle');
-            const alwaysShowToggle = document.getElementById('alwaysShowToggle');
-            const floatAnimationToggle = document.getElementById('floatAnimationToggle');
-
-            clickInteractionToggle.addEventListener('change', function() {
-                localStorage.setItem('clickInteractionEnabled', this.checked);
-                applyAssistantSettings();
-            });
-
-            voiceEncouragementToggle.addEventListener('change', function() {
-                localStorage.setItem('voiceEncouragementEnabled', this.checked);
-                applyAssistantSettings();
-            });
-
-            alwaysShowToggle.addEventListener('change', function() {
-                localStorage.setItem('alwaysShowAssistant', this.checked);
-                applyAssistantSettings();
-            });
-
-            floatAnimationToggle.addEventListener('change', function() {
-                localStorage.setItem('floatAnimationEnabled', this.checked);
-                applyAssistantSettings();
-            });
-
-            // 添加助手大小滑块事件监听
-            const assistantSizeSlider = document.getElementById('assistantSizeSlider');
-            const assistantSizeValue = document.getElementById('assistantSizeValue');
-            assistantSizeSlider.addEventListener('input', function() {
-                assistantSizeValue.textContent = `${this.value}px`;
-                applyAssistantSettings();
-            });
-
-            // 添加透明度滑块事件监听
-            const opacitySlider = document.getElementById('opacitySlider');
-            const opacityValue = document.getElementById('opacityValue');
-            opacitySlider.addEventListener('input', function() {
-                opacityValue.textContent = `${this.value}%`;
-                applyAssistantSettings();
-            });
-
-            // 加载保存的设置
-            loadAssistantSettings();
-        }
-
-        function loadAssistantSettings() {
-            // 助手开关
-            const assistantEnabled = localStorage.getItem('assistantEnabled') === 'true';
-            document.getElementById('assistantToggle').checked = assistantEnabled;
-            toggleAssistant(assistantEnabled);
-
-            // 助手昵称
-            const savedName = localStorage.getItem('assistantName') || '学习助手';
-            document.getElementById('assistantName').textContent = savedName;
-            document.getElementById('assistantNameInput').value = savedName;
-
-            // 助手形象
-            const savedAnimal = localStorage.getItem('assistantAnimal') || 'bear';
-            document.querySelector(`.animal-option[data-animal="${savedAnimal}"]`).classList.add('selected');
-            changeAssistantAnimal(savedAnimal);
-
-            // 其他设置
-            document.getElementById('clickInteractionToggle').checked = 
-                localStorage.getItem('clickInteractionEnabled') !== 'false'; // 默认开启
-            document.getElementById('voiceEncouragementToggle').checked = 
-                localStorage.getItem('voiceEncouragementEnabled') !== 'false'; // 默认开启
-            document.getElementById('alwaysShowToggle').checked = 
-                localStorage.getItem('alwaysShowAssistant') === 'true';
-            document.getElementById('floatAnimationToggle').checked = 
-                localStorage.getItem('floatAnimationEnabled') !== 'false'; // 默认开启
-
-            applyAssistantSettings();
-        }
-
-        function toggleAssistant(show) {
-            const assistant = document.getElementById('learningAssistant');
-            const bubble = document.getElementById('assistantSpeechBubble');
-            if (show) {
-                assistant.style.display = 'block';
-                //initLearningAssistant();
-            } else {
-                assistant.style.display = 'none';
-                if (window.learningAssistant) {
-                    //window.learningAssistant.destroy();
-                    window.learningAssistant = null;
-                }
-            }
-        }
-
-        function changeAssistantAnimal(animal) {
-            const assistantImage = document.querySelector('#learningAssistant .assistant-image');
-            const imagePath = `assets/logo/${animal}.png`;
-            
-            // Create a test image to check if the file exists
-            const testImage = new Image();
-            testImage.onload = function() {
-                // File exists, use the PNG image
-                assistantImage.src = imagePath;
-                assistantImage.alt = animal;
-                assistantImage.textContent = '';
-            };
-            testImage.onerror = function() {
-                // File doesn't exist, use emoji placeholder
-                assistantImage.src = '';
-                const emojiMap = {
-                    'dog': '🐶',
-                    'rabbit': '🐰',
-                    'peppa': '🐷', // Pig emoji for Peppa
-                    'nezha': '👶'  // Baby emoji for Nezha
-                };
-                const emoji = emojiMap[animal] || '🤖'; // Default robot emoji
-                assistantImage.alt = emoji;
-                assistantImage.textContent = emoji;
-            };
-            testImage.src = imagePath;
-        }
-
-        function applyAssistantSettings() {
-            const assistant = document.getElementById('learningAssistant');
-            const bubble = document.getElementById('assistantSpeechBubble');
-            
-            if (!assistant) return;
-
-            // 助手大小
-            const size = document.getElementById('assistantSizeSlider').value;
-            assistant.style.width = `${size}px`;
-            assistant.style.height = `${size}px`;
-
-            // 透明度
-            const opacity = document.getElementById('opacitySlider').value;
-            assistant.style.opacity = opacity / 100;
-
-            // 浮动动画
-            const floatAnimationEnabled = document.getElementById('floatAnimationToggle').checked;
-            if (floatAnimationEnabled) {
-                assistant.style.animation = 'float 3s ease-in-out infinite';
-            } else {
-                assistant.style.animation = 'none';
-            }
-
-            // 始终显示
-            const alwaysShow = document.getElementById('alwaysShowToggle').checked;
-            if (alwaysShow) {
-                assistant.style.display = 'block';
-            }
-            
-            // 更新助手行为
-            if (window.learningAssistant) {
-                window.learningAssistant.settings = {
-                    clickInteraction: document.getElementById('clickInteractionToggle').checked,
-                    voiceEncouragement: document.getElementById('voiceEncouragementToggle').checked,
-                    encouragementFrequency: document.getElementById('encouragementFrequencySlider').value,
-                    alwaysShow: alwaysShow
-                };
-                //window.learningAssistant.applySettings();
-            }
         }
 
         // 初始化应用 — 脚本在 body 末尾，DOM 已就绪，直接执行

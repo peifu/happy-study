@@ -1,0 +1,480 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>快乐学习 - 学习助手设置</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/common.css">
+    <link rel="stylesheet" href="assets/css/learning-assistant.css">
+    <style>
+        :root {
+            --assistant-primary: var(--primary);
+            --assistant-secondary: var(--secondary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Page switching */
+        .page {
+            display: none;
+            flex-direction: column;
+        }
+
+        .page.active {
+            display: flex;
+        }
+
+        /* Settings page styles */
+        .settings-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, var(--assistant-primary), var(--assistant-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .settings-card {
+            background: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid var(--border-card);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .settings-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .settings-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .settings-header .settings-icon {
+            font-size: 24px;
+            color: var(--assistant-primary);
+        }
+
+        .settings-header .settings-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 0;
+            background: none;
+            -webkit-text-fill-color: var(--text-color);
+            background-clip: unset;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .control-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        /* Switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 48px;
+            height: 26px;
+            flex-shrink: 0;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider-round {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #ccc;
+            transition: 0.3s;
+            border-radius: 26px;
+        }
+
+        .slider-round::before {
+            content: "";
+            position: absolute;
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+
+        .switch input:checked + .slider-round {
+            background: linear-gradient(90deg, var(--assistant-primary), var(--assistant-secondary));
+        }
+
+        .switch input:checked + .slider-round::before {
+            transform: translateX(22px);
+        }
+
+        /* Range slider */
+        .range-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.12);
+            outline: none;
+            transition: background 0.3s;
+        }
+
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--assistant-primary), var(--assistant-secondary));
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(124, 77, 255, 0.4);
+        }
+
+        .range-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--assistant-primary), var(--assistant-secondary));
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 8px rgba(124, 77, 255, 0.4);
+        }
+
+        .slider-value {
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--assistant-primary);
+            margin-top: 5px;
+        }
+
+        /* Animal selection */
+        .animal-selection {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 10px;
+        }
+
+        .animal-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 6px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+        }
+
+        .animal-option:hover {
+            background: rgba(124, 77, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .animal-option.selected {
+            background: rgba(124, 77, 255, 0.15);
+            border-color: var(--assistant-primary);
+            box-shadow: 0 0 15px rgba(124, 77, 255, 0.2);
+        }
+
+        .animal-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+
+        .animal-option span {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .animal-option.selected span {
+            color: var(--assistant-primary);
+            font-weight: 600;
+        }
+
+        /* Form input */
+        .form-control {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border-card);
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-color);
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--assistant-primary);
+            box-shadow: 0 0 0 3px rgba(124, 77, 255, 0.15);
+        }
+
+        @media (max-width: 768px) {
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .settings-title {
+                font-size: 22px;
+            }
+
+            .animal-selection {
+                grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+                gap: 8px;
+            }
+
+            .animal-icon {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 学习助手设置页面 -->
+        <div class="page active" id="assistantPage">
+            <h2 class="settings-title">学习助手设置</h2>
+
+            <div class="settings-grid">
+                <!-- 卡片1：助手设置 -->
+                <div class="settings-card">
+                    <div class="settings-header">
+                        <i class="fas fa-robot settings-icon"></i>
+                        <div class="settings-title">助手设置</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="control-label">
+                            <span>启用助手</span>
+                            <label class="switch">
+                                <input type="checkbox" id="assistantToggle">
+                                <span class="slider-round"></span>
+                            </label>
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">设置昵称</label>
+                        <input type="text" class="form-control" id="assistantNameInput" placeholder="请输入助手昵称" maxlength="20">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">选择形象</label>
+                        <div class="animal-selection" id="animalSelection">
+                            <div class="animal-option" data-animal="bear">
+                                <img src="assets/logo/bear.png" alt="仔仔熊" class="animal-icon">
+                                <span>仔仔熊</span>
+                            </div>
+                            <div class="animal-option" data-animal="cat">
+                                <img src="assets/logo/cat.png" alt="哆啦A梦" class="animal-icon">
+                                <span>哆啦A梦</span>
+                            </div>
+                            <div class="animal-option" data-animal="peppa">
+                                <img src="assets/logo/peppa.png" alt="小猪佩奇" class="animal-icon">
+                                <span>小猪佩奇</span>
+                            </div>
+                            <div class="animal-option" data-animal="nezha">
+                                <img src="assets/logo/nezha.png" alt="哪吒" class="animal-icon">
+                                <span>哪吒</span>
+                            </div>
+                            <div class="animal-option" data-animal="tom">
+                                <img src="assets/logo/tom.png" alt="Tom" class="animal-icon">
+                                <span>Tom</span>
+                            </div>
+                            <div class="animal-option" data-animal="jerry">
+                                <img src="assets/logo/jerry.png" alt="Jerry" class="animal-icon">
+                                <span>Jerry</span>
+                            </div>
+                            <div class="animal-option" data-animal="shixinxiong">
+                                <img src="assets/logo/shixinxiong.png" alt="失心熊" class="animal-icon">
+                                <span>失心熊</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 卡片2：互动设置 -->
+                <div class="settings-card">
+                    <div class="settings-header">
+                        <i class="fas fa-comment settings-icon"></i>
+                        <div class="settings-title">互动设置</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="control-label">
+                            <span>点击互动</span>
+                            <label class="switch">
+                                <input type="checkbox" id="clickInteractionToggle" checked>
+                                <span class="slider-round"></span>
+                            </label>
+                        </label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="control-label">
+                            <span>语音鼓励</span>
+                            <label class="switch">
+                                <input type="checkbox" id="voiceEncouragementToggle" checked>
+                                <span class="slider-round"></span>
+                            </label>
+                        </label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">鼓励语频率</label>
+                        <input type="range" min="1" max="10" value="3" class="range-slider" id="encouragementFrequencySlider">
+                        <div class="slider-value" id="encouragementFrequencyValue">3</div>
+                    </div>
+                </div>
+                
+                <!-- 卡片3：显示设置 -->
+                <div class="settings-card">
+                    <div class="settings-header">
+                        <i class="fas fa-eye settings-icon"></i>
+                        <div class="settings-title">显示设置</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="control-label">
+                            <span>始终显示</span>
+                            <label class="switch">
+                                <input type="checkbox" id="alwaysShowToggle" checked>
+                                <span class="slider-round"></span>
+                            </label>
+                        </label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="control-label">
+                            <span>浮动动画</span>
+                            <label class="switch">
+                                <input type="checkbox" id="floatAnimationToggle" checked>
+                                <span class="slider-round"></span>
+                            </label>
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">
+                            <span>允许拖拽</span>
+                            <label class="switch">
+                                <input type="checkbox" id="dragEnabledToggle" checked>
+                                <span class="slider-round"></span>
+                            </label>
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">显示大小</label>
+                        <input type="range" min="80" max="150" value="100" class="range-slider" id="assistantSizeSlider">
+                        <div class="slider-value" id="assistantSizeValue">100px</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">透明度</label>
+                        <input type="range" min="30" max="100" value="100" class="range-slider" id="opacitySlider">
+                        <div class="slider-value" id="opacityValue">100%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/common.js"></script>
+    <script src="assets/js/learning-assistant.js"></script>
+    <script>
+        // 页面配置
+        (function() {
+            // 注入导航（简约导航，指向首页）
+            var NAV_CONFIG = [
+                { page: 'home', icon: 'fa-home', label: '学习主页', active: false },
+                { page: 'assistant', icon: 'fa-robot', label: '学习助手', active: true },
+            ];
+            injectNav(NAV_CONFIG);
+            injectFooter();
+            injectAssistant();
+
+            // 修复：injectAssistant 后 DOM 才存在，刷新实例的 DOM 引用
+            if (window.learningAssistant) {
+                window.learningAssistant.assistant = document.getElementById('learningAssistant');
+                window.learningAssistant.speechBubble = document.getElementById('assistantSpeechBubble');
+                window.learningAssistant.assistantName = document.getElementById('assistantName');
+            }
+
+            // 点击"学习主页"导航链接回到首页
+            var homeNav = document.querySelector('[data-page="home"]');
+            if (homeNav) {
+                homeNav.addEventListener('click', function(e) {
+                    window.location.href = 'index.html';
+                });
+            }
+
+            // 点击快乐学习 Logo 回到首页
+            if (typeof setupHomeLink === 'function') {
+                setupHomeLink('homeLink', 'index.html');
+            }
+
+            // 同步主题
+            if (typeof syncThemeFromIndex === 'function') {
+                syncThemeFromIndex();
+            }
+        })();
+    </script>
+</body>
+</html>
