@@ -209,6 +209,54 @@
             transition: transform 0.3s ease;
         }
         .record-card:hover { transform: translateY(-2px); }
+        .record-card { cursor: pointer; position: relative; }
+        .record-card.expanded { grid-column: 1 / -1; }
+
+        /* 记录详情面板 */
+        .record-detail {
+            display: none;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-subtle);
+        }
+        .record-card.expanded .record-detail { display: block; }
+        .record-detail-section {
+            margin-bottom: 12px;
+        }
+        .record-detail-section:last-child { margin-bottom: 0; }
+        .record-detail-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-color);
+        }
+        .record-detail-header .rd-dot {
+            width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+        }
+        .record-detail-header .rd-count {
+            font-size: 12px; color: var(--text-secondary); font-weight: 400;
+        }
+        .record-detail-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            max-height: 120px;
+            overflow-y: auto;
+        }
+        .record-detail-items::-webkit-scrollbar { width: 4px; }
+        .record-detail-items::-webkit-scrollbar-thumb { background: var(--border-card); border-radius: 2px; }
+        .rd-item-tag {
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 12px;
+            white-space: nowrap;
+        }
+        .rd-item-tag.mastered { background: rgba(52, 168, 83, 0.15); color: #34a853; }
+        .rd-item-tag.unmastered { background: rgba(234, 67, 53, 0.12); color: #ea4335; }
+        .rd-item-tag.unlearned { background: rgba(255,255,255,0.06); color: var(--text-secondary); }
         .record-card .card-top {
             display: flex;
             align-items: center;
@@ -250,12 +298,17 @@
         .points-summary {
             background: var(--card-bg-color);
             border-radius: 20px;
-            padding: 32px;
+            padding: 28px 32px;
             border: 1px solid var(--border-card);
-            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
             margin-top: 15px;
             margin-bottom: 20px;
+            flex-wrap: wrap;
         }
+        .points-total-wrap { text-align: center; }
         .points-total {
             font-size: 56px;
             font-weight: 800;
@@ -263,11 +316,206 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            line-height: 1.1;
         }
         .points-total-label {
             font-size: 14px;
             color: var(--text-secondary);
             margin-top: 4px;
+        }
+        .points-badge-count {
+            text-align: center;
+            position: relative;
+        }
+        .points-badge-count::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 10%;
+            height: 80%;
+            width: 1px;
+            background: var(--border-subtle);
+        }
+        .badge-count-num {
+            font-size: 44px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #a78bfa, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+        }
+        .badge-count-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+        .points-streak-wrap {
+            text-align: center;
+            position: relative;
+        }
+        .points-streak-wrap::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 10%;
+            height: 80%;
+            width: 1px;
+            background: var(--border-subtle);
+        }
+        .streak-fire { font-size: 32px; margin-bottom: 2px; }
+        .streak-num {
+            font-size: 38px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff6b6b, #ff8c00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+        }
+        .streak-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+        .streak-max {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+            opacity: 0.7;
+        }
+
+        /* 今日收获 */
+        .today-harvest {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .harvest-item {
+            flex: 1;
+            background: var(--card-bg-color);
+            border-radius: 14px;
+            padding: 18px;
+            border: 1px solid var(--border-card);
+            text-align: center;
+        }
+        .harvest-icon { font-size: 28px; margin-bottom: 4px; }
+        .harvest-num {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffd700;
+        }
+        .harvest-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        /* 徽章网格 */
+        .badges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+        .badge-card {
+            background: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 20px 14px;
+            border: 1px solid var(--border-card);
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .badge-card:hover { transform: translateY(-3px); }
+        .badge-card.unlocked {
+            border-color: rgba(255, 215, 0, 0.3);
+            box-shadow: 0 0 24px rgba(255, 215, 0, 0.08);
+        }
+        .badge-card.max-level {
+            border-color: rgba(255, 215, 0, 0.5);
+            box-shadow: 0 0 32px rgba(255, 215, 0, 0.15), inset 0 0 40px rgba(255, 215, 0, 0.03);
+        }
+        .badge-card.max-level::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(255,215,0,0.06), transparent 60%);
+            pointer-events: none;
+        }
+        .badge-icon-wrap {
+            width: 56px; height: 56px;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            background: rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .badge-card.unlocked .badge-icon-wrap {
+            background: rgba(255,215,0,0.08);
+        }
+        .badge-card.max-level .badge-icon-wrap {
+            background: rgba(255,215,0,0.15);
+            box-shadow: 0 0 20px rgba(255,215,0,0.2);
+        }
+        .badge-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 8px;
+        }
+        .badge-levels {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 8px;
+        }
+        .badge-level-star {
+            width: 18px; height: 18px;
+            border-radius: 50%;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.08);
+            color: var(--text-secondary);
+        }
+        .badge-level-star.earned {
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            color: #fff;
+            box-shadow: 0 0 8px rgba(255,215,0,0.4);
+        }
+        .badge-progress {
+            width: 100%; height: 4px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .badge-progress-fill {
+            height: 100%;
+            border-radius: 2px;
+            background: linear-gradient(90deg, #ffd700, #ff8c00);
+            transition: width 0.6s ease;
+        }
+        .badge-progress-text {
+            font-size: 10px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+        .badge-card.max-level .badge-progress-fill {
+            background: linear-gradient(90deg, #ffd700, #ff6b6b, #a78bfa);
+            animation: badgeMaxShine 2s ease-in-out infinite;
+        }
+        @keyframes badgeMaxShine {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
         }
         .points-subjects {
             display: grid;
@@ -325,41 +573,21 @@
         }
         .points-empty i { font-size: 48px; margin-bottom: 12px; opacity: 0.4; }
 
-        /* Milestones */
-        .milestones {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-bottom: 24px;
-        }
-        .milestone {
-            flex: 1;
-            min-width: 100px;
-            background: var(--card-bg-color);
-            border-radius: 14px;
-            padding: 16px;
-            border: 1px solid var(--border-card);
-            text-align: center;
-            opacity: 0.4;
-            transition: all 0.3s ease;
-        }
-        .milestone.unlocked {
-            opacity: 1;
-            border-color: #ffd700;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
-        }
-        .milestone .ms-icon { font-size: 28px; margin-bottom: 6px; }
-        .milestone .ms-points { font-size: 14px; font-weight: 700; color: var(--text-color); }
-        .milestone .ms-label { font-size: 11px; color: var(--text-secondary); }
-        .milestone.unlocked .ms-points { color: #ffd700; }
 
         @media (max-width: 768px) {
             .settings-grid, .records-grid { grid-template-columns: 1fr; }
             .points-subjects { grid-template-columns: 1fr 1fr; }
+            .badges-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
             .page-title { font-size: 22px; }
             .animal-selection { grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: 8px; }
             .animal-icon { width: 40px; height: 40px; }
             .points-total { font-size: 40px; }
+            .badge-count-num { font-size: 34px; }
+            .points-summary { gap: 24px; padding: 20px 16px; }
+            .points-badge-count::before { left: -12px; }
+            .points-streak-wrap::before { left: -12px; }
+            .streak-num { font-size: 30px; }
+            .today-harvest { flex-direction: column; }
         }
     </style>
 </head>
@@ -509,33 +737,43 @@
         <div class="page" id="pointsPage">
             <h2 class="page-title">积分奖励</h2>
 
-            <!-- 积分总数 -->
+            <!-- 积分总数 + 连续天数 + 徽章数 -->
             <div class="points-summary">
-                <div class="points-total" id="pointsTotal">0</div>
-                <div class="points-total-label">总积分</div>
+                <div class="points-total-wrap">
+                    <div class="points-total" id="pointsTotal">0</div>
+                    <div class="points-total-label">总积分</div>
+                </div>
+                <div class="points-streak-wrap" id="streakWrap">
+                    <div class="streak-fire" id="streakIcon">🔥</div>
+                    <div class="streak-num" id="streakDays">0</div>
+                    <div class="streak-label">连续学习天数</div>
+                    <div class="streak-max" id="streakMax">最高纪录: 0 天</div>
+                </div>
+                <div class="points-badge-count">
+                    <div class="badge-count-num" id="badgeCountTotal">0</div>
+                    <div class="badge-count-label">徽章总数</div>
+                </div>
             </div>
 
-            <!-- 里程碑 -->
-            <div class="milestones" id="milestones">
-                <div class="milestone" data-points="100">
-                    <div class="ms-icon">🌱</div>
-                    <div class="ms-points">100</div>
-                    <div class="ms-label">学习新手</div>
+            <!-- 徽章 -->
+            <div class="badges-grid" id="badgesGrid"></div>
+
+            <!-- 今日收获 -->
+            <div class="today-harvest" id="todayHarvest" style="display:none;">
+                <div class="harvest-item">
+                    <div class="harvest-icon">🪙</div>
+                    <div class="harvest-num" id="todayPoints">0</div>
+                    <div class="harvest-label">今日积分</div>
                 </div>
-                <div class="milestone" data-points="500">
-                    <div class="ms-icon">🌟</div>
-                    <div class="ms-points">500</div>
-                    <div class="ms-label">学习达人</div>
+                <div class="harvest-item">
+                    <div class="harvest-icon">📝</div>
+                    <div class="harvest-num" id="todayItems">0</div>
+                    <div class="harvest-label">今日掌握</div>
                 </div>
-                <div class="milestone" data-points="1000">
-                    <div class="ms-icon">🏆</div>
-                    <div class="ms-points">1,000</div>
-                    <div class="ms-label">学习精英</div>
-                </div>
-                <div class="milestone" data-points="5000">
-                    <div class="ms-icon">👑</div>
-                    <div class="ms-points">5,000</div>
-                    <div class="ms-label">学习大师</div>
+                <div class="harvest-item">
+                    <div class="harvest-icon">🎯</div>
+                    <div class="harvest-num" id="dailyGoal">0/100</div>
+                    <div class="harvest-label">每日目标</div>
                 </div>
             </div>
 
@@ -613,64 +851,74 @@
                         id: 'english', name: '英语', icon: 'fa-language', color: '#4285f4',
                         getData: function() {
                             var map = JSON.parse(localStorage.getItem('masteredWordsMap') || '{}');
-                            var total = 0, mastered = 0;
+                            var mastered = [], unmastered = [];
                             for (var book in map) {
                                 for (var word in map[book]) {
-                                    total++;
-                                    if (map[book][word]) mastered++;
+                                    if (map[book][word]) mastered.push(word);
+                                    else unmastered.push(word);
                                 }
                             }
-                            return { mastered: mastered, total: total > 0 ? total : 1258 };
+                            var total = mastered.length + unmastered.length;
+                            if (total === 0) total = 1258;
+                            return { mastered: mastered, unmastered: unmastered, total: total };
                         }
                     },
                     {
                         id: 'chinese', name: '语文', icon: 'fa-pen-fancy', color: '#ea4335',
                         getData: function() {
                             var map = JSON.parse(localStorage.getItem('masteredPoems') || '{}');
-                            var total = 0, mastered = 0;
+                            var mastered = [], unmastered = [];
                             for (var title in map) {
-                                total++;
-                                if (map[title]) mastered++;
+                                if (map[title]) mastered.push(title);
+                                else unmastered.push(title);
                             }
-                            return { mastered: mastered, total: total > 0 ? total : 64 };
+                            var total = mastered.length + unmastered.length;
+                            if (total === 0) total = 64;
+                            return { mastered: mastered, unmastered: unmastered, total: total };
                         }
                     },
                     {
                         id: 'math', name: '数学', icon: 'fa-calculator', color: '#fbbc05',
                         getData: function() {
                             var map = JSON.parse(localStorage.getItem('masteredConcepts') || '{}');
-                            var total = 0, mastered = 0;
+                            var mastered = [], unmastered = [];
                             for (var t in map) {
-                                total++;
-                                if (map[t]) mastered++;
+                                if (map[t]) mastered.push(t);
+                                else unmastered.push(t);
                             }
-                            return { mastered: mastered, total: total > 0 ? total : 128 };
+                            var total = mastered.length + unmastered.length;
+                            if (total === 0) total = 128;
+                            return { mastered: mastered, unmastered: unmastered, total: total };
                         }
                     },
                     {
                         id: 'pe', name: '体育', icon: 'fa-running', color: '#34a853',
                         getData: function() {
                             var map = JSON.parse(localStorage.getItem('masteredSports') || '{}');
-                            var total = 0, mastered = 0;
+                            var mastered = [], unmastered = [];
                             for (var t in map) {
-                                total++;
-                                if (map[t]) mastered++;
+                                if (map[t]) mastered.push(t);
+                                else unmastered.push(t);
                             }
-                            return { mastered: mastered, total: total > 0 ? total : 36 };
+                            var total = mastered.length + unmastered.length;
+                            if (total === 0) total = 36;
+                            return { mastered: mastered, unmastered: unmastered, total: total };
                         }
                     },
                     {
                         id: 'science', name: '科学', icon: 'fa-flask', color: '#9b59b6',
                         getData: function() {
                             var map = JSON.parse(localStorage.getItem('baikeMasteredConcepts') || '{}');
-                            var total = 0, mastered = 0;
+                            var mastered = [], unmastered = [];
                             for (var topic in map) {
                                 for (var c in map[topic]) {
-                                    total++;
-                                    if (map[topic][c]) mastered++;
+                                    if (map[topic][c]) mastered.push(c);
+                                    else unmastered.push(c);
                                 }
                             }
-                            return { mastered: mastered, total: total > 0 ? total : 42 };
+                            var total = mastered.length + unmastered.length;
+                            if (total === 0) total = 42;
+                            return { mastered: mastered, unmastered: unmastered, total: total };
                         }
                     }
                 ];
@@ -679,8 +927,12 @@
                 var html = '';
                 subjects.forEach(function(s) {
                     var data = s.getData();
-                    var pct = data.total > 0 ? Math.round(data.mastered / data.total * 100) : 0;
-                    html += '<div class="record-card">' +
+                    var masteredCount = data.mastered.length;
+                    var unmasteredCount = data.unmastered.length;
+                    var knownTotal = masteredCount + unmasteredCount;
+                    var unlearnedCount = Math.max(0, data.total - knownTotal);
+                    var pct = data.total > 0 ? Math.round(masteredCount / data.total * 100) : 0;
+                    html += '<div class="record-card" data-subject="' + s.id + '">' +
                         '<div class="card-top">' +
                             '<div class="subject-icon-bg" style="background:' + s.color + '">' +
                                 '<i class="fas ' + s.icon + '"></i>' +
@@ -688,14 +940,46 @@
                             '<div class="subject-name">' + s.name + '</div>' +
                         '</div>' +
                         '<div class="record-stats">' +
-                            '<div class="record-stat"><div class="record-stat-value" style="color:' + s.color + '">' + data.mastered + '</div><div class="record-stat-label">已掌握</div></div>' +
-                            '<div class="record-stat"><div class="record-stat-value">' + data.total + '</div><div class="record-stat-label">总数量</div></div>' +
+                            '<div class="record-stat"><div class="record-stat-value" style="color:#34a853">' + masteredCount + '</div><div class="record-stat-label">已掌握</div></div>' +
+                            '<div class="record-stat"><div class="record-stat-value" style="color:#ea4335">' + unmasteredCount + '</div><div class="record-stat-label">未掌握</div></div>' +
                             '<div class="record-stat"><div class="record-stat-value" style="color:' + s.color + '">' + pct + '%</div><div class="record-stat-label">进度</div></div>' +
                         '</div>' +
                         '<div class="record-bar-container"><div class="record-bar-fill" style="width:' + pct + '%;background:' + s.color + '"></div></div>' +
+                        '<div class="record-detail">' +
+                            buildDetailSection('已掌握', '#34a853', data.mastered, 'mastered') +
+                            buildDetailSection('未掌握', '#ea4335', data.unmastered, 'unmastered') +
+                            '<div class="record-detail-section">' +
+                                '<div class="record-detail-header"><div class="rd-dot" style="background:rgba(255,255,255,0.15)"></div>未学习<span class="rd-count">~' + unlearnedCount + ' 项</span></div>' +
+                            '</div>' +
+                        '</div>' +
                     '</div>';
                 });
                 grid.innerHTML = html || '<div class="points-empty"><i class="fas fa-book-open"></i><p>暂无学习记录</p></div>';
+
+                // 点击卡片展开详情
+                grid.querySelectorAll('.record-card').forEach(function(card) {
+                    card.addEventListener('click', function(e) {
+                        var wasExpanded = card.classList.contains('expanded');
+                        // 关闭所有展开
+                        grid.querySelectorAll('.record-card.expanded').forEach(function(c) { c.classList.remove('expanded'); });
+                        if (!wasExpanded) {
+                            card.classList.add('expanded');
+                        }
+                    });
+                });
+            }
+
+            function buildDetailSection(label, color, items, cls) {
+                var shown = items.slice(0, 30);
+                var more = items.length > 30 ? ' +' + (items.length - 30) + ' 更多' : '';
+                var tags = '';
+                shown.forEach(function(name) {
+                    tags += '<span class="rd-item-tag ' + cls + '">' + name + '</span>';
+                });
+                return '<div class="record-detail-section">' +
+                    '<div class="record-detail-header"><div class="rd-dot" style="background:' + color + '"></div>' + label + '<span class="rd-count">' + items.length + ' 项</span></div>' +
+                    '<div class="record-detail-items">' + tags + more + '</div>' +
+                '</div>';
             }
 
             // ===== 积分奖励渲染 =====
@@ -706,11 +990,222 @@
 
                 document.getElementById('pointsTotal').textContent = data.total.toLocaleString();
 
-                // 里程碑
-                document.querySelectorAll('.milestone').forEach(function(m) {
-                    var pts = parseInt(m.dataset.points);
-                    m.classList.toggle('unlocked', data.total >= pts);
+                // 计算各科掌握数
+                var engMap = JSON.parse(localStorage.getItem('masteredWordsMap') || '{}');
+                var engMastered = 0;
+                for (var bk in engMap) for (var w in engMap[bk]) { if (engMap[bk][w]) engMastered++; }
+
+                var poemMap = JSON.parse(localStorage.getItem('masteredPoems') || '{}');
+                var poemMastered = 0;
+                for (var t in poemMap) { if (poemMap[t]) poemMastered++; }
+
+                var mathMap = JSON.parse(localStorage.getItem('masteredConcepts') || '{}');
+                var mathMastered = 0;
+                for (var t in mathMap) { if (mathMap[t]) mathMastered++; }
+
+                var subjWithPoints = 0;
+                for (var k in data.subjects) { if (data.subjects[k].points > 0) subjWithPoints++; }
+
+                // 徽章定义：{ name, icon, getLevel(total, eng, poem, math, subjCount) → level 0-3 }
+                var badgeDefs = [
+                    {
+                        name: '学习新芽', icon: '🌱',
+                        getLevel: function(t) {
+                            if (t >= 500) return 3;
+                            if (t >= 300) return 2;
+                            if (t >= 100) return 1;
+                            return 0;
+                        },
+                        getProgress: function(t) {
+                            if (t >= 500) return 100;
+                            if (t >= 300) return Math.round((t - 300) / 2);
+                            return Math.round(t / 3);
+                        },
+                        progressLabel: function(t) {
+                            var thresholds = [100, 300, 500];
+                            for (var i = 0; i < 3; i++) { if (t < thresholds[i]) return t + '/' + thresholds[i] + ' 分'; }
+                            return 'MAX';
+                        }
+                    },
+                    {
+                        name: '学习之星', icon: '⭐',
+                        getLevel: function(t) {
+                            if (t >= 5000) return 3;
+                            if (t >= 2000) return 2;
+                            if (t >= 500) return 1;
+                            return 0;
+                        },
+                        getProgress: function(t) {
+                            if (t >= 5000) return 100;
+                            if (t >= 2000) return Math.round((t - 2000) / 30);
+                            if (t >= 500) return Math.round((t - 500) / 15);
+                            return Math.round(t / 5);
+                        },
+                        progressLabel: function(t) {
+                            var thresholds = [500, 2000, 5000];
+                            for (var i = 0; i < 3; i++) { if (t < thresholds[i]) return t + '/' + thresholds[i] + ' 分'; }
+                            return 'MAX';
+                        }
+                    },
+                    {
+                        name: '博学多才', icon: '🎯',
+                        getLevel: function(t, e, p, m, sc) {
+                            if (sc >= 5) return 3;
+                            if (sc >= 3) return 2;
+                            if (sc >= 2) return 1;
+                            return 0;
+                        },
+                        getProgress: function(t, e, p, m, sc) {
+                            var thresholds = [2, 3, 5];
+                            var lv = 0;
+                            for (var i = 0; i < 3; i++) { if (sc >= thresholds[i]) lv = i + 1; }
+                            if (lv >= 3) return 100;
+                            return Math.round(sc / thresholds[lv] * 100);
+                        },
+                        progressLabel: function(t, e, p, m, sc) {
+                            var thresholds = [2, 3, 5];
+                            var lv = 0;
+                            for (var i = 0; i < 3; i++) { if (sc >= thresholds[i]) lv = i + 1; }
+                            if (lv >= 3) return 'MAX';
+                            return sc + '/' + thresholds[lv] + ' 科';
+                        }
+                    },
+                    {
+                        name: '单词大王', icon: '📚',
+                        getLevel: function(t, e) {
+                            if (e >= 500) return 3;
+                            if (e >= 200) return 2;
+                            if (e >= 50) return 1;
+                            return 0;
+                        },
+                        getProgress: function(t, e) {
+                            if (e >= 500) return 100;
+                            if (e >= 200) return Math.round((e - 200) / 3);
+                            if (e >= 50) return Math.round((e - 50) / 1.5);
+                            return Math.round(e / 0.5);
+                        },
+                        progressLabel: function(t, e) {
+                            var thresholds = [50, 200, 500];
+                            for (var i = 0; i < 3; i++) { if (e < thresholds[i]) return e + '/' + thresholds[i] + ' 词'; }
+                            return 'MAX';
+                        }
+                    },
+                    {
+                        name: '诗词达人', icon: '📜',
+                        getLevel: function(t, e, p) {
+                            if (p >= 50) return 3;
+                            if (p >= 20) return 2;
+                            if (p >= 5) return 1;
+                            return 0;
+                        },
+                        getProgress: function(t, e, p) {
+                            if (p >= 50) return 100;
+                            if (p >= 20) return Math.round((p - 20) / 0.3);
+                            if (p >= 5) return Math.round((p - 5) / 0.15);
+                            return Math.round(p / 0.05);
+                        },
+                        progressLabel: function(t, e, p) {
+                            var thresholds = [5, 20, 50];
+                            for (var i = 0; i < 3; i++) { if (p < thresholds[i]) return p + '/' + thresholds[i] + ' 首'; }
+                            return 'MAX';
+                        }
+                    },
+                    {
+                        name: '数学高手', icon: '🔢',
+                        getLevel: function(t, e, p, mt) {
+                            if (mt >= 100) return 3;
+                            if (mt >= 50) return 2;
+                            if (mt >= 15) return 1;
+                            return 0;
+                        },
+                        getProgress: function(t, e, p, mt) {
+                            if (mt >= 100) return 100;
+                            if (mt >= 50) return Math.round((mt - 50) / 0.5);
+                            if (mt >= 15) return Math.round((mt - 15) / 0.35);
+                            return Math.round(mt / 0.15);
+                        },
+                        progressLabel: function(t, e, p, mt) {
+                            var thresholds = [15, 50, 100];
+                            for (var i = 0; i < 3; i++) { if (mt < thresholds[i]) return mt + '/' + thresholds[i] + ' 题'; }
+                            return 'MAX';
+                        }
+                    },
+                    {
+                        name: '学习超神', icon: '👑',
+                        getLevel: function(t) {
+                            if (t >= 50000) return 3;
+                            if (t >= 20000) return 2;
+                            if (t >= 8000) return 1;
+                            return 0;
+                        },
+                        getProgress: function(t) {
+                            if (t >= 50000) return 100;
+                            if (t >= 20000) return Math.round((t - 20000) / 300);
+                            if (t >= 8000) return Math.round((t - 8000) / 120);
+                            return Math.round(t / 80);
+                        },
+                        progressLabel: function(t) {
+                            var thresholds = [8000, 20000, 50000];
+                            for (var i = 0; i < 3; i++) { if (t < thresholds[i]) return t + '/' + thresholds[i] + ' 分'; }
+                            return 'MAX';
+                        }
+                    }
+                ];
+
+                // 渲染徽章
+                var totalBadgeLevels = 0;
+                var badgesHtml = '';
+                badgeDefs.forEach(function(b) {
+                    var level = b.getLevel(data.total, engMastered, poemMastered, mathMastered, subjWithPoints);
+                    var progress = b.getProgress(data.total, engMastered, poemMastered, mathMastered, subjWithPoints);
+                    var progLabel = b.progressLabel(data.total, engMastered, poemMastered, mathMastered, subjWithPoints);
+                    var isMax = level >= 3;
+                    totalBadgeLevels += level;
+
+                    var cardClass = 'badge-card';
+                    if (isMax) cardClass += ' max-level';
+                    else if (level > 0) cardClass += ' unlocked';
+
+                    var starsHtml = '';
+                    for (var s = 1; s <= 3; s++) {
+                        var starClass = 'badge-level-star';
+                        if (s <= level) starClass += ' earned';
+                        starsHtml += '<div class="' + starClass + '">' + (s <= level ? '★' : '☆') + '</div>';
+                    }
+
+                    badgesHtml += '<div class="' + cardClass + '">' +
+                        '<div class="badge-icon-wrap">' + b.icon + '</div>' +
+                        '<div class="badge-name">' + b.name + '</div>' +
+                        '<div class="badge-levels">' + starsHtml + '</div>' +
+                        '<div class="badge-progress"><div class="badge-progress-fill" style="width:' + progress + '%"></div></div>' +
+                        '<div class="badge-progress-text">' + progLabel + '</div>' +
+                    '</div>';
                 });
+
+                document.getElementById('badgesGrid').innerHTML = badgesHtml;
+                document.getElementById('badgeCountTotal').textContent = totalBadgeLevels;
+
+                // 连续天数
+                var streak = typeof getStreakData === 'function' ? getStreakData() : { currentStreak: 0, maxStreak: 0 };
+                document.getElementById('streakDays').textContent = streak.currentStreak || 0;
+                document.getElementById('streakMax').textContent = '最高纪录: ' + (streak.maxStreak || 0) + ' 天';
+
+                // 今日收获
+                var today = new Date().toISOString().slice(0, 10);
+                var todayPoints = 0;
+                var todayItems = 0;
+                for (var i = data.history.length - 1; i >= 0; i--) {
+                    var h = data.history[i];
+                    if (h.time && h.time.slice(0, 10) === today) {
+                        todayPoints += h.points;
+                        todayItems++;
+                    }
+                }
+                document.getElementById('todayPoints').textContent = todayPoints;
+                document.getElementById('todayItems').textContent = todayItems;
+                var goal = 100;
+                document.getElementById('dailyGoal').textContent = Math.min(todayPoints, goal) + '/' + goal;
+                document.getElementById('todayHarvest').style.display = 'flex';
 
                 // 各科目积分
                 var subjectMap = {
