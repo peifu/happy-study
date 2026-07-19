@@ -816,16 +816,9 @@
             var pages = document.querySelectorAll('.page');
             if (typeof setupNavLinks === 'function') {
                 setupNavLinks(navLinks, pages, function(pageId) {
+                    if (pageId === 'home') window.location.href = 'index.html';
                     if (pageId === 'records') renderRecords();
                     if (pageId === 'points') renderPoints();
-                });
-            }
-
-            // 学习主页 → index.html
-            var homeNav = document.querySelector('[data-page="home"]');
-            if (homeNav) {
-                homeNav.addEventListener('click', function(e) {
-                    window.location.href = 'index.html';
                 });
             }
 
