@@ -1174,7 +1174,7 @@
     <script src="assets/js/common.js"></script>
 </head>
 
-<body>
+<body data-assistant-mode="music">
     <div class="container">
         <!-- 音乐播放页面 -->
         <div class="page active" id="playerPage">
@@ -1921,6 +1921,14 @@
             }
         });
 
+        function getBpmFromStyle(style) {
+            if (!style) return 100;
+            if (style.indexOf('欢快') !== -1) return 140;
+            if (style.indexOf('舒缓') !== -1) return 70;
+            if (style.indexOf('动感') !== -1) return 120;
+            return 100;
+        }
+
         function togglePlay() {
             if (isPlaying) {
                 pauseSong();
@@ -1939,6 +1947,12 @@
                     isPlaying = true;
                     playIcon.className = 'fas fa-pause';
                     startLyricsSync();
+                    if (window.learningAssistant) {
+                        var currentSong = songs[currentSongIndex];
+                        var bpm = (currentSong && currentSong.bpm) ? currentSong.bpm : getBpmFromStyle(currentSong ? currentSong.style : '');
+                        window.learningAssistant.setBeat(bpm);
+                        window.learningAssistant.startMusicBeat();
+                    }
                 })
                 .catch(error => {
                     console.error('播放失败:', error);
@@ -1951,6 +1965,9 @@
             isPlaying = false;
             playIcon.className = 'fas fa-play';
             stopLyricsSync();
+            if (window.learningAssistant) {
+                window.learningAssistant.stopMusicBeat();
+            }
         }
 
         // 切换循环模式: list → single → random → none → list
@@ -2155,6 +2172,12 @@
 
             window.simulateInterval = simulateInterval;
         }
+
+        window.addEventListener('beforeunload', function() {
+            if (window.learningAssistant) {
+                window.learningAssistant.stopMusicBeat();
+            }
+        });
 
         // 初始化应用
         (function() {
