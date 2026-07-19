@@ -129,22 +129,61 @@ function getStudyPoints() {
     return JSON.parse(localStorage.getItem('studyPoints') || '{"total":0,"subjects":{},"history":[]}');
 }
 
+function getStreakData() {
+    var d = JSON.parse(localStorage.getItem('studyStreak') || '{"currentStreak":0,"lastStudyDate":"","maxStreak":0}');
+    if (!d.currentStreak) d.currentStreak = 0;
+    if (!d.maxStreak) d.maxStreak = 0;
+    return d;
+}
+
+function updateStreak() {
+    var streak = getStreakData();
+    var today = new Date().toISOString().slice(0, 10);
+    if (streak.lastStudyDate === today) return streak;
+
+    var yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+    if (streak.lastStudyDate === yesterday) {
+        streak.currentStreak += 1;
+    } else if (streak.lastStudyDate === '') {
+        streak.currentStreak = 1;
+    } else {
+        streak.currentStreak = 1;
+    }
+    streak.lastStudyDate = today;
+    if (streak.currentStreak > streak.maxStreak) {
+        streak.maxStreak = streak.currentStreak;
+    }
+    localStorage.setItem('studyStreak', JSON.stringify(streak));
+    return streak;
+}
+
+function getStreakMultiplier() {
+    var streak = getStreakData();
+    var days = streak.currentStreak;
+    if (days >= 30) return 3.0;
+    if (days >= 7) return 2.0;
+    if (days >= 3) return 1.5;
+    return 1.0;
+}
+
 function addStudyPoints(subject, points, reason) {
+    var streak = updateStreak();
+    var multiplier = getStreakMultiplier();
+    var actualPoints = Math.round(points * multiplier);
+
     var data = getStudyPoints();
-    data.total += points;
+    data.total += actualPoints;
     if (!data.subjects[subject]) data.subjects[subject] = { points: 0, count: 0 };
-    data.subjects[subject].points += points;
+    data.subjects[subject].points += actualPoints;
     data.subjects[subject].count += 1;
-    data.history.push({ time: new Date().toISOString(), subject: subject, reason: reason, points: points });
+    data.history.push({ time: new Date().toISOString(), subject: subject, reason: reason, points: actualPoints });
     localStorage.setItem('studyPoints', JSON.stringify(data));
-    // 触发积分更新事件，供页面实时刷新
     window.dispatchEvent(new CustomEvent('studyPointsUpdated', { detail: data }));
-    // 弹出积分奖励提示
-    showPointsNotification(points, reason);
+    showPointsNotification(actualPoints, reason, multiplier, streak.currentStreak);
     return data;
 }
 
-function showPointsNotification(points, reason) {
+function showPointsNotification(points, reason, multiplier, streakDays) {
     var assistant = document.getElementById('learningAssistant');
     if (!assistant || assistant.style.display === 'none') return;
 
@@ -154,26 +193,31 @@ function showPointsNotification(points, reason) {
     var cx = window.innerWidth / 2;
     var cy = window.innerHeight / 2;
 
-    // 金币从助手位置飞向屏幕中央
-    var coinCount = Math.min(points, 8);
+    var coinCount = Math.min(Math.ceil(points / 2), 8);
     for (var i = 0; i < coinCount; i++) {
         setTimeout(function() {
             spawnCoin(ax, ay, cx, cy);
         }, i * 60);
     }
 
-    // 气泡提示
     var bubble = document.getElementById('assistantSpeechBubble');
     if (bubble) {
-        bubble.textContent = '+' + points + ' 积分！' + reason;
+        var msg = '+' + points + ' 积分！' + reason;
+        if (multiplier && multiplier > 1) {
+            msg += '  (🔥×' + multiplier.toFixed(1) + ' 连学' + streakDays + '天)';
+        }
+        bubble.textContent = msg;
         bubble.style.display = 'block';
+        if (window.learningAssistant) {
+            window.learningAssistant.updateBubblePosition();
+        }
         bubble.classList.add('show');
         setTimeout(function() {
             bubble.classList.remove('show');
             setTimeout(function() {
                 bubble.style.display = 'none';
             }, 300);
-        }, 2000);
+        }, 2500);
     }
 }
 
