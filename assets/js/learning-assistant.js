@@ -56,6 +56,58 @@ class LearningAssistant {
         }
     }
 
+    // 设置节拍BPM
+    setBeat(bpm) {
+        this.beatBpm = bpm || 100;
+    }
+
+    // 开始音乐节拍跳动
+    startMusicBeat() {
+        if (this.mode !== 'music') return;
+        this.stopMusicBeat();
+        var self = this;
+        var interval = Math.round(60000 / this.beatBpm);
+        this.assistant.style.animation = 'musicBounce ' + (interval / 1000) + 's ease-out infinite';
+
+        // 每拍释放音乐音符粒子
+        this.beatInterval = setInterval(function() {
+            self.spawnMusicNotes();
+        }, interval);
+    }
+
+    // 停止音乐节拍
+    stopMusicBeat() {
+        if (this.beatInterval) {
+            clearInterval(this.beatInterval);
+            this.beatInterval = null;
+        }
+        this.assistant.style.animation = '';
+    }
+
+    // 音乐音符粒子
+    spawnMusicNotes() {
+        var notes = ['🎵', '🎶', '♪', '♫', '🎼'];
+        var rect = this.assistant.getBoundingClientRect();
+        var cx = rect.left + rect.width / 2;
+        var cy = rect.top;
+        var count = 2 + Math.floor(Math.random() * 2);
+
+        for (var i = 0; i < count; i++) {
+            var note = document.createElement('span');
+            note.className = 'music-note-particle';
+            note.textContent = notes[Math.floor(Math.random() * notes.length)];
+            note.style.left = (cx + (Math.random() - 0.5) * 40) + 'px';
+            note.style.top = cy + 'px';
+            note.style.setProperty('--nx', ((Math.random() - 0.5) * 80) + 'px');
+            note.style.setProperty('--ny', -(40 + Math.random() * 80) + 'px');
+            note.style.setProperty('--nr', (Math.random() * 180 - 90) + 'deg');
+            document.body.appendChild(note);
+            setTimeout(function() {
+                if (note.parentNode) note.parentNode.removeChild(note);
+            }, 1600);
+        }
+    }
+
     // 初始化学习助手
     init() {
         if (!this.assistant || !this.speechBubble) return;
