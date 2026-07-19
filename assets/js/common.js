@@ -146,9 +146,25 @@ function addStudyPoints(subject, points, reason) {
 
 function showPointsNotification(points, reason) {
     var assistant = document.getElementById('learningAssistant');
+    if (!assistant || assistant.style.display === 'none') return;
+
+    var rect = assistant.getBoundingClientRect();
+    var ax = rect.left + rect.width / 2;
+    var ay = rect.top + rect.height / 2;
+    var cx = window.innerWidth / 2;
+    var cy = window.innerHeight / 2;
+
+    // 金币从助手位置飞向屏幕中央
+    var coinCount = Math.min(points, 8);
+    for (var i = 0; i < coinCount; i++) {
+        setTimeout(function() {
+            spawnCoin(ax, ay, cx, cy);
+        }, i * 60);
+    }
+
+    // 气泡提示
     var bubble = document.getElementById('assistantSpeechBubble');
-    // 助手显示时使用气泡提示
-    if (assistant && assistant.style.display !== 'none' && bubble) {
+    if (bubble) {
         bubble.textContent = '+' + points + ' 积分！' + reason;
         bubble.style.display = 'block';
         bubble.classList.add('show');
@@ -156,16 +172,57 @@ function showPointsNotification(points, reason) {
             bubble.classList.remove('show');
             setTimeout(function() {
                 bubble.style.display = 'none';
-                // 恢复默认鼓励语
-                var encouragements = [
-                    '加油，努力，学习要用力！',
-                    '好好学习，天天向上！',
-                    '学习真有趣，我们齐努力！',
-                    '学习让人进步，努力可能更酷！',
-                    '每天向前一小步，终会长成参天树！'
-                ];
-                bubble.textContent = encouragements[Math.floor(Math.random() * encouragements.length)];
             }, 300);
-        }, 2500);
+        }, 2000);
+    }
+}
+
+function spawnCoin(fromX, fromY, toX, toY) {
+    var coin = document.createElement('span');
+    coin.className = 'coin-particle';
+    coin.textContent = '🪙';
+
+    // 中间点加入随机弧线偏移
+    var mx = (toX - fromX) * 0.5 + (Math.random() - 0.5) * 120;
+    var my = (toY - fromY) * 0.5 - 40 - Math.random() * 60;
+    var ex = toX - fromX + (Math.random() - 0.5) * 30;
+    var ey = toY - fromY + (Math.random() - 0.5) * 30;
+
+    coin.style.left = fromX + 'px';
+    coin.style.top = fromY + 'px';
+    coin.style.setProperty('--coin-mx', mx + 'px');
+    coin.style.setProperty('--coin-my', my + 'px');
+    coin.style.setProperty('--coin-ex', ex + 'px');
+    coin.style.setProperty('--coin-ey', ey + 'px');
+    coin.style.setProperty('--coin-rot', (Math.random() * 360) + 'deg');
+    coin.style.setProperty('--coin-rot-end', (Math.random() * 720 + 360) + 'deg');
+    coin.style.animationDelay = '0s';
+
+    document.body.appendChild(coin);
+
+    // 到达终点时爆发小火花
+    setTimeout(function() {
+        spawnSparks(toX, toY);
+    }, 500);
+
+    setTimeout(function() {
+        if (coin.parentNode) coin.parentNode.removeChild(coin);
+    }, 1300);
+}
+
+function spawnSparks(x, y) {
+    for (var i = 0; i < 6; i++) {
+        var spark = document.createElement('span');
+        spark.className = 'coin-spark';
+        spark.style.left = x + 'px';
+        spark.style.top = y + 'px';
+        var angle = (Math.PI * 2 * i) / 6 + Math.random() * 0.5;
+        var dist = 15 + Math.random() * 25;
+        spark.style.setProperty('--sdx', Math.cos(angle) * dist + 'px');
+        spark.style.setProperty('--sdy', Math.sin(angle) * dist + 'px');
+        document.body.appendChild(spark);
+        setTimeout(function() {
+            if (spark.parentNode) spark.parentNode.removeChild(spark);
+        }, 700);
     }
 }
