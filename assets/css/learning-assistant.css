@@ -34,6 +34,39 @@
     transform: none;
 }
 
+/* ===== Mode Styles ===== */
+.learning-assistant.mode-study {
+    box-shadow: 0 4px 20px rgba(0, 212, 255, 0.4);
+    animation: floatStudy 3s ease-in-out infinite;
+}
+.learning-assistant.mode-study:hover {
+    box-shadow: 0 6px 25px rgba(0, 212, 255, 0.6);
+}
+.learning-assistant.mode-study.dragging {
+    box-shadow: 0 8px 32px rgba(0, 212, 255, 0.55);
+}
+
+.learning-assistant.mode-game {
+    box-shadow: 0 4px 20px rgba(255, 107, 53, 0.4);
+    animation: floatGame 1.5s ease-in-out infinite;
+}
+.learning-assistant.mode-game:hover {
+    box-shadow: 0 6px 25px rgba(255, 107, 53, 0.6);
+}
+.learning-assistant.mode-game.dragging {
+    box-shadow: 0 8px 32px rgba(255, 107, 53, 0.55);
+}
+
+.learning-assistant.mode-music {
+    box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4);
+}
+.learning-assistant.mode-music:hover {
+    box-shadow: 0 6px 25px rgba(168, 85, 247, 0.6);
+}
+.learning-assistant.mode-music.dragging {
+    box-shadow: 0 8px 32px rgba(168, 85, 247, 0.55);
+}
+
 .assistant-image {
     width: 100%;
     height: 100%;
@@ -134,6 +167,49 @@
     }
     50% {
         transform: translateY(-10px);
+    }
+}
+
+@keyframes floatStudy {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+}
+
+@keyframes floatGame {
+    0%, 100% { transform: translateY(0px) scale(1); }
+    50% { transform: translateY(-6px) scale(1.05); }
+}
+
+/* 音乐节拍跳动 */
+@keyframes musicBounce {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+    }
+    15% {
+        transform: translateY(-18px) scale(1.15);
+    }
+    30% {
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* 音乐粒子 */
+.music-note-particle {
+    position: fixed;
+    font-size: 20px;
+    pointer-events: none;
+    z-index: 10002;
+    animation: noteFloat 1.5s ease-out forwards;
+}
+
+@keyframes noteFloat {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(0.5) rotate(0deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(var(--nx), var(--ny)) scale(1.2) rotate(var(--nr));
     }
 }
 
