@@ -22,26 +22,49 @@ class LearningAssistant {
         ];
         this.isCelebrating = false;
         this.isGamePage = false;
+        this.mode = 'normal';
+        this.beatBpm = 100;
+        this.beatInterval = null;
         this.progressPercent = 0;
         this.progressRingFill = null;
         this.progressRing = null;
+    }
+
+    // 检测当前模式
+    detectMode() {
+        var bodyMode = document.body.dataset.assistantMode;
+        if (bodyMode === 'study' || bodyMode === 'game' || bodyMode === 'music') {
+            this.mode = bodyMode;
+        } else if (/game/i.test(window.location.pathname)) {
+            this.mode = 'game';
+        } else {
+            this.mode = 'normal';
+        }
+        this.isGamePage = (this.mode === 'game');
+    }
+
+    // 应用模式样式和行为
+    applyMode() {
+        var cls = this.mode === 'normal' ? '' : 'mode-' + this.mode;
+        this.assistant.className = 'learning-assistant';
+        if (cls) this.assistant.classList.add(cls);
+
+        if (this.mode === 'game' && this.progressRing) {
+            this.progressRing.classList.add('show');
+        } else if (this.progressRing) {
+            this.progressRing.classList.remove('show');
+        }
     }
 
     // 初始化学习助手
     init() {
         if (!this.assistant || !this.speechBubble) return;
 
-        // 检测是否为游戏页面
-        this.isGamePage = /game/i.test(window.location.pathname);
-
-        // 初始化进度环
+        this.updateAssistantUI();
         this.progressRing = document.getElementById('assistantProgressRing');
         this.progressRingFill = document.getElementById('progressRingFill');
-        if (this.isGamePage && this.progressRing) {
-            this.progressRing.classList.add('show');
-        }
-
-        this.updateAssistantUI();
+        this.detectMode();
+        this.applyMode();
         this.restorePosition();
         this.setupAssistantInteraction();
         this.setupDrag();
@@ -290,18 +313,28 @@ class LearningAssistant {
 
     // 设置点击交互
     setupAssistantInteraction() {
-        this.assistant.addEventListener('click', () => {
-            const settings = this.getSettings();
+        var self = this;
+        this.assistant.addEventListener('click', function() {
+            var settings = self.getSettings();
+            if (settings.clickInteraction === false) return;
 
-            if (settings.clickInteraction !== false) {
-                if (this.isGamePage) {
-                    this.celebrate();
-                } else {
-                    this.showEncouragement();
-
-                    if (settings.voiceEncouragement !== false) {
-                        this.speakEncouragement();
-                    }
+            if (self.mode === 'game') {
+                self.celebrate();
+            } else if (self.mode === 'music') {
+                // Toggle beat speed: cycle 60 → 100 → 140 → 180 → 60
+                var bpms = [60, 100, 140, 180];
+                var idx = bpms.indexOf(self.beatBpm);
+                var next = bpms[(idx + 1) % bpms.length];
+                self.setBeat(next);
+                if (self.beatInterval) {
+                    self.stopMusicBeat();
+                    self.startMusicBeat();
+                }
+                self.showEncouragement();
+            } else {
+                self.showEncouragement();
+                if (settings.voiceEncouragement !== false) {
+                    self.speakEncouragement();
                 }
             }
         });
@@ -498,12 +531,13 @@ class LearningAssistant {
     celebrate() {
         if (this.isCelebrating) return;
         this.isCelebrating = true;
+        var self = this;
 
         // ★ 解决 inline animation 与 CSS class 冲突
         // updateAssistantUI() 在 floatAnimation 开启时设置了 inline style animation，
         // 这会覆盖 .celebrating 类添加的 celebrateJump 动画。此处暂时清除。
         var savedAnimation = this.assistant.style.animation;
-        var hadFloatAnimation = !!(savedAnimation && savedAnimation.indexOf('float') !== -1);
+        var hadFloatAnimation = !!(savedAnimation && (savedAnimation.indexOf('float') !== -1 || savedAnimation.indexOf('musicBounce') !== -1));
         this.assistant.style.animation = '';
 
         // ① 随机庆祝动画
@@ -542,6 +576,10 @@ class LearningAssistant {
                 this.assistant.style.animation = savedAnimation;
             } else {
                 this.assistant.style.animation = '';
+            }
+            // Music mode: restart beat after celebrate
+            if (self.mode === 'music' && self.beatInterval === null && self.beatBpm) {
+                self.startMusicBeat();
             }
             this.isCelebrating = false;
         }, cleanupDelay);
