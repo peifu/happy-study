@@ -388,6 +388,143 @@
             margin-top: 1px;
         }
 
+        /* 学者等级 */
+        .rank-section {
+            margin-bottom: 24px;
+        }
+        .rank-display {
+            background: var(--card-bg-color);
+            border-radius: 20px;
+            padding: 28px;
+            border: 1px solid var(--border-card);
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            position: relative;
+            overflow: hidden;
+        }
+        .rank-display::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,215,0,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .rank-medal {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+            background: rgba(255,255,255,0.04);
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+        }
+        .rank-info {
+            flex: 1;
+            min-width: 140px;
+            position: relative;
+            z-index: 1;
+        }
+        .rank-name {
+            font-size: 24px;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.2;
+        }
+        .rank-sub {
+            font-size: 28px;
+            font-weight: 300;
+            color: var(--text-secondary);
+            letter-spacing: 4px;
+            margin-top: 2px;
+        }
+        .rank-progress-wrap {
+            min-width: 200px;
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+        .rank-progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .rank-progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            background: linear-gradient(90deg, #ffd700, #ff8c00, #ff4081);
+            transition: width 0.8s ease;
+        }
+        .rank-progress-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 6px;
+            text-align: right;
+        }
+
+        /* 等级天梯 */
+        .rank-ladder {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 8px;
+        }
+        .rank-rung {
+            background: var(--card-bg-color);
+            border-radius: 12px;
+            padding: 12px 10px;
+            border: 1px solid var(--border-card);
+            text-align: center;
+            transition: all 0.3s ease;
+            opacity: 0.35;
+        }
+        .rank-rung.reached {
+            opacity: 1;
+        }
+        .rank-rung.current {
+            opacity: 1;
+            border-color: #ffd700;
+            box-shadow: 0 0 20px rgba(255,215,0,0.2);
+            transform: scale(1.03);
+        }
+        .rank-rung .rr-icon {
+            font-size: 20px;
+            margin-bottom: 2px;
+        }
+        .rank-rung .rr-name {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        .rank-rung .rr-sub {
+            font-size: 10px;
+            color: var(--text-secondary);
+            margin-top: 1px;
+        }
+        .rank-rung .rr-pts {
+            font-size: 9px;
+            color: var(--text-secondary);
+            opacity: 0.6;
+            margin-top: 2px;
+        }
+        .rank-rung.current .rr-name { color: #ffd700; }
+        .rank-rung.current .rr-icon { animation: rankPulse 1.5s ease-in-out infinite; }
+        @keyframes rankPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
         /* 徽章分区 */
         .badge-section {
             margin-bottom: 24px;
@@ -589,6 +726,11 @@
             .vault-main { gap: 20px; }
             .vault-stats { gap: 16px; }
             .vault-divider { height: 1px; width: 80%; }
+            .rank-display { flex-direction: column; text-align: center; gap: 16px; }
+            .rank-progress-wrap { min-width: 0; width: 100%; }
+            .rank-ladder { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+            .rank-medal { width: 56px; height: 56px; font-size: 32px; }
+            .rank-name { font-size: 20px; }
             .bsh-desc { display: none; }
         }
     </style>
@@ -772,14 +914,22 @@
                 </div>
             </div>
 
-            <!-- 成就勋章 -->
-            <div class="badge-section">
-                <div class="badge-section-header">
-                    <span class="bsh-icon">🏅</span>
-                    <span class="bsh-title">成就勋章</span>
-                    <span class="bsh-desc">坚持学习，解锁荣誉</span>
+            <!-- 学者等级 -->
+            <div class="rank-section">
+                <div class="rank-display" id="rankDisplay">
+                    <div class="rank-medal" id="rankMedal">🥉</div>
+                    <div class="rank-info">
+                        <div class="rank-name" id="rankName">青铜学者</div>
+                        <div class="rank-sub" id="rankSub">I</div>
+                    </div>
+                    <div class="rank-progress-wrap">
+                        <div class="rank-progress-bar">
+                            <div class="rank-progress-fill" id="rankProgressFill" style="width:0%"></div>
+                        </div>
+                        <div class="rank-progress-label" id="rankProgressLabel">0/50</div>
+                    </div>
                 </div>
-                <div class="badges-grid" id="achievementBadges"></div>
+                <div class="rank-ladder" id="rankLadder"></div>
             </div>
 
             <!-- 学科技能 -->
@@ -1016,91 +1166,78 @@
                 var subjWithPoints = 0;
                 for (var k in data.subjects) { if (data.subjects[k].points > 0) subjWithPoints++; }
 
-                // 成就勋章（综合进度类）
-                var achievementBadges = [
-                    {
-                        name: '学习新芽', icon: '🌱',
-                        getLevel: function(t) {
-                            if (t >= 500) return 3;
-                            if (t >= 300) return 2;
-                            if (t >= 100) return 1;
-                            return 0;
-                        },
-                        getProgress: function(t) {
-                            if (t >= 500) return 100;
-                            if (t >= 300) return Math.round((t - 300) / 2);
-                            return Math.round(t / 3);
-                        },
-                        progressLabel: function(t) {
-                            var thresholds = [100, 300, 500];
-                            for (var i = 0; i < 3; i++) { if (t < thresholds[i]) return t + '/' + thresholds[i] + ' 分'; }
-                            return 'MAX';
-                        }
-                    },
-                    {
-                        name: '学习之星', icon: '⭐',
-                        getLevel: function(t) {
-                            if (t >= 5000) return 3;
-                            if (t >= 2000) return 2;
-                            if (t >= 500) return 1;
-                            return 0;
-                        },
-                        getProgress: function(t) {
-                            if (t >= 5000) return 100;
-                            if (t >= 2000) return Math.round((t - 2000) / 30);
-                            if (t >= 500) return Math.round((t - 500) / 15);
-                            return Math.round(t / 5);
-                        },
-                        progressLabel: function(t) {
-                            var thresholds = [500, 2000, 5000];
-                            for (var i = 0; i < 3; i++) { if (t < thresholds[i]) return t + '/' + thresholds[i] + ' 分'; }
-                            return 'MAX';
-                        }
-                    },
-                    {
-                        name: '博学多才', icon: '🎯',
-                        getLevel: function(t, e, p, m, sc) {
-                            if (sc >= 5) return 3;
-                            if (sc >= 3) return 2;
-                            if (sc >= 2) return 1;
-                            return 0;
-                        },
-                        getProgress: function(t, e, p, m, sc) {
-                            var thresholds = [2, 3, 5];
-                            var lv = 0;
-                            for (var i = 0; i < 3; i++) { if (sc >= thresholds[i]) lv = i + 1; }
-                            if (lv >= 3) return 100;
-                            return Math.round(sc / thresholds[lv] * 100);
-                        },
-                        progressLabel: function(t, e, p, m, sc) {
-                            var thresholds = [2, 3, 5];
-                            var lv = 0;
-                            for (var i = 0; i < 3; i++) { if (sc >= thresholds[i]) lv = i + 1; }
-                            if (lv >= 3) return 'MAX';
-                            return sc + '/' + thresholds[lv] + ' 科';
-                        }
-                    },
-                    {
-                        name: '学习超神', icon: '👑',
-                        getLevel: function(t) {
-                            if (t >= 50000) return 3;
-                            if (t >= 20000) return 2;
-                            if (t >= 8000) return 1;
-                            return 0;
-                        },
-                        getProgress: function(t) {
-                            if (t >= 50000) return 100;
-                            if (t >= 20000) return Math.round((t - 20000) / 300);
-                            if (t >= 8000) return Math.round((t - 8000) / 120);
-                            return Math.round(t / 80);
-                        },
-                        progressLabel: function(t) {
-                            var thresholds = [8000, 20000, 50000];
-                            for (var i = 0; i < 3; i++) { if (t < thresholds[i]) return t + '/' + thresholds[i] + ' 分'; }
-                            return 'MAX';
+                // 学者等级定义：[{ name, icon, color, levels: [L1, L2, L3] }]
+                var RANKS = [
+                    { name: '青铜学者', icon: '🥉', color: '#cd7f32', levels: [50, 150, 300] },
+                    { name: '白银学者', icon: '🥈', color: '#c0c0c0', levels: [500, 800, 1200] },
+                    { name: '黄金学者', icon: '🥇', color: '#ffd700', levels: [1800, 2500, 3500] },
+                    { name: '铂金学者', icon: '💠', color: '#a8e6cf', levels: [5000, 7000, 10000] },
+                    { name: '钻石学者', icon: '💎', color: '#74b9ff', levels: [14000, 19000, 25000] },
+                    { name: '智慧达人', icon: '🌟', color: '#a78bfa', levels: [32000, 40000, 50000] },
+                    { name: '学海大师', icon: '📖', color: '#ff6b6b', levels: [62000, 76000, 92000] },
+                    { name: '学习超神', icon: '👑', color: '#ff4081', levels: [110000, 140000, 180000] }
+                ];
+
+                // 计算当前等级
+                var totalPoints = data.total;
+                var currentRankIdx = 0;
+                var currentSubIdx = 0;
+                var nextThreshold = RANKS[0].levels[0];
+                var prevThreshold = 0;
+                var found = false;
+
+                for (var ri = 0; ri < RANKS.length && !found; ri++) {
+                    for (var si = 0; si < 3 && !found; si++) {
+                        if (totalPoints < RANKS[ri].levels[si]) {
+                            currentRankIdx = ri;
+                            currentSubIdx = si;
+                            nextThreshold = RANKS[ri].levels[si];
+                            prevThreshold = (si === 0) ? (ri === 0 ? 0 : RANKS[ri - 1].levels[2]) : RANKS[ri].levels[si - 1];
+                            found = true;
                         }
                     }
-                ];
+                }
+                if (!found) {
+                    // 已达最高等级
+                    currentRankIdx = RANKS.length - 1;
+                    currentSubIdx = 2;
+                    prevThreshold = RANKS[currentRankIdx].levels[2];
+                    nextThreshold = prevThreshold;
+                }
+
+                var rank = RANKS[currentRankIdx];
+                var subLabels = ['I', 'II', 'III'];
+                var progressPct = nextThreshold > prevThreshold ? Math.round((totalPoints - prevThreshold) / (nextThreshold - prevThreshold) * 100) : 100;
+                progressPct = Math.max(0, Math.min(100, progressPct));
+
+                // 更新等级展示
+                document.getElementById('rankMedal').textContent = rank.icon;
+                document.getElementById('rankName').textContent = rank.name;
+                document.getElementById('rankName').style.color = rank.color;
+                document.getElementById('rankSub').textContent = subLabels[currentSubIdx];
+                document.getElementById('rankProgressFill').style.width = progressPct + '%';
+                document.getElementById('rankProgressLabel').textContent = totalPoints.toLocaleString() + ' / ' + nextThreshold.toLocaleString();
+
+                // 渲染等级天梯
+                var ladderHtml = '';
+                for (var ri = 0; ri < RANKS.length; ri++) {
+                    var r = RANKS[ri];
+                    for (var si = 0; si < 3; si++) {
+                        var threshold = r.levels[si];
+                        var reached = totalPoints >= threshold;
+                        var isCurrent = (ri === currentRankIdx && si === currentSubIdx);
+                        var rungClass = 'rank-rung';
+                        if (isCurrent) rungClass += ' current';
+                        else if (reached) rungClass += ' reached';
+                        ladderHtml += '<div class="' + rungClass + '">' +
+                            '<div class="rr-icon">' + r.icon + '</div>' +
+                            '<div class="rr-name">' + r.name + '</div>' +
+                            '<div class="rr-sub">' + subLabels[si] + '</div>' +
+                            '<div class="rr-pts">' + threshold.toLocaleString() + ' 分</div>' +
+                        '</div>';
+                    }
+                }
+                document.getElementById('rankLadder').innerHTML = ladderHtml;
 
                 // 学科技能（单科精通类）
                 var subjectBadges = [
@@ -1197,9 +1334,11 @@
                     return badges.reduce(function(sum, b) { return sum + b.getLevel(total, eng, poem, math, sc); }, 0);
                 }
 
-                var totalAchievement = renderBadgeGrid('achievementBadges', achievementBadges, data.total, engMastered, poemMastered, mathMastered, subjWithPoints);
                 var totalSubject = renderBadgeGrid('subjectBadges', subjectBadges, data.total, engMastered, poemMastered, mathMastered, subjWithPoints);
-                var totalBadgeLevels = totalAchievement + totalSubject;
+
+                // 总徽章数 = 学科徽章等级 + 当前学者等级(按1-24级算)
+                var rankLevel = currentRankIdx * 3 + currentSubIdx + 1;
+                var totalBadgeLevels = totalSubject + rankLevel;
 
                 // 宝库统计
                 var streak = typeof getStreakData === 'function' ? getStreakData() : { currentStreak: 0, maxStreak: 0 };
