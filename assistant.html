@@ -294,7 +294,7 @@
             transition: width 0.6s ease;
         }
 
-        /* ===== 积分奖励页样式 ===== */
+        /* ===== 学习积分页样式 ===== */
 
         /* 积分宝库 */
         .points-vault {
@@ -388,141 +388,48 @@
             margin-top: 1px;
         }
 
-        /* 学者等级 */
-        .rank-section {
-            margin-bottom: 24px;
-        }
-        .rank-display {
-            background: var(--card-bg-color);
-            border-radius: 20px;
-            padding: 28px;
-            border: 1px solid var(--border-card);
+        /* 宝库内科目积分 */
+        .vault-subjects {
             display: flex;
-            align-items: center;
-            gap: 24px;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-            position: relative;
-            overflow: hidden;
-        }
-        .rank-display::before {
-            content: '';
-            position: absolute;
-            top: -40px;
-            right: -40px;
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(255,215,0,0.08) 0%, transparent 70%);
-            pointer-events: none;
-        }
-        .rank-medal {
-            width: 72px;
-            height: 72px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 42px;
-            background: rgba(255,255,255,0.04);
-            flex-shrink: 0;
-            position: relative;
-            z-index: 1;
-        }
-        .rank-info {
-            flex: 1;
-            min-width: 140px;
-            position: relative;
-            z-index: 1;
-        }
-        .rank-name {
-            font-size: 24px;
-            font-weight: 800;
-            color: #fff;
-            line-height: 1.2;
-        }
-        .rank-sub {
-            font-size: 28px;
-            font-weight: 300;
-            color: var(--text-secondary);
-            letter-spacing: 4px;
-            margin-top: 2px;
-        }
-        .rank-progress-wrap {
-            min-width: 200px;
-            flex: 1;
-            position: relative;
-            z-index: 1;
-        }
-        .rank-progress-bar {
-            width: 100%;
-            height: 8px;
-            background: rgba(255,255,255,0.06);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        .rank-progress-fill {
-            height: 100%;
-            border-radius: 4px;
-            background: linear-gradient(90deg, #ffd700, #ff8c00, #ff4081);
-            transition: width 0.8s ease;
-        }
-        .rank-progress-label {
-            font-size: 12px;
-            color: var(--text-secondary);
-            margin-top: 6px;
-            text-align: right;
-        }
-
-        /* 等级天梯 */
-        .rank-ladder {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
             gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 12px;
         }
-        .rank-rung {
-            background: var(--card-bg-color);
-            border-radius: 12px;
-            padding: 12px 10px;
-            border: 1px solid var(--border-card);
-            text-align: center;
-            transition: all 0.3s ease;
-            opacity: 0.35;
-        }
-        .rank-rung.reached {
-            opacity: 1;
-        }
-        .rank-rung.current {
-            opacity: 1;
-            border-color: #ffd700;
-            box-shadow: 0 0 20px rgba(255,215,0,0.2);
-            transform: scale(1.03);
-        }
-        .rank-rung .rr-icon {
-            font-size: 20px;
-            margin-bottom: 2px;
-        }
-        .rank-rung .rr-name {
+        .vault-subj-tag {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            border-radius: 14px;
             font-size: 11px;
-            font-weight: 600;
-            color: var(--text-color);
+            font-weight: 500;
+            color: #fff;
         }
-        .rank-rung .rr-sub {
-            font-size: 10px;
-            color: var(--text-secondary);
-            margin-top: 1px;
+        .vault-subj-tag .vs-icon { font-size: 10px; opacity: 0.85; }
+        .vault-subj-tag .vs-pts { opacity: 0.7; font-size: 10px; }
+
+        /* 等级徽章大尺寸 */
+        .badges-grid-lg {
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 14px;
         }
-        .rank-rung .rr-pts {
-            font-size: 9px;
-            color: var(--text-secondary);
-            opacity: 0.6;
-            margin-top: 2px;
+        .badges-grid-lg .badge-card {
+            padding: 24px 16px 20px;
         }
-        .rank-rung.current .rr-name { color: #ffd700; }
-        .rank-rung.current .rr-icon { animation: rankPulse 1.5s ease-in-out infinite; }
-        @keyframes rankPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.15); }
+        .badges-grid-lg .badge-icon-wrap {
+            width: 64px;
+            height: 64px;
+            font-size: 34px;
+            margin-bottom: 10px;
+        }
+        .badges-grid-lg .badge-name {
+            font-size: 15px;
+        }
+        .badges-grid-lg .badge-level-star {
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
         }
 
         /* 徽章分区 */
@@ -653,35 +560,6 @@
             50% { opacity: 0.5; }
         }
 
-        /* 各科目积分 */
-        .points-subjects-section {
-            margin-bottom: 24px;
-        }
-        .points-subjects {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 12px;
-        }
-        .points-subject-card {
-            background: var(--card-bg-color);
-            border-radius: 14px;
-            padding: 16px 18px;
-            border: 1px solid var(--border-card);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transition: transform 0.2s;
-        }
-        .points-subject-card:hover { transform: translateY(-1px); }
-        .points-subject-card .ps-icon {
-            width: 40px; height: 40px; border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 16px; color: #fff; flex-shrink: 0;
-        }
-        .points-subject-card .ps-info { flex: 1; }
-        .points-subject-card .ps-name { font-size: 12px; color: var(--text-secondary); }
-        .points-subject-card .ps-points { font-size: 18px; font-weight: 700; color: #ffd700; }
-
         .points-history {
             background: var(--card-bg-color);
             border-radius: 16px;
@@ -726,11 +604,7 @@
             .vault-main { gap: 20px; }
             .vault-stats { gap: 16px; }
             .vault-divider { height: 1px; width: 80%; }
-            .rank-display { flex-direction: column; text-align: center; gap: 16px; }
-            .rank-progress-wrap { min-width: 0; width: 100%; }
-            .rank-ladder { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
-            .rank-medal { width: 56px; height: 56px; font-size: 32px; }
-            .rank-name { font-size: 20px; }
+            .badges-grid-lg { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
             .bsh-desc { display: none; }
         }
     </style>
@@ -877,9 +751,9 @@
             </div>
         </div>
 
-        <!-- ========== 积分奖励页面 ========== -->
+        <!-- ========== 学习积分页面 ========== -->
         <div class="page" id="pointsPage">
-            <h2 class="page-title">积分奖励</h2>
+            <h2 class="page-title">学习积分</h2>
 
             <!-- 积分宝库 -->
             <div class="points-vault">
@@ -889,6 +763,7 @@
                         <div class="vault-icon">💎</div>
                         <div class="points-total" id="pointsTotal">0</div>
                         <div class="points-total-label">总积分</div>
+                        <div class="vault-subjects" id="vaultSubjects"></div>
                     </div>
                     <div class="vault-divider"></div>
                     <div class="vault-stats">
@@ -915,21 +790,13 @@
             </div>
 
             <!-- 学者等级 -->
-            <div class="rank-section">
-                <div class="rank-display" id="rankDisplay">
-                    <div class="rank-medal" id="rankMedal">🥉</div>
-                    <div class="rank-info">
-                        <div class="rank-name" id="rankName">青铜学者</div>
-                        <div class="rank-sub" id="rankSub">I</div>
-                    </div>
-                    <div class="rank-progress-wrap">
-                        <div class="rank-progress-bar">
-                            <div class="rank-progress-fill" id="rankProgressFill" style="width:0%"></div>
-                        </div>
-                        <div class="rank-progress-label" id="rankProgressLabel">0/50</div>
-                    </div>
+            <div class="badge-section">
+                <div class="badge-section-header">
+                    <span class="bsh-icon">🏅</span>
+                    <span class="bsh-title">学者等级</span>
+                    <span class="bsh-desc">积分为阶，步步高升</span>
                 </div>
-                <div class="rank-ladder" id="rankLadder"></div>
+                <div class="badges-grid badges-grid-lg" id="rankGrid"></div>
             </div>
 
             <!-- 学科技能 -->
@@ -940,11 +807,6 @@
                     <span class="bsh-desc">每科精通，专属认可</span>
                 </div>
                 <div class="badges-grid" id="subjectBadges"></div>
-            </div>
-
-            <!-- 各科目积分 -->
-            <div class="points-subjects-section">
-                <div class="points-subjects" id="pointsSubjects"></div>
             </div>
 
             <!-- 积分记录 -->
@@ -965,7 +827,7 @@
                 { page: 'home',      icon: 'fa-home',     label: '学习主页', active: false },
                 { page: 'assistant', icon: 'fa-robot',    label: '助手设置', active: true },
                 { page: 'records',   icon: 'fa-chart-bar', label: '学习记录', active: false },
-                { page: 'points',    icon: 'fa-star',     label: '积分奖励', active: false },
+                { page: 'points',    icon: 'fa-star',     label: '学习积分', active: false },
             ];
             injectNav(NAV_CONFIG);
             injectFooter();
@@ -1142,7 +1004,7 @@
                 '</div>';
             }
 
-            // ===== 积分奖励渲染 =====
+            // ===== 学习积分渲染 =====
             function renderPoints() {
                 var data = typeof getStudyPoints === 'function' ? getStudyPoints() : { total: 0, subjects: {}, history: [] };
                 if (!data.subjects) data.subjects = {};
@@ -1182,8 +1044,6 @@
                 var totalPoints = data.total;
                 var currentRankIdx = 0;
                 var currentSubIdx = 0;
-                var nextThreshold = RANKS[0].levels[0];
-                var prevThreshold = 0;
                 var found = false;
 
                 for (var ri = 0; ri < RANKS.length && !found; ri++) {
@@ -1191,53 +1051,52 @@
                         if (totalPoints < RANKS[ri].levels[si]) {
                             currentRankIdx = ri;
                             currentSubIdx = si;
-                            nextThreshold = RANKS[ri].levels[si];
-                            prevThreshold = (si === 0) ? (ri === 0 ? 0 : RANKS[ri - 1].levels[2]) : RANKS[ri].levels[si - 1];
                             found = true;
                         }
                     }
                 }
                 if (!found) {
-                    // 已达最高等级
                     currentRankIdx = RANKS.length - 1;
                     currentSubIdx = 2;
-                    prevThreshold = RANKS[currentRankIdx].levels[2];
-                    nextThreshold = prevThreshold;
                 }
 
-                var rank = RANKS[currentRankIdx];
+                // 渲染等级徽章（卡牌样式，3星表示3小级）
+                var rankHtml = '';
                 var subLabels = ['I', 'II', 'III'];
-                var progressPct = nextThreshold > prevThreshold ? Math.round((totalPoints - prevThreshold) / (nextThreshold - prevThreshold) * 100) : 100;
-                progressPct = Math.max(0, Math.min(100, progressPct));
-
-                // 更新等级展示
-                document.getElementById('rankMedal').textContent = rank.icon;
-                document.getElementById('rankName').textContent = rank.name;
-                document.getElementById('rankName').style.color = rank.color;
-                document.getElementById('rankSub').textContent = subLabels[currentSubIdx];
-                document.getElementById('rankProgressFill').style.width = progressPct + '%';
-                document.getElementById('rankProgressLabel').textContent = totalPoints.toLocaleString() + ' / ' + nextThreshold.toLocaleString();
-
-                // 渲染等级天梯
-                var ladderHtml = '';
                 for (var ri = 0; ri < RANKS.length; ri++) {
                     var r = RANKS[ri];
-                    for (var si = 0; si < 3; si++) {
-                        var threshold = r.levels[si];
-                        var reached = totalPoints >= threshold;
-                        var isCurrent = (ri === currentRankIdx && si === currentSubIdx);
-                        var rungClass = 'rank-rung';
-                        if (isCurrent) rungClass += ' current';
-                        else if (reached) rungClass += ' reached';
-                        ladderHtml += '<div class="' + rungClass + '">' +
-                            '<div class="rr-icon">' + r.icon + '</div>' +
-                            '<div class="rr-name">' + r.name + '</div>' +
-                            '<div class="rr-sub">' + subLabels[si] + '</div>' +
-                            '<div class="rr-pts">' + threshold.toLocaleString() + ' 分</div>' +
-                        '</div>';
+                    var rankLevel = 0;
+                    if (ri < currentRankIdx) rankLevel = 3;
+                    else if (ri === currentRankIdx) rankLevel = currentSubIdx;
+
+                    var nextTh = r.levels[rankLevel >= 3 ? 2 : Math.max(0, rankLevel)];
+                    var prevTh = rankLevel > 0 ? r.levels[rankLevel - 1] : (ri > 0 ? RANKS[ri - 1].levels[2] : 0);
+                    var prog = rankLevel >= 3 ? 100 : Math.round((totalPoints - prevTh) / (nextTh - prevTh) * 100);
+                    prog = Math.max(0, Math.min(100, prog));
+
+                    var isMax = rankLevel >= 3;
+                    var cardClass = 'badge-card';
+                    if (isMax) cardClass += ' max-level';
+                    else if (rankLevel > 0) cardClass += ' unlocked';
+
+                    var starsHtml = '';
+                    for (var s = 1; s <= 3; s++) {
+                        var starClass = 'badge-level-star';
+                        if (s <= rankLevel) starClass += ' earned';
+                        starsHtml += '<div class="' + starClass + '">' + (s <= rankLevel ? '★' : '☆') + '</div>';
                     }
+
+                    var progLabel = isMax ? 'MAX' : totalPoints.toLocaleString() + '/' + nextTh.toLocaleString();
+
+                    rankHtml += '<div class="' + cardClass + '">' +
+                        '<div class="badge-icon-wrap">' + r.icon + '</div>' +
+                        '<div class="badge-name">' + r.name + '</div>' +
+                        '<div class="badge-levels">' + starsHtml + '</div>' +
+                        '<div class="badge-progress"><div class="badge-progress-fill" style="width:' + prog + '%"></div></div>' +
+                        '<div class="badge-progress-text">' + progLabel + '</div>' +
+                    '</div>';
                 }
-                document.getElementById('rankLadder').innerHTML = ladderHtml;
+                document.getElementById('rankGrid').innerHTML = rankHtml;
 
                 // 学科技能（单科精通类）
                 var subjectBadges = [
@@ -1337,8 +1196,8 @@
                 var totalSubject = renderBadgeGrid('subjectBadges', subjectBadges, data.total, engMastered, poemMastered, mathMastered, subjWithPoints);
 
                 // 总徽章数 = 学科徽章等级 + 当前学者等级(按1-24级算)
-                var rankLevel = currentRankIdx * 3 + currentSubIdx + 1;
-                var totalBadgeLevels = totalSubject + rankLevel;
+                var rankLevelTotal = currentRankIdx * 3 + currentSubIdx; // 已解锁的等级数
+                var totalBadgeLevels = totalSubject + rankLevelTotal;
 
                 // 宝库统计
                 var streak = typeof getStreakData === 'function' ? getStreakData() : { currentStreak: 0, maxStreak: 0 };
@@ -1361,7 +1220,7 @@
                 document.getElementById('dailyGoal').textContent = '目标 ' + Math.min(todayPoints, goal) + '/' + goal;
                 document.getElementById('badgeCountTotal').textContent = totalBadgeLevels + ' 徽章';
 
-                // 各科目积分
+                // 各科目积分（宝库内标签）
                 var subjectMap = {
                     english: { name: '英语', icon: 'fa-language', color: '#4285f4' },
                     chinese: { name: '语文', icon: 'fa-pen-fancy', color: '#ea4335' },
@@ -1369,21 +1228,17 @@
                     pe: { name: '体育', icon: 'fa-running', color: '#34a853' },
                     science: { name: '科学', icon: 'fa-flask', color: '#9b59b6' }
                 };
-                var subjectsHtml = '';
+                var subjHtml = '';
                 for (var key in subjectMap) {
                     var info = subjectMap[key];
                     var pts = data.subjects[key] ? data.subjects[key].points : 0;
-                    subjectsHtml += '<div class="points-subject-card">' +
-                        '<div class="ps-icon" style="background:' + info.color + '">' +
-                            '<i class="fas ' + info.icon + '"></i>' +
-                        '</div>' +
-                        '<div class="ps-info">' +
-                            '<div class="ps-name">' + info.name + '</div>' +
-                            '<div class="ps-points">' + pts + ' 分</div>' +
-                        '</div>' +
+                    subjHtml += '<div class="vault-subj-tag" style="background:' + info.color + '">' +
+                        '<i class="fas ' + info.icon + ' vs-icon"></i>' +
+                        '<span>' + info.name + '</span>' +
+                        '<span class="vs-pts">' + pts + '分</span>' +
                     '</div>';
                 }
-                document.getElementById('pointsSubjects').innerHTML = subjectsHtml;
+                document.getElementById('vaultSubjects').innerHTML = subjHtml;
 
                 // 积分记录
                 var list = document.getElementById('pointsHistoryList');
