@@ -409,28 +409,68 @@
         .vault-subj-tag .vs-icon { font-size: 10px; opacity: 0.85; }
         .vault-subj-tag .vs-pts { opacity: 0.7; font-size: 10px; }
 
-        /* 等级徽章大尺寸 */
+        /* 等级徽章大尺寸 — 最多6列 */
         .badges-grid-lg {
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 14px;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 12px;
         }
         .badges-grid-lg .badge-card {
-            padding: 24px 16px 20px;
+            padding: 24px 14px 18px;
         }
         .badges-grid-lg .badge-icon-wrap {
-            width: 64px;
-            height: 64px;
-            font-size: 34px;
-            margin-bottom: 10px;
+            width: 60px;
+            height: 60px;
+            font-size: 30px;
+            margin-bottom: 8px;
         }
         .badges-grid-lg .badge-name {
-            font-size: 15px;
+            font-size: 13px;
         }
         .badges-grid-lg .badge-level-star {
             width: 20px;
             height: 20px;
-            font-size: 12px;
+            font-size: 11px;
         }
+
+        /* 等级状态 */
+        .rank-reached {
+            background: rgba(52,168,83,0.06);
+            border-color: rgba(52,168,83,0.15);
+        }
+        .rank-current {
+            border-color: #ffd700;
+            box-shadow: 0 0 24px rgba(255,215,0,0.15);
+            transform: scale(1.02);
+        }
+        .rank-locked {
+            opacity: 0.35;
+            filter: grayscale(0.5);
+        }
+
+        /* 科目积分卡片（大尺寸，学习成就页用） */
+        .subj-points-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+        .sp-card {
+            background: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid var(--border-card);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .sp-card-icon {
+            width: 48px; height: 48px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px; color: #fff; flex-shrink: 0;
+        }
+        .sp-card-info { flex: 1; }
+        .sp-card-name { font-size: 13px; color: var(--text-secondary); }
+        .sp-card-pts { font-size: 26px; font-weight: 700; color: #ffd700; }
 
         /* 徽章分区 */
         .badge-section {
@@ -604,7 +644,8 @@
             .vault-main { gap: 20px; }
             .vault-stats { gap: 16px; }
             .vault-divider { height: 1px; width: 80%; }
-            .badges-grid-lg { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+            .badges-grid-lg { grid-template-columns: repeat(4, 1fr); }
+            .subj-points-row { grid-template-columns: 1fr 1fr; }
             .bsh-desc { display: none; }
         }
     </style>
@@ -744,7 +785,7 @@
 
         <!-- ========== 学习记录页面 ========== -->
         <div class="page" id="recordsPage">
-            <h2 class="page-title">学习记录</h2>
+            <h2 class="page-title">学习进度</h2>
 
             <div class="records-grid" id="recordsGrid">
                 <!-- 由 JS 动态渲染 -->
@@ -753,7 +794,7 @@
 
         <!-- ========== 学习积分页面 ========== -->
         <div class="page" id="pointsPage">
-            <h2 class="page-title">学习积分</h2>
+            <h2 class="page-title">学习成就</h2>
 
             <!-- 积分宝库 -->
             <div class="points-vault">
@@ -788,6 +829,9 @@
                     </div>
                 </div>
             </div>
+
+            <!-- 各科目积分 -->
+            <div class="subj-points-row" id="subjPointsRow"></div>
 
             <!-- 学者等级 -->
             <div class="badge-section">
@@ -826,8 +870,8 @@
             var NAV_CONFIG = [
                 { page: 'home',      icon: 'fa-home',     label: '学习主页', active: false },
                 { page: 'assistant', icon: 'fa-robot',    label: '助手设置', active: true },
-                { page: 'records',   icon: 'fa-chart-bar', label: '学习记录', active: false },
-                { page: 'points',    icon: 'fa-star',     label: '学习积分', active: false },
+                { page: 'records',   icon: 'fa-chart-bar', label: '学习进度', active: false },
+                { page: 'points',    icon: 'fa-star',     label: '学习成就', active: false },
             ];
             injectNav(NAV_CONFIG);
             injectFooter();
@@ -874,15 +918,18 @@
                         getData: function() {
                             var map = JSON.parse(localStorage.getItem('masteredWordsMap') || '{}');
                             var mastered = [], unmastered = [];
+                            var books = [];
                             for (var book in map) {
+                                var bm = 0, bu = 0;
                                 for (var word in map[book]) {
-                                    if (map[book][word]) mastered.push(word);
-                                    else unmastered.push(word);
+                                    if (map[book][word]) { mastered.push(word); bm++; }
+                                    else { unmastered.push(word); bu++; }
                                 }
+                                books.push({ name: book, mastered: bm, unmastered: bu, total: bm + bu });
                             }
                             var total = mastered.length + unmastered.length;
                             if (total === 0) total = 1258;
-                            return { mastered: mastered, unmastered: unmastered, total: total };
+                            return { mastered: mastered, unmastered: unmastered, total: total, books: books };
                         }
                     },
                     {
@@ -932,15 +979,18 @@
                         getData: function() {
                             var map = JSON.parse(localStorage.getItem('baikeMasteredConcepts') || '{}');
                             var mastered = [], unmastered = [];
+                            var topics = [];
                             for (var topic in map) {
+                                var tm = 0, tu = 0;
                                 for (var c in map[topic]) {
-                                    if (map[topic][c]) mastered.push(c);
-                                    else unmastered.push(c);
+                                    if (map[topic][c]) { mastered.push(c); tm++; }
+                                    else { unmastered.push(c); tu++; }
                                 }
+                                topics.push({ name: topic, mastered: tm, unmastered: tu, total: tm + tu });
                             }
                             var total = mastered.length + unmastered.length;
                             if (total === 0) total = 42;
-                            return { mastered: mastered, unmastered: unmastered, total: total };
+                            return { mastered: mastered, unmastered: unmastered, total: total, topics: topics };
                         }
                     }
                 ];
@@ -968,6 +1018,8 @@
                         '</div>' +
                         '<div class="record-bar-container"><div class="record-bar-fill" style="width:' + pct + '%;background:' + s.color + '"></div></div>' +
                         '<div class="record-detail">' +
+                            (data.books ? buildBookBreakdown(data.books, s.color) : '') +
+                            (data.topics ? buildBookBreakdown(data.topics, s.color) : '') +
                             buildDetailSection('已掌握', '#34a853', data.mastered, 'mastered') +
                             buildDetailSection('未掌握', '#ea4335', data.unmastered, 'unmastered') +
                             '<div class="record-detail-section">' +
@@ -1002,6 +1054,26 @@
                     '<div class="record-detail-header"><div class="rd-dot" style="background:' + color + '"></div>' + label + '<span class="rd-count">' + items.length + ' 项</span></div>' +
                     '<div class="record-detail-items">' + tags + more + '</div>' +
                 '</div>';
+            }
+
+            function buildBookBreakdown(groups, color) {
+                var html = '<div class="record-detail-section">' +
+                    '<div class="record-detail-header"><div class="rd-dot" style="background:' + color + '"></div>分册进度</div>' +
+                    '<div style="display:flex;flex-direction:column;gap:6px;">';
+                groups.forEach(function(g) {
+                    var pct = g.total > 0 ? Math.round(g.mastered / g.total * 100) : 0;
+                    html += '<div style="display:flex;align-items:center;gap:8px;font-size:11px;">' +
+                        '<span style="color:var(--text-color);min-width:60px;">' + g.name + '</span>' +
+                        '<span style="color:#34a853;min-width:28px;">' + g.mastered + '</span>' +
+                        '<span style="color:#ea4335;min-width:28px;">' + g.unmastered + '</span>' +
+                        '<div style="flex:1;height:4px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;">' +
+                            '<div style="height:100%;width:' + pct + '%;background:' + color + ';border-radius:2px;"></div>' +
+                        '</div>' +
+                        '<span style="color:var(--text-secondary);min-width:32px;text-align:right;">' + pct + '%</span>' +
+                    '</div>';
+                });
+                html += '</div></div>';
+                return html;
             }
 
             // ===== 学习积分渲染 =====
@@ -1060,9 +1132,9 @@
                     currentSubIdx = 2;
                 }
 
-                // 渲染等级徽章（卡牌样式，3星表示3小级）
+                // 渲染等级徽章（3状态背景 + 3级星色）
                 var rankHtml = '';
-                var subLabels = ['I', 'II', 'III'];
+                var starColors = ['#cd7f32', '#c0c0c0', '#ffd700']; // 一星铜、二星银、三星金
                 for (var ri = 0; ri < RANKS.length; ri++) {
                     var r = RANKS[ri];
                     var rankLevel = 0;
@@ -1075,15 +1147,16 @@
                     prog = Math.max(0, Math.min(100, prog));
 
                     var isMax = rankLevel >= 3;
-                    var cardClass = 'badge-card';
-                    if (isMax) cardClass += ' max-level';
-                    else if (rankLevel > 0) cardClass += ' unlocked';
+                    var state = isMax ? 'reached' : (ri === currentRankIdx ? 'current' : (ri < currentRankIdx ? 'reached' : 'locked'));
+                    var cardClass = 'badge-card rank-' + state;
 
                     var starsHtml = '';
                     for (var s = 1; s <= 3; s++) {
-                        var starClass = 'badge-level-star';
-                        if (s <= rankLevel) starClass += ' earned';
-                        starsHtml += '<div class="' + starClass + '">' + (s <= rankLevel ? '★' : '☆') + '</div>';
+                        var sc = '';
+                        if (s <= rankLevel) {
+                            sc = ' earned" style="background:' + starColors[s - 1] + ';box-shadow:0 0 6px ' + starColors[s - 1];
+                        }
+                        starsHtml += '<div class="badge-level-star' + sc + '">' + (s <= rankLevel ? '★' : '☆') + '</div>';
                     }
 
                     var progLabel = isMax ? 'MAX' : totalPoints.toLocaleString() + '/' + nextTh.toLocaleString();
@@ -1220,7 +1293,7 @@
                 document.getElementById('dailyGoal').textContent = '目标 ' + Math.min(todayPoints, goal) + '/' + goal;
                 document.getElementById('badgeCountTotal').textContent = totalBadgeLevels + ' 徽章';
 
-                // 各科目积分（宝库内标签）
+                // 各科目积分（宝库标签 + 下方大卡片）
                 var subjectMap = {
                     english: { name: '英语', icon: 'fa-language', color: '#4285f4' },
                     chinese: { name: '语文', icon: 'fa-pen-fancy', color: '#ea4335' },
@@ -1229,6 +1302,7 @@
                     science: { name: '科学', icon: 'fa-flask', color: '#9b59b6' }
                 };
                 var subjHtml = '';
+                var subjCardsHtml = '';
                 for (var key in subjectMap) {
                     var info = subjectMap[key];
                     var pts = data.subjects[key] ? data.subjects[key].points : 0;
@@ -1237,8 +1311,18 @@
                         '<span>' + info.name + '</span>' +
                         '<span class="vs-pts">' + pts + '分</span>' +
                     '</div>';
+                    subjCardsHtml += '<div class="sp-card">' +
+                        '<div class="sp-card-icon" style="background:' + info.color + '">' +
+                            '<i class="fas ' + info.icon + '"></i>' +
+                        '</div>' +
+                        '<div class="sp-card-info">' +
+                            '<div class="sp-card-name">' + info.name + '</div>' +
+                            '<div class="sp-card-pts">' + pts + ' 分</div>' +
+                        '</div>' +
+                    '</div>';
                 }
                 document.getElementById('vaultSubjects').innerHTML = subjHtml;
+                document.getElementById('subjPointsRow').innerHTML = subjCardsHtml;
 
                 // 积分记录
                 var list = document.getElementById('pointsHistoryList');
