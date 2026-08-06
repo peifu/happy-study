@@ -989,6 +989,12 @@
         // 训练教学视频数据（mp4 文件位于 data/pe 目录，清单见 data/pe/videos.json）
         const TRAINING_VIDEOS = [
             {
+                file: "50米跑步教学1.mp4",
+                title: "50米跑步教学",
+                category: "速度训练",
+                description: "50米短跑教学视频，讲解起跑姿势、摆臂、途中跑与冲刺的动作要领。"
+            },
+            {
                 file: "坐位体前屈训练1.mp4",
                 title: "坐位体前屈训练",
                 category: "柔韧训练",
@@ -1055,10 +1061,38 @@
                     </div>
                     <p class="video-description">${video.description || '跟着视频学习标准动作要领。'}</p>
                 `;
+
+                // 播放当前视频时，仅暂停其他视频（画面保持不变，不重新加载）
+                const currentVideo = card.querySelector('video');
+                currentVideo.addEventListener('play', () => {
+                    document.querySelectorAll('#videoList .video-card').forEach(otherCard => {
+                        otherCard.classList.remove('active-video');
+                    });
+                    card.classList.add('active-video');
+
+                    document.querySelectorAll('#videoList video').forEach(otherVideo => {
+                        if (otherVideo !== currentVideo) {
+                            pauseVideo(otherVideo);
+                        }
+                    });
+                });
+
                 grid.appendChild(card);
             });
 
             videoListElement.appendChild(grid);
+        }
+
+        // 暂停指定视频（仅暂停，不重新加载，保持画面不变）
+        function pauseVideo(video) {
+            if (video && !video.paused) {
+                video.pause();
+            }
+        }
+
+        // 暂停所有教学视频（仅暂停，不改变画面）
+        function pauseAllVideos() {
+            document.querySelectorAll('#videoList video').forEach(pauseVideo);
         }
 
         // 播放指定教学视频（按标题模糊匹配）
@@ -1216,6 +1250,11 @@
             if (pageId === 'home') {
                 window.location.href = 'index.html';
                 return;
+            }
+
+            // 离开教学页面时，暂停所有视频
+            if (pageId !== 'teaching') {
+                pauseAllVideos();
             }
 
             // 特殊处理跳绳页面
