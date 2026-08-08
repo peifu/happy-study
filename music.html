@@ -677,8 +677,9 @@
             .lyrics-container {
                 padding: 16px 14px;
                 max-height: 55vh;
-                display: flex; flex-direction: column; justify-content: center;
+                display: flex; flex-direction: column;
             }
+            .lyrics-content { margin: auto 0; }
             .lyric-line { font-size: 14px; padding: 8px 10px; text-align: center; }
             .lyric-line.active { font-size: 15px; text-align: center; }
             .song-title { font-size: 18px; }
@@ -2103,8 +2104,8 @@
                 if (index === activeLineIndex) {
                     line.classList.add('active');
                     const container = document.querySelector('.lyrics-container');
-                    const lineTop = line.offsetTop;
-                    const containerHeight = container.offsetHeight;
+                    const lineTop = line.getBoundingClientRect().top - container.getBoundingClientRect().top + container.scrollTop;
+                    const containerHeight = container.clientHeight;
                     const lineHeight = line.offsetHeight;
                     const scrollTop = lineTop - containerHeight / 2 + lineHeight / 2;
 
