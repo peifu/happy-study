@@ -1310,11 +1310,12 @@
         // 首次加载：从JSON文件读取并写入localStorage
         async function initPlaylistStore() {
             var store = getStore();
-            if (store && store.playlists && store.playlists.length > 0) {
+            // 版本不匹配（歌单结构更新）时重新从JSON种子数据初始化
+            if (store && store.version === 2 && store.playlists && store.playlists.length > 0) {
                 return store;
             }
             // 从JSON种子数据初始化
-            store = { version: 1, playlists: [] };
+            store = { version: 2, playlists: [] };
             try {
                 var indexResp = await fetch('data/music/playlist/music-index.json');
                 var indexData = await indexResp.json();
