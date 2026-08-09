@@ -1,6 +1,6 @@
 [
-  { "id": "pop-chinese", "title": "华语流行", "file": "data/music/playlist/pop-chinese.json" },
   { "id": "pop-english", "title": "欧美流行", "file": "data/music/playlist/pop-english.json" },
+  { "id": "pop-chinese", "title": "华语流行", "file": "data/music/playlist/pop-chinese.json" },
   { "id": "rock-classic", "title": "经典摇滚", "file": "data/music/playlist/rock-classic.json" },
   { "id": "folk", "title": "民谣", "file": "data/music/playlist/folk.json" },
   { "id": "instrumental", "title": "轻音乐", "file": "data/music/playlist/instrumental.json" },
