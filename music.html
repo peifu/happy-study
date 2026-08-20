@@ -291,6 +291,17 @@
             font-family: 'Segoe UI', sans-serif;
         }
 
+        /* 收藏按钮 */
+        .favorite-btn i { transition: transform 0.2s ease; }
+        .favorite-btn:hover i { transform: scale(1.15); }
+        .favorite-btn.active,
+        .favorite-btn.active:hover {
+            color: #f43f5e;
+            border-color: rgba(244, 63, 94, 0.5);
+            background: rgba(244, 63, 94, 0.10);
+            box-shadow: 0 0 18px rgba(244, 63, 94, 0.25);
+        }
+
         /* Play button — larger, blue gradient, vinyl-inspired */
         .play-btn {
             width: 56px;
@@ -528,6 +539,18 @@
             font-variant-numeric: tabular-nums;
             font-family: 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
         }
+        .song-item-fav {
+            font-size: 14px;
+            color: var(--music-text-dim);
+            cursor: pointer;
+            flex-shrink: 0;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+        .song-item-fav:hover { color: #f43f5e; transform: scale(1.15); }
+        .song-item-fav.faved { color: #f43f5e; }
+        .song-item-fav.faved:hover { color: #f43f5e; opacity: 0.85; }
 
         /* ============================================================
            LIGHT THEME — "Polar Light Lounge"
@@ -650,6 +673,16 @@
         body.light-theme .song-title {
             color: #1e3a5f;
             text-shadow: none;
+        }
+
+        .light-theme .favorite-btn.active,
+        body.light-theme .favorite-btn.active,
+        .light-theme .favorite-btn.active:hover,
+        body.light-theme .favorite-btn.active:hover {
+            color: #f43f5e;
+            border-color: rgba(244, 63, 94, 0.5);
+            background: rgba(244, 63, 94, 0.10);
+            box-shadow: 0 0 18px rgba(244, 63, 94, 0.25);
         }
 
         /* ============================================================
@@ -1196,6 +1229,7 @@
                         <p class="song-artist" id="currentSongArtist">快乐学习</p>
                     </div>
                     <div class="player-controls">
+                        <button class="control-btn favorite-btn" id="favoriteBtn" title="收藏"><i class="far fa-heart"></i></button>
                         <button class="control-btn loop-btn" id="loopBtn" title="列表循环"><i class="fas fa-redo-alt"></i></button>
                         <button class="control-btn" id="prevBtn"><i class="fas fa-step-backward"></i></button>
                         <button class="control-btn play-btn" id="playBtn"><i class="fas fa-play" id="playIcon"></i></button>
@@ -1292,6 +1326,7 @@
         // 播放列表数据存储 (localStorage)
         // ============================================================
         var STORE_KEY = 'musicPlaylistData';
+        var FAVORITES_ID = 'favorites'; // 我的收藏歌单固定ID
         var playlistStore = null; // { playlists: [{ id, title, songs: [{id,title,artist}] }] }
 
         function getStore() {
@@ -1377,9 +1412,6 @@
         function getLyricPath(song) {
             return 'data/music/lyrics/' + song.artist + '-' + song.title + '.lrc';
         }
-        function getLyricPathJson(song) {
-            return 'data/music/lyrics/' + song.artist + '-' + song.title + '.json';
-        }
 
         // 循环模式: 'list' | 'single' | 'random' | 'none'
         let loopMode = 'list';
@@ -1411,6 +1443,7 @@
         const lyricsContent = document.getElementById('lyricsContent');
         const songsGrid = document.getElementById('songsGrid');
         const playlistSelect = document.getElementById('playlistSelect');
+        const favoriteBtn = document.getElementById('favoriteBtn');
         let navLinks, pages;
 
         // 从store加载歌单到播放器（播放页面使用）
@@ -1445,6 +1478,128 @@
             songs = [];
         }
 
+        // ============================================================
+        // 收藏功能 — “我的收藏”歌单（id 固定为 favorites）
+        // ============================================================
+        function getFavoritesPlaylist(store) {
+            if (!store) return null;
+            for (var i = 0; i < store.playlists.length; i++) {
+                if (store.playlists[i].id === FAVORITES_ID) return store.playlists[i];
+            }
+            return null;
+        }
+
+        // 确保“我的收藏”歌单存在（老用户 localStorage 也兼容）
+        function ensureFavoritesPlaylist() {
+            var store = getStore();
+            if (!store) return;
+            if (!getFavoritesPlaylist(store)) {
+                store.playlists.push({ id: FAVORITES_ID, title: '我的收藏', songs: [] });
+                saveStore(store);
+            }
+        }
+
+        // 歌曲是否已收藏
+        function isFavorite(song) {
+            if (!song) return false;
+            var fav = getFavoritesPlaylist(getStore());
+            if (!fav) return false;
+            var key = getSongKey(song);
+            for (var i = 0; i < fav.songs.length; i++) {
+                if (getSongKey(fav.songs[i]) === key) return true;
+            }
+            return false;
+        }
+
+        // 收藏/取消收藏，返回收藏后状态（true=已收藏）
+        function toggleFavorite(song) {
+            if (!song) return;
+            var store = getStore();
+            var fav = getFavoritesPlaylist(store);
+            if (!fav) {
+                ensureFavoritesPlaylist();
+                store = getStore();
+                fav = getFavoritesPlaylist(store);
+            }
+            if (!fav) return;
+            var key = getSongKey(song);
+            for (var i = 0; i < fav.songs.length; i++) {
+                if (getSongKey(fav.songs[i]) === key) {
+                    fav.songs.splice(i, 1);
+                    for (var j = 0; j < fav.songs.length; j++) fav.songs[j].id = j + 1;
+                    saveStore(store);
+                    updateFavoriteUI(song, false);
+                    refreshAfterFavoriteChange();
+                    return false;
+                }
+            }
+            var maxId = 0;
+            for (var k = 0; k < fav.songs.length; k++) {
+                if (fav.songs[k].id > maxId) maxId = fav.songs[k].id;
+            }
+            fav.songs.push({ id: maxId + 1, title: song.title, artist: song.artist });
+            saveStore(store);
+            updateFavoriteUI(song, true);
+            refreshAfterFavoriteChange();
+            return true;
+        }
+
+        // 同步收藏按钮 + 歌曲列表所有项的收藏状态
+        function updateFavoriteUI(song, faved) {
+            var active = (faved === true || faved === false) ? faved : isFavorite(song);
+            if (favoriteBtn) {
+                favoriteBtn.classList.toggle('active', active);
+                favoriteBtn.innerHTML = '<i class="' + (active ? 'fas' : 'far') + ' fa-heart"></i>';
+                favoriteBtn.title = active ? '取消收藏' : '收藏';
+            }
+            var items = songsGrid.querySelectorAll('.song-item');
+            for (var i = 0; i < items.length; i++) {
+                var s = songs[parseInt(items[i].dataset.index)];
+                var favEl = items[i].querySelector('.song-item-fav');
+                if (!favEl || !s) continue;
+                var favedNow = isFavorite(s);
+                favEl.querySelector('i').className = favedNow ? 'fas fa-heart' : 'far fa-heart';
+                favEl.classList.toggle('faved', favedNow);
+            }
+        }
+
+        // 刷新歌单下拉框（保留当前选中）
+        function refreshPlaylistSelectOptions() {
+            var store = getStore();
+            if (!store) return;
+            var prevValue = playlistSelect.value;
+            playlistSelect.innerHTML = '<option value="">选择歌单</option>';
+            for (var i = 0; i < store.playlists.length; i++) {
+                var pl = store.playlists[i];
+                var option = document.createElement('option');
+                option.value = pl.id;
+                option.textContent = pl.title + ' (' + pl.songs.length + '首)';
+                playlistSelect.appendChild(option);
+            }
+            playlistSelect.value = prevValue;
+        }
+
+        // 收藏变化后的整体刷新
+        function refreshAfterFavoriteChange() {
+            refreshPlaylistSelectOptions();
+            if (playlistSelect.value === FAVORITES_ID) {
+                var prevKey = (songs.length && songs[currentSongIndex]) ? getSongKey(songs[currentSongIndex]) : null;
+                loadSongsById(FAVORITES_ID);
+                currentSongIndex = 0;
+                if (prevKey) {
+                    for (var i = 0; i < songs.length; i++) {
+                        if (getSongKey(songs[i]) === prevKey) { currentSongIndex = i; break; }
+                    }
+                }
+                if (songs.length > 0 && currentSongIndex >= songs.length) currentSongIndex = songs.length - 1;
+                renderSongsList();
+            }
+            updateFavoriteUI(songs[currentSongIndex]);
+            renderPlaylistCards();
+            renderSelectedPlaylistSongs();
+            renderAllSongs(document.getElementById('songSearch').value);
+        }
+
         // 解析LRC格式歌词
         function parseLRC(content) {
             const lyrics = [];
@@ -1473,7 +1628,7 @@
             return lyrics.length > 0 ? lyrics : [{ time: 0, text: '暂无歌词' }];
         }
 
-        // 加载歌词（按需 + 缓存）- 支持LRC和JSON格式，.lrc优先，回退到.json
+        // 加载歌词（按需 + 缓存），仅支持 LRC 格式
         async function loadLyrics(lyricFile) {
             if (lyricsCache[lyricFile]) return lyricsCache[lyricFile];
             try {
@@ -1481,41 +1636,11 @@
                 if (!resp.ok) throw new Error('HTTP ' + resp.status);
                 const content = await resp.text();
 
-                let lyrics;
-                if (lyricFile.endsWith('.lrc')) {
-                    lyrics = parseLRC(content);
-                } else {
-                    try {
-                        lyrics = JSON.parse(content);
-                    } catch {
-                        lyrics = [{ time: 0, text: '暂无歌词' }];
-                    }
-                }
+                const lyrics = parseLRC(content);
 
                 lyricsCache[lyricFile] = lyrics;
                 return lyrics;
             } catch (e) {
-                // .lrc 失败则尝试 .json 回退
-                if (lyricFile.endsWith('.lrc')) {
-                    var jsonPath = lyricFile.replace(/\.lrc$/, '.json');
-                    if (!lyricsCache[jsonPath]) {
-                        try {
-                            var resp2 = await fetch(jsonPath);
-                            if (resp2.ok) {
-                                var content2 = await resp2.text();
-                                var lyrics2;
-                                try {
-                                    lyrics2 = JSON.parse(content2);
-                                } catch {
-                                    lyrics2 = [{ time: 0, text: '暂无歌词' }];
-                                }
-                                lyricsCache[jsonPath] = lyrics2;
-                                lyricsCache[lyricFile] = lyrics2; // 缓存到原key避免重复尝试
-                                return lyrics2;
-                            }
-                        } catch (e2) { /* fall through */ }
-                    }
-                }
                 console.error('加载歌词失败:', lyricFile, e);
                 return [{ time: 0, text: '暂无歌词' }];
             }
@@ -1601,12 +1726,15 @@
             for (var i = 0; i < pls.length; i++) {
                 var pl = pls[i];
                 var selClass = (pl.id === selectedPlaylistId) ? ' selected' : '';
+                var deleteBtnHtml = (pl.id === FAVORITES_ID)
+                    ? ''
+                    : '<button class="playlist-card-delete" data-delete-id="' + pl.id + '" title="删除歌单"><i class="fas fa-times"></i></button>';
                 html += '<div class="playlist-card' + selClass + '" data-playlist-id="' + pl.id + '">' +
                     '<div class="playlist-card-info">' +
                         '<div class="playlist-card-title">' + pl.title + '</div>' +
                         '<div class="playlist-card-count">' + pl.songs.length + ' 首歌曲</div>' +
                     '</div>' +
-                    '<button class="playlist-card-delete" data-delete-id="' + pl.id + '" title="删除歌单"><i class="fas fa-times"></i></button>' +
+                    deleteBtnHtml +
                 '</div>';
             }
             if (pls.length === 0) {
@@ -1638,6 +1766,10 @@
         function deletePlaylistById(playlistId) {
             var store = getStore();
             if (!store) return;
+            if (playlistId === FAVORITES_ID) {
+                alert('“我的收藏”歌单不可删除');
+                return;
+            }
             var pl = null;
             for (var i = 0; i < store.playlists.length; i++) {
                 if (store.playlists[i].id === playlistId) { pl = store.playlists[i]; break; }
@@ -1737,6 +1869,9 @@
                 }
             }
             saveStore(store);
+            if (playlistId === FAVORITES_ID) {
+                updateFavoriteUI(songs[currentSongIndex]);
+            }
             if (playlistSelect.value === playlistId) {
                 loadSongsById(playlistId);
                 renderSongsList();
@@ -1781,6 +1916,9 @@
 
             if (added > 0) {
                 saveStore(store);
+                if (targetPl.id === FAVORITES_ID) {
+                    updateFavoriteUI(songs[currentSongIndex]);
+                }
                 if (playlistSelect.value === selectedPlaylistId) {
                     loadSongsById(selectedPlaylistId);
                     renderSongsList();
@@ -1838,6 +1976,7 @@
             pages = document.querySelectorAll('.page');
             syncThemeFromIndex();
             await initPlaylistStore();
+            ensureFavoritesPlaylist();
             loadPlaylistsFromStore();
             renderSongsList();
             if (songs.length > 0) {
@@ -1879,6 +2018,9 @@
             });
 
             playBtn.addEventListener('click', togglePlay);
+            favoriteBtn.addEventListener('click', function() {
+                toggleFavorite(songs[currentSongIndex]);
+            });
             prevBtn.addEventListener('click', playPrevSong);
             nextBtn.addEventListener('click', playNextSong);
             loopBtn.addEventListener('click', cycleLoopMode);
@@ -1913,6 +2055,7 @@
             renderLyrics(lyrics);
 
             updateSongListActive();
+            updateFavoriteUI(song);
 
             pendingAutoPlay = !!autoPlay;
         }
@@ -2134,15 +2277,22 @@
                         '<div class="song-item-title">' + song.title + '</div>' +
                         '<div class="song-item-artist">' + song.artist + '</div>' +
                     '</div>' +
-                    '<div class="song-item-duration">' + (song.duration || '') + '</div>';
+                    '<div class="song-item-duration">' + (song.duration || '') + '</div>' +
+                    '<div class="song-item-fav" title="收藏"><i class="far fa-heart"></i></div>';
 
                 songItem.addEventListener('click', function() {
                     if (isPlaying) pauseSong();
                     loadSong(index, true);
                 });
 
+                songItem.querySelector('.song-item-fav').addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    toggleFavorite(song);
+                });
+
                 songsGrid.appendChild(songItem);
             });
+            updateFavoriteUI(songs[currentSongIndex]);
         }
 
         function updateSongListActive() {
