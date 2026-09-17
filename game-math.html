@@ -276,7 +276,7 @@
             color: white;
             border: none;
             border-radius: var(--radius-pill);
-            box-shadow: 0 5px 0 #cf7a10;
+            box-shadow: 0 5px 0 var(--chunky-amber);
             font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
@@ -288,12 +288,12 @@
         .start-btn:hover {
             background: linear-gradient(145deg, var(--amber), #e08b00);
             transform: translateY(-2px);
-            box-shadow: 0 5px 0 #cf7a10, 0 12px 24px var(--glow-amber);
+            box-shadow: 0 5px 0 var(--chunky-amber), 0 12px 24px var(--glow-amber);
         }
 
         .start-btn:active {
             transform: translateY(3px);
-            box-shadow: 0 1px 0 #cf7a10;
+            box-shadow: 0 1px 0 var(--chunky-amber);
         }
 
         .start-btn:disabled {
@@ -305,16 +305,16 @@
 
         .start-btn.review-btn {
             background: linear-gradient(135deg, #8ed49a, var(--success));
-            box-shadow: 0 5px 0 #4e9360;
+            box-shadow: 0 5px 0 var(--chunky-green);
         }
 
         .start-btn.review-btn:hover {
             background: linear-gradient(135deg, var(--success), #4e9360);
-            box-shadow: 0 5px 0 #4e9360, 0 12px 24px rgba(107, 196, 109, 0.35);
+            box-shadow: 0 5px 0 var(--chunky-green), 0 12px 24px rgba(107, 196, 109, 0.35);
         }
 
         .start-btn.review-btn:active {
-            box-shadow: 0 1px 0 #4e9360;
+            box-shadow: 0 1px 0 var(--chunky-green);
         }
 
         /* ===== 右侧状态栏 ===== */
@@ -865,18 +865,18 @@
         .quiz-result.pass .result-btn {
             background: linear-gradient(135deg, #8ed49a, var(--success));
             color: white;
-            box-shadow: 0 5px 0 #4e9360;
+            box-shadow: 0 5px 0 var(--chunky-green);
         }
 
         .quiz-result.pass .result-btn:hover {
             background: linear-gradient(135deg, var(--success), #4e9360);
-            box-shadow: 0 5px 0 #4e9360, 0 12px 24px rgba(107, 196, 109, 0.35);
+            box-shadow: 0 5px 0 var(--chunky-green), 0 12px 24px rgba(107, 196, 109, 0.35);
             transform: scale(1.05);
         }
 
         .quiz-result.pass .result-btn:active {
             transform: translateY(3px);
-            box-shadow: 0 1px 0 #4e9360;
+            box-shadow: 0 1px 0 var(--chunky-green);
         }
 
         .quiz-result.fail .result-btn {

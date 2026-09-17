@@ -29,7 +29,6 @@
     --ink-green: #9fd37a;
     --cocoa: #c4b49c;
     --cream: #fffbf0;
-    --paper: #fffffa;
     --amber: #ff9500;
     --amber-soft: #ffb347;
     --surface-peach: rgba(254, 242, 224, 0.10);
@@ -44,6 +43,10 @@
     --glow-warm: rgba(255, 179, 71, 0.25);
     --nav-bg: rgba(38, 29, 58, 0.85);
     --font-kid: 'Comic Neue', 'Comic Sans MS', 'Chalkboard SE', 'YouYuan', '幼圆', 'Segoe UI', 'Microsoft YaHei', sans-serif;
+    --danger: #e74c3c;
+    --chunky-amber: #cf7a10;
+    --chunky-green: #4e9360;
+    --chunky-red: #b9533a;
 }
 
 /* 浅色主题变量 — 奶油纸张风 */
@@ -80,6 +83,10 @@
     --shadow-soft: 0 20px 28px rgba(0, 0, 0, 0.10);
     --shadow-chunky: 0 5px 0 #cf7a10;
     --nav-bg: rgba(255, 251, 240, 0.90);
+    --danger: #d63a2f;
+    --chunky-amber: #cf7a10;
+    --chunky-green: #4e9360;
+    --chunky-red: #b9533a;
 }
 
 * {
@@ -166,7 +173,7 @@ select:focus-visible {
     align-items: center;
     gap: 8px;
     font-size: 24px;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--ink-green);
     cursor: pointer;
     flex: none;
@@ -224,7 +231,7 @@ select:focus-visible {
     text-align: center;
     margin-bottom: 30px;
     font-size: 32px;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--ink-green);
 }
 
@@ -251,7 +258,7 @@ select:focus-visible {
     text-align: center;
     margin-bottom: 30px;
     font-size: 28px;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--ink-green);
 }
 
@@ -481,9 +488,9 @@ footer {
     background: linear-gradient(135deg, var(--amber-soft) 0%, var(--amber) 100%);
     color: #fff;
     font-size: 18px;
-    font-weight: 800;
+    font-weight: 700;
     cursor: pointer;
-    box-shadow: 0 5px 0 #cf7a10, 0 8px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 5px 0 var(--chunky-amber), 0 8px 20px rgba(0, 0, 0, 0.15);
     opacity: 0;
     pointer-events: none;
     transform: translateY(12px);
@@ -498,7 +505,7 @@ footer {
 
 #backToTop:active {
     transform: translateY(3px);
-    box-shadow: 0 1px 0 #cf7a10;
+    box-shadow: 0 1px 0 var(--chunky-amber);
 }
 
 /* 响应式设计 - 优化多设备适配 */
@@ -648,48 +655,48 @@ footer {
 .btn-primary {
     background: linear-gradient(135deg, var(--amber-soft), var(--amber));
     color: white;
-    box-shadow: 0 5px 0 #cf7a10;
+    box-shadow: 0 5px 0 var(--chunky-amber);
 }
 
 .btn-primary:hover {
-    box-shadow: 0 5px 0 #cf7a10, 0 12px 24px var(--glow-amber);
+    box-shadow: 0 5px 0 var(--chunky-amber), 0 12px 24px var(--glow-amber);
     transform: translateY(-2px);
 }
 
 .btn-primary:active {
-    box-shadow: 0 1px 0 #cf7a10;
+    box-shadow: 0 1px 0 var(--chunky-amber);
     transform: translateY(3px);
 }
 
 .btn-success {
     background: linear-gradient(135deg, #8ed49a, var(--success));
     color: #1f4d26;
-    box-shadow: 0 5px 0 #4e9360;
+    box-shadow: 0 5px 0 var(--chunky-green);
 }
 
 .btn-success:hover {
-    box-shadow: 0 5px 0 #4e9360, 0 12px 24px rgba(107, 196, 109, 0.35);
+    box-shadow: 0 5px 0 var(--chunky-green), 0 12px 24px rgba(107, 196, 109, 0.35);
     transform: translateY(-2px);
 }
 
 .btn-success:active {
-    box-shadow: 0 1px 0 #4e9360;
+    box-shadow: 0 1px 0 var(--chunky-green);
     transform: translateY(3px);
 }
 
 .btn-warning {
     background: linear-gradient(135deg, #ff8f6b, var(--accent));
     color: white;
-    box-shadow: 0 5px 0 #b9533a;
+    box-shadow: 0 5px 0 var(--chunky-red);
 }
 
 .btn-warning:hover {
-    box-shadow: 0 5px 0 #b9533a, 0 12px 24px rgba(242, 109, 95, 0.35);
+    box-shadow: 0 5px 0 var(--chunky-red), 0 12px 24px rgba(242, 109, 95, 0.35);
     transform: translateY(-2px);
 }
 
 .btn-warning:active {
-    box-shadow: 0 1px 0 #b9533a;
+    box-shadow: 0 1px 0 var(--chunky-red);
     transform: translateY(3px);
 }
 
@@ -747,7 +754,7 @@ footer {
 
 .stat-value {
     font-size: 24px;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--secondary);
     margin-bottom: 5px;
 }
