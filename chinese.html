@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>/* 主题预热：避免首屏深色闪烁 */ (function(){try{var t=localStorage.getItem('theme')||'light';if(t==='light'||(t==='auto'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)){document.documentElement.classList.add('light-theme');}}catch(e){}})();</script>
     <title>快乐学习 - 小学语文诗词</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
@@ -571,7 +572,7 @@
         let learnedPoems = {};
         let masteredPoems = {};
         let voiceType = '普通话';
-        let currentTheme = 'dark';
+        let currentTheme = localStorage.getItem('theme') || 'light';
         let currentFontSize = 'medium';
 
         // DOM元素
@@ -666,7 +667,6 @@
             showCurrentPoem();
             updateProgress();
             updatePoemList();
-            applyTheme();
             applyFontSize();
         }
 
@@ -757,7 +757,6 @@
         // 保存设置
         function saveSettings() {
             localStorage.setItem('voiceTypeZh', voiceType);
-            localStorage.setItem('theme', currentTheme);
             localStorage.setItem('fontSize', currentFontSize);
 
             const rateEl = document.getElementById('speechRateSlider');
@@ -767,7 +766,7 @@
             if (pitchEl) localStorage.setItem('speechPitchZh', pitchEl.value);
             if (voiceSelect && voiceSelect.value) localStorage.setItem('selectedVoiceZh', voiceSelect.value);
 
-            applyTheme();
+            applyTheme(currentTheme);
             applyFontSize();
 
             alert('设置已保存！');
@@ -776,7 +775,7 @@
         // 重置设置
         function resetSettings() {
             voiceType = '普通话';
-            currentTheme = 'dark';
+            currentTheme = 'light';
             currentFontSize = 'medium';
 
             document.querySelectorAll('.setting-option').forEach(option => {
@@ -793,23 +792,10 @@
                 }
             });
 
-            applyTheme();
+            applyTheme(currentTheme);
             applyFontSize();
 
             alert('设置已重置为默认值！');
-        }
-
-        // 应用主题
-        function applyTheme() {
-            document.body.classList.remove('light-theme');
-            if (currentTheme === 'light') {
-                document.body.classList.add('light-theme');
-            } else if (currentTheme === 'auto') {
-                if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-                    document.body.classList.add('light-theme');
-                }
-            }
-            // 'blue' theme: keep the option working but remap to the night storybook look — just do nothing extra (falls back to :root dark palette)
         }
 
         // 应用字体大小
