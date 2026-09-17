@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>/* 主题预热：避免首屏深色闪烁 */ (function(){try{var t=localStorage.getItem('theme')||'light';if(t==='light'||(t==='auto'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)){document.documentElement.classList.add('light-theme');}}catch(e){}})();</script>
     <title>快乐学习 - 音乐学习</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
@@ -53,8 +54,7 @@
             background: linear-gradient(160deg, #191327 0%, #2b2340 30%, #241a33 60%, #191327 100%);
             background-attachment: fixed;
         }
-        .light-theme body,
-        body.light-theme {
+        .light-theme body {
             background: linear-gradient(160deg, #fff6e8 0%, #fff1dc 30%, #fdf7ec 60%, #ffe9cc 100%);
             background-attachment: fixed;
         }
@@ -90,12 +90,10 @@
             z-index: 0;
         }
         /* Light-theme glow orbs — warm amber tones */
-        .light-theme body::before,
-        body.light-theme::before {
+        .light-theme body::before {
             background: radial-gradient(circle, rgba(255, 179, 71, 0.20) 0%, transparent 70%);
         }
-        .light-theme body::after,
-        body.light-theme::after {
+        .light-theme body::after {
             background: radial-gradient(circle, rgba(255, 143, 107, 0.16) 0%, transparent 70%);
         }
 
@@ -563,126 +561,102 @@
            LIGHT THEME — "Cream Paper Radio"
            Warm cream-paper tones, soft shadows, gentle amber accents
            ============================================================ */
-        .light-theme .lyrics-container,
-        body.light-theme .lyrics-container {
+        .light-theme .lyrics-container {
             box-shadow:
                 var(--shadow-soft),
                 inset 0 1px 0 rgba(255, 255, 255, 0.6);
         }
-        .light-theme .lyrics-container::-webkit-scrollbar-thumb,
-        body.light-theme .lyrics-container::-webkit-scrollbar-thumb {
+        .light-theme .lyrics-container::-webkit-scrollbar-thumb {
             background: rgba(255, 149, 0, 0.28);
         }
-        .light-theme .lyrics-container::-webkit-scrollbar-thumb:hover,
-        body.light-theme .lyrics-container::-webkit-scrollbar-thumb:hover {
+        .light-theme .lyrics-container::-webkit-scrollbar-thumb:hover {
             background: rgba(255, 149, 0, 0.45);
         }
 
-        .light-theme .music-player,
-        body.light-theme .music-player {
+        .light-theme .music-player {
             box-shadow:
                 var(--shadow-soft),
                 inset 0 1px 0 rgba(255, 255, 255, 0.6);
         }
 
-        .light-theme .control-btn,
-        body.light-theme .control-btn {
+        .light-theme .control-btn {
             background: var(--surface-peach);
             color: var(--music-text-dim);
             border-color: rgba(139, 105, 66, 0.25);
         }
-        .light-theme .control-btn:hover,
-        body.light-theme .control-btn:hover {
+        .light-theme .control-btn:hover {
             background: rgba(255, 149, 0, 0.16);
             border-color: var(--music-accent);
             color: var(--music-accent);
             box-shadow: 0 0 16px var(--glow-amber);
         }
 
-        .light-theme .play-btn,
-        body.light-theme .play-btn {
+        .light-theme .play-btn {
             box-shadow: 0 5px 0 var(--music-chunky-shade), 0 8px 18px var(--glow-amber);
         }
-        .light-theme .play-btn:hover,
-        body.light-theme .play-btn:hover {
+        .light-theme .play-btn:hover {
             box-shadow: 0 6px 0 var(--music-chunky-shade), 0 12px 24px var(--glow-amber);
         }
 
-        .light-theme .progress-bar,
-        body.light-theme .progress-bar {
+        .light-theme .progress-bar {
             background: var(--surface-sand);
         }
-        .light-theme .progress-fill::after,
-        body.light-theme .progress-fill::after {
+        .light-theme .progress-fill::after {
             box-shadow: 0 0 8px var(--glow-amber);
         }
 
-        .light-theme .songs-panel,
-        body.light-theme .songs-panel {
+        .light-theme .songs-panel {
             box-shadow:
                 var(--shadow-soft),
                 inset 0 1px 0 rgba(255, 255, 255, 0.6);
         }
-        .light-theme .songs-panel::-webkit-scrollbar-thumb,
-        body.light-theme .songs-panel::-webkit-scrollbar-thumb {
+        .light-theme .songs-panel::-webkit-scrollbar-thumb {
             background: rgba(255, 149, 0, 0.28);
         }
-        .light-theme .songs-panel::-webkit-scrollbar-thumb:hover,
-        body.light-theme .songs-panel::-webkit-scrollbar-thumb:hover {
+        .light-theme .songs-panel::-webkit-scrollbar-thumb:hover {
             background: rgba(255, 149, 0, 0.45);
         }
 
-        .light-theme .playlist-selector,
-        body.light-theme .playlist-selector {
+        .light-theme .playlist-selector {
             background: var(--surface-peach);
         }
-        .light-theme .playlist-selector select,
-        body.light-theme .playlist-selector select {
+        .light-theme .playlist-selector select {
             background: var(--surface-peach);
         }
-        .light-theme .playlist-selector select option,
-        body.light-theme .playlist-selector select option {
+        .light-theme .playlist-selector select option {
             background: #fff6e8;
             color: #5a4a38;
         }
 
-        .light-theme .song-item,
-        body.light-theme .song-item {
+        .light-theme .song-item {
             background: var(--surface-peach);
         }
-        .light-theme .song-item:hover,
-        body.light-theme .song-item:hover {
+        .light-theme .song-item:hover {
             background: rgba(255, 149, 0, 0.10);
             border-color: rgba(255, 149, 0, 0.30);
         }
-        .light-theme .song-item.active,
-        body.light-theme .song-item.active {
+        .light-theme .song-item.active {
             background: linear-gradient(90deg, rgba(255, 149, 0, 0.12), rgba(255, 143, 107, 0.08));
             box-shadow: 0 0 12px var(--glow-warm);
         }
 
-        .light-theme .song-item-icon,
-        body.light-theme .song-item-icon {
+        .light-theme .song-item-icon {
             background: linear-gradient(135deg, rgba(255, 149, 0, 0.20), rgba(255, 143, 107, 0.16));
         }
 
-        .light-theme .lyric-line.active,
-        body.light-theme .lyric-line.active {
+        .light-theme .lyric-line.active {
             color: #5a4a38;
             text-shadow: none;
             background: linear-gradient(90deg, rgba(255, 149, 0, 0.14), rgba(255, 143, 107, 0.10), rgba(255, 149, 0, 0.14));
         }
 
-        .light-theme .song-title,
-        body.light-theme .song-title {
+        .light-theme .song-title {
             color: #5a4a38;
             text-shadow: none;
         }
 
         .light-theme .favorite-btn.active,
-        body.light-theme .favorite-btn.active,
-        .light-theme .favorite-btn.active:hover,
-        body.light-theme .favorite-btn.active:hover {
+        .light-theme .favorite-btn.active:hover {
             color: #f43f5e;
             border-color: rgba(244, 63, 94, 0.5);
             background: rgba(244, 63, 94, 0.10);
@@ -1108,77 +1082,58 @@
         }
 
         /* Light theme overrides */
-        .light-theme .all-songs-panel,
-        body.light-theme .all-songs-panel {
+        .light-theme .all-songs-panel {
             box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.6);
         }
         .light-theme .all-songs-panel::after,
-        body.light-theme .all-songs-panel::after { display: none; }
-        .light-theme .all-songs-list::-webkit-scrollbar-thumb,
-        body.light-theme .all-songs-list::-webkit-scrollbar-thumb {
+        .light-theme .all-songs-list::-webkit-scrollbar-thumb {
             background: rgba(255, 149, 0, 0.28);
         }
-        .light-theme .all-songs-list::-webkit-scrollbar-thumb:hover,
-        body.light-theme .all-songs-list::-webkit-scrollbar-thumb:hover {
+        .light-theme .all-songs-list::-webkit-scrollbar-thumb:hover {
             background: rgba(255, 149, 0, 0.45);
         }
-        .light-theme .selected-playlist-songs::-webkit-scrollbar-thumb,
-        body.light-theme .selected-playlist-songs::-webkit-scrollbar-thumb {
+        .light-theme .selected-playlist-songs::-webkit-scrollbar-thumb {
             background: rgba(255, 149, 0, 0.28);
         }
-        .light-theme .selected-playlist-songs::-webkit-scrollbar-thumb:hover,
-        body.light-theme .selected-playlist-songs::-webkit-scrollbar-thumb:hover {
+        .light-theme .selected-playlist-songs::-webkit-scrollbar-thumb:hover {
             background: rgba(255, 149, 0, 0.45);
         }
-        .light-theme .playlist-editor-panel,
-        body.light-theme .playlist-editor-panel {
+        .light-theme .playlist-editor-panel {
             box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.6);
         }
         .light-theme .playlist-editor-panel::after,
-        body.light-theme .playlist-editor-panel::after { display: none; }
-        .light-theme .song-search,
-        body.light-theme .song-search {
+        .light-theme .song-search {
             background: var(--surface-peach);
         }
-        .light-theme .song-card,
-        body.light-theme .song-card {
+        .light-theme .song-card {
             background: var(--surface-peach);
         }
-        .light-theme .song-card:hover,
-        body.light-theme .song-card:hover {
+        .light-theme .song-card:hover {
             background: rgba(255, 149, 0, 0.08);
         }
-        .light-theme .song-card.selected,
-        body.light-theme .song-card.selected {
+        .light-theme .song-card.selected {
             background: linear-gradient(135deg, rgba(255, 149, 0, 0.12), rgba(255, 143, 107, 0.06));
         }
-        .light-theme .song-card-icon,
-        body.light-theme .song-card-icon {
+        .light-theme .song-card-icon {
             background: linear-gradient(135deg, rgba(255, 149, 0, 0.20), rgba(255, 143, 107, 0.16));
         }
-        .light-theme .song-card.selected .song-card-icon,
-        body.light-theme .song-card.selected .song-card-icon {
+        .light-theme .song-card.selected .song-card-icon {
             background: linear-gradient(135deg, var(--music-accent), var(--music-accent2));
             color: #241a33;
         }
-        .light-theme .playlist-card,
-        body.light-theme .playlist-card {
+        .light-theme .playlist-card {
             background: var(--surface-peach);
         }
-        .light-theme .playlist-card:hover,
-        body.light-theme .playlist-card:hover {
+        .light-theme .playlist-card:hover {
             background: rgba(255, 149, 0, 0.08);
         }
-        .light-theme .playlist-card.selected,
-        body.light-theme .playlist-card.selected {
+        .light-theme .playlist-card.selected {
             background: linear-gradient(90deg, rgba(255, 149, 0, 0.12), rgba(255, 143, 107, 0.06));
         }
-        .light-theme .btn-outline,
-        body.light-theme .btn-outline {
+        .light-theme .btn-outline {
             background: var(--surface-peach);
         }
-        .light-theme .btn-outline:hover,
-        body.light-theme .btn-outline:hover {
+        .light-theme .btn-outline:hover {
             background: rgba(255, 149, 0, 0.12);
         }
 

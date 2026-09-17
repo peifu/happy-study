@@ -1,11 +1,12 @@
-// 主题切换
+// 主题切换（light-theme 类挂在 <html> 上，head 内联脚本可在首次绘制前预热）
 function applyTheme(theme) {
-    document.body.classList.remove('light-theme');
+    const rootEl = document.documentElement;
+    rootEl.classList.remove('light-theme');
     if (theme === 'light') {
-        document.body.classList.add('light-theme');
+        rootEl.classList.add('light-theme');
     } else if (theme === 'auto') {
         if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-            document.body.classList.add('light-theme');
+            rootEl.classList.add('light-theme');
         }
     }
     localStorage.setItem('theme', theme);
