@@ -6,30 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>快乐学习 - 单词消消乐</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/common.css">
     <link rel="stylesheet" href="assets/css/learning-assistant.css">
     <style>
         /* Page-specific overrides */
         :root {
-            --progress-bg: rgba(255, 255, 255, 0.1);
-            --progress-fill: linear-gradient(90deg, var(--primary), var(--secondary));
-        }
-
-        body.light-theme {
-            --bg-color: #f5f7fa;
-            --text-color: #2d3748;
-            --card-bg-color: rgba(255, 255, 255, 0.95);
-            --text-secondary: #718096;
-            --darker: #e2e8f0;
-            --dark: #edf2f7;
-            --primary: #3182ce;
-            --secondary: #38a169;
-            --accent: #e53e3e;
-            --success: #38a169;
-            --warning: #d69e2e;
-            --info: #3182ce;
-            --progress-bg: rgba(0, 0, 0, 0.1);
-            --progress-fill: linear-gradient(90deg, #3182ce, #38a169);
+            --progress-bg: var(--surface-sand);
+            --progress-fill: linear-gradient(90deg, var(--amber-soft), var(--progress-green, #6bc46d));
         }
 
         .game-header {
@@ -38,7 +22,7 @@
             align-items: center;
             margin-bottom: 20px;
             padding-bottom: 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid var(--surface-peach);
         }
 
         .game-header h2 {
@@ -83,19 +67,19 @@
 
         .game-tile:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 20px var(--surface-peach);
             border-color: var(--primary);
         }
 
         .game-tile.en {
-            background: linear-gradient(135deg, var(--primary), #4a90e2);
+            background: linear-gradient(135deg, var(--english), var(--info));
             color: white;
             font-size: 18px;
             font-weight: 700;
         }
 
         .game-tile.cn {
-            background: linear-gradient(135deg, var(--secondary), #38b2ac);
+            background: linear-gradient(135deg, var(--secondary), var(--ink-green));
             color: white;
             font-size: 16px;
             font-weight: 600;
@@ -109,7 +93,7 @@
 
         .game-tile.selected {
             border-color: var(--accent);
-            box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+            box-shadow: 0 0 15px var(--glow-amber);
             transform: scale(1.05);
             background: var(--accent);
             color: white;
@@ -120,8 +104,8 @@
         }
 
         @keyframes connectPulse {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7); }
-            50% { transform: scale(1.1); box-shadow: 0 0 0 15px rgba(76, 175, 80, 0); }
+            0% { transform: scale(1); box-shadow: 0 0 0 0 var(--glow-amber); }
+            50% { transform: scale(1.1); box-shadow: 0 0 0 15px rgba(255, 149, 0, 0); }
             100% { transform: scale(1); }
         }
 
@@ -132,16 +116,16 @@
         }
 
         @keyframes lightningPulse {
-            0% { opacity: 1; filter: drop-shadow(0 0 8px #00f7ff); }
-            50% { opacity: 0.8; filter: drop-shadow(0 0 15px #00f7ff); }
-            100% { opacity: 0; filter: drop-shadow(0 0 5px #00f7ff); }
+            0% { opacity: 1; filter: drop-shadow(0 0 8px #ffb347); }
+            50% { opacity: 0.8; filter: drop-shadow(0 0 15px #ffb347); }
+            100% { opacity: 0; filter: drop-shadow(0 0 5px #ffb347); }
         }
 
         .game-tile::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--surface-peach);
             opacity: 0;
             transition: opacity 0.3s ease;
         }
@@ -163,11 +147,11 @@
         .game-status-container {
             margin-top: 20px;
             padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid var(--surface-peach);
         }
 
         .game-status {
-            background: rgba(0, 0, 0, 0.1);
+            background: var(--surface-peach);
             border-radius: 8px;
             padding: 15px;
             text-align: center;
@@ -184,7 +168,7 @@
         }
 
         .compact-stat-card {
-            background: rgba(0, 0, 0, 0.1);
+            background: var(--surface-peach);
             border-radius: 8px;
             padding: 10px 5px;
             text-align: center;
@@ -232,7 +216,6 @@
             font-size: 28px;
             font-weight: 700;
             color: #FFD700;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
             animation: scoreUp 1s ease-out forwards;
         }
         @keyframes scoreUp {

@@ -6,6 +6,7 @@
     <title>🎮 数学大冒险 - 三年级下册知识闯关</title>
     <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/common.css">
     <link rel="stylesheet" href="assets/css/learning-assistant.css">
     <style>
@@ -22,13 +23,13 @@
 
         .star {
             position: absolute;
-            color: #FFD700;
+            color: #ffd79a;
             font-size: 20px;
             animation: twinkle 2s infinite ease-in-out;
         }
 
         .light-theme .star {
-            color: #d4a017;
+            color: #e2b257;
         }
 
         @keyframes twinkle {
@@ -50,6 +51,7 @@
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 10px var(--glow-warm));
             margin-bottom: 8px;
             animation: titlePulse 2s infinite;
         }
@@ -62,10 +64,10 @@
         /* ===== 左侧主游戏卡片 ===== */
         .game-main-card {
             background: var(--card-bg-color);
-            border-radius: 16px;
+            border-radius: var(--radius-card);
             padding: 25px;
             border: 1px solid var(--border-card);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            box-shadow: var(--shadow-soft);
             position: relative;
             overflow: hidden;
         }
@@ -77,7 +79,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(102, 126, 234, 0.06) 0%, transparent 70%);
+            background: radial-gradient(circle, var(--glow-warm) 0%, transparent 70%);
             transform: rotate(30deg);
             z-index: 0;
             pointer-events: none;
@@ -95,9 +97,9 @@
         /* ===== 关卡卡片 ===== */
         .level-card {
             background: var(--card-bg-color);
-            border-radius: 16px;
+            border-radius: var(--radius-card);
             padding: 22px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-soft);
             position: relative;
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -108,7 +110,7 @@
 
         .level-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 0 25px var(--glow-warm);
         }
 
         .level-card.locked {
@@ -153,7 +155,7 @@
         }
 
         .level-badge.unlocked {
-            background: linear-gradient(145deg, #FF6B6B, #ee5a5a);
+            background: linear-gradient(145deg, var(--amber-soft), var(--amber));
             animation: badgeBounce 2s infinite;
         }
 
@@ -200,7 +202,7 @@
 
         /* 关卡内进度条 */
         .level-progress-container {
-            background: rgba(128, 128, 128, 0.2);
+            background: var(--surface-sand);
             border-radius: 10px;
             height: 8px;
             overflow: hidden;
@@ -210,7 +212,7 @@
         .level-progress-bar {
             height: 100%;
             border-radius: 10px;
-            background: linear-gradient(90deg, #FF6B6B, #FFE66D, #4ECDC4);
+            background: linear-gradient(90deg, var(--amber-soft), var(--progress-green, #6bc46d));
             transition: width 1s ease-out;
         }
 
@@ -232,15 +234,15 @@
 
         /* 知识点预览 */
         .knowledge-preview {
-            background: rgba(102, 126, 234, 0.08);
+            background: var(--surface-peach);
             border-radius: 12px;
             padding: 12px;
             margin-top: 12px;
-            border-left: 4px solid #667eea;
+            border-left: 4px solid var(--primary);
         }
 
         .knowledge-preview h4 {
-            color: #667eea;
+            color: var(--primary);
             font-size: 0.9rem;
             margin-bottom: 6px;
             display: flex;
@@ -255,22 +257,12 @@
         }
 
         .knowledge-tag {
-            background: rgba(102, 126, 234, 0.1);
-            color: #667eea;
+            background: var(--surface-peach);
+            color: var(--primary);
             padding: 3px 9px;
-            border-radius: 10px;
+            border-radius: var(--radius-pill);
             font-size: 0.75rem;
-            border: 1px solid rgba(102, 126, 234, 0.2);
-        }
-
-        .light-theme .knowledge-tag {
-            background: rgba(102, 126, 234, 0.08);
-            color: #5568d3;
-            border-color: rgba(102, 126, 234, 0.2);
-        }
-
-        .light-theme .modal-content {
-            background: rgba(255, 255, 255, 0.98);
+            border: 1px solid var(--border-card);
         }
 
         /* 开始按钮 */
@@ -279,10 +271,11 @@
             width: 100%;
             padding: 10px;
             margin-top: 12px;
-            background: linear-gradient(145deg, #FF6B6B, #ee5a5a);
+            background: linear-gradient(145deg, var(--amber-soft), var(--amber));
             color: white;
             border: none;
-            border-radius: 12px;
+            border-radius: var(--radius-pill);
+            box-shadow: 0 5px 0 #cf7a10;
             font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
@@ -292,24 +285,35 @@
         }
 
         .start-btn:hover {
-            background: linear-gradient(145deg, #ee5a5a, #dd4949);
-            transform: scale(1.02);
-            box-shadow: 0 5px 20px rgba(255, 107, 107, 0.4);
+            background: linear-gradient(145deg, var(--amber), #e08b00);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 0 #cf7a10, 0 12px 24px var(--glow-amber);
+        }
+
+        .start-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #cf7a10;
         }
 
         .start-btn:disabled {
             background: #666;
+            box-shadow: 0 5px 0 #4d4d4d;
             cursor: not-allowed;
             transform: none;
         }
 
         .start-btn.review-btn {
-            background: linear-gradient(145deg, #4CAF50, #388E3C);
+            background: linear-gradient(135deg, #8ed49a, var(--success));
+            box-shadow: 0 5px 0 #4e9360;
         }
 
         .start-btn.review-btn:hover {
-            background: linear-gradient(145deg, #388E3C, #2E7D32);
-            box-shadow: 0 5px 20px rgba(76, 175, 80, 0.4);
+            background: linear-gradient(135deg, var(--success), #4e9360);
+            box-shadow: 0 5px 0 #4e9360, 0 12px 24px rgba(107, 196, 109, 0.35);
+        }
+
+        .start-btn.review-btn:active {
+            box-shadow: 0 1px 0 #4e9360;
         }
 
         /* ===== 右侧状态栏 ===== */
@@ -345,8 +349,8 @@
         }
 
         .stat-card {
-            background: rgba(0, 162, 255, 0.06);
-            border-radius: 12px;
+            background: var(--surface-peach);
+            border-radius: 18px;
             padding: 14px 8px;
             text-align: center;
             border: 1px solid var(--border-subtle);
@@ -385,7 +389,7 @@
         }
 
         .progress-bar {
-            background: rgba(128, 128, 128, 0.2);
+            background: var(--surface-sand);
             border-radius: 10px;
             height: 10px;
             overflow: hidden;
@@ -394,7 +398,7 @@
         .progress-fill {
             height: 100%;
             border-radius: 10px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            background: linear-gradient(90deg, var(--amber-soft), var(--progress-green, #6bc46d));
             transition: width 0.8s ease-out;
         }
 
@@ -417,7 +421,7 @@
         }
 
         .level-status-item:hover {
-            background: rgba(0, 162, 255, 0.04);
+            background: var(--surface-peach);
         }
 
         .level-status-item.completed {
@@ -431,7 +435,7 @@
 
         .level-status-item.current {
             color: var(--primary);
-            background: rgba(0, 162, 255, 0.08);
+            background: var(--surface-peach);
             font-weight: 600;
         }
 
@@ -484,7 +488,7 @@
         .grade-select:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(0, 162, 255, 0.15);
+            box-shadow: 0 0 0 3px var(--glow-warm);
         }
 
         /* ===== 知识详情弹窗 ===== */
@@ -508,8 +512,8 @@
         }
 
         .modal-content {
-            background: rgba(10, 25, 41, 0.97);
-            border-radius: 20px;
+            background: var(--card-bg-color);
+            border-radius: var(--radius-lg);
             max-width: 900px;
             width: 100%;
             max-height: 90vh;
@@ -517,7 +521,7 @@
             padding: 30px;
             position: relative;
             animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            box-shadow: var(--shadow-soft);
             border: 1px solid var(--border-card);
         }
 
@@ -540,7 +544,7 @@
         }
 
         .modal-close:hover {
-            color: #FF6B6B;
+            color: var(--primary);
             transform: rotate(90deg);
         }
 
@@ -571,10 +575,10 @@
         }
 
         .knowledge-card {
-            background: rgba(255, 107, 107, 0.05);
-            border-radius: 16px;
+            background: var(--surface-peach);
+            border-radius: var(--radius-card);
             padding: 18px;
-            border: 1px solid rgba(255, 107, 107, 0.15);
+            border: 1px solid var(--border-card);
             transition: all 0.3s;
             position: relative;
             overflow: hidden;
@@ -582,8 +586,8 @@
 
         .knowledge-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.12);
-            border-color: rgba(255, 107, 107, 0.3);
+            box-shadow: 0 8px 20px var(--glow-warm);
+            border-color: var(--primary);
         }
 
         .knowledge-card::before {
@@ -593,11 +597,11 @@
             left: 0;
             width: 4px;
             height: 100%;
-            background: linear-gradient(180deg, #FF6B6B, #FFE66D);
+            background: linear-gradient(180deg, var(--amber-soft), var(--accent));
         }
 
         .knowledge-card h4 {
-            color: #FF6B6B;
+            color: var(--primary);
             font-size: 1rem;
             margin-bottom: 8px;
             display: flex;
@@ -612,36 +616,36 @@
         }
 
         .knowledge-card .example {
-            background: rgba(102, 126, 234, 0.08);
+            background: var(--surface-sand);
             border-radius: 8px;
             padding: 8px 12px;
             margin-top: 8px;
             font-family: 'Courier New', monospace;
-            color: #667eea;
+            color: var(--primary);
             font-size: 0.8rem;
         }
 
         /* 公式卡片 */
         .formula-box {
-            background: rgba(102, 126, 234, 0.06);
-            border-radius: 16px;
+            background: var(--surface-sand);
+            border-radius: var(--radius-card);
             padding: 20px;
             margin: 20px 0;
             text-align: center;
-            border: 2px dashed rgba(102, 126, 234, 0.25);
+            border: 2px dashed var(--border-card);
         }
 
         .formula-box h3 {
-            color: #667eea;
+            color: var(--primary);
             margin-bottom: 12px;
             font-family: 'ZCOOL KuaiLe', cursive;
         }
 
         .formula-item {
             display: inline-block;
-            background: rgba(102, 126, 234, 0.08);
+            background: var(--surface-peach);
             padding: 8px 16px;
-            border-radius: 12px;
+            border-radius: var(--radius-pill);
             margin: 4px;
             font-family: 'Courier New', monospace;
             color: var(--text-color);
@@ -650,15 +654,15 @@
 
         /* 核心要点 */
         .key-points {
-            background: rgba(78, 205, 196, 0.06);
-            border-radius: 16px;
+            background: var(--surface-peach);
+            border-radius: var(--radius-card);
             padding: 20px;
             margin-top: 20px;
-            border: 2px solid rgba(78, 205, 196, 0.25);
+            border: 2px solid var(--border-card);
         }
 
         .key-points h3 {
-            color: #4ECDC4;
+            color: var(--secondary);
             margin-bottom: 12px;
             font-family: 'ZCOOL KuaiLe', cursive;
             font-size: 1.2rem;
@@ -685,15 +689,15 @@
 
         /* ===== 练习题区域 ===== */
         .quiz-section {
-            background: rgba(255, 193, 7, 0.06);
-            border-radius: 16px;
+            background: var(--surface-peach);
+            border-radius: var(--radius-card);
             padding: 22px;
             margin-top: 22px;
-            border: 2px solid rgba(255, 193, 7, 0.25);
+            border: 2px solid var(--border-card);
         }
 
         .quiz-section h3 {
-            color: #FF8F00;
+            color: var(--primary);
             font-family: 'ZCOOL KuaiLe', cursive;
             font-size: 1.3rem;
             margin-bottom: 18px;
@@ -705,7 +709,7 @@
         }
 
         .quiz-item {
-            background: rgba(128, 128, 128, 0.04);
+            background: var(--surface-sand);
             border-radius: 12px;
             padding: 18px;
             margin-bottom: 12px;
@@ -714,7 +718,7 @@
         }
 
         .quiz-item:hover {
-            border-color: rgba(255, 193, 7, 0.3);
+            border-color: var(--primary);
         }
 
         .quiz-question {
@@ -727,7 +731,7 @@
 
         .quiz-question .q-num {
             display: inline-block;
-            background: linear-gradient(145deg, #FF6B6B, #ee5a5a);
+            background: linear-gradient(145deg, var(--amber-soft), var(--amber));
             color: white;
             width: 28px;
             height: 28px;
@@ -747,8 +751,9 @@
         .quiz-option {
             padding: 10px 14px;
             border: 2px solid var(--border-card);
-            border-radius: 10px;
+            border-radius: var(--radius-pill);
             background: var(--card-bg-color);
+            box-shadow: 0 3px 0 var(--surface-sand);
             cursor: pointer;
             transition: all 0.3s;
             font-size: 0.9rem;
@@ -757,8 +762,8 @@
         }
 
         .quiz-option:hover {
-            background: rgba(33, 150, 243, 0.08);
-            border-color: #2196F3;
+            background: var(--surface-peach);
+            border-color: var(--primary);
             transform: scale(1.02);
         }
 
@@ -766,12 +771,14 @@
             background: #C8E6C9;
             border-color: #4CAF50;
             color: #2E7D32;
+            box-shadow: 0 3px 0 #388E3C;
         }
 
         .quiz-option.wrong {
             background: #FFCDD2;
             border-color: #F44336;
             color: #C62828;
+            box-shadow: 0 3px 0 #c0392b;
         }
 
         .quiz-option.disabled {
@@ -809,7 +816,7 @@
             text-align: center;
             padding: 22px;
             margin-top: 18px;
-            border-radius: 16px;
+            border-radius: var(--radius-card);
             display: none;
         }
 
@@ -846,7 +853,7 @@
             margin-top: 12px;
             padding: 10px 28px;
             border: none;
-            border-radius: 12px;
+            border-radius: var(--radius-pill);
             font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
@@ -855,23 +862,37 @@
         }
 
         .quiz-result.pass .result-btn {
-            background: linear-gradient(145deg, #4CAF50, #388E3C);
+            background: linear-gradient(135deg, #8ed49a, var(--success));
             color: white;
+            box-shadow: 0 5px 0 #4e9360;
         }
 
         .quiz-result.pass .result-btn:hover {
-            background: linear-gradient(145deg, #388E3C, #2E7D32);
+            background: linear-gradient(135deg, var(--success), #4e9360);
+            box-shadow: 0 5px 0 #4e9360, 0 12px 24px rgba(107, 196, 109, 0.35);
             transform: scale(1.05);
+        }
+
+        .quiz-result.pass .result-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #4e9360;
         }
 
         .quiz-result.fail .result-btn {
             background: linear-gradient(145deg, #FF6B6B, #ee5a5a);
             color: white;
+            box-shadow: 0 5px 0 #b23b3b;
         }
 
         .quiz-result.fail .result-btn:hover {
             background: linear-gradient(145deg, #ee5a5a, #dd4949);
+            box-shadow: 0 5px 0 #b23b3b, 0 12px 24px rgba(255, 107, 107, 0.35);
             transform: scale(1.05);
+        }
+
+        .quiz-result.fail .result-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #b23b3b;
         }
 
         /* 彩纸动画 */
@@ -916,7 +937,7 @@
             .level-map { grid-template-columns: 1fr; }
             .game-main-card { padding: 18px; }
             .quiz-options { grid-template-columns: 1fr; }
-            .modal-content { padding: 20px; border-radius: 16px; }
+            .modal-content { padding: 20px; border-radius: var(--radius-card); }
             .modal-title { font-size: 1.6rem; }
             .stats { grid-template-columns: repeat(3, 1fr); gap: 6px; }
             .stat-value { font-size: 1.3rem; }
@@ -1222,7 +1243,7 @@
                     statusText = '✅ 已通关';
                 } else if (level.unlocked && i === completed) {
                     statusClass = 'current';
-                    dotColor = '#00a2ff';
+                    dotColor = 'var(--primary)';
                     statusText = '🔓 进行中';
                 } else if (level.unlocked) {
                     statusClass = '';

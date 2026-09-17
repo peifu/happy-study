@@ -7,14 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>快乐学习 - 百科知识学习系统</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/common.css">
     <style>
         /* Concept card styles */
         .concept-card {
             background: var(--card-bg-color);
-            border-radius: 16px;
+            border-radius: var(--radius-card);
             padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            box-shadow: var(--shadow-soft);
             position: relative;
             overflow: hidden;
             min-height: 400px;
@@ -28,7 +29,7 @@
 
         .concept-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--shadow-soft), 0 0 0 4px var(--glow-warm);
         }
 
         .concept-card::before {
@@ -57,7 +58,6 @@
             font-size: 36px;
             font-weight: 700;
             color: var(--science);
-            text-shadow: 0 0 10px rgba(155, 89, 182, 0.3);
         }
 
         .speak-btn-icon {
@@ -72,12 +72,17 @@
             justify-content: center;
             cursor: pointer;
             transition: var(--transition);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--shadow-chunky);
         }
 
         .speak-btn-icon:hover {
             transform: scale(1.1);
-            box-shadow: 0 0 15px rgba(155, 89, 182, 0.5);
+            box-shadow: var(--shadow-chunky), 0 0 15px rgba(155, 89, 182, 0.5);
+        }
+
+        .speak-btn-icon:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #cf7a10;
         }
 
         .speak-btn-icon i {
@@ -92,7 +97,7 @@
             z-index: 1;
             background: rgba(155, 89, 182, 0.1);
             padding: 8px 16px;
-            border-radius: 20px;
+            border-radius: var(--radius-pill);
         }
 
         .explanation {
@@ -133,7 +138,7 @@
             flex: 1;
             position: relative;
             background: #000a1f;
-            border-radius: 16px;
+            border-radius: var(--radius-card);
             overflow: hidden;
             border: 1px solid var(--border-card);
         }
@@ -157,7 +162,7 @@
         .controls-panel {
             width: 300px;
             background: var(--card-bg-color);
-            border-radius: 16px;
+            border-radius: var(--radius-card);
             padding: 20px;
             border: 1px solid var(--border-card);
         }
@@ -289,7 +294,7 @@
 
         .zodiac-card {
             background: var(--card-bg-color);
-            border-radius: 16px;
+            border-radius: var(--radius-card);
             padding: 25px;
             border: 1px solid var(--border-card);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -300,7 +305,7 @@
 
         .zodiac-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            box-shadow: var(--shadow-soft);
         }
 
         .zodiac-card-header {
@@ -324,7 +329,7 @@
             background: rgba(155, 89, 182, 0.15);
             color: var(--science);
             padding: 4px 12px;
-            border-radius: 20px;
+            border-radius: var(--radius-pill);
             font-size: 13px;
             font-weight: 600;
         }
@@ -346,7 +351,7 @@
         .zodiac-story {
             font-size: 13px;
             color: var(--text-color);
-            background: rgba(0, 0, 0, 0.05);
+            background: var(--surface-peach);
             border-radius: 8px;
             padding: 12px;
             line-height: 1.6;
@@ -418,7 +423,7 @@
         }
         /* 地球地质历史样式 */
         .earth-era-header {
-            border-radius: 16px;
+            border-radius: var(--radius-card);
             padding: 25px 30px;
             margin-bottom: 20px;
             color: #fff;
@@ -456,7 +461,7 @@
 
         .earth-period-card {
             background: var(--card-bg-color);
-            border-radius: 14px;
+            border-radius: var(--radius-card);
             padding: 22px;
             border: 1px solid var(--border-card);
             border-left: 5px solid var(--era-color);
@@ -465,7 +470,7 @@
 
         .earth-period-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+            box-shadow: var(--shadow-soft);
         }
 
         .earth-period-name {
@@ -493,7 +498,7 @@
             color: var(--text-color);
             margin-bottom: 12px;
             padding: 10px 14px;
-            background: rgba(0,0,0,0.04);
+            background: var(--surface-peach);
             border-radius: 8px;
             border-left: 3px solid var(--era-color);
         }
@@ -510,7 +515,7 @@
             align-items: center;
             gap: 8px;
             padding: 8px 14px;
-            background: rgba(0,0,0,0.06);
+            background: var(--surface-peach);
             border-radius: 8px;
             font-size: 14px;
             font-weight: 600;
@@ -539,7 +544,7 @@
         }
 
         .earth-summary-table th {
-            background: rgba(0,0,0,0.12);
+            background: var(--surface-peach);
             padding: 10px 12px;
             text-align: left;
             font-weight: 700;
@@ -556,7 +561,7 @@
         }
 
         .earth-summary-table tr:hover td {
-            background: rgba(0,0,0,0.04);
+            background: var(--surface-peach);
         }
 
         .earth-summary-table .row-paleozoic { border-left: 4px solid #8B4513; }
@@ -565,7 +570,7 @@
 
         .earth-intro-card {
             background: var(--card-bg-color);
-            border-radius: 16px;
+            border-radius: var(--radius-card);
             padding: 22px 28px;
             margin-bottom: 20px;
             border: 1px solid var(--border-card);

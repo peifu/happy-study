@@ -5,21 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>快乐学习 - 七博士 AI 学习助手</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/common.css">
     <link rel="stylesheet" href="assets/css/learning-assistant.css">
     <style>
         :root {
-            --qiboshi: #7c3aed;
-            --qiboshi-light: #a78bfa;
-            --bubble-ai: var(--card-bg-color);
-            --bubble-user: linear-gradient(135deg, var(--qiboshi), #5b21b6);
-        }
-
-        body.light-theme {
-            --qiboshi: #6d28d9;
-            --qiboshi-light: #8b5cf6;
-            --bubble-ai: var(--card-bg-color);
-            --bubble-user: linear-gradient(135deg, #6d28d9, #4c1d95);
+            --qiboshi: #ff9500;
+            --qiboshi-light: var(--primary);
+            --bubble-ai: linear-gradient(135deg, #fff6e8, #ffe9cc);
+            --bubble-user: linear-gradient(135deg, var(--amber-soft), var(--amber));
         }
 
         * { box-sizing: border-box; }
@@ -206,6 +200,7 @@
         .msg-ai {
             align-self: flex-start;
             background: var(--bubble-ai);
+            color: #4a3826;
             border: 1px solid var(--border-card);
             border-bottom-left-radius: 6px;
             position: relative;
@@ -229,19 +224,19 @@
 
         .msg-ai th,
         .msg-ai td {
-            border: 1px solid rgba(148, 180, 210, 0.16);
+            border: 1px solid rgba(139, 105, 66, 0.25);
             padding: 10px 12px;
             text-align: left;
             vertical-align: top;
         }
 
         .msg-ai th {
-            background: rgba(255, 255, 255, 0.08);
+            background: var(--surface-peach);
             font-weight: 700;
         }
 
         .msg-ai tr:nth-child(even) {
-            background: rgba(255, 255, 255, 0.04);
+            background: var(--surface-sand);
         }
 
         .msg-ai ul,
@@ -258,12 +253,12 @@
             margin: 14px 0;
             padding: 12px 16px;
             border-left: 3px solid var(--qiboshi-light);
-            background: rgba(255, 255, 255, 0.06);
+            background: var(--surface-peach);
             color: var(--text-secondary);
         }
 
         .msg-ai a {
-            color: var(--qiboshi-light);
+            color: #b86400;
             text-decoration: underline;
         }
 
@@ -281,7 +276,7 @@
         }
 
         .msg-ai .speak-msg-btn:hover {
-            color: var(--qiboshi-light);
+            color: #b86400;
         }
 
         .msg-ai .speak-msg-btn.playing {
@@ -332,10 +327,17 @@
             color: #fff;
             border: none;
             padding: 4px 12px;
-            border-radius: 8px;
+            border-radius: var(--radius-pill);
             margin-top: 8px;
             cursor: pointer;
             font-size: 13px;
+            transition: transform 0.1s;
+            box-shadow: 0 5px 0 #c94f3d;
+        }
+
+        .msg-error .retry-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #c94f3d;
         }
 
         /* Input area */
@@ -405,17 +407,23 @@
         .chat-input-area .send-btn {
             width: 44px;
             height: 44px;
-            border-radius: 50%;
+            border-radius: var(--radius-pill);
             border: none;
-            background: linear-gradient(135deg, var(--qiboshi), #5b21b6);
+            background: linear-gradient(135deg, var(--amber-soft), var(--amber));
             color: #fff;
             font-size: 16px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: opacity 0.2s;
+            transition: opacity 0.2s, transform 0.1s;
+            box-shadow: 0 5px 0 #cf7a10, 0 12px 24px var(--glow-amber);
             flex-shrink: 0;
+        }
+
+        .chat-input-area .send-btn:active:not(:disabled) {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #cf7a10;
         }
 
         .chat-input-area .send-btn:disabled {
@@ -439,7 +447,7 @@
         .setup-card {
             background: var(--card-bg-color);
             border: 1px solid var(--border-card);
-            border-radius: 16px;
+            border-radius: var(--radius-card);
             padding: 40px;
             max-width: 440px;
             width: 100%;
@@ -477,12 +485,19 @@
             width: 100%;
             padding: 12px;
             border: none;
-            border-radius: 12px;
-            background: linear-gradient(135deg, var(--qiboshi), #5b21b6);
+            border-radius: var(--radius-pill);
+            background: linear-gradient(135deg, var(--amber-soft), var(--amber));
             color: #fff;
             font-size: 15px;
             font-weight: 600;
             cursor: pointer;
+            transition: transform 0.1s;
+            box-shadow: 0 5px 0 #cf7a10, 0 12px 24px var(--glow-amber);
+        }
+
+        .setup-card .save-key-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #cf7a10;
         }
 
         .setup-card .key-hint {
@@ -497,7 +512,7 @@
 
         /* Markdown styles inside AI messages */
         .msg-ai pre {
-            background: rgba(0,0,0,0.2);
+            background: var(--surface-peach);
             padding: 10px 14px;
             border-radius: 8px;
             overflow-x: auto;
@@ -506,7 +521,7 @@
         }
 
         .msg-ai code {
-            background: rgba(0,0,0,0.15);
+            background: var(--surface-sand);
             padding: 2px 6px;
             border-radius: 4px;
             font-size: 13px;
@@ -523,7 +538,7 @@
         }
 
         .msg-ai strong {
-            color: var(--qiboshi-light);
+            color: #b86400;
         }
 
         /* Settings page */
@@ -584,17 +599,23 @@
 
         .settings-page button {
             padding: 11px 24px;
-            border-radius: 10px;
+            border-radius: var(--radius-pill);
             border: none;
             font-size: 15px;
             font-weight: 600;
             cursor: pointer;
-            transition: opacity 0.2s;
+            transition: opacity 0.2s, transform 0.1s;
         }
 
         .settings-page .btn-primary {
-            background: linear-gradient(135deg, var(--qiboshi), #5b21b6);
+            background: linear-gradient(135deg, var(--amber-soft), var(--amber));
             color: #fff;
+            box-shadow: 0 5px 0 #cf7a10, 0 12px 24px var(--glow-amber);
+        }
+
+        .settings-page .btn-primary:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #cf7a10;
         }
 
         .settings-page .btn-primary:hover {
@@ -604,6 +625,12 @@
         .settings-page .btn-danger {
             background: var(--accent);
             color: #fff;
+            box-shadow: 0 5px 0 #c94f3d, 0 12px 24px var(--glow-warm);
+        }
+
+        .settings-page .btn-danger:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #c94f3d;
         }
 
         .settings-page .btn-danger:hover {

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>快乐学习 - 游戏闯关</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/common.css">
     <link rel="stylesheet" href="assets/css/learning-assistant.css">
     <style>
@@ -19,9 +20,9 @@
 
         .game-card {
             background: var(--card-bg-color);
-            border-radius: 16px;
+            border-radius: var(--radius-card);
             padding: 25px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            box-shadow: var(--shadow-soft);
             position: relative;
             overflow: hidden;
             min-height: 240px;
@@ -35,8 +36,8 @@
         }
 
         .game-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-chunky), var(--shadow-soft);
         }
 
         .game-card::before {
@@ -46,7 +47,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(0, 247, 255, 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, var(--surface-sand) 0%, transparent 70%);
             transform: rotate(30deg);
             z-index: 0;
         }
@@ -62,7 +63,7 @@
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--surface-peach);
         }
 
         /* 汽车游戏 - 橙色系 */
@@ -70,20 +71,20 @@
         .car-card .game-icon { color: #FF6B35; box-shadow: 0 0 20px rgba(255, 107, 53, 0.3); }
         .car-card .game-name { color: #FF6B35; }
 
-        /* 单词消消乐 - 蓝色系 */
-        .word-card { border-top: 4px solid #4285f4; }
-        .word-card .game-icon { color: #4285f4; box-shadow: 0 0 20px rgba(66, 133, 244, 0.3); }
-        .word-card .game-name { color: #4285f4; }
+        /* 单词消消乐 - 琥珀色系 */
+        .word-card { border-top: 4px solid var(--amber); }
+        .word-card .game-icon { color: var(--amber); box-shadow: 0 0 20px var(--glow-amber); }
+        .word-card .game-name { color: var(--amber); }
 
-        /* 数学闯关 - 紫色系 */
-        .math-card { border-top: 4px solid #9b59b6; }
-        .math-card .game-icon { color: #9b59b6; box-shadow: 0 0 20px rgba(155, 89, 182, 0.3); }
-        .math-card .game-name { color: #9b59b6; }
+        /* 数学闯关 - 柔金色系 */
+        .math-card { border-top: 4px solid var(--amber-soft); }
+        .math-card .game-icon { color: var(--amber-soft); box-shadow: 0 0 20px var(--glow-warm); }
+        .math-card .game-name { color: var(--amber-soft); }
 
         /* 游戏世界 - 绿色系 */
-        .world-card { border-top: 4px solid #34a853; }
-        .world-card .game-icon { color: #34a853; box-shadow: 0 0 20px rgba(52, 168, 83, 0.3); }
-        .world-card .game-name { color: #34a853; }
+        .world-card { border-top: 4px solid var(--success); }
+        .world-card .game-icon { color: var(--success); box-shadow: 0 0 20px rgba(107, 196, 109, 0.35); }
+        .world-card .game-name { color: var(--success); }
 
         .game-name {
             font-size: 24px;
@@ -106,7 +107,7 @@
         .game-badge {
             display: inline-block;
             padding: 4px 12px;
-            border-radius: 20px;
+            border-radius: var(--radius-pill);
             font-size: 12px;
             font-weight: 600;
             position: relative;
@@ -114,9 +115,9 @@
         }
 
         .car-card .game-badge { background: rgba(255, 107, 53, 0.2); color: #FF6B35; }
-        .word-card .game-badge { background: rgba(66, 133, 244, 0.2); color: #4285f4; }
-        .math-card .game-badge { background: rgba(155, 89, 182, 0.2); color: #9b59b6; }
-        .world-card .game-badge { background: rgba(52, 168, 83, 0.2); color: #34a853; }
+        .word-card .game-badge { background: rgba(255, 149, 0, 0.2); color: var(--amber); }
+        .math-card .game-badge { background: rgba(255, 179, 71, 0.2); color: var(--amber-soft); }
+        .world-card .game-badge { background: rgba(107, 196, 109, 0.2); color: var(--success); }
 
         /* 响应式 */
         @media (max-width: 1200px) {

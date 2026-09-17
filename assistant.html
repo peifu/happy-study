@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>快乐学习 - 学习助手</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/common.css">
     <link rel="stylesheet" href="assets/css/learning-assistant.css">
     <style>
@@ -29,7 +30,7 @@
             font-size: 28px;
             font-weight: 700;
             margin-bottom: 10px;
-            background: linear-gradient(90deg, var(--assistant-primary), var(--assistant-secondary));
+            background: linear-gradient(90deg, var(--amber-soft), var(--ink-green));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -43,7 +44,7 @@
 
         .settings-card {
             background: var(--card-bg-color);
-            border-radius: 16px;
+            border-radius: var(--radius-card);
             padding: 24px;
             border: 1px solid var(--border-card);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -51,7 +52,7 @@
 
         .settings-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            box-shadow: var(--shadow-soft);
         }
 
         .settings-header {
@@ -128,19 +129,19 @@
         .range-slider {
             -webkit-appearance: none;
             width: 100%; height: 6px; border-radius: 3px;
-            background: rgba(255, 255, 255, 0.12); outline: none;
+            background: var(--surface-sand); outline: none;
         }
         .range-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             width: 20px; height: 20px; border-radius: 50%;
             background: linear-gradient(135deg, var(--assistant-primary), var(--assistant-secondary));
-            cursor: pointer; box-shadow: 0 2px 8px rgba(124, 77, 255, 0.4);
+            cursor: pointer; box-shadow: 0 2px 8px var(--glow-amber);
         }
         .range-slider::-moz-range-thumb {
             width: 20px; height: 20px; border-radius: 50%;
             background: linear-gradient(135deg, var(--assistant-primary), var(--assistant-secondary));
             cursor: pointer; border: none;
-            box-shadow: 0 2px 8px rgba(124, 77, 255, 0.4);
+            box-shadow: 0 2px 8px var(--glow-amber);
         }
         .slider-value {
             text-align: center; font-size: 14px; font-weight: 600;
@@ -186,12 +187,12 @@
         .form-control {
             width: 100%; padding: 10px 14px; border-radius: 10px;
             border: 1px solid var(--border-card);
-            background: rgba(255, 255, 255, 0.06);
+            background: var(--surface-peach);
             color: var(--text-color); font-size: 14px; outline: none;
         }
         .form-control:focus {
             border-color: var(--assistant-primary);
-            box-shadow: 0 0 0 3px rgba(124, 77, 255, 0.15);
+            box-shadow: 0 0 0 3px var(--glow-warm);
         }
 
         /* ===== 学习记录页样式 ===== */
@@ -203,7 +204,7 @@
         }
         .record-card {
             background: var(--card-bg-color);
-            border-radius: 16px;
+            border-radius: var(--radius-card);
             padding: 24px;
             border: 1px solid var(--border-card);
             transition: transform 0.3s ease;
@@ -256,7 +257,7 @@
         }
         .rd-item-tag.mastered { background: rgba(52, 168, 83, 0.15); color: #34a853; }
         .rd-item-tag.unmastered { background: rgba(234, 67, 53, 0.12); color: #ea4335; }
-        .rd-item-tag.unlearned { background: rgba(255,255,255,0.06); color: var(--text-secondary); }
+        .rd-item-tag.unlearned { background: var(--surface-peach); color: var(--text-secondary); }
         .record-card .card-top {
             display: flex;
             align-items: center;
@@ -286,7 +287,7 @@
         }
         .record-bar-container {
             width: 100%; height: 8px;
-            background: rgba(255,255,255,0.08);
+            background: var(--surface-sand);
             border-radius: 4px; overflow: hidden;
         }
         .record-bar-fill {
@@ -300,7 +301,7 @@
         .points-vault {
             position: relative;
             background: var(--card-bg-color);
-            border-radius: 24px;
+            border-radius: var(--radius-lg);
             padding: 36px 28px 28px;
             border: 1px solid var(--border-card);
             margin-top: 15px;
@@ -373,7 +374,7 @@
         .vault-stat-num {
             font-size: 22px;
             font-weight: 700;
-            color: #fff;
+            color: var(--text-color);
             line-height: 1.2;
         }
         .vault-stat-label {
@@ -456,7 +457,7 @@
         }
         .sp-card {
             background: var(--card-bg-color);
-            border-radius: 16px;
+            border-radius: var(--radius-card);
             padding: 20px;
             border: 1px solid var(--border-card);
             display: flex;
@@ -504,7 +505,7 @@
         }
         .badge-card {
             background: var(--card-bg-color);
-            border-radius: 16px;
+            border-radius: var(--radius-card);
             padding: 20px 12px 16px;
             border: 1px solid var(--border-card);
             text-align: center;
@@ -524,7 +525,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            border-radius: 16px;
+            border-radius: var(--radius-card);
             background: linear-gradient(135deg, rgba(255,215,0,0.05), transparent 60%);
             pointer-events: none;
         }
@@ -536,7 +537,7 @@
             align-items: center;
             justify-content: center;
             font-size: 26px;
-            background: rgba(255,255,255,0.04);
+            background: var(--surface-peach);
             transition: all 0.3s ease;
         }
         .badge-card.unlocked .badge-icon-wrap {
@@ -566,7 +567,7 @@
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
-            background: rgba(255,255,255,0.06);
+            background: var(--surface-peach);
             color: var(--text-secondary);
         }
         .badge-level-star.earned {
@@ -576,14 +577,14 @@
         }
         .badge-progress {
             width: 100%; height: 3px;
-            background: rgba(255,255,255,0.05);
+            background: var(--surface-sand);
             border-radius: 2px;
             overflow: hidden;
         }
         .badge-progress-fill {
             height: 100%;
             border-radius: 2px;
-            background: linear-gradient(90deg, #ffd700, #ff8c00);
+            background: linear-gradient(90deg, var(--amber-soft), var(--progress-green, #6bc46d));
             transition: width 0.6s ease;
         }
         .badge-progress-text {
@@ -592,7 +593,7 @@
             margin-top: 4px;
         }
         .badge-card.max-level .badge-progress-fill {
-            background: linear-gradient(90deg, #ffd700, #ff6b6b, #a78bfa);
+            background: linear-gradient(90deg, #ffd700, var(--amber-soft), var(--ink-green));
             animation: badgeMaxShine 2s ease-in-out infinite;
         }
         @keyframes badgeMaxShine {
@@ -602,7 +603,7 @@
 
         .points-history {
             background: var(--card-bg-color);
-            border-radius: 16px;
+            border-radius: var(--radius-card);
             padding: 20px;
             border: 1px solid var(--border-card);
         }

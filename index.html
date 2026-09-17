@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>快乐学习 - 学习主页</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/common.css">
     <link rel="stylesheet" href="assets/css/learning-assistant.css">
     <style>
@@ -12,16 +13,16 @@
         .subjects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            gap: 24px;
             margin-top: 20px;
             flex: 1;
         }
         
         .subject-card {
             background: var(--card-bg-color);
-            border-radius: 16px;
+            border-radius: var(--radius-card, 24px);
             padding: 25px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            box-shadow: var(--shadow-soft, 0 20px 28px rgba(0, 0, 0, 0.10));
             position: relative;
             overflow: hidden;
             min-height: 240px;
@@ -32,25 +33,21 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             border: 1px solid var(--border-subtle);
             cursor: pointer;
+            animation: fadeIn 0.6s ease both;
         }
-        
+
+        .subject-card:nth-child(1) { animation-delay: 0.05s; }
+        .subject-card:nth-child(2) { animation-delay: 0.12s; }
+        .subject-card:nth-child(3) { animation-delay: 0.19s; }
+        .subject-card:nth-child(4) { animation-delay: 0.26s; }
+        .subject-card:nth-child(5) { animation-delay: 0.33s; }
+        .subject-card:nth-child(6) { animation-delay: 0.40s; }
+
         .subject-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 24px 40px rgba(0, 0, 0, 0.16);
         }
-        
-        .subject-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(0, 247, 255, 0.1) 0%, transparent 70%);
-            transform: rotate(30deg);
-            z-index: 0;
-        }
-        
+
         .subject-icon {
             font-size: 50px;
             margin-bottom: 15px;
@@ -62,7 +59,7 @@
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--surface-peach, #fef2e0);
         }
         
         .english-card {
@@ -91,37 +88,37 @@
         
         .english-card .subject-icon {
             color: var(--english);
-            box-shadow: 0 0 20px rgba(66, 133, 244, 0.3);
+            box-shadow: 0 6px 14px rgba(66, 133, 244, 0.25);
         }
-        
+
         .chinese-card .subject-icon {
             color: var(--chinese);
-            box-shadow: 0 0 20px rgba(234, 67, 53, 0.3);
+            box-shadow: 0 6px 14px rgba(234, 67, 53, 0.25);
         }
-        
+
         .math-card .subject-icon {
             color: var(--math);
-            box-shadow: 0 0 20px rgba(251, 188, 5, 0.3);
+            box-shadow: 0 6px 14px rgba(251, 188, 5, 0.25);
         }
-        
+
         .pe-card .subject-icon {
             color: var(--pe);
-            box-shadow: 0 0 20px rgba(52, 168, 83, 0.3);
+            box-shadow: 0 6px 14px rgba(52, 168, 83, 0.25);
         }
 
         .science-card .subject-icon {
             color: var(--science);
-            box-shadow: 0 0 20px rgba(155, 89, 182, 0.3);
+            box-shadow: 0 6px 14px rgba(155, 89, 182, 0.25);
         }
 
         .music-card .subject-icon {
             color: var(--music);
-            box-shadow: 0 0 20px rgba(255, 152, 0, 0.3);
+            box-shadow: 0 6px 14px rgba(255, 152, 0, 0.25);
         }
         
         .subject-name {
             font-size: 24px;
-            font-weight: 700;
+            font-weight: 800;
             margin-bottom: 12px;
             position: relative;
             z-index: 1;
@@ -176,7 +173,7 @@
         
         .stat-value {
             font-size: 20px;
-            font-weight: 700;
+            font-weight: 800;
             margin-bottom: 5px;
         }
         

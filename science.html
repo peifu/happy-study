@@ -7,14 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>快乐学习 - 科学知识学习系统</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/common.css">
     <style>
         /* Concept card styles */
         .concept-card {
             background: var(--card-bg-color);
-            border-radius: 16px;
+            border-radius: var(--radius-card);
             padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            box-shadow: var(--shadow-soft);
             position: relative;
             overflow: hidden;
             min-height: 400px;
@@ -57,14 +58,13 @@
             font-size: 36px;
             font-weight: 700;
             color: var(--science);
-            text-shadow: 0 0 10px rgba(155, 89, 182, 0.3);
         }
 
         .speak-btn-icon {
             background: linear-gradient(90deg, var(--science), var(--primary));
             color: white;
             border: none;
-            border-radius: 50%;
+            border-radius: var(--radius-pill);
             width: 50px;
             height: 50px;
             display: flex;
@@ -72,12 +72,17 @@
             justify-content: center;
             cursor: pointer;
             transition: var(--transition);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 0 #8a58c4;
         }
 
         .speak-btn-icon:hover {
             transform: scale(1.1);
-            box-shadow: 0 0 15px rgba(155, 89, 182, 0.5);
+            box-shadow: 0 5px 0 #8a58c4, 0 0 15px rgba(155, 89, 182, 0.5);
+        }
+
+        .speak-btn-icon:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #8a58c4;
         }
 
         .speak-btn-icon i {
@@ -92,7 +97,7 @@
             z-index: 1;
             background: rgba(155, 89, 182, 0.1);
             padding: 8px 16px;
-            border-radius: 20px;
+            border-radius: var(--radius-lg);
         }
 
         .explanation {
@@ -133,7 +138,7 @@
             flex: 1;
             position: relative;
             background: #000a1f;
-            border-radius: 16px;
+            border-radius: var(--radius-card);
             overflow: hidden;
             border: 1px solid var(--border-card);
         }
@@ -157,7 +162,7 @@
         .controls-panel {
             width: 300px;
             background: var(--card-bg-color);
-            border-radius: 16px;
+            border-radius: var(--radius-card);
             padding: 20px;
             border: 1px solid var(--border-card);
         }

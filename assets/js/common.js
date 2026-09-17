@@ -14,10 +14,10 @@ function applyTheme(theme) {
 }
 
 function syncThemeFromIndex() {
-    const theme = localStorage.getItem('theme') || 'dark';
+    const theme = localStorage.getItem('theme') || 'light';
     applyTheme(theme);
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-        if ((localStorage.getItem('theme') || 'dark') === 'auto') {
+        if ((localStorage.getItem('theme') || 'light') === 'auto') {
             applyTheme('auto');
         }
     });
@@ -79,7 +79,9 @@ function initLearningAssistant() {
 function injectNav(navItems) {
     const container = document.querySelector('.container');
     if (!container) return;
-    const html = '<div class="nav-container">' +
+    container.id = 'main';
+    const html = '<a class="skip-link" href="#main">跳到主要内容</a>' +
+        '<div class="nav-container" id="navBar">' +
         '<div class="logo" id="homeLink">' +
         '<i class="fas fa-brain"></i>' +
         '<span>快乐学习</span>' +
@@ -94,6 +96,14 @@ function injectNav(navItems) {
         '</div>' +
         '</div>';
     container.insertAdjacentHTML('afterbegin', html);
+
+    // 滚动时加深吸顶导航阴影
+    const navBar = document.getElementById('navBar');
+    if (navBar) {
+        const onScroll = () => navBar.classList.toggle('scrolled', window.scrollY > 12);
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+    }
 }
 
 function injectFooter() {
@@ -101,6 +111,19 @@ function injectFooter() {
     if (!container) return;
     const html = '<footer><p>(c) 2025 快乐学习 - Sevenking Studio</p></footer>';
     container.insertAdjacentHTML('beforeend', html);
+
+    if (document.getElementById('backToTop')) return;
+    const btn = document.createElement('button');
+    btn.id = 'backToTop';
+    btn.setAttribute('aria-label', '回到页面顶部');
+    btn.textContent = '▲';
+    btn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    document.body.appendChild(btn);
+    window.addEventListener('scroll', () => {
+        btn.classList.toggle('visible', window.scrollY > 300);
+    }, { passive: true });
 }
 
 function injectAssistant() {
@@ -109,9 +132,9 @@ function injectAssistant() {
         '<svg class="assistant-progress-ring" id="assistantProgressRing" viewBox="0 0 100 100">' +
             '<defs>' +
                 '<linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">' +
-                    '<stop offset="0%" stop-color="#00e5ff" />' +
-                    '<stop offset="50%" stop-color="#7c4dff" />' +
-                    '<stop offset="100%" stop-color="#ff4081" />' +
+                    '<stop offset="0%" stop-color="#ffd79a" />' +
+                    '<stop offset="50%" stop-color="#ff9500" />' +
+                    '<stop offset="100%" stop-color="#ff8f6b" />' +
                 '</linearGradient>' +
             '</defs>' +
             '<circle class="progress-ring-bg" cx="50" cy="50" r="44" />' +
