@@ -7,7 +7,7 @@
     <script>/* 主题预热：避免首屏深色闪烁 */ (function(){try{var t=localStorage.getItem('theme')||'light';if(t==='light'||(t==='auto'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)){document.documentElement.classList.add('light-theme');}}catch(e){}})();</script>
     <link rel="icon" type="image/png" href="assets/logo/bear.png">
     <meta name="theme-color" content="#ffb347">
-    <title>快乐学习 - 体测</title>
+    <title>快乐学习 - 体测达标</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/common.css">
@@ -69,9 +69,9 @@
 <body data-assistant-mode="study">
     <div class="container">
 
-        <!-- 体测计算器 -->
+        <!-- 体测达标 -->
         <div class="page active" id="calcPage">
-            <h1 class="main-title">📏 北京体测计算器</h1>
+            <h1 class="main-title">📏 体测达标</h1>
             <p class="subtitle">依据《国家学生体质健康标准（2014年修订）》与北京中考体育过程性考核“体测统测”口径。选择年级与性别，填入成绩，自动算体测总分、等级与中考赋分。</p>
 
             <div class="calc-grid">
@@ -82,8 +82,8 @@
                     <div class="form-group">
                         <label class="form-label">年级</label>
                         <select class="form-control" id="gradeSel">
-                            <option value="4">四年级</option>
-                            <option value="6" selected>六年级</option>
+                            <option value="4" selected>四年级</option>
+                            <option value="6">六年级</option>
                             <option value="8">八年级</option>
                         </select>
                     </div>
@@ -143,13 +143,98 @@
             </div>
         </div>
 
-        <!-- 体测项目与要求 -->
+        <!-- 达标标准 -->
         <div class="page" id="rulesPage">
-            <h1 class="main-title">📋 北京体测统测标准</h1>
-            <p class="subtitle">2025年北京四/六/八年级开学体测纳入中考：考核项目、加分与赋分标准（《国家学生体质健康标准（2014年修订）》口径）。</p>
+            <h1 class="main-title">📋 达标标准</h1>
+            <p class="subtitle">小学各年级体育项目达标标准（及格 / 良好 / 优秀 / 满分，男、女分列），以及北京体测统测（四 / 六 / 八年级）考核、加分与中考赋分标准（《国家学生体质健康标准（2014年修订）》口径）。</p>
 
             <div class="req-card">
-                <h2><i class="fas fa-circle-info"></i> 一、考核与计入方式</h2>
+                <h2><i class="fas fa-clipboard-check"></i> 一、小学各年级体育项目达标标准</h2>
+                <p>下表为各年级体育项目达标要求，分为<strong>及格、良好、优秀、满分</strong>四个等级，男、女标准分列。</p>
+                <div style="overflow-x: auto;">
+                    <h3 style="color:var(--primary);margin-top:24px;">50米跑（秒）</h3>
+                    <table class="ref" style="min-width: 640px;">
+                        <thead>
+                            <tr><th rowspan="2">年级</th><th colspan="2">及格</th><th colspan="2">良好</th><th colspan="2">优秀</th><th colspan="2">满分</th></tr>
+                            <tr><th>男</th><th>女</th><th>男</th><th>女</th><th>男</th><th>女</th><th>男</th><th>女</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="item-col">一年级</td><td>12.6</td><td>13.8</td><td>10.6</td><td>11.8</td><td>10.4</td><td>11.2</td><td>10.2</td><td>11.0</td></tr>
+                            <tr><td class="item-col">二年级</td><td>12.0</td><td>12.8</td><td>10.0</td><td>10.8</td><td>9.8</td><td>10.2</td><td>9.6</td><td>10.0</td></tr>
+                            <tr><td class="item-col">三年级</td><td>11.5</td><td>12.0</td><td>9.5</td><td>10.0</td><td>9.3</td><td>9.4</td><td>9.1</td><td>9.2</td></tr>
+                            <tr><td class="item-col">四年级</td><td>11.1</td><td>11.5</td><td>9.0</td><td>9.5</td><td>8.9</td><td>8.9</td><td>8.7</td><td>8.7</td></tr>
+                            <tr><td class="item-col">五年级</td><td>10.8</td><td>11.1</td><td>8.8</td><td>9.1</td><td>8.6</td><td>8.5</td><td>8.4</td><td>8.3</td></tr>
+                            <tr><td class="item-col">六年级</td><td>10.6</td><td>11.0</td><td>8.6</td><td>9.0</td><td>8.4</td><td>8.4</td><td>8.2</td><td>8.2</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h3 style="color:var(--primary);margin-top:24px;">坐位体前屈（厘米）</h3>
+                    <table class="ref" style="min-width: 640px;">
+                        <thead>
+                            <tr><th rowspan="2">年级</th><th colspan="2">及格</th><th colspan="2">良好</th><th colspan="2">优秀</th><th colspan="2">满分</th></tr>
+                            <tr><th>男</th><th>女</th><th>男</th><th>女</th><th>男</th><th>女</th><th>男</th><th>女</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="item-col">一年级</td><td>0.0</td><td>2.4</td><td>11.0</td><td>13.4</td><td>13.0</td><td>16.0</td><td>16.1</td><td>18.6</td></tr>
+                            <tr><td class="item-col">二年级</td><td>-0.4</td><td>2.3</td><td>10.6</td><td>13.3</td><td>13.2</td><td>16.3</td><td>16.2</td><td>18.9</td></tr>
+                            <tr><td class="item-col">三年级</td><td>-0.8</td><td>2.2</td><td>10.2</td><td>13.2</td><td>13.4</td><td>16.6</td><td>16.3</td><td>19.2</td></tr>
+                            <tr><td class="item-col">四年级</td><td>-2.2</td><td>2.1</td><td>9.8</td><td>13.1</td><td>13.6</td><td>16.9</td><td>16.4</td><td>19.5</td></tr>
+                            <tr><td class="item-col">五年级</td><td>-2.6</td><td>2.0</td><td>9.4</td><td>13.0</td><td>13.8</td><td>17.2</td><td>16.5</td><td>19.8</td></tr>
+                            <tr><td class="item-col">六年级</td><td>-4.0</td><td>1.9</td><td>9.0</td><td>12.9</td><td>14.0</td><td>17.5</td><td>16.6</td><td>19.9</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h3 style="color:var(--primary);margin-top:24px;">一分钟跳绳（个）</h3>
+                    <table class="ref" style="min-width: 640px;">
+                        <thead>
+                            <tr><th rowspan="2">年级</th><th colspan="2">及格</th><th colspan="2">良好</th><th colspan="2">优秀</th><th colspan="2">满分</th></tr>
+                            <tr><th>男</th><th>女</th><th>男</th><th>女</th><th>男</th><th>女</th><th>男</th><th>女</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="item-col">一年级</td><td>17</td><td>17</td><td>87</td><td>87</td><td>99</td><td>103</td><td>109</td><td>117</td></tr>
+                            <tr><td class="item-col">二年级</td><td>25</td><td>27</td><td>95</td><td>97</td><td>107</td><td>113</td><td>117</td><td>127</td></tr>
+                            <tr><td class="item-col">三年级</td><td>34</td><td>39</td><td>104</td><td>109</td><td>116</td><td>125</td><td>126</td><td>139</td></tr>
+                            <tr><td class="item-col">四年级</td><td>45</td><td>49</td><td>115</td><td>119</td><td>127</td><td>135</td><td>137</td><td>149</td></tr>
+                            <tr><td class="item-col">五年级</td><td>56</td><td>58</td><td>126</td><td>128</td><td>138</td><td>144</td><td>148</td><td>158</td></tr>
+                            <tr><td class="item-col">六年级</td><td>65</td><td>66</td><td>135</td><td>136</td><td>147</td><td>152</td><td>157</td><td>166</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h3 style="color:var(--primary);margin-top:24px;">仰卧起坐（个）</h3>
+                    <table class="ref" style="min-width: 640px;">
+                        <thead>
+                            <tr><th rowspan="2">年级</th><th colspan="2">及格</th><th colspan="2">良好</th><th colspan="2">优秀</th><th colspan="2">满分</th></tr>
+                            <tr><th>男</th><th>女</th><th>男</th><th>女</th><th>男</th><th>女</th><th>男</th><th>女</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="item-col">三年级</td><td>16</td><td>16</td><td>36</td><td>36</td><td>42</td><td>42</td><td>48</td><td>46</td></tr>
+                            <tr><td class="item-col">四年级</td><td>17</td><td>17</td><td>37</td><td>37</td><td>43</td><td>43</td><td>49</td><td>47</td></tr>
+                            <tr><td class="item-col">五年级</td><td>18</td><td>18</td><td>38</td><td>38</td><td>44</td><td>44</td><td>50</td><td>48</td></tr>
+                            <tr><td class="item-col">六年级</td><td>19</td><td>19</td><td>39</td><td>39</td><td>45</td><td>45</td><td>51</td><td>49</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h3 style="color:var(--primary);margin-top:24px;">肺活量（毫升）</h3>
+                    <table class="ref" style="min-width: 640px;">
+                        <thead>
+                            <tr><th rowspan="2">年级</th><th colspan="2">及格</th><th colspan="2">良好</th><th colspan="2">优秀</th><th colspan="2">满分</th></tr>
+                            <tr><th>男</th><th>女</th><th>男</th><th>女</th><th>男</th><th>女</th><th>男</th><th>女</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="item-col">一年级</td><td>700</td><td>600</td><td>1300</td><td>1000</td><td>1500</td><td>1200</td><td>1700</td><td>1400</td></tr>
+                            <tr><td class="item-col">二年级</td><td>800</td><td>700</td><td>1500</td><td>1200</td><td>1800</td><td>1400</td><td>2000</td><td>1600</td></tr>
+                            <tr><td class="item-col">三年级</td><td>900</td><td>800</td><td>1700</td><td>1400</td><td>2100</td><td>1600</td><td>2300</td><td>1800</td></tr>
+                            <tr><td class="item-col">四年级</td><td>1100</td><td>900</td><td>1900</td><td>1600</td><td>2400</td><td>1800</td><td>2600</td><td>2000</td></tr>
+                            <tr><td class="item-col">五年级</td><td>1300</td><td>1050</td><td>2200</td><td>1850</td><td>2700</td><td>2050</td><td>2900</td><td>2250</td></tr>
+                            <tr><td class="item-col">六年级</td><td>1500</td><td>1200</td><td>2500</td><td>2100</td><td>3000</td><td>2300</td><td>3200</td><td>2500</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="note">等级说明：<strong>及格</strong>=达到基本要求；<strong>良好</strong>=超过基本要求，表现较好；<strong>优秀</strong>=表现突出，远超基本要求；<strong>满分</strong>=达到或超过最高标准。表中数值为各等级起始成绩，跑类项目数值越小越好，其余项目数值越大越好。</div>
+            </div>
+
+            <div class="req-card">
+                <h2><i class="fas fa-circle-info"></i> 二、考核与计入方式</h2>
                 <ul>
                     <li>考核年级：<strong>四年级、六年级、八年级</strong>第一学期；每次考核<strong>10分</strong>，共 <strong>30分</strong>。</li>
                     <li>另有“体育与健康知识”<strong>10分</strong>（八年级第二学期）。四项合计<strong>过程性考核 40 分</strong>。</li>
@@ -157,7 +242,7 @@
             </div>
 
             <div class="req-card">
-                <h2><i class="fas fa-percent"></i> 二、总分与加分</h2>
+                <h2><i class="fas fa-percent"></i> 三、总分与加分</h2>
                 <p>体测总分 = <strong>标准分 + 附加分</strong>，满分 120 分：</p>
                 <ul>
                     <li><strong>标准分</strong>：各单项指标得分 × 权重 之和，满分 <strong>100 分</strong>。</li>
@@ -167,7 +252,7 @@
             </div>
 
             <div class="req-card">
-                <h2><i class="fas fa-table-list"></i> 三、各年级项目与权重</h2>
+                <h2><i class="fas fa-table-list"></i> 四、各年级项目与权重</h2>
                 <table class="ref">
                     <thead><tr><th>项目 / 权重</th><th>四年级</th><th>六年级</th><th>八年级</th></tr></thead>
                     <tbody>
@@ -187,7 +272,7 @@
             </div>
 
             <div class="req-card">
-                <h2><i class="fas fa-scale-balanced"></i> 四、中考赋分标准（三类六档）</h2>
+                <h2><i class="fas fa-scale-balanced"></i> 五、中考赋分标准（三类六档）</h2>
                 <p>体测总分按“良好及以上 / 及格 / 不及格”三类六档折算为中考计入分（每次 0–10 分）：</p>
                 <table class="ref">
                     <thead><tr><th>等级</th><th>体测总分</th><th>本次赋分</th><th>三年累计</th></tr></thead>
@@ -204,7 +289,7 @@
             </div>
 
             <div class="req-card">
-                <h2><i class="fas fa-list-check"></i> 五、各项目测试要求与注意事项</h2>
+                <h2><i class="fas fa-list-check"></i> 六、各项目测试要求与注意事项</h2>
                 <ul>
                     <li><strong>体重指数(BMI)</strong>：脱鞋、穿轻便服装测量身高体重；BMI = 体重(kg) ÷ 身高(m)²。</li>
                     <li><strong>肺活量</strong>：深吸气后向吹嘴平稳吹完，测 2 次取最大值（毫升）。</li>
@@ -222,8 +307,8 @@
 
             <div class="req-card">
                 <h2><i class="fas fa-triangle-exclamation"></i> 数据来源与免责声明</h2>
-                <p>本页评分表与赋分标准整理自参考网页（北京小升初信息网）的“北京市国家学生体质健康测试统测评分表”，
-                    其原始表格为图片，已由 OCR 提取并人工整理。<strong>肺活量、50米跑、BMI、赋分标准</strong>数值较可靠；
+                <p>本页评分表与赋分标准整理自“国家学生体质健康标准（2014年修订）”，
+                    <strong>肺活量、50米跑、BMI、赋分标准</strong>数值较可靠；
                     <strong>坐位体前屈、一分钟跳绳/仰卧起坐、50米×8、立定跳远、引体向上、1000/800米</strong>等部分数值可能含 OCR 误差
                     或为估算。结果<strong>仅供参考</strong>，请以学校 / 官方发布为准。</p>
             </div>
@@ -272,13 +357,23 @@
                 renderItemInputs(); recalc();
             });
             ['heightInput', 'weightInput'].forEach(function (id) { document.getElementById(id).addEventListener('input', recalc); });
-            document.getElementById('itemInputs').addEventListener('input', recalc);
+            document.getElementById('itemInputs').addEventListener('input', function (e) {
+                const inp = e.target;
+                // 仅50米跑允许小数，其余测试成绩栏只保留整数
+                if (inp && inp.dataset && inp.dataset.item && inp.dataset.item !== 'sprint' && inp.value && inp.value.indexOf('.') !== -1) {
+                    inp.value = inp.value.split('.')[0];
+                }
+                recalc();
+            });
             document.getElementById('calcBtn').addEventListener('click', recalc);
             document.getElementById('demoBtn').addEventListener('click', fillDemo);
             document.getElementById('resetBtn').addEventListener('click', resetForm);
         }
 
-        function switchPage(pageId) { switchPageCommon(pageId, navLinks, pages); }
+        function switchPage(pageId) {
+            if (pageId === 'back') { window.location.href = 'pe.html'; return; }
+            switchPageCommon(pageId, navLinks, pages);
+        }
 
         function gradeItems() {
             const grade = parseInt(document.getElementById('gradeSel').value, 10);
@@ -295,9 +390,12 @@
                 '<div class="item-score" id="bmiValueCell" style="grid-column: 2 / 4;">--</div></div>';
             items.forEach(function (item) {
                 const old = prev[item] || '';
+                const allowDecimal = item === 'sprint'; // 仅50米跑允许小数
+                const step = allowDecimal ? '0.1' : '1';
+                const mode = allowDecimal ? 'decimal' : 'numeric';
                 html += '<div class="item-input">' +
                     '<div class="item-name">' + itemName(item, sex) + '<small>' + itemDesc(item, sex) + '</small></div>' +
-                    '<input class="form-control" id="val-' + item + '" data-item="' + item + '" type="number" step="0.01" placeholder="' + itemUnit(item, sex) + '" inputmode="decimal" value="' + old + '">' +
+                    '<input class="form-control" id="val-' + item + '" data-item="' + item + '" type="number" step="' + step + '" placeholder="' + itemUnit(item, sex) + '" inputmode="' + mode + '" value="' + old + '">' +
                     '<div class="item-score" id="score-' + item + '">--<small>分</small></div></div>';
             });
             wrap.innerHTML = html;
@@ -391,8 +489,9 @@
 
         (function () {
             var NAV_CONFIG = [
-                { page: 'calc',  icon: 'fa-calculator', label: '体测计算器', active: true },
-                { page: 'rules', icon: 'fa-list-check', label: '标准与赋分', active: false }
+                { page: 'back',  icon: 'fa-arrow-left', label: '返回PE', active: false },
+                { page: 'calc',  icon: 'fa-calculator', label: '体测达标', active: true },
+                { page: 'rules', icon: 'fa-list-check', label: '达标标准', active: false }
             ];
             injectNav(NAV_CONFIG);
             injectFooter();
