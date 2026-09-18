@@ -888,6 +888,7 @@
             { page: 'running',   icon: 'fa-running',  label: '跑步训练', active: false },
             { page: 'teaching',  icon: 'fa-video',    label: '训练教学', active: false },
             { page: 'standards', icon: 'fa-award',    label: '达标标准', active: false },
+            { page: 'physique',  icon: 'fa-heart-pulse', label: '体测计算', active: false },
             
         ];
 
@@ -1252,6 +1253,12 @@
         function switchPage(pageId) {
             if (pageId === 'home') {
                 window.location.href = 'index.html';
+                return;
+            }
+
+            // 跳转到体测计算器
+            if (pageId === 'physique') {
+                window.location.href = 'physique.html';
                 return;
             }
 

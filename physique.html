@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>/* 主题预热：避免首屏深色闪烁 */ (function(){try{var t=localStorage.getItem('theme')||'light';if(t==='light'||(t==='auto'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)){document.documentElement.classList.add('light-theme');}}catch(e){}})();</script>
+    <link rel="icon" type="image/png" href="assets/logo/bear.png">
+    <meta name="theme-color" content="#ffb347">
+    <title>快乐学习 - 体测</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/common.css">
+    <link rel="stylesheet" href="assets/css/learning-assistant.css">
+    <style>
+        .main-title { font-size: 30px; }
+        .calc-grid { display: grid; grid-template-columns: minmax(320px, 1fr) minmax(320px, 1fr); gap: 24px; align-items: start; margin-top: 10px; }
+        .calc-panel { background: var(--card-bg-color); border: 1px solid var(--border-card); border-radius: var(--radius-card); box-shadow: var(--shadow-soft); padding: 22px; }
+        .panel-title { font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+        .field-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
+        .seg { display: flex; gap: 10px; }
+        .seg-btn { flex: 1; padding: 10px; border-radius: 16px; border: 1px solid var(--border-subtle); background: var(--surface-peach); color: var(--text-color); cursor: pointer; font-weight: 700; transition: var(--transition); }
+        .seg-btn.active { background: linear-gradient(135deg, var(--amber-soft) 0%, var(--amber) 100%); color: #fff; border-color: transparent; box-shadow: 0 4px 12px var(--glow-amber); }
+        .item-input { display: grid; grid-template-columns: 1fr 96px 92px; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px dashed var(--border-subtle); }
+        .item-input:last-child { border-bottom: none; }
+        .item-name { font-weight: 700; }
+        .item-name small { display: block; color: var(--text-secondary); font-weight: 400; font-size: 12px; }
+        .item-input input { width: 100%; }
+        .item-score { text-align: center; font-weight: 700; color: var(--secondary); font-size: 18px; }
+        .item-score small { font-size: 11px; color: var(--text-secondary); font-weight: 400; }
+        .calc-actions { display: flex; gap: 12px; margin-top: 18px; flex-wrap: wrap; }
+        .calc-actions .btn { flex: 1; min-width: 130px; }
+        .result-score { text-align: center; padding: 14px 10px 4px; }
+        .result-score .num { font-size: 60px; font-weight: 700; line-height: 1; color: var(--primary); }
+        .result-score .lvl { display: inline-block; margin-top: 10px; padding: 6px 22px; border-radius: var(--radius-pill); font-size: 20px; font-weight: 700; color: #fff; }
+        .lvl-优秀 { background: linear-gradient(135deg, #7ad17f, #4fa356); }
+        .lvl-良好 { background: linear-gradient(135deg, #6fb3e0, #3f8ec4); }
+        .lvl-及格 { background: linear-gradient(135deg, #ffb347, #ff9500); }
+        .lvl-不及格 { background: linear-gradient(135deg, #ff8f6b, #e74c3c); }
+        .honor-box { margin-top: 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .honor-cell { background: var(--surface-peach); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 12px; text-align: center; }
+        .honor-cell .h-val { font-size: 26px; font-weight: 700; color: var(--primary); }
+        .honor-cell .h-label { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
+        .result-hint { text-align: center; color: var(--text-secondary); font-size: 13px; margin-top: 10px; }
+        .breakdown { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 14px; }
+        .breakdown th, .breakdown td { padding: 8px 6px; text-align: center; border-bottom: 1px solid var(--border-subtle); }
+        .breakdown th { color: var(--text-secondary); font-weight: 700; }
+        .breakdown td.item-col { text-align: left; }
+        .breakdown .muted { color: var(--text-secondary); }
+        .req-card { background: var(--card-bg-color); border: 1px solid var(--border-card); border-radius: var(--radius-card); box-shadow: var(--shadow-soft); padding: 22px; margin-bottom: 20px; }
+        .req-card h2 { font-size: 20px; color: var(--primary); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+        .req-card p, .req-card li { color: var(--text-color); line-height: 1.8; }
+        .req-card ul { padding-left: 22px; margin: 8px 0; }
+        table.ref { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+        table.ref th, table.ref td { border: 1px solid var(--border-subtle); padding: 8px 10px; text-align: center; }
+        table.ref th { background: var(--surface-peach); color: var(--text-color); font-weight: 700; }
+        table.ref td.item-col { text-align: left; font-weight: 700; }
+        table.ref tr:nth-child(even) td { background: var(--surface-sand); }
+        .note { background: var(--surface-peach); border-left: 4px solid var(--amber); border-radius: 12px; padding: 12px 16px; font-size: 13px; color: var(--text-secondary); line-height: 1.7; margin-top: 14px; }
+        .level-chips { display: flex; flex-wrap: wrap; gap: 10px; margin: 10px 0; }
+        .chip { padding: 8px 16px; border-radius: var(--radius-pill); color: #fff; font-weight: 700; font-size: 14px; }
+        @media (max-width: 860px) { .calc-grid { grid-template-columns: 1fr; } }
+    </style>
+    <script src="assets/js/common.js"></script>
+    <script src="assets/js/physique.js"></script>
+    <script src="assets/js/learning-assistant.js"></script>
+</head>
+
+<body data-assistant-mode="study">
+    <div class="container">
+
+        <!-- 体测计算器 -->
+        <div class="page active" id="calcPage">
+            <h1 class="main-title">📏 北京体测计算器</h1>
+            <p class="subtitle">依据《国家学生体质健康标准（2014年修订）》与北京中考体育过程性考核“体测统测”口径。选择年级与性别，填入成绩，自动算体测总分、等级与中考赋分。</p>
+
+            <div class="calc-grid">
+                <!-- 输入区 -->
+                <div class="calc-panel">
+                    <div class="panel-title"><i class="fas fa-keyboard"></i><span>录入成绩</span></div>
+
+                    <div class="form-group">
+                        <label class="form-label">年级</label>
+                        <select class="form-control" id="gradeSel">
+                            <option value="4">四年级</option>
+                            <option value="6" selected>六年级</option>
+                            <option value="8">八年级</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">性别</label>
+                        <div class="seg" id="sexSeg">
+                            <button class="seg-btn active" data-sex="male" type="button"><i class="fas fa-mars"></i> 男生</button>
+                            <button class="seg-btn" data-sex="female" type="button"><i class="fas fa-venus"></i> 女生</button>
+                        </div>
+                    </div>
+
+                    <div class="field-row">
+                        <div class="form-group">
+                            <label class="form-label">身高 (cm)</label>
+                            <input class="form-control" id="heightInput" type="number" min="80" max="220" step="0.1" placeholder="如 150" inputmode="decimal">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">体重 (kg)</label>
+                            <input class="form-control" id="weightInput" type="number" min="10" max="200" step="0.1" placeholder="如 40" inputmode="decimal">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">各项测试成绩</label>
+                        <div id="itemInputs"></div>
+                    </div>
+
+                    <div class="calc-actions">
+                        <button class="btn btn-success" id="calcBtn" type="button"><i class="fas fa-calculator"></i> 计算</button>
+                        <button class="btn btn-secondary" id="demoBtn" type="button"><i class="fas fa-wand-magic-sparkles"></i> 示例</button>
+                        <button class="btn btn-secondary" id="resetBtn" type="button"><i class="fas fa-eraser"></i> 清空</button>
+                    </div>
+                </div>
+
+                <!-- 结果区 -->
+                <div class="calc-panel">
+                    <div class="panel-title"><i class="fas fa-award"></i><span>评估结果</span></div>
+                    <div class="result-score">
+                        <div class="num" id="finalScore">--</div>
+                        <div><span class="lvl lvl-及格" id="levelTag">待计算</span></div>
+                    </div>
+
+                    <div class="honor-box">
+                        <div class="honor-cell"><div class="h-val" id="honorPer">--</div><div class="h-label">本次体测赋分（0–10）</div></div>
+                        <div class="honor-cell"><div class="h-val" id="honorTotal">--</div><div class="h-label">三年累计（0–30）</div></div>
+                    </div>
+
+                    <div class="result-hint" id="resultHint">填写成绩后自动计算。总分=标准分+附加分（上限120）。</div>
+                    <div id="breakdownWrap"></div>
+
+                    <div class="note">
+                        <strong>说明：</strong>中考“体育与健康知识”另计 10 分（八年级第二学期），四项合计过程性考核 40 分。
+                        评分表数值取自参考来源（图片）经 OCR 整理，部分为估算，<strong>仅供参考</strong>，请以学校 / 官方发布为准。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 体测项目与要求 -->
+        <div class="page" id="rulesPage">
+            <h1 class="main-title">📋 北京体测统测标准</h1>
+            <p class="subtitle">2025年北京四/六/八年级开学体测纳入中考：考核项目、加分与赋分标准（《国家学生体质健康标准（2014年修订）》口径）。</p>
+
+            <div class="req-card">
+                <h2><i class="fas fa-circle-info"></i> 一、考核与计入方式</h2>
+                <ul>
+                    <li>考核年级：<strong>四年级、六年级、八年级</strong>第一学期；每次考核<strong>10分</strong>，共 <strong>30分</strong>。</li>
+                    <li>另有“体育与健康知识”<strong>10分</strong>（八年级第二学期）。四项合计<strong>过程性考核 40 分</strong>。</li>
+                </ul>
+            </div>
+
+            <div class="req-card">
+                <h2><i class="fas fa-percent"></i> 二、总分与加分</h2>
+                <p>体测总分 = <strong>标准分 + 附加分</strong>，满分 120 分：</p>
+                <ul>
+                    <li><strong>标准分</strong>：各单项指标得分 × 权重 之和，满分 <strong>100 分</strong>。</li>
+                    <li><strong>附加分</strong>：对成绩超过 100 分的加分指标加分，满分 <strong>20 分</strong>。</li>
+                    <li>加分指标：四、六年级 = <strong>1分钟跳绳</strong>（+20）；八年级 = 男生 <strong>引体向上 + 1000米跑</strong>、女生 <strong>1分钟仰卧起坐 + 800米跑</strong>（各 +10）。</li>
+                </ul>
+            </div>
+
+            <div class="req-card">
+                <h2><i class="fas fa-table-list"></i> 三、各年级项目与权重</h2>
+                <table class="ref">
+                    <thead><tr><th>项目 / 权重</th><th>四年级</th><th>六年级</th><th>八年级</th></tr></thead>
+                    <tbody>
+                        <tr><td class="item-col">体重指数(BMI)</td><td>15%</td><td>15%</td><td>15%</td></tr>
+                        <tr><td class="item-col">肺活量</td><td>15%</td><td>15%</td><td>15%</td></tr>
+                        <tr><td class="item-col">50米跑</td><td>20%</td><td>20%</td><td>20%</td></tr>
+                        <tr><td class="item-col">坐位体前屈</td><td>20%</td><td>10%</td><td>10%</td></tr>
+                        <tr><td class="item-col">一分钟跳绳</td><td>20%</td><td>10%</td><td>—</td></tr>
+                        <tr><td class="item-col">一分钟仰卧起坐</td><td>10%</td><td>20%</td><td>10%（女生）</td></tr>
+                        <tr><td class="item-col">50米×8往返跑</td><td>—</td><td>10%</td><td>—</td></tr>
+                        <tr><td class="item-col">立定跳远</td><td>—</td><td>—</td><td>10%</td></tr>
+                        <tr><td class="item-col">引体向上（男生）</td><td>—</td><td>—</td><td>10%</td></tr>
+                        <tr><td class="item-col">1000米（男）/800米（女）</td><td>—</td><td>—</td><td>20%</td></tr>
+                    </tbody>
+                </table>
+                <div class="note">八年级：男生考“引体向上 + 1000米跑”，女生考“一分钟仰卧起坐 + 800米跑”。</div>
+            </div>
+
+            <div class="req-card">
+                <h2><i class="fas fa-scale-balanced"></i> 四、中考赋分标准（三类六档）</h2>
+                <p>体测总分按“良好及以上 / 及格 / 不及格”三类六档折算为中考计入分（每次 0–10 分）：</p>
+                <table class="ref">
+                    <thead><tr><th>等级</th><th>体测总分</th><th>本次赋分</th><th>三年累计</th></tr></thead>
+                    <tbody>
+                        <tr><td>良好及以上</td><td>80 分及以上</td><td>10</td><td>30</td></tr>
+                        <tr><td>及格</td><td>75.0 ~ 79.9</td><td>8</td><td>24</td></tr>
+                        <tr><td>及格</td><td>70.0 ~ 74.9</td><td>8</td><td>24</td></tr>
+                        <tr><td>及格</td><td>65.0 ~ 69.9</td><td>7.5</td><td>22.5</td></tr>
+                        <tr><td>及格</td><td>60.0 ~ 64.9</td><td>7</td><td>21</td></tr>
+                        <tr><td>不及格</td><td>59.9 及以下</td><td>5.5</td><td>16.5</td></tr>
+                    </tbody>
+                </table>
+                <div class="note">赋分标准取自参考来源“体质健康测试统测赋分标准”表；体育与健康知识（10分）另计。</div>
+            </div>
+
+            <div class="req-card">
+                <h2><i class="fas fa-list-check"></i> 五、各项目测试要求与注意事项</h2>
+                <ul>
+                    <li><strong>体重指数(BMI)</strong>：脱鞋、穿轻便服装测量身高体重；BMI = 体重(kg) ÷ 身高(m)²。</li>
+                    <li><strong>肺活量</strong>：深吸气后向吹嘴平稳吹完，测 2 次取最大值（毫升）。</li>
+                    <li><strong>50米跑</strong>：站立式起跑，全力跑过终点线，成绩精确到 0.1 秒。</li>
+                    <li><strong>坐位体前屈</strong>：双腿伸直、缓慢前屈，双手中指匀速推游标，测 2 次取最好（厘米）。</li>
+                    <li><strong>一分钟跳绳</strong>：1 分钟内累计有效个数，绊绳不计（四、六年级，可加分）。</li>
+                    <li><strong>一分钟仰卧起坐</strong>：1 分钟内屈膝仰卧、双手抱头，双肘触膝计 1 个。</li>
+                    <li><strong>50米×8往返跑</strong>：往返 4 次共 400 米，绕标志物折返（六年级）。</li>
+                    <li><strong>立定跳远</strong>：双脚原地起跳，落地取最近点（八年级）。</li>
+                    <li><strong>引体向上</strong>：正握单杠、下巴过杠计 1 次（八年级男生，可加分）。</li>
+                    <li><strong>1000米 / 800米跑</strong>：站立式起跑，跑完规定距离（八年级，可加分）。</li>
+                </ul>
+                <div class="note">测试前充分热身，穿运动服与运动鞋；身体不适应按学校安排申请缓考。</div>
+            </div>
+
+            <div class="req-card">
+                <h2><i class="fas fa-triangle-exclamation"></i> 数据来源与免责声明</h2>
+                <p>本页评分表与赋分标准整理自参考网页（北京小升初信息网）的“北京市国家学生体质健康测试统测评分表”，
+                    其原始表格为图片，已由 OCR 提取并人工整理。<strong>肺活量、50米跑、BMI、赋分标准</strong>数值较可靠；
+                    <strong>坐位体前屈、一分钟跳绳/仰卧起坐、50米×8、立定跳远、引体向上、1000/800米</strong>等部分数值可能含 OCR 误差
+                    或为估算。结果<strong>仅供参考</strong>，请以学校 / 官方发布为准。</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let navLinks, pages;
+        let sex = 'male';
+        const ORDER_ALL = ['vital', 'sprint', 'sitreach', 'rope', 'situps', 'shuttle', 'standing', 'upper', 'run'];
+
+        function itemName(item, sex) {
+            if (item === 'upper') return sex === 'male' ? '引体向上' : '一分钟仰卧起坐';
+            if (item === 'run') return sex === 'male' ? '1000米跑' : '800米跑';
+            return Physique.ITEMS[item].name;
+        }
+        function itemUnit(item, sex) {
+            if (item === 'upper') return sex === 'male' ? '次' : '个';
+            if (item === 'run') return '秒';
+            return Physique.ITEMS[item].unit;
+        }
+        function itemDesc(item, sex) {
+            if (item === 'upper' || item === 'run') return '数值' + (Physique.ITEMS[item === 'run' ? 'run' : 'situps'].dir === 'low' ? '越小越好' : '越大越好') + '，可加分';
+            return Physique.ITEMS[item].desc;
+        }
+
+        function init() {
+            navLinks = document.querySelectorAll('.nav-link');
+            pages = document.querySelectorAll('.page');
+            syncThemeFromIndex();
+            setupEventListeners();
+            renderItemInputs();
+            initLearningAssistant();
+            if (typeof applyAssistantSettings === 'function') applyAssistantSettings();
+        }
+
+        function setupEventListeners() {
+            setupNavLinks(navLinks, pages, function (pageId) { switchPage(pageId); });
+            setupHomeLink('homeLink', 'index.html');
+            document.getElementById('gradeSel').addEventListener('change', function () { renderItemInputs(); recalc(); });
+            document.getElementById('sexSeg').addEventListener('click', function (e) {
+                const btn = e.target.closest('.seg-btn'); if (!btn) return;
+                sex = btn.getAttribute('data-sex');
+                document.querySelectorAll('#sexSeg .seg-btn').forEach(function (b) { b.classList.toggle('active', b === btn); });
+                renderItemInputs(); recalc();
+            });
+            ['heightInput', 'weightInput'].forEach(function (id) { document.getElementById(id).addEventListener('input', recalc); });
+            document.getElementById('itemInputs').addEventListener('input', recalc);
+            document.getElementById('calcBtn').addEventListener('click', recalc);
+            document.getElementById('demoBtn').addEventListener('click', fillDemo);
+            document.getElementById('resetBtn').addEventListener('click', resetForm);
+        }
+
+        function switchPage(pageId) { switchPageCommon(pageId, navLinks, pages); }
+
+        function gradeItems() {
+            const grade = parseInt(document.getElementById('gradeSel').value, 10);
+            return Physique.GRADES[grade].order;
+        }
+
+        function renderItemInputs() {
+            const items = gradeItems();
+            const wrap = document.getElementById('itemInputs');
+            const prev = {};
+            wrap.querySelectorAll('input[id^="val-"]').forEach(function (inp) { prev[inp.getAttribute('data-item')] = inp.value; });
+
+            let html = '<div class="item-input"><div class="item-name">体重指数(BMI)<small>由身高 / 体重自动计算</small></div>' +
+                '<div class="item-score" id="bmiValueCell" style="grid-column: 2 / 4;">--</div></div>';
+            items.forEach(function (item) {
+                const old = prev[item] || '';
+                html += '<div class="item-input">' +
+                    '<div class="item-name">' + itemName(item, sex) + '<small>' + itemDesc(item, sex) + '</small></div>' +
+                    '<input class="form-control" id="val-' + item + '" data-item="' + item + '" type="number" step="0.01" placeholder="' + itemUnit(item, sex) + '" inputmode="decimal" value="' + old + '">' +
+                    '<div class="item-score" id="score-' + item + '">--<small>分</small></div></div>';
+            });
+            wrap.innerHTML = html;
+        }
+
+        function readValues() {
+            const values = {};
+            document.querySelectorAll('#itemInputs input[id^="val-"]').forEach(function (inp) { values[inp.getAttribute('data-item')] = inp.value; });
+            return values;
+        }
+
+        function recalc() {
+            const input = {
+                grade: parseInt(document.getElementById('gradeSel').value, 10),
+                sex: sex,
+                height: parseFloat(document.getElementById('heightInput').value),
+                weight: parseFloat(document.getElementById('weightInput').value),
+                values: readValues()
+            };
+            const r = Physique.calculate(input);
+            if (!r) return;
+
+            const bmiCell = document.getElementById('bmiValueCell');
+            if (bmiCell) bmiCell.textContent = r.bmi != null ? (r.bmi.toFixed(1) + (r.rows[0].category ? ' (' + r.rows[0].category + ')' : '')) : '--';
+
+            r.rows.forEach(function (row) {
+                if (row.item === 'bmi') return;
+                const cell = document.getElementById('score-' + row.item); if (!cell) return;
+                if (row.score == null) cell.innerHTML = '--<small>分</small>';
+                else cell.innerHTML = row.score + '<small>分</small>' + (row.bonus ? ' <small style="color:var(--amber)">+' + row.bonus + '</small>' : '');
+            });
+
+            const hasAny = r.rows.some(function (x) { return x.score != null && x.score > 0; });
+            const finalEl = document.getElementById('finalScore');
+            const levelTag = document.getElementById('levelTag');
+            const honorPer = document.getElementById('honorPer');
+            const honorTotal = document.getElementById('honorTotal');
+            if (!hasAny) {
+                finalEl.textContent = '--'; levelTag.textContent = '待计算'; levelTag.className = 'lvl lvl-及格';
+                honorPer.textContent = '--'; honorTotal.textContent = '--';
+                document.getElementById('resultHint').textContent = '填写成绩后自动计算。总分=标准分+附加分（上限120）。';
+                document.getElementById('breakdownWrap').innerHTML = '';
+                return;
+            }
+
+            finalEl.textContent = r.rounded;
+            levelTag.textContent = r.level; levelTag.className = 'lvl lvl-' + r.level;
+            honorPer.textContent = r.honor;
+            honorTotal.textContent = r.honorTotal;
+            document.getElementById('resultHint').textContent =
+                '标准分 ' + r.standard + (r.bonus ? ' + 附加分 ' + r.bonus : '') + ' = ' + r.final + ' 分';
+            renderBreakdown(r);
+        }
+
+        function renderBreakdown(r) {
+            let rows = '';
+            r.rows.forEach(function (row) {
+                rows += '<tr><td class="item-col">' + row.name + (row.bonus ? ' <small style="color:var(--amber)">(加分 +' + row.bonus + ')</small>' : '') + '</td>' +
+                    '<td>' + row.weight + '%</td>' +
+                    '<td>' + (row.score == null ? '<span class="muted">未填</span>' : row.score) + '</td>' +
+                    '<td>' + (row.weighted == null ? '<span class="muted">—</span>' : row.weighted) + '</td></tr>';
+            });
+            document.getElementById('breakdownWrap').innerHTML =
+                '<table class="breakdown"><thead><tr><th class="item-col">项目</th><th>权重</th><th>单项得分</th><th>加权分</th></tr></thead><tbody>' + rows + '</tbody></table>';
+        }
+
+        function fillDemo() {
+            const g = document.getElementById('gradeSel').value;
+            document.getElementById('heightInput').value = g === '8' ? '165' : (g === '4' ? '138' : '150');
+            document.getElementById('weightInput').value = g === '8' ? '52' : (g === '4' ? '32' : '42');
+            const demo = {
+                4: { vital: 2600, sprint: 8.8, sitreach: 15, situps: 44, rope: 140 },
+                6: { vital: 3100, sprint: 8.3, sitreach: 16, situps: 47, shuttle: 93, rope: 160 },
+                8: sex === 'male'
+                    ? { vital: 3300, sprint: 8.0, sitreach: 14, standing: 220, upper: 12, run: 240 }
+                    : { vital: 2600, sprint: 8.4, sitreach: 18, standing: 190, upper: 46, run: 235 }
+            }[g];
+            document.querySelectorAll('#itemInputs input[id^="val-"]').forEach(function (inp) {
+                const it = inp.getAttribute('data-item');
+                inp.value = demo[it] != null ? demo[it] : '';
+            });
+            recalc();
+        }
+
+        function resetForm() {
+            document.getElementById('heightInput').value = '';
+            document.getElementById('weightInput').value = '';
+            document.querySelectorAll('#itemInputs input[id^="val-"]').forEach(function (inp) { inp.value = ''; });
+            recalc();
+        }
+
+        (function () {
+            var NAV_CONFIG = [
+                { page: 'calc',  icon: 'fa-calculator', label: '体测计算器', active: true },
+                { page: 'rules', icon: 'fa-list-check', label: '标准与赋分', active: false }
+            ];
+            injectNav(NAV_CONFIG);
+            injectFooter();
+            injectAssistant();
+            init();
+        })();
+    </script>
+
+</body>
+
+</html>
