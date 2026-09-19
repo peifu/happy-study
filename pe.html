@@ -419,7 +419,7 @@
 
         /* ===== 体测达标 / 达标标准（原 physique.html） ===== */
         .main-title { font-size: 30px; }
-        .calc-grid { display: grid; grid-template-columns: minmax(320px, 1fr) minmax(320px, 1fr); gap: 24px; align-items: start; margin-top: 10px; }
+        .calc-grid { display: grid; grid-template-columns: minmax(0, 2fr) minmax(320px, 1fr); gap: 24px; align-items: start; margin-top: 10px; }
         .calc-panel { background: var(--card-bg-color); border: 1px solid var(--border-card); border-radius: var(--radius-card); box-shadow: var(--shadow-soft); padding: 22px; }
         .panel-title { font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
         .field-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
@@ -465,6 +465,18 @@
         .level-chips { display: flex; flex-wrap: wrap; gap: 10px; margin: 10px 0; }
         .chip { padding: 8px 16px; border-radius: var(--radius-pill); color: #fff; font-weight: 700; font-size: 14px; }
         @media (max-width: 860px) { .calc-grid { grid-template-columns: 1fr; } }
+
+        /* ===== 体测评估：左侧录入区稍紧凑 ===== */
+        #calcPage .calc-panel--input { padding: 18px; }
+        #calcPage .calc-panel--input .panel-title { margin-bottom: 12px; }
+        #calcPage .calc-panel--input .form-group { margin-bottom: 12px; }
+        #calcPage .calc-panel--input .form-label { margin-bottom: 6px; }
+        #calcPage .calc-panel--input .form-control { padding: 8px 10px; border-radius: 12px; }
+        #calcPage .calc-panel--input .field-row { gap: 10px; }
+        #calcPage .calc-panel--input .item-input { grid-template-columns: 1fr 84px 76px; gap: 8px; padding: 7px 0; }
+        #calcPage .calc-panel--input .item-name small { font-size: 11px; }
+        #calcPage .calc-panel--input .item-score { font-size: 16px; }
+        #calcPage .calc-panel--input .calc-actions { margin-top: 12px; gap: 10px; }
     </style>
         <script src="assets/js/learning-assistant.js"></script>
     <script src="assets/js/common.js"></script>
@@ -819,28 +831,28 @@
 
         <!-- 体测达标 -->
         <div class="page" id="calcPage">
-            <h1 class="main-title">📏 体测达标</h1>
-            <p class="subtitle">依据《国家学生体质健康标准（2014年修订）》与北京中考体育过程性考核“体测统测”口径。选择年级与性别，填入成绩，自动算体测总分、等级与中考赋分。</p>
 
             <div class="calc-grid">
                 <!-- 输入区 -->
-                <div class="calc-panel">
+                <div class="calc-panel calc-panel--input">
                     <div class="panel-title"><i class="fas fa-keyboard"></i><span>录入成绩</span></div>
 
-                    <div class="form-group">
-                        <label class="form-label">年级</label>
-                        <select class="form-control" id="gradeSel">
-                            <option value="4" selected>四年级</option>
-                            <option value="6">六年级</option>
-                            <option value="8">八年级</option>
-                        </select>
-                    </div>
+                    <div class="field-row">
+                        <div class="form-group">
+                            <label class="form-label">年级</label>
+                            <select class="form-control" id="gradeSel">
+                                <option value="4" selected>四年级</option>
+                                <option value="6">六年级</option>
+                                <option value="8">八年级</option>
+                            </select>
+                        </div>
 
-                    <div class="form-group">
-                        <label class="form-label">性别</label>
-                        <div class="seg" id="sexSeg">
-                            <button class="seg-btn active" data-sex="male" type="button"><i class="fas fa-mars"></i> 男生</button>
-                            <button class="seg-btn" data-sex="female" type="button"><i class="fas fa-venus"></i> 女生</button>
+                        <div class="form-group">
+                            <label class="form-label">性别</label>
+                            <div class="seg" id="sexSeg">
+                                <button class="seg-btn active" data-sex="male" type="button"><i class="fas fa-mars"></i> 男生</button>
+                                <button class="seg-btn" data-sex="female" type="button"><i class="fas fa-venus"></i> 女生</button>
+                            </div>
                         </div>
                     </div>
 
@@ -893,8 +905,6 @@
 
         <!-- 达标标准 -->
         <div class="page" id="rulesPage">
-            <h1 class="main-title">📋 达标标准</h1>
-            <p class="subtitle">小学各年级体育项目达标标准（及格 / 良好 / 优秀 / 满分，男、女分列），以及北京体测统测（四 / 六 / 八年级）考核、加分与中考赋分标准（《国家学生体质健康标准（2014年修订）》口径）。</p>
 
             <div class="req-card">
                 <h2><i class="fas fa-clipboard-check"></i> 一、小学各年级体育项目达标标准</h2>
@@ -1070,8 +1080,8 @@
             { page: 'jumpRope',  icon: 'fa-forward',  label: '跳绳训练', active: false },
             { page: 'running',   icon: 'fa-running',  label: '跑步训练', active: false },
             { page: 'teaching',  icon: 'fa-video',    label: '训练教学', active: false },
-            { page: 'calc',      icon: 'fa-calculator', label: '体测达标', active: false },
             { page: 'rules',     icon: 'fa-list-check', label: '达标标准', active: false },
+            { page: 'calc',      icon: 'fa-calculator', label: '体测评估', active: false },
             
         ];
 
