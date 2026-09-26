@@ -6,7 +6,7 @@
     <script>/* 主题预热：避免首屏深色闪烁 */ (function(){try{var t=localStorage.getItem('theme')||'light';if(t==='light'||(t==='auto'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)){document.documentElement.classList.add('light-theme');}}catch(e){}})();</script>
     <link rel="icon" type="image/png" href="assets/logo/bear.png">
     <meta name="theme-color" content="#ffb347">
-    <title>快乐学习 - 小学语文诗词</title>
+    <title>快乐学习 - 诗词</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/common.css">
@@ -331,7 +331,7 @@
         }
 
         /* ===== 作文环节 ===== */
-        .comp-layout { grid-template-columns: 320px 1fr; align-items: start; }
+        .comp-layout { grid-template-columns: 1fr 350px; align-items: start; }
         .comp-side { position: sticky; top: 90px; }
         .comp-list { max-height: 60vh; }
         .comp-list .poem-item.active { background: rgba(234, 67, 53, 0.12); border-left: 4px solid var(--primary); }
@@ -350,7 +350,7 @@
         .comp-sample p:last-child { margin-bottom: 0; }
         @media (max-width: 800px) {
             .comp-layout { grid-template-columns: 1fr; }
-            .comp-side { position: static; }
+            .comp-side { position: static; order: -1; }
         }
     </style>
     <script src="assets/js/common.js"></script>
@@ -483,22 +483,23 @@
         <!-- 作文页面 -->
         <div class="page" id="compositionPage">
             <div class="main-content comp-layout">
-                <!-- 左：单元列表 -->
+                <!-- 左：单元详情 -->
+                <div class="comp-detail" id="compDetail">
+                    <div class="loading"><i class="fas fa-spinner fa-spin"></i><span>加载中...</span></div>
+                </div>
+                <!-- 右：单元列表 -->
                 <div class="progress-container comp-side">
                     <div class="progress-title">
                         <i class="fas fa-pen-nib"></i>
                         <span>作文单元</span>
                     </div>
+                    <select class="form-control" id="compGradeSelector" aria-label="选择年级"></select>
                     <div class="poem-list comp-list" id="compUnitList">
                         <div class="loading">
                             <i class="fas fa-spinner fa-spin"></i>
                             <span>加载作文列表...</span>
                         </div>
                     </div>
-                </div>
-                <!-- 右：单元详情 -->
-                <div class="comp-detail" id="compDetail">
-                    <div class="loading"><i class="fas fa-spinner fa-spin"></i><span>加载中...</span></div>
                 </div>
             </div>
         </div>
@@ -570,7 +571,7 @@
 
     <script>
         const NAV_CONFIG = [
-            { page: 'chinese',        icon: 'fa-pen-fancy',    label: '语文诗词', active: true },
+            { page: 'chinese',        icon: 'fa-pen-fancy',    label: '诗词',     active: true },
             { page: 'composition',    icon: 'fa-pen-nib',     label: '作文',     active: false },
             { page: 'daily',          icon: 'fa-calendar-day', label: '日积月累', active: false },
             { page: 'pinyinKnowledge', icon: 'fa-book',        label: '拼音知识', active: false },
@@ -742,6 +743,13 @@
             const randomDailyBtn = document.getElementById('randomDailyBtn');
             if (randomDailyBtn) {
                 randomDailyBtn.addEventListener('click', showRandomDaily);
+            }
+
+            const compGradeSelector = document.getElementById('compGradeSelector');
+            if (compGradeSelector) {
+                compGradeSelector.addEventListener('change', () => {
+                    loadCompositionBook(compGradeSelector.value);
+                });
             }
 
             document.querySelectorAll('.setting-option').forEach(option => {
@@ -1233,6 +1241,8 @@
 
         // ===== 作文环节 =====
         let compositionData = null;
+        let compositionIndex = [];
+        let currentCompBook = '';
 
         function cnUnitNum(n) {
             const cn = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'];
@@ -1240,7 +1250,51 @@
         }
 
         function loadCompositionData() {
-            fetch('data/chinese/composition-grade4a.json')
+            // 先加载作文索引，仅填充实际存在的年级到选择器
+            fetch('data/chinese/composition-index.json')
+                .then(response => {
+                    if (!response.ok) throw new Error('作文索引加载失败');
+                    return response.json();
+                })
+                .then(index => {
+                    compositionIndex = Array.isArray(index) ? index : [];
+                    const selector = document.getElementById('compGradeSelector');
+                    if (selector) {
+                        selector.innerHTML = '';
+                        compositionIndex.forEach(entry => {
+                            const opt = document.createElement('option');
+                            opt.value = entry.id;
+                            opt.textContent = entry.title;
+                            selector.appendChild(opt);
+                        });
+                    }
+                    if (compositionIndex.length === 0) {
+                        const listEl = document.getElementById('compUnitList');
+                        if (listEl) listEl.innerHTML = '<div class="error-message">暂无作文数据</div>';
+                        return;
+                    }
+                    loadCompositionBook(compositionIndex[0].id);
+                })
+                .catch(error => {
+                    console.error('加载作文索引失败:', error);
+                    loadCompositionBook('grade4a');
+                });
+        }
+
+        function loadCompositionBook(bookId) {
+            const entry = compositionIndex.find(e => e.id === bookId);
+            const file = entry ? entry.file : `data/chinese/composition-${bookId}.json`;
+            currentCompBook = bookId;
+
+            const selector = document.getElementById('compGradeSelector');
+            if (selector && selector.value !== bookId) selector.value = bookId;
+
+            const listEl = document.getElementById('compUnitList');
+            if (listEl) listEl.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i><span>加载作文列表...</span></div>';
+            const detailEl = document.getElementById('compDetail');
+            if (detailEl) detailEl.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i><span>加载中...</span></div>';
+
+            fetch(file)
                 .then(response => {
                     if (!response.ok) throw new Error('作文数据加载失败');
                     return response.json();
@@ -1252,9 +1306,7 @@
                 })
                 .catch(error => {
                     console.error('加载作文数据失败:', error);
-                    const listEl = document.getElementById('compUnitList');
                     if (listEl) listEl.innerHTML = '<div class="error-message">作文数据加载失败</div>';
-                    const detailEl = document.getElementById('compDetail');
                     if (detailEl) detailEl.innerHTML = '<div class="error-message">作文数据加载失败</div>';
                 });
         }
@@ -1286,7 +1338,7 @@
                 el.classList.toggle('active', i === index);
             });
 
-            let html = `<div class="comp-unit-head">第${cnUnitNum(unit.no)}单元 · ${unit.name}</div>`;
+            let html = '';
 
             html += '<div class="comp-section"><div class="comp-section-title"><i class="fas fa-lightbulb"></i>写作指南</div>';
             if (unit.requirements) {
