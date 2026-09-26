@@ -329,6 +329,29 @@
                 padding: 8px 10px;
             }
         }
+
+        /* ===== 作文环节 ===== */
+        .comp-layout { grid-template-columns: 320px 1fr; align-items: start; }
+        .comp-side { position: sticky; top: 90px; }
+        .comp-list { max-height: 60vh; }
+        .comp-list .poem-item.active { background: rgba(234, 67, 53, 0.12); border-left: 4px solid var(--primary); }
+        .comp-detail { display: flex; flex-direction: column; gap: 20px; }
+        .comp-unit-head { font-size: 24px; font-weight: 700; color: var(--primary); margin: 0; }
+        .comp-section { background: var(--card-bg-color); border: 1px solid var(--border-card); border-radius: var(--radius-card); box-shadow: var(--shadow-soft); padding: 22px; }
+        .comp-section-title { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 14px; }
+        .comp-sub { font-weight: 700; color: var(--secondary); margin: 14px 0 6px; }
+        .comp-section > p { line-height: 1.9; margin: 0; }
+        .comp-list-ul { margin: 0; padding-left: 22px; line-height: 1.9; }
+        .comp-words { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+        .comp-word { background: var(--surface-peach); border: 1px solid var(--border-subtle); border-radius: var(--radius-pill); padding: 4px 12px; font-size: 14px; }
+        .comp-sample-title { font-size: 18px; font-weight: 700; color: var(--text-color); }
+        .comp-sample-count { font-size: 13px; color: var(--text-secondary); margin: 4px 0 12px; }
+        .comp-sample p { line-height: 2; text-indent: 2em; margin: 0 0 12px; }
+        .comp-sample p:last-child { margin-bottom: 0; }
+        @media (max-width: 800px) {
+            .comp-layout { grid-template-columns: 1fr; }
+            .comp-side { position: static; }
+        }
     </style>
     <script src="assets/js/common.js"></script>
     <script src="assets/js/learning-assistant.js"></script>
@@ -457,6 +480,29 @@
             </div>
         </div>
 
+        <!-- 作文页面 -->
+        <div class="page" id="compositionPage">
+            <div class="main-content comp-layout">
+                <!-- 左：单元列表 -->
+                <div class="progress-container comp-side">
+                    <div class="progress-title">
+                        <i class="fas fa-pen-nib"></i>
+                        <span>作文单元</span>
+                    </div>
+                    <div class="poem-list comp-list" id="compUnitList">
+                        <div class="loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <span>加载作文列表...</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- 右：单元详情 -->
+                <div class="comp-detail" id="compDetail">
+                    <div class="loading"><i class="fas fa-spinner fa-spin"></i><span>加载中...</span></div>
+                </div>
+            </div>
+        </div>
+
         <!-- 设置页面 -->
         <div class="page" id="settingsPage">
             <h2>系统设置</h2>
@@ -525,6 +571,7 @@
     <script>
         const NAV_CONFIG = [
             { page: 'chinese',        icon: 'fa-pen-fancy',    label: '语文诗词', active: true },
+            { page: 'composition',    icon: 'fa-pen-nib',     label: '作文',     active: false },
             { page: 'daily',          icon: 'fa-calendar-day', label: '日积月累', active: false },
             { page: 'pinyinKnowledge', icon: 'fa-book',        label: '拼音知识', active: false },
             { page: 'settings',       icon: 'fa-cog',          label: '设置',     active: false },
@@ -623,6 +670,9 @@
             setupEventListeners();
 
             initLearningAssistant();
+
+            // 加载作文数据
+            loadCompositionData();
         }
 
         // 加载诗词数据
@@ -1179,6 +1229,101 @@
                 `;
                 dailyTranslationElement.textContent = dailyItem.translation;
             }
+        }
+
+        // ===== 作文环节 =====
+        let compositionData = null;
+
+        function cnUnitNum(n) {
+            const cn = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'];
+            return cn[n - 1] || n;
+        }
+
+        function loadCompositionData() {
+            fetch('data/chinese/composition-grade4a.json')
+                .then(response => {
+                    if (!response.ok) throw new Error('作文数据加载失败');
+                    return response.json();
+                })
+                .then(data => {
+                    compositionData = data;
+                    renderCompUnitList();
+                    showCompUnit(0);
+                })
+                .catch(error => {
+                    console.error('加载作文数据失败:', error);
+                    const listEl = document.getElementById('compUnitList');
+                    if (listEl) listEl.innerHTML = '<div class="error-message">作文数据加载失败</div>';
+                    const detailEl = document.getElementById('compDetail');
+                    if (detailEl) detailEl.innerHTML = '<div class="error-message">作文数据加载失败</div>';
+                });
+        }
+
+        function renderCompUnitList() {
+            const listEl = document.getElementById('compUnitList');
+            if (!listEl || !compositionData) return;
+
+            listEl.innerHTML = '';
+            compositionData.units.forEach((unit, index) => {
+                const item = document.createElement('div');
+                item.className = 'poem-item';
+                item.innerHTML = `
+                    <div>
+                        <div class="poem-name">${unit.name}</div>
+                        <div class="poem-author">第${cnUnitNum(unit.no)}单元</div>
+                    </div>
+                `;
+                item.addEventListener('click', () => showCompUnit(index));
+                listEl.appendChild(item);
+            });
+        }
+
+        function showCompUnit(index) {
+            if (!compositionData || !compositionData.units[index]) return;
+            const unit = compositionData.units[index];
+
+            document.querySelectorAll('#compUnitList .poem-item').forEach((el, i) => {
+                el.classList.toggle('active', i === index);
+            });
+
+            let html = `<div class="comp-unit-head">第${cnUnitNum(unit.no)}单元 · ${unit.name}</div>`;
+
+            html += '<div class="comp-section"><div class="comp-section-title"><i class="fas fa-lightbulb"></i>写作指南</div>';
+            if (unit.requirements) {
+                html += `<div class="comp-sub">写作要求</div><p>${unit.requirements}</p>`;
+            }
+            if (unit.format && unit.format.length) {
+                html += '<div class="comp-sub">书信格式</div><ul class="comp-list-ul">' +
+                    unit.format.map(x => `<li>${x}</li>`).join('') + '</ul>';
+            }
+            if (unit.ideas && unit.ideas.length) {
+                html += '<div class="comp-sub">写作思路</div><ul class="comp-list-ul">' +
+                    unit.ideas.map(x => `<li>${x}</li>`).join('') + '</ul>';
+            }
+            if (unit.goodWords && unit.goodWords.length) {
+                html += '<div class="comp-sub">高分好词</div><div class="comp-words">' +
+                    unit.goodWords.map(x => `<span class="comp-word">${x}</span>`).join('') + '</div>';
+            }
+            if (unit.cautions && unit.cautions.length) {
+                html += '<div class="comp-sub">注意事项（避坑）</div><ul class="comp-list-ul">' +
+                    unit.cautions.map(x => `<li>${x}</li>`).join('') + '</ul>';
+            }
+            html += '</div>';
+
+            if (unit.sample) {
+                html += '<div class="comp-section"><div class="comp-section-title"><i class="fas fa-star"></i>满分范文</div>' +
+                    `<div class="comp-sample-title">${unit.sample.title}</div>` +
+                    (unit.sample.wordCount ? `<div class="comp-sample-count">约 ${unit.sample.wordCount} 字</div>` : '') +
+                    '<div class="comp-sample">' + unit.sample.paragraphs.map(p => `<p>${p}</p>`).join('') + '</div></div>';
+            }
+
+            const tips = compositionData.generalTips || [];
+            if (tips.length) {
+                html += '<div class="comp-section"><div class="comp-section-title"><i class="fas fa-triangle-exclamation"></i>通用满分注意事项</div><ul class="comp-list-ul">' +
+                    tips.map(x => `<li>${x}</li>`).join('') + '</ul></div>';
+            }
+
+            document.getElementById('compDetail').innerHTML = html;
         }
 
         // 初始化应用
