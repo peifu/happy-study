@@ -335,7 +335,7 @@
         .comp-side { position: sticky; top: 90px; }
         .comp-list { max-height: 60vh; }
         .comp-list .poem-item.active { background: rgba(234, 67, 53, 0.12); border-left: 4px solid var(--primary); }
-        .comp-detail { display: flex; flex-direction: column; gap: 20px; }
+        .comp-detail { display: flex; flex-direction: column; gap: 20px; scroll-margin-top: 90px; }
         .comp-unit-head { font-size: 24px; font-weight: 700; color: var(--primary); margin: 0; }
         .comp-section { background: var(--card-bg-color); border: 1px solid var(--border-card); border-radius: var(--radius-card); box-shadow: var(--shadow-soft); padding: 22px; }
         .comp-section-title { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 14px; }
@@ -1325,9 +1325,22 @@
                         <div class="poem-author">第${cnUnitNum(unit.no)}单元</div>
                     </div>
                 `;
-                item.addEventListener('click', () => showCompUnit(index));
+                item.addEventListener('click', () => {
+                    showCompUnit(index);
+                    scrollCompDetailToTop();
+                });
                 listEl.appendChild(item);
             });
+        }
+
+        function scrollCompDetailToTop() {
+            const detailEl = document.getElementById('compDetail');
+            if (!detailEl) return;
+            if (typeof detailEl.scrollIntoView === 'function') {
+                detailEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
         }
 
         function showCompUnit(index) {
