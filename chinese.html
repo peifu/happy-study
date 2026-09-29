@@ -352,6 +352,24 @@
             .comp-layout { grid-template-columns: 1fr; }
             .comp-side { position: static; order: -1; }
         }
+
+        /* ===== 阅读理解技巧 ===== */
+        .rd-detail { display: flex; flex-direction: column; gap: 20px; scroll-margin-top: 90px; }
+        .rd-card { background: var(--card-bg-color); border: 1px solid var(--border-card); border-radius: var(--radius-card); box-shadow: var(--shadow-soft); padding: 22px; }
+        .rd-card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid var(--surface-sand); }
+        .rd-badge { flex: none; background: linear-gradient(135deg, var(--amber-soft) 0%, var(--amber) 100%); color: #fff; font-size: 13px; font-weight: 700; padding: 5px 12px; border-radius: var(--radius-pill); box-shadow: 0 4px 10px var(--glow-amber); }
+        .rd-card-title { font-size: 18px; font-weight: 700; color: var(--primary); margin: 0; }
+        .rd-group-title { font-weight: 700; color: var(--secondary); margin: 14px 0 8px; font-size: 15px; }
+        .rd-group-title:first-of-type { margin-top: 0; }
+        .rd-list { margin: 0; padding-left: 22px; line-height: 1.9; }
+        .rd-list li { margin-bottom: 3px; }
+        .rd-hl { color: var(--primary); font-weight: 700; }
+        .rd-table-wrap { overflow-x: auto; }
+        .rd-table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 640px; }
+        .rd-table th, .rd-table td { border: 1px solid var(--border-subtle); padding: 12px 14px; text-align: left; vertical-align: top; line-height: 1.8; }
+        .rd-table thead th { background: var(--surface-sand); color: var(--primary); font-weight: 700; white-space: nowrap; }
+        .rd-table tbody tr:nth-child(even) { background: var(--surface-peach); }
+        .rd-table .rd-method { font-weight: 700; color: var(--primary); white-space: nowrap; }
     </style>
     <script src="assets/js/common.js"></script>
     <script src="assets/js/learning-assistant.js"></script>
@@ -450,6 +468,29 @@
                         <div class="loading">
                             <i class="fas fa-spinner fa-spin"></i>
                             <span>加载诗词列表中...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 阅读理解技巧页面 -->
+        <div class="page" id="readingPage">
+            <div class="main-content comp-layout">
+                <!-- 左：考点详情 -->
+                <div class="rd-detail" id="rdDetail">
+                    <div class="loading"><i class="fas fa-spinner fa-spin"></i><span>加载中...</span></div>
+                </div>
+                <!-- 右：考点导航 -->
+                <div class="progress-container comp-side">
+                    <div class="progress-title">
+                        <i class="fas fa-book-open"></i>
+                        <span>考点导航</span>
+                    </div>
+                    <div class="poem-list comp-list" id="rdTopicList">
+                        <div class="loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <span>加载考点...</span>
                         </div>
                     </div>
                 </div>
@@ -572,6 +613,7 @@
     <script>
         const NAV_CONFIG = [
             { page: 'chinese',        icon: 'fa-pen-fancy',    label: '诗词',     active: true },
+            { page: 'reading',        icon: 'fa-book-open',    label: '阅读',     active: false },
             { page: 'composition',    icon: 'fa-pen-nib',     label: '作文',     active: false },
             { page: 'daily',          icon: 'fa-calendar-day', label: '日积月累', active: false },
             { page: 'pinyinKnowledge', icon: 'fa-book',        label: '拼音知识', active: false },
@@ -674,6 +716,9 @@
 
             // 加载作文数据
             loadCompositionData();
+
+            // 加载阅读理解数据
+            loadReadingData();
         }
 
         // 加载诗词数据
@@ -1389,6 +1434,109 @@
             }
 
             document.getElementById('compDetail').innerHTML = html;
+        }
+
+        // ===== 阅读理解环节 =====
+        let readingData = null;
+
+        function rdEscape(s) {
+            return String(s == null ? '' : s)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+        }
+
+        function rdFmt(s) {
+            return rdEscape(s).replace(/\*\*(.+?)\*\*/g, '<strong class="rd-hl">$1</strong>');
+        }
+
+        function loadReadingData() {
+            fetch('data/chinese/reading-skills.json')
+                .then(response => {
+                    if (!response.ok) throw new Error('阅读数据加载失败');
+                    return response.json();
+                })
+                .then(data => {
+                    readingData = data;
+                    renderReadingTopicList();
+                    showReadingTopic(0);
+                })
+                .catch(error => {
+                    console.error('加载阅读数据失败:', error);
+                    const listEl = document.getElementById('rdTopicList');
+                    if (listEl) listEl.innerHTML = '<div class="error-message">阅读数据加载失败</div>';
+                    const detailEl = document.getElementById('rdDetail');
+                    if (detailEl) detailEl.innerHTML = '<div class="error-message">阅读数据加载失败</div>';
+                });
+        }
+
+        function renderReadingTopicList() {
+            const listEl = document.getElementById('rdTopicList');
+            if (!listEl || !readingData) return;
+
+            listEl.innerHTML = '';
+            (readingData.topics || []).forEach((topic, index) => {
+                const item = document.createElement('div');
+                item.className = 'poem-item';
+                item.innerHTML = `
+                    <div>
+                        <div class="poem-name">${rdFmt(topic.title)}</div>
+                        <div class="poem-author">考点${cnUnitNum(topic.no)}</div>
+                    </div>
+                `;
+                item.addEventListener('click', () => {
+                    showReadingTopic(index);
+                    scrollReadingDetailToTop();
+                });
+                listEl.appendChild(item);
+            });
+        }
+
+        function scrollReadingDetailToTop() {
+            const detailEl = document.getElementById('rdDetail');
+            if (!detailEl) return;
+            if (typeof detailEl.scrollIntoView === 'function') {
+                detailEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function showReadingTopic(index) {
+            if (!readingData || !readingData.topics[index]) return;
+            const topic = readingData.topics[index];
+
+            document.querySelectorAll('#rdTopicList .poem-item').forEach((el, i) => {
+                el.classList.toggle('active', i === index);
+            });
+
+            let html = '<section class="rd-card">';
+            html += `<div class="rd-card-head"><span class="rd-badge">考点${cnUnitNum(topic.no)}</span>` +
+                `<h3 class="rd-card-title">${rdFmt(topic.title)}</h3></div>`;
+
+            (topic.blocks || []).forEach(block => {
+                if (block.type === 'table') {
+                    html += '<div class="rd-table-wrap"><table class="rd-table"><thead><tr>';
+                    (block.headers || []).forEach(h => { html += `<th>${rdFmt(h)}</th>`; });
+                    html += '</tr></thead><tbody>';
+                    (block.rows || []).forEach(row => {
+                        html += '<tr>';
+                        row.forEach((cell, ci) => {
+                            html += `<td${ci === 0 ? ' class="rd-method"' : ''}>${rdFmt(cell)}</td>`;
+                        });
+                        html += '</tr>';
+                    });
+                    html += '</tbody></table></div>';
+                } else if (block.type === 'group') {
+                    if (block.title) html += `<div class="rd-group-title">${rdFmt(block.title)}</div>`;
+                    html += '<ul class="rd-list">';
+                    (block.items || []).forEach(item => { html += `<li>${rdFmt(item)}</li>`; });
+                    html += '</ul>';
+                }
+            });
+
+            html += '</section>';
+            document.getElementById('rdDetail').innerHTML = html;
         }
 
         // 初始化应用
