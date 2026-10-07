@@ -627,7 +627,7 @@
                     const defs = e.defs || [];
                     if (defs.length) {
                         let h = '<div class="en-sec-title">释义</div><div class="en-defs">';
-                        defs.slice(0, 6).forEach(line => {
+                        defs.slice(0, 2).forEach(line => {
                             const i = line.indexOf('\t');
                             const pos = i >= 0 ? line.slice(0, i) : '';
                             const txt = (i >= 0 ? line.slice(i + 1) : line).trim();
@@ -702,8 +702,8 @@
             const strokeHtml = isCJK
                 ? '<div class="zh-stroke"><div id="hanziTarget"></div>' +
                   '<div class="zh-stroke-btns">' +
-                  '<button id="hanziPlay" class="btn btn-secondary" type="button"><i class="fas fa-play"></i> 播放笔顺</button>' +
-                  '<button id="hanziOutline" class="btn btn-secondary" type="button"><i class="fas fa-pencil"></i> 循环描红</button>' +
+                  '<button id="hanziPlay" class="btn btn-secondary" type="button"><i class="fas fa-play"></i> 笔顺</button>' +
+                  '<button id="hanziOutline" class="btn btn-secondary" type="button"><i class="fas fa-pencil"></i> 循环</button>' +
                   '</div></div>'
                 : '<div class="zh-stroke"><div class="dict-hint">请输入汉字以查看笔顺。</div></div>';
 
