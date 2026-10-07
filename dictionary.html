@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>/* 主题预热：避免首屏深色闪烁 */ (function () { try { var t = localStorage.getItem('theme') || 'light'; if (t === 'light' || (t === 'auto' && window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches)) { document.documentElement.classList.add('light-theme'); } } catch (e) { } })();</script>
+    <link rel="icon" type="image/png" href="assets/logo/bear.png">
+    <meta name="theme-color" content="#ffb347">
+    <title>快乐学习 - 词典</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/common.css">
+    <link rel="stylesheet" href="assets/css/learning-assistant.css">
+    <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5.0/dist/hanzi-writer.min.js"></script>
+    <script src="assets/js/common.js"></script>
+    <script src="assets/js/learning-assistant.js"></script>
+    <style>
+        /* ===== 词典 ===== */
+        .dict-card {
+            background: var(--card-bg-color);
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius-card);
+            box-shadow: var(--shadow-soft);
+            padding: 26px;
+        }
+
+        .dict-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary);
+            font-size: 22px;
+            font-weight: 700;
+            margin: 0 0 20px;
+        }
+
+        .dict-search {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        .dict-search .form-control {
+            flex: 1;
+            font-size: 16px;
+        }
+
+        .dict-result {
+            min-height: 90px;
+            line-height: 1.9;
+        }
+
+        .dict-empty,
+        .dict-hint {
+            color: var(--text-secondary);
+        }
+
+        .dict-error {
+            color: var(--danger);
+        }
+
+        /* 英文词典 */
+        .en-word {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--ink-green);
+            margin-bottom: 6px;
+        }
+
+        .en-trans {
+            font-size: 20px;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .en-alt-title {
+            font-weight: 700;
+            color: var(--secondary);
+            margin: 12px 0 8px;
+        }
+
+        .en-alt {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .en-alt span {
+            background: var(--surface-peach);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-pill);
+            padding: 4px 12px;
+            font-size: 14px;
+        }
+
+        /* 汉语词典 */
+        .zh-grid {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 26px;
+            align-items: start;
+        }
+
+        .zh-stroke {
+            text-align: center;
+        }
+
+        #hanziTarget {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            border: 1px dashed var(--border-subtle);
+            border-radius: 16px;
+            background: var(--surface-peach);
+        }
+
+        .zh-stroke-btns {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 12px;
+        }
+
+        .zh-stroke-btns .btn {
+            padding: 8px 14px;
+            font-size: 14px;
+        }
+
+        .zh-char {
+            font-size: 40px;
+            font-weight: 800;
+            color: var(--ink-green);
+            line-height: 1.1;
+            margin-bottom: 10px;
+        }
+
+        .zh-pinyin {
+            font-size: 18px;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .zh-meaning {
+            line-height: 1.9;
+            margin-bottom: 14px;
+        }
+
+        .zh-words-title {
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 8px;
+        }
+
+        .zh-words {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .zh-word {
+            background: var(--surface-peach);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-pill);
+            padding: 4px 12px;
+        }
+
+        @media (max-width: 600px) {
+            .zh-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dict-search {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body data-assistant-mode="study">
+    <div class="container">
+        <!-- 英文词典 -->
+        <div class="page active" id="englishDictPage">
+            <div class="dict-card">
+                <h2 class="dict-title"><i class="fas fa-language"></i> 英文词典</h2>
+                <div class="dict-search">
+                    <input id="enInput" class="form-control" type="text" autocomplete="off"
+                        placeholder="输入英文或中文单词，如 apple / 苹果，回车查询">
+                    <button id="enBtn" class="btn btn-primary" type="button">
+                        <i class="fas fa-search"></i><span>查询</span>
+                    </button>
+                </div>
+                <div id="enResult" class="dict-result">
+                    <div class="dict-hint">输入单词后点击“查询”，即可在线得到中英对照结果。</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 汉语词典 -->
+        <div class="page" id="chineseDictPage">
+            <div class="dict-card">
+                <h2 class="dict-title"><i class="fas fa-book"></i> 汉语词典</h2>
+                <div class="dict-search">
+                    <input id="zhInput" class="form-control" type="text" maxlength="1" autocomplete="off"
+                        placeholder="输入一个汉字，如 好，回车查询">
+                    <button id="zhBtn" class="btn btn-primary" type="button">
+                        <i class="fas fa-search"></i><span>查询</span>
+                    </button>
+                </div>
+                <div id="zhResult" class="dict-result">
+                    <div class="dict-hint">输入一个汉字，可查看笔顺动画、字义和组词。</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const NAV_CONFIG = [
+            { page: 'englishDict', icon: 'fa-language', label: '英文词典', active: true },
+            { page: 'chineseDict', icon: 'fa-book', label: '汉语词典', active: false },
+        ];
+
+        let navLinks, pages;
+        let charDict = [];
+        let hanziWriter = null;
+
+        function init() {
+            syncThemeFromIndex();
+            navLinks = document.querySelectorAll('.nav-link');
+            pages = document.querySelectorAll('.page');
+            setupEventListeners();
+            initLearningAssistant();
+            loadCharDict();
+        }
+
+        function setupEventListeners() {
+            setupNavLinks(navLinks, pages);
+            setupHomeLink('homeLink', 'index.html');
+
+            const enInput = document.getElementById('enInput');
+            const enBtn = document.getElementById('enBtn');
+            if (enBtn) enBtn.addEventListener('click', searchEnglish);
+            if (enInput) enInput.addEventListener('keydown', e => { if (e.key === 'Enter') searchEnglish(); });
+
+            const zhInput = document.getElementById('zhInput');
+            const zhBtn = document.getElementById('zhBtn');
+            if (zhBtn) zhBtn.addEventListener('click', searchChinese);
+            if (zhInput) zhInput.addEventListener('keydown', e => { if (e.key === 'Enter') searchChinese(); });
+        }
+
+        function escHtml(s) {
+            return String(s == null ? '' : s)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+        }
+
+        // ===== 英文词典：中英互译（MyMemory 在线 API） =====
+        function searchEnglish() {
+            const input = document.getElementById('enInput');
+            const result = document.getElementById('enResult');
+            const q = (input.value || '').trim();
+            if (!q) { result.innerHTML = '<div class="dict-hint">请先输入要查询的单词。</div>'; return; }
+
+            const isZh = /[\u4e00-\u9fff]/.test(q);
+            const pair = isZh ? 'zh-CN|en' : 'en|zh-CN';
+            result.innerHTML = '<div class="dict-hint"><i class="fas fa-spinner fa-spin"></i> 查询中...</div>';
+
+            fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(q) + '&langpair=' + encodeURIComponent(pair))
+                .then(r => r.json())
+                .then(data => {
+                    const t = data && data.responseData && data.responseData.translatedText;
+                    if (!t) { result.innerHTML = '<div class="dict-empty">未找到结果，请换一个词试试。</div>'; return; }
+
+                    let html = '<div class="en-word">' + escHtml(q) + '</div>';
+                    html += '<div class="en-trans">' + escHtml(t) + '</div>';
+
+                    // 其他译法
+                    const seen = new Set([String(t).toLowerCase()]);
+                    const alts = [];
+                    (data.matches || []).forEach(m => {
+                        const tr = m && m.translation;
+                        if (tr && !seen.has(String(tr).toLowerCase())) {
+                            seen.add(String(tr).toLowerCase());
+                            alts.push(tr);
+                        }
+                    });
+                    if (alts.length) {
+                        html += '<div class="en-alt-title">其他译法</div><div class="en-alt">' +
+                            alts.slice(0, 8).map(x => '<span>' + escHtml(x) + '</span>').join('') + '</div>';
+                    }
+                    result.innerHTML = html;
+                })
+                .catch(err => {
+                    console.error('翻译查询失败:', err);
+                    result.innerHTML = '<div class="dict-error">在线查询失败，请检查网络后重试。</div>';
+                });
+        }
+
+        // ===== 汉语词典：本地字义/组词 + hanzi-writer 在线笔顺 =====
+        function loadCharDict() {
+            fetch('data/chinese/char-dict.json')
+                .then(r => { if (!r.ok) throw new Error('字典数据加载失败'); return r.json(); })
+                .then(data => { charDict = Array.isArray(data.characters) ? data.characters : []; })
+                .catch(err => { console.error('加载汉字数据失败:', err); charDict = []; });
+        }
+
+        function searchChinese() {
+            const input = document.getElementById('zhInput');
+            const result = document.getElementById('zhResult');
+            const raw = (input.value || '').trim();
+            const char = Array.from(raw)[0];
+            if (!char) { result.innerHTML = '<div class="dict-hint">请先输入一个汉字。</div>'; return; }
+
+            const isCJK = /[\u4e00-\u9fff]/.test(char);
+            const entry = charDict.find(c => c.char === char);
+
+            let infoHtml = '<div class="zh-char">' + escHtml(char) + '</div>';
+            if (entry) {
+                infoHtml += '<div class="zh-pinyin">拼音：' + escHtml(entry.pinyin) + '</div>';
+                infoHtml += '<div class="zh-meaning">' + escHtml(entry.meaning) + '</div>';
+                infoHtml += '<div class="zh-words-title">组词</div><div class="zh-words">' +
+                    (entry.words || []).map(w => '<span class="zh-word">' + escHtml(w) + '</span>').join('') + '</div>';
+            } else {
+                infoHtml += '<div class="dict-empty">暂未收录该字的释义与组词' + (isCJK ? '（笔顺仍可查看）' : '') + '。</div>';
+            }
+
+            const strokeHtml = isCJK
+                ? '<div class="zh-stroke"><div id="hanziTarget"></div>' +
+                  '<div class="zh-stroke-btns">' +
+                  '<button id="hanziPlay" class="btn btn-secondary" type="button"><i class="fas fa-play"></i> 播放笔顺</button>' +
+                  '<button id="hanziOutline" class="btn btn-secondary" type="button"><i class="fas fa-pencil"></i> 循环描红</button>' +
+                  '</div></div>'
+                : '<div class="zh-stroke"><div class="dict-hint">请输入汉字以查看笔顺。</div></div>';
+
+            result.innerHTML = '<div class="zh-grid">' + strokeHtml + '<div class="zh-info">' + infoHtml + '</div></div>';
+
+            if (isCJK && typeof HanziWriter !== 'undefined') {
+                try {
+                    hanziWriter = HanziWriter.create('hanziTarget', char, {
+                        width: 200, height: 200, padding: 8, showOutline: true,
+                        strokeAnimationSpeed: 1, delayBetweenStrokes: 250
+                    });
+                    hanziWriter.animateCharacter();
+                    const playBtn = document.getElementById('hanziPlay');
+                    const outlineBtn = document.getElementById('hanziOutline');
+                    if (playBtn) playBtn.addEventListener('click', () => hanziWriter.animateCharacter());
+                    if (outlineBtn) outlineBtn.addEventListener('click', () => hanziWriter.loopCharacterAnimation());
+                } catch (e) {
+                    console.error('笔顺渲染失败:', e);
+                }
+            }
+        }
+
+        // 初始化应用
+        (function () {
+            injectNav(NAV_CONFIG);
+            injectFooter();
+            injectAssistant();
+            init();
+        })();
+    </script>
+
+</body>
+
+</html>
