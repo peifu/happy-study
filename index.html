@@ -596,6 +596,11 @@
                 switchPage('qiboshi');
             });
 
+            const dictionaryLink = document.querySelector('[data-page="dictionary"]');
+            if (dictionaryLink) dictionaryLink.addEventListener('click', function() {
+                switchPage('dictionary');
+            });
+
             // 卡片点击事件
             document.getElementById('englishCard').addEventListener('click', function() {
                 switchPage('englishCard');
