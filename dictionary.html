@@ -106,6 +106,77 @@
             font-size: 14px;
         }
 
+        .en-head {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .en-ipa {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        .en-audios {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 8px 0 10px;
+        }
+
+        .en-audio-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--surface-peach);
+            border: 1px solid var(--border-subtle);
+            color: var(--primary);
+            border-radius: var(--radius-pill);
+            padding: 3px 12px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .en-audio-btn:hover {
+            border-color: var(--primary);
+        }
+
+        .en-sec-title {
+            font-weight: 700;
+            color: var(--secondary);
+            margin: 16px 0 8px;
+        }
+
+        .en-defs {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .en-def-line {
+            line-height: 1.7;
+        }
+
+        .pos-tag {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 700;
+            color: #fff;
+            background: var(--primary);
+            border-radius: var(--radius-pill);
+            padding: 1px 8px;
+            margin-right: 2px;
+        }
+
+        .en-example {
+            color: var(--text-secondary);
+            font-style: italic;
+            font-size: 14px;
+            margin-top: 2px;
+        }
+
         /* 汉语词典 */
         .zh-grid {
             display: grid;
@@ -319,7 +390,7 @@
                             </button>
                         </div>
                         <div id="enResult" class="dict-result">
-                            <div class="dict-hint">输入单词后点击“查询”，即可在线得到中英对照结果。</div>
+                            <div class="dict-hint">输入英文单词可查看音标、发音、释义、例句和中文翻译；输入中文可查英文。</div>
                         </div>
                     </div>
                 </div>
@@ -460,7 +531,36 @@
             }
         }
 
-        /* ===== 英文词典：中英互译（MyMemory 在线 API） ===== */
+        function fetchWithTimeout(url, ms) {
+            const ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+            const timer = setTimeout(() => { if (ctrl) ctrl.abort(); }, ms);
+            return fetch(url, ctrl ? { signal: ctrl.signal } : undefined).finally(() => clearTimeout(timer));
+        }
+
+        // 词性缩写 -> 中文
+        function posCn(p) {
+            const map = { n: '名词', v: '动词', adj: '形容词', adv: '副词', u: '其他', interj: '感叹词', prep: '介词', conj: '连词', pron: '代词', det: '限定词', num: '数词', aux: '助动词', abbr: '缩写', prefix: '前缀', suffix: '后缀' };
+            return map[p] || p || '';
+        }
+
+        // 发音按钮（有道发音直链，媒体播放无需 CORS）
+        function renderPron(container, word) {
+            const uk = 'https://dict.youdao.com/dictvoice?audio=' + encodeURIComponent(word) + '&type=1';
+            const us = 'https://dict.youdao.com/dictvoice?audio=' + encodeURIComponent(word) + '&type=2';
+            container.innerHTML = '<div class="en-sec-title">发音</div><div class="en-audios">' +
+                '<button class="en-audio-btn" type="button" data-src="' + escHtml(uk) + '"><i class="fas fa-volume-up"></i> 英式</button>' +
+                '<button class="en-audio-btn" type="button" data-src="' + escHtml(us) + '"><i class="fas fa-volume-up"></i> 美式</button>' +
+                '</div>';
+            container.querySelectorAll('.en-audio-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const src = btn.getAttribute('data-src');
+                    if (!src) return;
+                    try { new Audio(src).play(); } catch (e) { console.error('发音播放失败:', e); }
+                });
+            });
+        }
+
+        /* ===== 英文词典：翻译(MyMemory) + 音标/释义/词性(datamuse) + 发音(有道) + 例句/同义词(dictionaryapi.dev 可选) ===== */
         function searchEnglish() {
             const input = document.getElementById('enInput');
             const result = document.getElementById('enResult');
@@ -469,37 +569,104 @@
 
             const isZh = /[\u4e00-\u9fff]/.test(q);
             const pair = isZh ? 'zh-CN|en' : 'en|zh-CN';
-            result.innerHTML = '<div class="dict-hint"><i class="fas fa-spinner fa-spin"></i> 查询中...</div>';
 
-            fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(q) + '&langpair=' + encodeURIComponent(pair))
+            // 骨架：各数据源独立渲染，互不阻塞
+            result.innerHTML =
+                '<div class="en-head"><span class="en-word">' + escHtml(q) + '</span><span class="en-ipa" id="enIpa"></span></div>' +
+                '<div id="enAudios"></div>' +
+                '<div class="en-trans" id="enTrans"><i class="fas fa-spinner fa-spin"></i> 翻译中...</div>' +
+                '<div id="enAlts"></div>' +
+                '<div id="enDefs"></div>' +
+                '<div id="enExtra"></div>';
+
+            const transEl = document.getElementById('enTrans');
+            const altsEl = document.getElementById('enAlts');
+            const defsEl = document.getElementById('enDefs');
+            const extraEl = document.getElementById('enExtra');
+            const ipaEl = document.getElementById('enIpa');
+            const audiosEl = document.getElementById('enAudios');
+
+            let histSaved = false;
+            const saveHist = summary => { if (!histSaved) { histSaved = true; addHistory('en', q, summary || ''); } };
+
+            // 1) 中文翻译
+            fetchWithTimeout('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(q) + '&langpair=' + encodeURIComponent(pair), 10000)
                 .then(r => r.json())
                 .then(data => {
                     const t = data && data.responseData && data.responseData.translatedText;
-                    if (!t) { result.innerHTML = '<div class="dict-empty">未找到结果，请换一个词试试。</div>'; return; }
-
-                    let html = '<div class="en-word">' + escHtml(q) + '</div>';
-                    html += '<div class="en-trans">' + escHtml(t) + '</div>';
-
+                    if (!t) { transEl.innerHTML = '<span class="dict-empty">未找到翻译</span>'; return; }
+                    transEl.textContent = t;
                     const seen = new Set([String(t).toLowerCase()]);
                     const alts = [];
                     (data.matches || []).forEach(m => {
                         const tr = m && m.translation;
-                        if (tr && !seen.has(String(tr).toLowerCase())) {
-                            seen.add(String(tr).toLowerCase());
-                            alts.push(tr);
-                        }
+                        if (tr && !seen.has(String(tr).toLowerCase())) { seen.add(String(tr).toLowerCase()); alts.push(tr); }
                     });
                     if (alts.length) {
-                        html += '<div class="en-alt-title">其他译法</div><div class="en-alt">' +
+                        altsEl.innerHTML = '<div class="en-sec-title">其他译法</div><div class="en-alt">' +
                             alts.slice(0, 8).map(x => '<span>' + escHtml(x) + '</span>').join('') + '</div>';
                     }
-                    result.innerHTML = html;
-                    addHistory('en', q, t);
+                    saveHist(t);
                 })
-                .catch(err => {
-                    console.error('翻译查询失败:', err);
-                    result.innerHTML = '<div class="dict-error">在线查询失败，请检查网络后重试。</div>';
-                });
+                .catch(() => { transEl.innerHTML = '<span class="dict-error">翻译查询失败（网络）</span>'; });
+
+            if (isZh) return;
+
+            // 2) 发音
+            renderPron(audiosEl, q);
+
+            // 3) 音标 / 释义 / 词性（datamuse）
+            fetchWithTimeout('https://api.datamuse.com/words?sp=' + encodeURIComponent(q) + '&md=prd&ipa=1&max=1', 8000)
+                .then(r => r.json())
+                .then(list => {
+                    const e = Array.isArray(list) ? list[0] : null;
+                    if (!e) return;
+                    const ipaTag = (e.tags || []).find(t => t.indexOf('ipa_pron:') === 0);
+                    const ipa = ipaTag ? ipaTag.slice('ipa_pron:'.length) : '';
+                    if (ipa) ipaEl.textContent = '/' + ipa + '/';
+                    const defs = e.defs || [];
+                    if (defs.length) {
+                        let h = '<div class="en-sec-title">释义</div><div class="en-defs">';
+                        defs.slice(0, 6).forEach(line => {
+                            const i = line.indexOf('\t');
+                            const pos = i >= 0 ? line.slice(0, i) : '';
+                            const txt = (i >= 0 ? line.slice(i + 1) : line).trim();
+                            h += '<div class="en-def"><div class="en-def-line">' +
+                                (pos ? '<span class="pos-tag">' + escHtml(posCn(pos)) + '</span> ' : '') +
+                                escHtml(txt) + '</div></div>';
+                        });
+                        h += '</div>';
+                        defsEl.innerHTML = h;
+                    }
+                    saveHist(ipa || q);
+                })
+                .catch(() => {});
+
+            // 4) 例句 / 同义词（dictionaryapi.dev，可达时补）
+            fetchWithTimeout('https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(q), 8000)
+                .then(r => r.ok ? r.json() : null)
+                .then(data => {
+                    const entry = Array.isArray(data) ? data[0] : null;
+                    if (!entry) return;
+                    const examples = [];
+                    (entry.meanings || []).forEach(m => (m.definitions || []).forEach(d => { if (d.example) examples.push(d.example); }));
+                    const syns = new Set();
+                    (entry.meanings || []).forEach(m => {
+                        (m.synonyms || []).forEach(s => syns.add(s));
+                        (m.definitions || []).forEach(d => (d.synonyms || []).forEach(s => syns.add(s)));
+                    });
+                    let h = '';
+                    if (examples.length) {
+                        h += '<div class="en-sec-title">例句</div><div class="en-defs">' +
+                            examples.slice(0, 5).map(x => '<div class="en-example">' + escHtml(x) + '</div>').join('') + '</div>';
+                    }
+                    if (syns.size) {
+                        h += '<div class="en-sec-title">同义词</div><div class="en-alt">' +
+                            [...syns].slice(0, 12).map(x => '<span>' + escHtml(x) + '</span>').join('') + '</div>';
+                    }
+                    if (h) extraEl.innerHTML = h;
+                })
+                .catch(() => {});
         }
 
         /* ===== 汉语词典：本地字义/组词 + hanzi-writer 在线笔顺 ===== */
