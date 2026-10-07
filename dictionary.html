@@ -177,6 +177,12 @@
             margin-top: 2px;
         }
 
+        .dict-src-hint {
+            color: var(--text-secondary);
+            font-size: 13px;
+            margin-top: 12px;
+        }
+
         /* 汉语词典 */
         .zh-grid {
             display: grid;
@@ -443,6 +449,7 @@
             navLinks = document.querySelectorAll('.nav-link');
             pages = document.querySelectorAll('.page');
             loadCharDict();
+            loadLocalDict();
             loadHistory();
             renderHistory();
             setupEventListeners();
@@ -560,13 +567,79 @@
             });
         }
 
-        /* ===== 英文词典：翻译(MyMemory) + 音标/释义/词性(datamuse) + 发音(有道) + 例句/同义词(dictionaryapi.dev 可选) ===== */
+        /* ===== 英文词典：先本地词库检索，未命中再联网 ===== */
+        let localDict = null;
+        let localDictPromise = null;
+
+        function loadLocalDict() {
+            if (localDict) return Promise.resolve(localDict);
+            if (localDictPromise) return localDictPromise;
+            localDictPromise = fetch('data/english/book-index.json')
+                .then(r => r.ok ? r.json() : [])
+                .then(list => Promise.all([
+                    ...(Array.isArray(list) ? list : []).map(e =>
+                        fetch(e.file).then(r => r.ok ? r.json() : []).catch(() => [])
+                    ),
+                    fetch('data/english/wordlists.json').then(r => r.ok ? r.json() : {}).catch(() => ({}))
+                ]))
+                .then(arrs => {
+                    const map = new Map();
+                    const add = item => {
+                        if (item && item.word) {
+                            const k = String(item.word).toLowerCase();
+                            if (!map.has(k)) map.set(k, item);
+                        }
+                    };
+                    arrs.forEach(arr => {
+                        if (Array.isArray(arr)) { arr.forEach(add); }
+                        else if (arr && typeof arr === 'object') {
+                            Object.values(arr).forEach(v => { if (Array.isArray(v)) v.forEach(add); });
+                        }
+                    });
+                    localDict = map;
+                    return map;
+                })
+                .catch(() => { localDict = new Map(); return localDict; });
+            return localDictPromise;
+        }
+
         function searchEnglish() {
             const input = document.getElementById('enInput');
             const result = document.getElementById('enResult');
             const q = (input.value || '').trim();
             if (!q) { result.innerHTML = '<div class="dict-hint">请先输入要查询的单词。</div>'; return; }
 
+            if (!/[\u4e00-\u9fff]/.test(q)) {
+                // 英文：先本地词库
+                result.innerHTML = '<div class="dict-hint"><i class="fas fa-spinner fa-spin"></i> 查询中...</div>';
+                loadLocalDict().then(map => {
+                    const entry = map.get(q.toLowerCase());
+                    if (entry) { renderLocalEnglish(q, entry); }
+                    else { onlineEnglishLookup(q); }
+                });
+            } else {
+                // 中文：直接联网翻译
+                onlineEnglishLookup(q);
+            }
+        }
+
+        // 本地词库命中
+        function renderLocalEnglish(q, entry) {
+            const result = document.getElementById('enResult');
+            result.innerHTML =
+                '<div class="en-head"><span class="en-word">' + escHtml(q) + '</span>' +
+                (entry.phonetic ? '<span class="en-ipa">' + escHtml(entry.phonetic) + '</span>' : '') + '</div>' +
+                '<div id="enAudios"></div>' +
+                (entry.meaning ? '<div class="en-trans">' + escHtml(entry.meaning) + '</div>' : '') +
+                (entry.example ? '<div class="en-sec-title">例句</div><div class="en-defs"><div class="en-example">' + escHtml(entry.example) + '</div></div>' : '') +
+                '<div class="dict-src-hint"><i class="fas fa-database"></i> 本地词库</div>';
+            renderPron(document.getElementById('enAudios'), q);
+            addHistory('en', q, entry.meaning || '');
+        }
+
+        // 联网查询（本地未命中时）
+        function onlineEnglishLookup(q) {
+            const result = document.getElementById('enResult');
             const isZh = /[\u4e00-\u9fff]/.test(q);
             const pair = isZh ? 'zh-CN|en' : 'en|zh-CN';
 
