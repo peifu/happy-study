@@ -231,6 +231,12 @@
             margin-bottom: 10px;
         }
 
+        .zh-meta {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
         .zh-meaning {
             line-height: 1.9;
             margin-bottom: 14px;
@@ -742,12 +748,122 @@
                 .catch(() => {});
         }
 
-        /* ===== 汉语词典：本地字义/组词 + hanzi-writer 在线笔顺 ===== */
+        /* ===== 汉语词典：经 CORS 代理抓取“汉语国学” + 本地兜底 + hanzi-writer 笔顺 ===== */
         function loadCharDict() {
             fetch('data/chinese/char-dict.json')
                 .then(r => { if (!r.ok) throw new Error('字典数据加载失败'); return r.json(); })
                 .then(data => { charDict = Array.isArray(data.characters) ? data.characters : []; })
                 .catch(err => { console.error('加载汉字数据失败:', err); charDict = []; });
+        }
+
+        const HANYU_PROXIES = [
+            u => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u),
+            u => 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(u),
+            u => 'https://test.cors.workers.dev/?' + u,
+            u => 'https://cors.isomorphic-git.org/' + u
+        ];
+
+        function parseHanyuGuoxue(html) {
+            let doc;
+            try { doc = new DOMParser().parseFromString(html, 'text/html'); } catch (e) { return null; }
+            if (!doc || !doc.querySelector('.zi-basic-explain, .zi-contents')) return null;
+
+            const info = { pinyin: [], radical: '', strokes: '', radicalOut: '', meaning: '', words: [] };
+
+            // 拼音
+            doc.querySelectorAll('.zi-pinyin a.pinyin, .zi-heading .voice .py').forEach(a => {
+                const t = (a.textContent || '').replace(/[0-9]/g, '').trim();
+                if (t && info.pinyin.indexOf(t) < 0) info.pinyin.push(t);
+            });
+
+            // 部首 / 笔画
+            doc.querySelectorAll('p').forEach(p => {
+                const lab = p.querySelector('label');
+                if (!lab) return;
+                const name = (lab.textContent || '').trim();
+                const val = (p.textContent || '').replace(name, '').replace(/\s+/g, '').trim();
+                if (name === '部首') info.radical = val.replace(/部$/, '');
+                else if (name === '总笔画') info.strokes = val.replace(/[^0-9]/g, '');
+                else if (name === '部外笔画') info.radicalOut = val.replace(/[^0-9]/g, '');
+            });
+
+            // 释义（基本解释）
+            const parts = [];
+            doc.querySelectorAll('.zi-basic-explain .explain').forEach(p => {
+                const no = (p.querySelector('.no') ? p.querySelector('.no').textContent : '').trim();
+                const text = (p.querySelector('.text') ? p.querySelector('.text').textContent : '').trim();
+                const egEl = p.querySelector('.eg');
+                const eg = egEl ? egEl.textContent.replace('例如', '').trim() : '';
+                if (text) parts.push(no + text + (eg ? '（例如：' + eg + '）' : ''));
+            });
+            info.meaning = parts.join(' ');
+
+            // 组词
+            doc.querySelectorAll('.zi-zuci').forEach(slide => {
+                slide.querySelectorAll('p.list a').forEach(a => {
+                    const w = (a.textContent || '').trim();
+                    if (w && info.words.indexOf(w) < 0) info.words.push(w);
+                });
+            });
+
+            if (!info.pinyin.length && !info.radical && !info.meaning && !info.words.length) return null;
+            return info;
+        }
+
+        function fetchHanyuGuoxue(char) {
+            const target = 'https://www.hanyuguoxue.com/zidian/zi-' + char.codePointAt(0);
+            const tryNext = i => {
+                if (i >= HANYU_PROXIES.length) return Promise.resolve(null);
+                return fetchWithTimeout(HANYU_PROXIES[i](target), 9000)
+                    .then(r => r.ok ? r.text() : '')
+                    .then(html => {
+                        const info = html ? parseHanyuGuoxue(html) : null;
+                        return info ? info : tryNext(i + 1);
+                    })
+                    .catch(() => tryNext(i + 1));
+            };
+            return tryNext(0);
+        }
+
+        // 渲染字信息：data 为联网解析结果或本地条目
+        function renderZhInfo(char, data, online) {
+            const infoEl = document.getElementById('zhInfo');
+            if (!infoEl) return;
+            let html = '<div class="zh-char">' + escHtml(char) + '</div>';
+            if (data && online) {
+                const meta = [];
+                if (data.radical) meta.push('部首：' + escHtml(data.radical));
+                if (data.strokes) meta.push('总笔画：' + escHtml(data.strokes));
+                if (data.radicalOut) meta.push('部外笔画：' + escHtml(data.radicalOut));
+                if (meta.length) html += '<div class="zh-meta">' + meta.join('　') + '</div>';
+                if (data.pinyin && data.pinyin.length) html += '<div class="zh-pinyin">拼音：' + data.pinyin.map(escHtml).join('　') + '</div>';
+                if (data.meaning) html += '<div class="zh-words-title">释义</div><div class="zh-meaning">' + escHtml(data.meaning) + '</div>';
+                if (data.words && data.words.length) html += '<div class="zh-words-title">组词</div><div class="zh-words">' + data.words.slice(0, 30).map(w => '<span class="zh-word">' + escHtml(w) + '</span>').join('') + '</div>';
+                html += '<div class="dict-src-hint"><i class="fas fa-globe"></i> 汉语国学（在线）</div>';
+            } else if (data) {
+                if (data.pinyin) html += '<div class="zh-pinyin">拼音：' + escHtml(data.pinyin) + '</div>';
+                if (data.meaning) html += '<div class="zh-words-title">释义</div><div class="zh-meaning">' + escHtml(data.meaning) + '</div>';
+                if (data.words && data.words.length) html += '<div class="zh-words-title">组词</div><div class="zh-words">' + data.words.map(w => '<span class="zh-word">' + escHtml(w) + '</span>').join('') + '</div>';
+                html += '<div class="dict-src-hint"><i class="fas fa-database"></i> 本地词库（联网失败）</div>';
+            } else {
+                html += '<div class="dict-empty">未查询到该字的解释（笔顺仍可查看）。</div>';
+            }
+            infoEl.innerHTML = html;
+        }
+
+        function initHanzi(char) {
+            if (typeof HanziWriter === 'undefined') return;
+            try {
+                hanziWriter = HanziWriter.create('hanziTarget', char, {
+                    width: 200, height: 200, padding: 8, showOutline: true,
+                    strokeAnimationSpeed: 1, delayBetweenStrokes: 250
+                });
+                hanziWriter.animateCharacter();
+                const playBtn = document.getElementById('hanziPlay');
+                const outlineBtn = document.getElementById('hanziOutline');
+                if (playBtn) playBtn.addEventListener('click', () => hanziWriter.animateCharacter());
+                if (outlineBtn) outlineBtn.addEventListener('click', () => hanziWriter.loopCharacterAnimation());
+            } catch (e) { console.error('笔顺渲染失败:', e); }
         }
 
         function searchChinese() {
@@ -758,20 +874,6 @@
             if (!char) { result.innerHTML = '<div class="dict-hint">请先输入一个汉字。</div>'; return; }
 
             const isCJK = /[\u4e00-\u9fff]/.test(char);
-            const entry = charDict.find(c => c.char === char);
-
-            let infoHtml = '<div class="zh-char">' + escHtml(char) + '</div>';
-            let summary = '未收录';
-            if (entry) {
-                infoHtml += '<div class="zh-pinyin">拼音：' + escHtml(entry.pinyin) + '</div>';
-                infoHtml += '<div class="zh-meaning">' + escHtml(entry.meaning) + '</div>';
-                infoHtml += '<div class="zh-words-title">组词</div><div class="zh-words">' +
-                    (entry.words || []).map(w => '<span class="zh-word">' + escHtml(w) + '</span>').join('') + '</div>';
-                summary = entry.pinyin + ' ' + entry.meaning;
-            } else {
-                infoHtml += '<div class="dict-empty">暂未收录该字的释义与组词' + (isCJK ? '（笔顺仍可查看）' : '') + '。</div>';
-            }
-
             const strokeHtml = isCJK
                 ? '<div class="zh-stroke"><div id="hanziTarget"></div>' +
                   '<div class="zh-stroke-btns">' +
@@ -779,26 +881,27 @@
                   '<button id="hanziOutline" class="btn btn-secondary" type="button"><i class="fas fa-pencil"></i> 循环</button>' +
                   '</div></div>'
                 : '<div class="zh-stroke"><div class="dict-hint">请输入汉字以查看笔顺。</div></div>';
+            result.innerHTML = '<div class="zh-grid">' + strokeHtml +
+                '<div class="zh-info" id="zhInfo"><i class="fas fa-spinner fa-spin"></i> 查询中...</div></div>';
 
-            result.innerHTML = '<div class="zh-grid">' + strokeHtml + '<div class="zh-info">' + infoHtml + '</div></div>';
+            if (isCJK) initHanzi(char);
 
-            if (isCJK && typeof HanziWriter !== 'undefined') {
-                try {
-                    hanziWriter = HanziWriter.create('hanziTarget', char, {
-                        width: 200, height: 200, padding: 8, showOutline: true,
-                        strokeAnimationSpeed: 1, delayBetweenStrokes: 250
-                    });
-                    hanziWriter.animateCharacter();
-                    const playBtn = document.getElementById('hanziPlay');
-                    const outlineBtn = document.getElementById('hanziOutline');
-                    if (playBtn) playBtn.addEventListener('click', () => hanziWriter.animateCharacter());
-                    if (outlineBtn) outlineBtn.addEventListener('click', () => hanziWriter.loopCharacterAnimation());
-                } catch (e) {
-                    console.error('笔顺渲染失败:', e);
+            const fallback = () => {
+                const entry = charDict.find(c => c.char === char);
+                renderZhInfo(char, entry, false);
+                addHistory('zh', char, entry ? (entry.pinyin + ' ' + entry.meaning) : '');
+            };
+
+            if (!isCJK) { fallback(); return; }
+
+            fetchHanyuGuoxue(char).then(info => {
+                if (info) {
+                    renderZhInfo(char, info, true);
+                    addHistory('zh', char, ((info.pinyin || []).join(' ') + ' ' + (info.meaning || '')).trim());
+                } else {
+                    fallback();
                 }
-            }
-
-            addHistory('zh', char, summary);
+            }).catch(fallback);
         }
 
         // 初始化应用
