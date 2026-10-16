@@ -12,7 +12,7 @@ import concurrent.futures as cf
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "data", "chinese", "hanzi-dict.json")
-CODES = os.path.join(ROOT, "tools", "changyongzi-2500.txt")
+CODES = os.environ.get("CODES_FILE") or os.path.join(ROOT, "tools", "changyongzi-2500.txt")
 UA = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36",
       "Accept-Encoding": "gzip"}
 WORKERS = int(os.environ.get("WORKERS", "6"))
